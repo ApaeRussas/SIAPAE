@@ -1,0 +1,117 @@
+.font-times {
+    font-family: 'TimesNewRoman', serif;
+}
+.font-arial {
+    font-family: 'Arial', Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+body {
+    padding-top: 70px;
+    padding-bottom: 10px;
+}
+header { 
+    position: fixed; top: -20px; left: 0px; right: 0px; height: 50px; 
+}
+.signature {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    word-wrap: break-word; /* Quebra a palavra quando necessário */
+    overflow-wrap: break-word; /* Garantir que a palavra longa seja quebrada */
+}
+.paragrafo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.palavra {
+    margin-right: 4px;
+}
+.justify {
+    text-align: justify;
+}
+.tab {
+    display: inline-block;
+    width: 40px; /* Ajuste o valor conforme necessário para simular um Tab */
+}
+
+.head-font-nova {
+    font-size: 11px;
+}
+.center-text {
+    text-align: center;
+}
+.center-image {
+    text-align: center; /* Centraliza horizontalmente */
+    vertical-align: middle; /* Centraliza verticalmente */
+    display: table-cell;
+}
+.capslock {
+    text-transform: uppercase;
+}
+
+.retangulo {
+    border: 1px solid #000; 
+    padding: 20px 0px 20px 10px;
+    width: 100%;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+p {
+    margin:0;
+    padding:0;
+}
+td {
+    width: 50%;
+}
+table {
+    width: 100%;
+    margin-left: -3px;
+}
+.m-bottom {
+    margin-bottom: 10px;
+}
+.m-bottom-table {
+    margin-bottom: 7px;
+}
+
+.table-dif {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', Helvetica, sans-serif;
+    font-size: 9px;
+}
+.th-dif {
+    border: 0.5px solid black;
+    padding: 8px;
+    text-align: center;
+}
+.tr-dif {
+    margin-top: 8px;
+    text-align: center;
+}
+.td-dif {
+    padding: 8px 0px;
+    border: 0.5px solid black;
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+}
+.bg-gray {
+    background-color: #D3D3D3;
+}
+.no-top-border {
+    border-top: none; /* Oculta a borda superior */
+}
+.no-bottom-border {
+    border-bottom: none; /* Oculta a borda inferior */
+}
+.page-break {
+    page-break-before: always;
+}

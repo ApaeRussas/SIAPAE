@@ -1,0 +1,60 @@
+body {
+    padding-top: 70px;
+}
+header { 
+    position: fixed; top: -20px; left: 0px; right: 0px; height: 50px; 
+}
+.font-times {
+    font-family: 'TimesNewRoman', serif;
+}
+.font-arial {
+    font-family: 'Arial', Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.head-font-nova {
+    font-size: 11px;
+}
+.center-text {
+    text-align: center;
+}
+.center-image {
+    text-align: center; /* Centraliza horizontalmente */
+    vertical-align: middle; /* Centraliza verticalmente */
+    display: table-cell;
+}
+
+p {
+    margin:0;
+    padding:0;
+}
+.m-bottom {
+    margin-bottom: 10px;
+}
+.border {  
+    border: 0.5px solid black;
+}
+table {
+    width: 100%;
+}
+main table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Arial', Helvetica, sans-serif;
+    font-size: 9px;
+}
+main th {
+    border: 0.5px solid black;
+    padding: 8px;
+    text-align: center;
+}
+main tr {
+    margin-top: 8px;
+    text-align: center;
+}
+main td {
+    padding: 8px 0px;
+    border: 0.5px solid black;
+    word-wrap: break-word; 
+    overflow-wrap: break-word;
+}
