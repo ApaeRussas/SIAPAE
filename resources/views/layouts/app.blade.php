@@ -4,10 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="google-site-verification" content="dUnO9D6oic-hNM5YbU-wBYhu8mRfxNgcf4BfZE4ZIMI" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <title> @yield('title', config('app.name', 'Laravel')) </title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" />
@@ -35,7 +38,10 @@
     <script src="{{ asset('js/script.js') }}" defer></script>
     <script src="{{ asset('js/alerts.js') }}" defer></script>
 </head>
-<body class="font-sans antialiased">
+<body 
+    class="font-sans antialiased" 
+    :class="{ 'sidebar-open': isSidebarOpen }">
+
     <!-- Carregar jQuery antes de qualquer outro script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
@@ -46,13 +52,21 @@
         x-cloak
     >
         <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200 transition duration-200 ease-in-out">
+            <!-- Overlay para mobile -->
+            <div
+                x-show="isSidebarOpen && window.innerWidth < 1024"
+                class="fixed inset-0 bg-black bg-opacity-50 z-30"
+                x-on:click="toggleSidebar"
+            ></div>
+            
             <!-- Sidebar -->
-            <x-sidebar.sidebar />
+            <x-sidebar.sidebar class="overflow-auto"/>
 
             <!-- Page Wrapper -->
             <div class="flex flex-col min-h-screen"
-                 :class="{ 'lg:ml-64': isSidebarOpen, 'md:ml-16': !isSidebarOpen }"
-                 style="transition-property: margin; transition-duration: 150ms;">
+                 :class="{ 'lg:ml-64': isSidebarOpen, 'md:ml-16': !isSidebarOpen}"
+                 style="transition-property: margin; transition-duration: 150ms;"
+                 >
 
                 <!-- Navbar -->
                 <x-navbar />
@@ -97,6 +111,10 @@
         @endif
         @if(Session::has('error'))
             toastr.error("{{ Session::get('error') }}");
+        @endif
+
+        @if(Session::has('pdf_error'))
+            window.close(); 
         @endif
     </script>
 </body>

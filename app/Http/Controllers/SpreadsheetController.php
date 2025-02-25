@@ -14,7 +14,10 @@ class SpreadsheetController extends Controller
     public function exportExpenses(Request $request)
     {
         $expenses = json_decode($request->expenses); // Obtém todas as despesas do ano escolhido
-    
+        if(!$expenses || count($expenses) === 0) {
+            return redirect()->back()->with('error', 'Sem Gastos nesse ano para gerar uma tabela Excel');
+        }        
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -73,7 +76,9 @@ class SpreadsheetController extends Controller
     public function exportDonations(Request $request)
     {
         $donations = json_decode($request->donations); // Obtém todas as doações do ano escolhido
-
+        if(!$donations || count($donations) === 0) {
+            return redirect()->back()->with('error', 'Sem Doações nesse ano para gerar uma tabela Excel');
+        }
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 

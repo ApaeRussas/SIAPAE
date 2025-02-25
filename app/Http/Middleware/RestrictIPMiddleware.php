@@ -15,15 +15,14 @@ class RestrictIPMiddleware
      * @var array
      */
     private $allowedIps = [
-        '192.168.0.0/24', // Exemplo de faixa IPv4
         '187.19.149.0/24', // IPv4 da APAE e outras 254 redes
         '2804:29b8:5004:bda::/64', // IPv6 da APAE que pode mudar
-        '2804:29b8:5004:737b::/64', // IPv6 da APAE que pode mudar
+        '2804:29b8:5004:792e::/64',
     ];
 
     private $allowedSingleIps = [
         '127.0.0.1', // IPv4 localhost
-        '::1',       // IPv6 localhost
+        '187.19.149.22', 
     ];
 
     public function handle(Request $request, Closure $next)

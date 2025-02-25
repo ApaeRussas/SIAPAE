@@ -1,4 +1,9 @@
-<x-perfect-scrollbar as="nav" aria-label="main" class="flex flex-col flex-1 gap-3 px-3 z-20">
+<x-perfect-scrollbar 
+    as="nav" 
+    aria-label="main" 
+    class="flex flex-col flex-1 gap-3 px-3 z-20"
+>
+
     <!-- Dashboard -->
     <x-sidebar.link title="Home" href="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')">
         <x-slot name="icon">
@@ -55,7 +60,7 @@
     <x-sidebar.link title="{{__('SCFV')}}" href="{{route('scfv.index')}}" 
         :isActive="request()->routeIs('scfv.index', 'scfv.create', 'scfv.edit', 'scfv.show')">
         <x-slot name="icon">
-            <x-icons.scfv class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+            <x-icons.scfv class="flex-shrink-0 w-6 h-6 text-gray-200" aria-hidden="true" />
         </x-slot>
     </x-sidebar.link>
 

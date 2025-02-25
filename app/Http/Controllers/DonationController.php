@@ -139,6 +139,10 @@ class DonationController extends Controller
     public function generatePdf(Request $request) 
     {
         $data = json_decode($request->donations);
+        if(!$data || count($data) === 0) {
+            return redirect()->back()->with('pdf_error', 'Sem Doações nesse ano para gerar um PDF');
+        }     
+
         $users = User::all();
 
         // list($year, $month, $day) = explode('-', $data->date);

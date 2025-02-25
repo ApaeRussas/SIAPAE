@@ -156,7 +156,6 @@
 
             // Alterna o status
             let novoStatus = statusAtual === 0 ? 1 : (statusAtual === 1 ? null : 0);
-            console.log(frequencyId +'  Status atual: '+ statusAtual+ '  Status novo: ' + novoStatus);
 
             // Realiza a requisição AJAX
             $.ajax({

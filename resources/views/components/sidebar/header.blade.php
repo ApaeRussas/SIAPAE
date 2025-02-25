@@ -10,9 +10,9 @@
             aria-hidden="true" 
             class="mini-logo" />
         <x-application-mini-dark-logo    
-        x-show="!isSidebarOpen && isDarkMode"
-        aria-hidden="true" 
-        class="mini-logo" /> 
+            x-show="!isSidebarOpen && isDarkMode"
+            aria-hidden="true" 
+            class="mini-logo" /> 
         <x-application-logo-light
             x-show="isSidebarOpen && !isDarkMode" 
             class="h-logo" /> 

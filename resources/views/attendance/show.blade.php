@@ -5,7 +5,6 @@
         :elementShow="$attendance" 
         :labelsVariables="[
             ['Nome do aluno', 'student.name', 'select'],
-            ['Data do Atendimento', 'date', 'date'],
             ['Assinatura do Professor Responsável', 'professor.name', 'text'],
             ['Eixo educacional trabalhado', 'educational_axis', 'textarea'],
             ['Avanços', 'advances', 'textarea'],

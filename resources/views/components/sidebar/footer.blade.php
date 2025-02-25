@@ -4,7 +4,7 @@
         icon-only
         variant="secondary"
         x-show="!isSidebarOpen"
-        x-on:click="isSidebarOpen = !isSidebarOpen"
+        x-on:click="toggleSidebar"
         sr-text="Toggle sidebar"
     >
         <x-icons.menu-fold-left

@@ -193,7 +193,7 @@ class AdminController extends Controller
         try {
             
             Donation::where('student_id', $studentId)
-            ->where('year', $request->year)
+            ->where('year_of_donation', $request->year)
             ->delete();
 
             return response()->json([

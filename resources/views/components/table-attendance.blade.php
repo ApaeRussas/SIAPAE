@@ -65,7 +65,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
              x-transition:leave-end="opacity-0">
             
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2 mb-4 flex-wrap">
+                <div class="flex items-center gap-0.5 sm:gap-2 mb-4 flex-wrap">
                     {{-- Botão anterior --}}
                     <button id="btnPrevious" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
                         <svg class="w-4 h-4 text-gray-800 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,7 +130,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} transform transition-all duration-300 opacity-0 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} transform transition-all duration-300 opacity-0 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['segunda'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['segunda'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -146,7 +146,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasMondayMorningStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para segunda de manhã</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para segunda de manhã</li>
                         @endif
                     </ul>
                 </details>
@@ -171,7 +171,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['segunda'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['segunda'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -187,7 +187,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasMondayAfternoonStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para segunda de tarde</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para segunda de tarde</li>
                         @endif
                     </ul>
                 </details>
@@ -222,7 +222,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['terca'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['terca'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -238,7 +238,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasTuesdayMorningStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para terça de manhã</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para terça de manhã</li>
                         @endif
                     </ul>
                 </details>
@@ -263,7 +263,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['terca'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['terca'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -279,7 +279,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasTuesdayAfternoonStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para terça de tarde</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para terça de tarde</li>
                         @endif
                     </ul>
                 </details>
@@ -314,7 +314,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['quarta'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['quarta'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -330,7 +330,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasMondayMorningStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quarta de manhã</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quarta de manhã</li>
                         @endif
                     </ul>
                 </details>
@@ -355,7 +355,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['quarta'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['quarta'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -371,7 +371,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasWednesdayAfternoonStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quarta tarde</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quarta tarde</li>
                         @endif
                     </ul>
                 </details>
@@ -406,7 +406,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['quinta'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['quinta'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -422,7 +422,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasThursdayMorningStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quinta de manhã</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quinta de manhã</li>
                         @endif
                     </ul>
                 </details>
@@ -447,7 +447,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['quinta'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['quinta'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -463,7 +463,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasThursdayAfternoonStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quinta de tarde</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para quinta de tarde</li>
                         @endif
                     </ul>
                 </details>
@@ -498,7 +498,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['sexta'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['sexta'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -514,7 +514,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasFridayMorningStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para sexta de manhã</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para sexta de manhã</li>
                         @endif
                     </ul>
                 </details>
@@ -539,7 +539,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 $attendanceExists = App\Models\Attendance::where('student_id', $student->id)->where('date', $year . '-' . $month . '-' . $day)->exists();
                             @endphp
                             @if($frequency)
-                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 dark:text-green-500' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
+                                <li class="text-sm {{$frequency->{$day} === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : ($frequency->{$day} === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300') }} truncate transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
                                     <div class="flex items-center space-x-1.5">
                                         <a href="{{$frequency->{$day} === true ? route('attendance.show', ['student_id' => $student->id, 'date' => $diasDaSemana['sexta'], 'year' => $year, $student->id]) : ($frequency->{$day} === false ? '#' : route('attendance.create', ['student_id' => $student->id, 'date' => $diasDaSemana['sexta'], 'year' => $year]))}}" class="truncate">
                                             {{$student->name}}
@@ -555,7 +555,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endif
                         @endforeach
                         @if(!$hasFridayAfternoonStudents)
-                            <li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para sexta de tarde</li>
+                            <li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para sexta de tarde</li>
                         @endif
                     </ul>
                 </details>
@@ -605,7 +605,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                             @endphp
                             <form action="{{ route($route) }}" method="GET">
                                 <x-form.input type="text" id="search" name="search"
-                                    class="form-control w-64 dark:text-gray-300" placeholder="{{$search}}" />
+                                    class="form-control w-64 dark:text-gray-400" placeholder="{{$search}}" />
 
                                 <button id="icone-search" class="px-2 bg-gray-500 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none -ml-3 transition duration-300">
                                     <x-icons.search />
@@ -679,7 +679,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 }
                             @endphp
 
-                            <x-form.input class="date-range w-full sm:w-80 form-control text-gra-800 dark:text-gray-300" x-init="initFlatpickr" name="date_range" placeholder="{{$placeholderValue}}" autocomplete="off"/>     
+                            <x-form.input class="date-range w-full sm:w-80 form-control text-gra-800 dark:text-gray-400" x-init="initFlatpickr" name="date_range" placeholder="{{$placeholderValue}}" autocomplete="off"/>     
                             
                             <button class="icone-search px-2 bg-gray-500 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none -ml-3 transition duration-300">
                                 <x-icons.search />
@@ -720,7 +720,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                         @if (isset($valueTotal))
                         <div class="flex justify-center items-center mr-2 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded">
-                            <p class="dark:text-gray-300">
+                            <p class="dark:text-gray-400">
                                 Valor Total: {{$valueTotal}} R$
                             </p>
                         </div>
@@ -798,7 +798,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                                     @foreach ($variablesDB as $variable)
                                         <td
-                                            class="border border-gray-300 dark:border-gray-600 px-2 py-3 text-center text-gray-800 dark:text-gray-300">
+                                            class="border border-gray-300 dark:border-gray-600 px-2 py-3 text-center text-gray-800 dark:text-gray-400">
                                             @if ($variable == "date_of_birth" || $variable == "date_of_emission" || $variable == "date" || $variable == "date_of_anamnesis" || $variable == "date_pedagogical" || $variable == "date_scfv")
                                                 {{ \Carbon\Carbon::parse($row->{$variable})->format('d/m/Y') }}
 
@@ -910,7 +910,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                 </tr>
                             @empty
                                 <tr class="text-center ">
-                                    <td class="p-3 font-normal dark:text-gray-300 border border-gray-300 dark:border-gray-600"
+                                    <td class="p-3 font-normal dark:text-gray-400 border border-gray-300 dark:border-gray-600"
                                         colspan="{{ count($headers) + (isset($actionRoute) ? 2 : 0) }}">
                                         Nenhum registro encontrado.
                                     </td>
@@ -1005,17 +1005,10 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     year: year,
                 },
                 success: function (data) {
-                    // console.log("Faixa semana retornado:", data.faixaSemana);
-                    // console.log("Ano retornado:", data.year);
-                    
-                    console.log("Dados retornados:", data);
-                    
-                    // Atualiza a faixa da semana na página e tbm att a variável faixaSemana
+                    // Atualiza a faixa da semana e ano na página e tbm att a faixaSemana e year
                     $('#faixaSemana').text(data.faixaSemana);
                     $('#year').text(data.year);
                                 
-                    // console.log(sessionFaixaSemana, sessionYear);
-                    
                     faixaSemana = data.faixaSemana;
                     year = data.year;
 
@@ -1023,12 +1016,6 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     localStorage.setItem('faixaSemana', data.faixaSemana);
                     localStorage.setItem('year', data.year);
                     localStorage.setItem('diasDaSemana', JSON.stringify(data.diasDaSemana));
-
-                    // console.log("Faixa semana retornado localstorage:", localStorage.getItem('faixaSemana'));
-                    // console.log("Ano retornado localstorage:", localStorage.getItem('year'));
-                    // console.log("Dias da semana no localStorage:", localStorage.getItem('diasDaSemana'));
-
-                    console.log("----------------------------");
 
                     // Atualiza os dias da semana (data de cada dia)
                     updateDiasDaSemana(data.diasDaSemana);
@@ -1076,7 +1063,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     
                     // Verifica se o aluno tem uma tabela de frequência para o mês/ano
                     if (student.frequencyExists === true) {
-                        var className = frequency === true ? 'text-green-600 dark:text-green-500' : (frequency === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 dark:text-gray-300');
+                        var className = frequency === true ? 'text-green-600 hover:text-green-700 dark:text-green-500 hover:dark:text-green-400' : (frequency === false ? 'text-red-600 dark:text-red-500' : 'text-gray-700 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300');
                         var ahref = frequency === true ? '<a href="attendance/show?student_id=' + student.id + '&date=' + dayDate + '&year=' + year + '">' + student.name + '</a>' : (frequency === false ? '<a href="#">' + student.name + '</a>' : '<a href="/attendance/create?student_id=' + student.id + '&date=' + dayDate + '&year=' + year + '">' + student.name + '</a>');
                         var listItem = `
                             <li class="text-sm ${className} transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">
@@ -1108,7 +1095,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     }
                 });
 
-                const noStudentsMessage = '<li class="text-sm text-gray-700 dark:text-gray-300 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para ' + dayName + ' manhã</li>';
+                const noStudentsMessage = '<li class="text-sm text-gray-700 dark:text-gray-400 transform transition-all duration-300 opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0">Nenhum aluno para ' + dayName + ' manhã</li>';
 
                 // Adiciona uma mensagem se não houver alunos em cada turno
                 if (!hasMorningStudents) {
