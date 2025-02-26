@@ -137,36 +137,40 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         </div>
                     @endif
 
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        @if (isset($withExportExcel))
-                            <form action="{{route('export.'.$actionRoute . 's')}}" method="POST">
-                                @csrf
-                                <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($rows->items())}}">
-                                
-                                <x-button variant="excel" title="Exportar em Excel" size="sm">
-                                    <x-icons.excel-icon />
-                                </x-button>
-                            </form>
-                        @endif
-
-                        @if (isset($withExportPdf))
-                            <form action="{{route($actionRoute . '.export')}}" method="POST" target="_blank">
-                                @csrf
-                                <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($rows->items())}}">
-                                
-                                <x-button variant="pdf-trash" title="Exportar em PDF" size="sm" class="py-2.5">
-                                    <x-icons.pdf />
-                                </x-button>
-                            </form>
-                        @endif
-
-                        @if (isset($valueTotal))
-                        <div class="flex justify-center items-center mr-2 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded w-full sm:w-auto">
-                            <p class="dark:text-gray-300">
-                                Valor Total: {{$valueTotal}} R$
-                            </p>
+                    <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            @if (isset($withExportExcel))
+                                <form action="{{route('export.'.$actionRoute . 's')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($rows->items())}}">
+                                    
+                                    <x-button variant="excel" title="Exportar em Excel" size="sm">
+                                        <x-icons.excel-icon />
+                                    </x-button>
+                                </form>
+                            @endif
+    
+                            @if (isset($withExportPdf))
+                                <form action="{{route($actionRoute . '.export')}}" method="POST" target="_blank">
+                                    @csrf
+                                    <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($rows->items())}}">
+                                    
+                                    <x-button variant="pdf-trash" title="Exportar em PDF" size="sm" class="py-2.5">
+                                        <x-icons.pdf />
+                                    </x-button>
+                                </form>
+                            @endif
+    
+                            @if (isset($valueTotal))
+                                <div class="flex max-w-full justify-center items-center sm:mr-2 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded w-full sm:w-auto">
+                                    <p class="flex dark:text-gray-300 gap-x-1">
+                                        <span class="hidden sm:flex">Valor Total:</span> 
+                                        <span class="flex sm:hidden">V.T:</span> 
+                                        <span class="">{{$valueTotal}} R$</span>
+                                    </p>
+                                </div>
+                            @endif
                         </div>
-                        @endif
 
                         @if(isset($actionRoute) && !isset($notButtonAdd) && !isset($actionsDeposit) && !isset($isNotAdmin))
                             <x-button href="{{route($actionRoute . '.create')}}" variant="blue" class="w-full sm:w-auto">

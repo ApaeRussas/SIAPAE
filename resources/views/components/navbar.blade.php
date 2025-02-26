@@ -143,7 +143,8 @@
         icon-only
         variant="secondary"
         sr-text="Open main menu"
-        x-on:click="isSidebarOpen = !isSidebarOpen"
+        x-on:click="toggleSidebar"
+        class="sidebar-toggle-button"
     >
         <x-heroicon-o-menu
             x-show="!isSidebarOpen"

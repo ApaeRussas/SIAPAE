@@ -149,7 +149,6 @@ window.updateConfirm = function (e, title, text, confirmButton) {
                 form.submit();
                 //Swal.fire('Excluído!', 'O item foi excluído.', 'success');
             } else if (result.isDismissed) {
-                console.log('A exclusão foi cancelada');
             }
         });
     }

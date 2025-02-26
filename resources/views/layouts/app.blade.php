@@ -36,7 +36,10 @@
     <script src="{{ asset('js/script.js') }}" defer></script>
     <script src="{{ asset('js/alerts.js') }}" defer></script>
 </head>
-<body class="font-sans antialiased">
+<body 
+    class="font-sans antialiased" 
+    :class="{ 'sidebar-open': isSidebarOpen }">
+
     <!-- Carregar jQuery antes de qualquer outro script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
@@ -47,13 +50,21 @@
         x-cloak
     >
         <div class="min-h-screen text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200 transition duration-200 ease-in-out">
+            <!-- Overlay para mobile -->
+            <div
+                x-show="isSidebarOpen && window.innerWidth < 1024"
+                class="fixed inset-0 bg-black bg-opacity-50 z-30"
+                x-on:click="toggleSidebar"
+            ></div>
+            
             <!-- Sidebar -->
-            <x-sidebar.sidebar />
+            <x-sidebar.sidebar class="overflow-auto"/>
 
             <!-- Page Wrapper -->
             <div class="flex flex-col min-h-screen"
-                 :class="{ 'lg:ml-64': isSidebarOpen, 'md:ml-16': !isSidebarOpen }"
-                 style="transition-property: margin; transition-duration: 150ms;">
+                 :class="{ 'lg:ml-64': isSidebarOpen, 'md:ml-16': !isSidebarOpen}"
+                 style="transition-property: margin; transition-duration: 150ms;"
+                 >
 
                 <!-- Navbar -->
                 <x-navbar />
@@ -98,6 +109,10 @@
         @endif
         @if(Session::has('error'))
             toastr.error("{{ Session::get('error') }}");
+        @endif
+
+        @if(Session::has('pdf_error'))
+            window.close(); 
         @endif
     </script>
 </body>

@@ -15,11 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // const dateInputs = document.querySelectorAll('.date');
-    // dateInputs.forEach(input => {
-    //     input.type = "text"; // Garante que o input seja tipo "text"
-    // });
-
     applyMask('.date-range', new Inputmask("99/99/9999 à 99/99/9999"));
     applyMask('.date', new Inputmask("99/99/9999"));
     applyMask('.monthYear', new Inputmask("99/9999"));
@@ -108,6 +103,8 @@ document.addEventListener('alpine:init', () => {
                     darkTheme.disabled = !this.isDarkMode;
                     lightTheme.disabled = this.isDarkMode;
                 }
+
+                this.applyScrollbarTheme();
             },
             initFlatpickr() {
                 //Calendário no input de data
@@ -117,6 +114,7 @@ document.addEventListener('alpine:init', () => {
                     locale: customLocale,
                     minDate: "01/01/1960",
                     maxDate: "today",
+                    disableMobile: true,
                 });
 
                 // Aplicar o Flatpickr com a opção de intervalo de datas 
@@ -127,7 +125,45 @@ document.addEventListener('alpine:init', () => {
                     allowInput: true,
                     minDate: "01/01/1960",
                     maxDate: "today",
+                    disableMobile: true,
                 });
+            },
+            applyScrollbarTheme() {
+                const scrollbarThumbColor = this.isDarkMode ? '#555555' : '#c1c1c1';
+                const scrollbarTrackColor = this.isDarkMode ? '#333333' : '#f1f1f1';
+                var scrollbarHeight = '';
+
+                if (window.innerWidth > 1024) {
+                    scrollbarHeight = '7px';
+                } else {
+                    scrollbarHeight = '4px';
+                }
+
+                // Aplicar estilos dinamicamente
+                const style = document.createElement('style');
+                style.id = 'scrollbar-theme';
+                style.textContent = `
+                    .scrollbar-custom::-webkit-scrollbar {
+                        height: ${scrollbarHeight};
+                        }
+                    .scrollbar-custom::-webkit-scrollbar-thumb {
+                        background-color: ${scrollbarThumbColor};
+                        border-radius: 4px;
+                    }
+                    .scrollbar-custom::-webkit-scrollbar-track {
+                        background-color: ${scrollbarTrackColor};
+                        border-radius: 0px 0px 5px 5px;
+                    }
+                `;
+
+                // Remover o estilo anterior (se existir)
+                const existingStyle = document.getElementById('scrollbar-theme');
+                if (existingStyle) {
+                    existingStyle.remove();
+                }
+
+                // Adicionar o novo estilo
+                document.head.appendChild(style);
             },
             isSidebarOpen: JSON.parse(window.localStorage.getItem('isSidebarOpen')) ?? (window.innerWidth > 1024),
             isSidebarHovered: false,
@@ -140,14 +176,22 @@ document.addEventListener('alpine:init', () => {
             handleWindowResize() {
                 if (window.innerWidth <= 1024) {
                     this.isSidebarOpen = false;
+                    document.body.style.overflow = 'auto';
                 } else {
                     this.isSidebarOpen = true;
+                    document.body.style.overflow = 'auto'; 
                 }
                 window.localStorage.setItem('isSidebarOpen', JSON.stringify(this.isSidebarOpen));
             },
             toggleSidebar() {
                 this.isSidebarOpen = !this.isSidebarOpen;
                 window.localStorage.setItem('isSidebarOpen', JSON.stringify(this.isSidebarOpen));
+                
+                if (this.isSidebarOpen && window.innerWidth < 1024) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
             },
             scrollingDown: false,
             scrollingUp: false,
