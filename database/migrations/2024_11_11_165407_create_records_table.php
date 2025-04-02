@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('type_ata');
             $table->string('special_signatures');
             $table->integer('number_signatures');
+            $table->text('title_frequency');
             $table->text('relatives_frequencies');
             $table->timestamps();
         });

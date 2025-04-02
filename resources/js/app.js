@@ -6,7 +6,6 @@ import PerfectScrollbar from 'perfect-scrollbar'
 import Inputmask from 'inputmask'
 
 document.addEventListener("DOMContentLoaded", function () {
-
     // Função para aplicar máscaras aos elementos
     function applyMask(selector, mask) {
         const elements = document.querySelectorAll(selector);
@@ -19,9 +18,23 @@ document.addEventListener("DOMContentLoaded", function () {
     applyMask('.date', new Inputmask("99/99/9999"));
     applyMask('.monthYear', new Inputmask("99/9999"));
     applyMask('.cellphone', new Inputmask("(99) 99999-9999"));
-    applyMask('.rg', new Inputmask("99.999.999-9"));
+    applyMask('.cpf', new Inputmask("999.999.999-99"));
     applyMask('#fiscal', new Inputmask("999.999.999"));
     applyMask('#cupom', new Inputmask("999999"));
+
+    // Máscara dinâmica para RG (7 a 13 dígitos)
+    applyMask('.rg', new Inputmask({
+        mask: [
+            "9{7}",
+            "99.999.999-9",
+            "99.999.999-99",
+            "99.999.999-999",
+            "99.999.999-9999",
+            "99.999.999-99999"
+        ],
+        greedy: false,
+        keepStatic: true
+    }));
 });
 
 var customLocale = {

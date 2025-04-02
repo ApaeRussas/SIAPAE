@@ -5,16 +5,18 @@
         onlyHead
         actionRoute="student">
 
-        <div class="mb-3">
-            <label for="name" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
-                Nome do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
-            </label>
-            <x-form.input id="name" type="text" name="name" value="{{ old('name') }}" class="w-full dark:text-gray-400"
-                placeholder="Ex: João" required/>
-
-            @error("name")
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-            @enderror
+        <div class="grid grid-cols-1 sm:grid-cols-1 gap-x-2 gap-y-2 mb-3">
+            <div class="col-span-1">
+                <label for="name" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
+                    Nome do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="name" type="text" name="name" value="{{ old('name') }}" class="w-full dark:text-gray-400"
+                    placeholder="Ex: João .." required/>
+    
+                @error("name")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-3">
@@ -138,17 +140,6 @@
                 @enderror
             </div>
             <div class="col-span-1">
-                <label for="student_id" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
-                    ID do Estudante: <span class="text-red-700 dark:text-red-500">*</span>
-                </label>
-                <x-form.input id="student_id" type="text" name="student_id" value="{{ old('student_id') }}"
-                    class="w-full dark:text-gray-400" placeholder="Ex: 2137981" required/>
-    
-                @error("student_id")
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-                @enderror
-            </div>
-            <div class="col-span-1">
                 <label for="date" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base truncate mb-2">
                     Data de Nascimento: <span class="text-red-700 dark:text-red-500">*</span>
                 </label>
@@ -164,25 +155,38 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label for="school" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
-                Escola do Aluno: (*opcional - caso não frequente uma escola)
-            </label>
-            <x-form.input id="school" type="text" name="school" value="{{ old('school') }}"
-                class="w-full dark:text-gray-400" placeholder="Ex: Benilce.." />
-
-            @error("school")
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-            @enderror
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-3">
+            <div class="col-span-1 sm:col-span-2">
+                <label for="school" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    Escola do Aluno: (*opcional - caso não frequente uma escola)
+                </label>
+                <x-form.input id="school" type="text" name="school" value="{{ old('school') }}"
+                    class="w-full dark:text-gray-400" placeholder="Ex: Benilce.." />
+    
+                @error("school")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="col-span-1">
+                <label for="student_id" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    ID do Estudante: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="student_id" type="text" name="student_id" value="{{ old('student_id') }}"
+                    class="w-full dark:text-gray-400" placeholder="Ex: 2137981" required/>
+    
+                @error("student_id")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <div>
                 <label for="class_school" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
-                    Turma do Aluno na Escola: (*opcional)
+                    Nº do SIGE do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
                 </label>
                 <x-form.input id="class_school" type="text" name="class_school" value="{{ old('class_school') }}"
-                    class="w-full dark:text-gray-400" placeholder="Ex: 21372"/>
+                    class="w-full dark:text-gray-400" placeholder="Ex: nºsige 21372" required/>
 
                 @error("class_school")
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>
@@ -221,16 +225,18 @@
             </div>
         </div>
         
-        <div class="mb-3">
-            <label for="service" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
-                Qual o serviço realizado na Apae ? <span class="text-red-700 dark:text-red-500">*</span>
-            </label>
-            <x-form.input id="service" type="text" name="service" value="{{ old('service') }}" class="w-full dark:text-gray-400"
-                placeholder="Ex: AEE" required/>
-
-            @error("service")
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-            @enderror
+        <div class="grid grid-cols-1 sm:grid-cols-1 gap-2 mb-3">
+            <div class="col-span-1">
+                <label for="service" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
+                    Qual o serviço realizado na Apae ? <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="service" type="text" name="service" value="{{ old('service') }}" class="w-full dark:text-gray-400"
+                    placeholder="Ex: AEE" required/>
+    
+                @error("service")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
         </div>
         
         <div class="mb-3">

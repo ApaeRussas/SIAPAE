@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Frequency;
-use Carbon\Carbon;
 use App\Models\MedHistory;
 use App\Models\Student;
-use App\Models\Attendance;
+use App\Models\User;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 
@@ -36,7 +37,9 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('student.create');
+        $professors = User::where('position', 'Professor(a)')->get();
+
+        return view('student.create', compact('professors'));
     }
 
     public function store(StudentRequest $request)

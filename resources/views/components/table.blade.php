@@ -74,7 +74,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endphp
 
                         <form method="GET" action="{{route('frequency.index')}}" class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                            <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
+                            <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2 -mb-2 sm:mb-0">
                                 <x-form.select valueName="turn_apae" notRequired>
                                     <option value="">Turno do aluno</option>
 
@@ -91,8 +91,8 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                     </x-button> 
                                 </div>
                             </div>
-                            <div> 
-                                <x-button class="w-full sm:w-auto hidden sm:flex">
+                            <div class="hidden sm:flex"> 
+                                <x-button class="w-full sm:w-auto">
                                     <div class="text-gray-100 dark:text-gray-100 w-full text-center"> Filtrar </div>
                                 </x-button> 
                             </div>
@@ -138,7 +138,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     @endif
 
                     <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
-                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <div class="flex items-center gap-2 w-full sm:w-auto {{!isset($withExportExcel) ? 'hidden' : ''}}">
                             @if (isset($withExportExcel))
                                 <form action="{{route('export.'.$actionRoute . 's')}}" method="POST">
                                     @csrf

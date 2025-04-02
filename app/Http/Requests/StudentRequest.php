@@ -58,7 +58,7 @@ class StudentRequest extends FormRequest
             'class_school' => [
             'nullable',
             'min:1',
-            'max:20'
+            'max:40'
             ],
             
             'turn_school' => [

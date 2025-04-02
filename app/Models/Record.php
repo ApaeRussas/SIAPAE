@@ -16,6 +16,7 @@ class Record extends Model
         'type_ata',
         'number_signatures',
         'special_signatures',
+        'title_frequency',
         'relatives_frequencies',
     ];
 }

@@ -33,9 +33,12 @@
         case 'text':
             $height = 'h-64';
         break;
-        // Gambiarra para aumentar o tamanho do textarea
+        // Gambiarra para aumentar o tamanho do textarea de determinados valores
         case 'relatives_frequencies':
             $height = 'h-64';
+        break;
+        case 'special_signatures':
+            $height = 'h-48';
         break;
     }
 

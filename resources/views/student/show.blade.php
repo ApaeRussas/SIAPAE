@@ -18,7 +18,7 @@
         ['Dias de Atendimento na APAE', 'class_apae', 'select'],
         ['Turno na Apae', 'turn_apae', 'select'],
         ['Escola', 'school', 'text'],
-        ['Turma na Escola', 'class_school', 'text'],
+        ['Nº do SIGE do Aluno', 'class_school', 'text'],
         ['Turno na Escola', 'turn_school', 'select'],
         ['Série na Escola', 'grade_school', 'text'],
         ['Diagnóstico', 'diagnostic', 'text'],

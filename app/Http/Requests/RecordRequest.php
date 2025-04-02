@@ -26,7 +26,7 @@ class RecordRequest extends FormRequest
             'title_header' => [
                 'required',
                 'min:1',
-                'max:100',
+                'max:200',
             ],
             
             'date' => [
@@ -59,10 +59,16 @@ class RecordRequest extends FormRequest
                 'max:70',
             ],
 
+            'title_frequency' => [
+                'required',
+                'min:1',
+                'max:200',
+            ],
+
             'relatives_frequencies' => [
                 'required',
                 'min:1',
-                'max:4000',
+                'max:7000',
             ]
         ];
         

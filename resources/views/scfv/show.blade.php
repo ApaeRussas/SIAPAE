@@ -247,7 +247,7 @@
 
         <div class="mb-3">
             <label for="students_frequency" class="block text-gray-700 dark:text-gray-400 font-normal mt-3 mb-2">
-                Alunos Presentes para a Frequência das Quinzenas:
+                Assistidos Presentes para a Frequência das Quinzenas:
             </label>
 
             <x-form.textarea id="students_frequency" disabled disabled_normal="null" class="w-full dark:text-gray-400" sizeFont="base" height="lg">

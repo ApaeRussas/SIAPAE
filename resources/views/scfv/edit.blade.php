@@ -258,7 +258,7 @@ Ex: 1-  Confraternização Natalina ...
 
         <div class="mb-3">
             <label for="students_frequency" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Alunos Presentes para a Frequência das Quinzenas: <span class="text-red-700 dark:text-red-500">*</span>
+                Assistidos Presentes para a Frequência das Quinzenas: <span class="text-red-700 dark:text-red-500">*</span>
             </label>
 
             <x-form.textarea id="students_frequency" name="students_frequency" class="w-full dark:text-gray-400" sizeFont="base"

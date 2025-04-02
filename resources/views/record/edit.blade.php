@@ -12,6 +12,7 @@
 Ex: 1ª Secretária
 Presidente'],
             ['Número de Assinaturas Comuns', 'number_signatures', 'number', 'Ex: 2'],
+            ['Cabeçalho da Frequência da Reunião', 'title_frequency', 'text', 'Ex: Freuquência da Ata ....'],
             ['Frequência dos Pais', 'relatives_frequencies', 'textarea', 'Dê um enter (quebra de linha) após cada linha de frequência. 
 Ex: João Antonio Ferreira
 Maria Lurdes

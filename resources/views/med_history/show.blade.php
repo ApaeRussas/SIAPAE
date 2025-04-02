@@ -18,7 +18,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
                 <div class="col-span-1 md:col-span-2">
-                    <x-anamnesis.label sizeFont="sm" isShow>Nome da Criança</x-anamnesis.label>
+                    <x-anamnesis.label sizeFont="sm" isShow>Nome do Assistido</x-anamnesis.label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->student->name}} </x-form.p_show>
                 </div>
                 <div>
@@ -49,7 +49,7 @@
                 <div class="flex">
                     <x-anamnesis.label for="have_caregiver" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_caregiver ? 'checked' : '' }}
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600" disabled>
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" disabled>
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem Cuidador?</span>
                     </x-anamnesis.label>
                 </div>
@@ -72,7 +72,7 @@
                     <x-form.p_show sizeFont="sm"> {{$medHistory->grade_school ?? '-----'}} </x-form.p_show>
                 </div>
                 <div>
-                    <x-anamnesis.label sizeFont="sm" isShow>Turma:</x-anamnesis.label>
+                    <x-anamnesis.label sizeFont="sm" isShow>Nº do SIGE:</x-anamnesis.label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->class_school ?? '-----'}} </x-form.p_show>
                 </div>
                 <div>
@@ -81,7 +81,7 @@
                 </div>
                 <div>
                     <label for="have_AEE" class="inline-flex items-center">
-                        <input type="checkbox" class="rounded dark:bg-gray-800 dark:checked:bg-blue-600"
+                        <input type="checkbox" class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1"
                             {{$medHistory->have_AEE ? 'checked' : ''}} disabled>
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz AEE?</span>
                     </label>
@@ -149,7 +149,7 @@
                 <div>
                     <label for="have_medication" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_medication ? 'checked' : '' }}
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600" disabled>
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" disabled>
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400 text-sm">Usa Medicação?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->what_medication ?? '-----'}} </x-form.p_show>
@@ -197,7 +197,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <label for="have_kinship_parents" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_kinship_parents ? 'checked' : '' }} disabled
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Existe Parentesco entre os
                             Pais?</span>
                     </label>
@@ -209,7 +209,7 @@
                 <div class="flex">
                     <label for="new_relation_mother" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->new_relation_mother ? 'checked' : '' }} disabled
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Mãe: Novo relacionamento?</span>
                     </label>
                 </div>
@@ -228,7 +228,7 @@
                 <div class="flex">
                     <label for="new_relation_father" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->new_relation_father ? 'checked' : '' }} disabled
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Pai: Novo relacionamento?</span>
                     </label>
                 </div>
@@ -294,7 +294,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <label for="history_abort" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->history_abort ? 'checked' : '' }} disabled
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Histórico de Aborto?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->abort_justify ?? '-----'}} </x-form.p_show>
@@ -311,7 +311,7 @@
                 <div>
                     <label for="have_disease_gestation" class="inline-flex items-center">
                         <input type="checkbox" {{  $medHistory->have_disease_gestation ? 'checked' : '' }} disabled
-                            class="rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Doença durante a Gravidez?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->what_disease_gestation ?? '-----'}} </x-form.p_show>
@@ -321,13 +321,13 @@
                     <x-form.p_show sizeFont="sm"> {{$medHistory->have_treatment ?? '-----'}} </x-form.p_show>
                 </div>
                 <div>
-                    <x-anamnesis.label sizeFont="sm" isShow>Local onde a Criança Nasceu:</x-anamnesis.label>
+                    <x-anamnesis.label sizeFont="sm" isShow>Local onde o Assistido Nasceu:</x-anamnesis.label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->place_birth}} </x-form.p_show>
                 </div>
                 <div>
                     <label for="have_discharged_together" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_discharged_together ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Receberam Altas Juntos?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->detail_discharged_together ?? '-----'}}
@@ -337,7 +337,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <label for="have_problems_birth" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_problems_birth ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Intercorrência no Parto?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->what_problems_birth ?? '-----'}} </x-form.p_show>
@@ -353,7 +353,7 @@
                 <div class="flex">
                     <label for="have_neonatal_tests" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_neonatal_tests ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Fez os testes
                             neonatais?</span>
                     </label>
@@ -379,7 +379,7 @@
 
                     <label for="have_nozzle" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_nozzle ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz uso de bicos artificiais?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->have_mother_breastfeed ?? '-----'}} </x-form.p_show>
@@ -399,7 +399,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <label for="have_delay_NPM" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_delay_NPM ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Apresentou atraso no Desenv.
                             NPM?</span>
                     </label>
@@ -411,7 +411,7 @@
 
                     <label for="have_normal_development" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_normal_development ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Desenv. da Linguagem Normal?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->detail_normal_development ?? '-----'}} </x-form.p_show>
@@ -420,7 +420,7 @@
                 <div>
                     <label for="have_desfrald_yet" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_desfrald_yet ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Desfralde?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->age_desfrald_yet ?? '-----'}} </x-form.p_show>
@@ -428,7 +428,7 @@
                 <div>
                     <label for="have_sphincters_control" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_sphincters_control ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Controle dos Esfincteres?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->age_sphincters_control ?? '-----'}} </x-form.p_show>
@@ -493,28 +493,28 @@
                 <div class="flex">
                     <label for="stubbornness" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->stubbornness ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Teimosia?</span>
                     </label>
                 </div>
                 <div class="flex">
                     <label for="tantrum" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->tantrum ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Birra?</span>
                     </label>
                 </div>
                 <div class="flex">
                     <label for="lies" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->lies ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Mente?</span>
                     </label>
                 </div>
                 <div class="col-span-2 md:col-span-3">
                     <label for="inappropriate_behavior" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->inappropriate_behavior ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Comportamento
                             Inapropriado?</span>
                     </label>
@@ -524,27 +524,27 @@
                 <div class="flex">
                     <label for="aggressiveness" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->aggressiveness ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Agressiva?</span>
                     </label>
                 </div>
                 <div class="flex">
                     <label for="shyness" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->shyness ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Timidez?</span>
                     </label>
                 </div>
                 <div class="flex">
                     <label for="affectionate" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->affectionate ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Carinhoso?</span>
                     </label>
                 </div>
                 <div class="col-span-2 md:col-span-3">
                     <label for="sexual_curiosity" class="inline-flex items-center">
-                        <input type="checkbox" {{ old('sexual_curiosity', $medHistory->sexual_curiosity) ? 'checked' : '' }} disabled class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                        <input type="checkbox" {{ old('sexual_curiosity', $medHistory->sexual_curiosity) ? 'checked' : '' }} disabled class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Manifesta curiosidade
                             sexual?</span>
                     </label>
@@ -554,7 +554,7 @@
                 <div class="flex">
                     <label for="tics_manias" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->tics_manias ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tiques, mania ou
                             estereotipia?</span>
                     </label>
@@ -562,21 +562,21 @@
                 <div class="flex">
                     <label for="hyperfocus" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->hyperfocus ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Hiperfoco?</span>
                     </label>
                 </div>
                 <div class="flex">
                     <label for="waiting_skill" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->waiting_skill ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem habilidade de Espera?</span>
                     </label>
                 </div>
                 <div class="col-span-2 md:col-span-3">
                     <label for="sports_activity" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->sports_activity ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz alguma atividade
                             esportiva?</span>
                     </label>
@@ -585,14 +585,14 @@
                 <div class="flex">
                     <label for="tolerates_frustration" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->tolerates_frustration ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tolera Frustações?</span>
                     </label>
                 </div>
                 <div class="flex">
                     <label for="responds_orders" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->responds_orders ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Atende Ordens Solicitadas?</span>
                     </label>
                 </div>
@@ -602,7 +602,7 @@
                 <div class="flex">
                     <label for="daily_routine" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->daily_routine ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Segue uma Rotina Diária?</span>
                     </label>
                 </div>
@@ -659,7 +659,7 @@
                     <x-form.p_show sizeFont="sm"> {{$medHistory->how_school_adaptation}} </x-form.p_show>
                 </div>
                 <div>
-                    <x-anamnesis.label sizeFont="sm" isShow>Realiza esforço escolar?</x-anamnesis.label>
+                    <x-anamnesis.label sizeFont="sm" isShow>Realiza reforço escolar?</x-anamnesis.label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->school_reinforcement}} </x-form.p_show>
                 </div>
 
@@ -678,7 +678,7 @@
                 <div>
                     <label for="have_difficulty_learning" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_difficulty_learning ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Dificuldade na aprendizagem?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->justify_difficulty_learning ?? '-----'}}
@@ -764,7 +764,7 @@
                 <div>
                     <label for="have_allergy" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_allergy ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Possui algum tipo de alergia?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->what_allergy ?? '-----'}} </x-form.p_show>
@@ -785,7 +785,7 @@
                 <div class="col-span-1 md:col-span-4">
                     <label for="have_therapeutic" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_therapeutic ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz acompanhamento
                             terapeutico?</span>
                     </label>
@@ -795,7 +795,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <label for="history_disorders_family" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->history_disorders_family ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Histórico de
                             doenças/distúrbios ou transtorno na família?</span>
                     </label>
@@ -805,7 +805,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <label for="have_update_vaccines" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_update_vaccines ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Cronograma de Vacinas em dia?</span>
                     </label>
                     <x-form.p_show sizeFont="sm"> {{$medHistory->detail_update_vaccines ?? '-----'}} </x-form.p_show>
@@ -836,7 +836,7 @@
 
                     <label for="have_access_cellphone" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->have_access_cellphone ? 'checked' : '' }} disabled
-                            class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem acesso ao celular ou a outras
                             telas?</span>
                     </label>
@@ -867,7 +867,7 @@
 
                     <label for="already_had_information_institution" class="inline-flex items-center">
                         <input type="checkbox" {{ $medHistory->already_had_information_institution ? 'checked' : '' }}
-                            disabled class="form-checkbox rounded dark:bg-gray-800 dark:checked:bg-blue-600">
+                            disabled class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
                         <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Já tinha informações da
                             Instituição?</span>
                     </label>

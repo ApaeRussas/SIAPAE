@@ -180,11 +180,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-4">
             <div>
                 <label for="class_school" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Turma do Aluno na Escola: (*opcional)
+                    Nº do SIGE do Aluno: (*opcional) 
                 </label>
                 <x-form.input id="class_school" type="text" name="class_school"
                     value="{{ old('class_school', $student->class_school) }}" class="w-full dark:text-gray-400"
-                    placeholder="Ex: 21372" />
+                    placeholder="Ex: n}sige 21372" />
 
                 @error("class_school")
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>

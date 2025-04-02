@@ -9,9 +9,9 @@
     </x-slot>
 
     <x-table title="Anamnese" 
-        :headers="['Nome', 'ID do Aluno', 'Diagnóstico', 'Data Anamnese', 'Assinatura']"
+        :headers="['Nome', 'ID do Assistido', 'Data Anamnese', 'Assinatura']"
         :rows="$medHistories" 
-        :variablesDB="['student.name', 'student.student_id', 'student.diagnostic', 'date_of_anamnesis', 'user.name']" 
+        :variablesDB="['student.name', 'student.student_id', 'date_of_anamnesis', 'user.name']" 
         iteration="false" 
         withSearchInput
         :search="$search"

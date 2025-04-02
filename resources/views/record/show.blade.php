@@ -10,6 +10,7 @@
             ['Tipo de Ata', 'type_ata', 'text'],
             ['Assinaturas Especiais', 'special_signatures', 'textarea'],
             ['Número de Assinaturas Comuns', 'number_signatures', 'number'],
+            ['Cabeçalho da Frequência da Reunião', 'title_frequency', 'text'],
             ['Frequência dos Pais', 'relatives_frequencies', 'textarea'],
         ]" 
         exportPdf
