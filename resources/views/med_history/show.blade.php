@@ -73,7 +73,7 @@
                 </div>
                 <div>
                     <x-anamnesis.label sizeFont="sm" isShow>Nº do SIGE:</x-anamnesis.label>
-                    <x-form.p_show sizeFont="sm"> {{$medHistory->class_school ?? '-----'}} </x-form.p_show>
+                    <x-form.p_show sizeFont="sm"> {{$medHistory->sige ?? '-----'}} </x-form.p_show>
                 </div>
                 <div>
                     <x-anamnesis.label sizeFont="sm" isShow>Turno:</x-anamnesis.label>
@@ -1014,7 +1014,7 @@
                         $('#diagnostic').val(data.diagnostic || '------');
                         $('#school').val(data.school || '------');
                         $('#grade_school').val(data.grade_school || '------');
-                        $('#class_school').val(data.class_school || '------');
+                        $('#sige').val(data.sige || '------');
                         $('#turn_school').val(data.turn_school || '------');
                     }
                 });
@@ -1024,7 +1024,7 @@
                 $('#diagnostic').val('');
                 $('#school').val('');
                 $('#grade_school').val('');
-                $('#class_school').val('');
+                $('#sige').val('');
                 $('#turn_school').val('');
             }
         });

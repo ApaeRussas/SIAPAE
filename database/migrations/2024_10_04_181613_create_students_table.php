@@ -14,17 +14,20 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('name_mother');
             $table->date('date_of_birth');
             $table->string('diagnostic');
+            $table->string('cpf');
             $table->string('student_id');
             $table->string('school')->nullable();
-            $table->string('class_school')->nullable();
+            $table->string('sige')->nullable();
             $table->string('grade_school')->nullable();
             $table->string('turn_school')->nullable();
             $table->string('class_apae');
             $table->string('turn_apae');
             $table->string('image')->nullable();
             $table->string('service');
+            $table->string('professors_service', 500)->nullable();
             $table->string('state_student')->default('alive');
             $table->timestamps();
         });

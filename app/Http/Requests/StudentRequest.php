@@ -31,6 +31,12 @@ class StudentRequest extends FormRequest
                 'max:100',
                 Rule::unique('students')->ignore($studentId),
             ],
+
+            'name_mother' => [
+            'required',
+            'min:1',
+            'max:100',
+            ],
             
             'date_of_birth' => [
             'required',
@@ -41,6 +47,12 @@ class StudentRequest extends FormRequest
             'required',
             'min:1',
             'max:125'
+            ],
+
+            'cpf' => [
+            'required',
+            'min:14',
+            'max:14',
             ],
             
             'student_id' => [
@@ -55,10 +67,10 @@ class StudentRequest extends FormRequest
             'max:125'
             ],
             
-            'class_school' => [
-            'nullable',
+            'sige' => [
+            'required',
             'min:1',
-            'max:40'
+            'max:50'
             ],
             
             'turn_school' => [
@@ -89,6 +101,12 @@ class StudentRequest extends FormRequest
             'required',
             'min:1',
             'max:125'
+            ], 
+
+            'professors_service' => [
+            'nullable',
+            'min:1',
+            'max:500'
             ],
             
             'image' => [

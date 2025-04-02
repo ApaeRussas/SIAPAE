@@ -5,7 +5,7 @@
         onlyHead
         actionRoute="student">
 
-        <div class="grid grid-cols-1 sm:grid-cols-1 gap-x-2 gap-y-2 mb-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2 mb-3">
             <div class="col-span-1">
                 <label for="name" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
                     Nome do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
@@ -14,6 +14,17 @@
                     placeholder="Ex: João .." required/>
     
                 @error("name")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="col-span-1">
+                <label for="name_mother" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
+                    Nome da Mãe do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="name_mother" type="text" name="name_mother" value="{{ old('name_mother') }}" class="w-full dark:text-gray-400"
+                    placeholder="Ex: Francisca .." required/>
+    
+                @error("name_mother")
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>
                 @enderror
             </div>
@@ -140,6 +151,17 @@
                 @enderror
             </div>
             <div class="col-span-1">
+                <label for="cpf" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    CPF: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="cpf" type="text" name="cpf" value="{{ old('cpf') }}"
+                    class="cpf w-full dark:text-gray-400" placeholder="Ex: 213.798.541-99" required/>
+    
+                @error("cpf")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="col-span-1">
                 <label for="date" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base truncate mb-2">
                     Data de Nascimento: <span class="text-red-700 dark:text-red-500">*</span>
                 </label>
@@ -158,7 +180,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-3">
             <div class="col-span-1 sm:col-span-2">
                 <label for="school" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
-                    Escola do Aluno: (*opcional - caso não frequente uma escola)
+                    Escola do Aluno: (*opcional)
                 </label>
                 <x-form.input id="school" type="text" name="school" value="{{ old('school') }}"
                     class="w-full dark:text-gray-400" placeholder="Ex: Benilce.." />
@@ -178,21 +200,20 @@
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>
                 @enderror
             </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <div>
-                <label for="class_school" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+            <div class="col-span-1">
+                <label for="sige" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
                     Nº do SIGE do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
                 </label>
-                <x-form.input id="class_school" type="text" name="class_school" value="{{ old('class_school') }}"
+                <x-form.input id="sige" type="text" name="sige" value="{{ old('sige') }}"
                     class="w-full dark:text-gray-400" placeholder="Ex: nºsige 21372" required/>
 
-                @error("class_school")
+                @error("sige")
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>
                 @enderror
             </div>
+        </div>
 
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <div>
                 <label for="grade_school" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
                     Série: (*opcional)
@@ -225,7 +246,7 @@
             </div>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-1 gap-2 mb-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
             <div class="col-span-1">
                 <label for="service" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
                     Qual o serviço realizado na Apae ? <span class="text-red-700 dark:text-red-500">*</span>
@@ -266,3 +287,95 @@
     </x-table-create>
 
 </x-app-layout>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let ts = new TomSelect("#professors", {
+        plugins: ['checkbox_options'],
+        placeholder: "Escolha o(s) Professor(es)",
+        hideSelected: true,
+        maxItems: null,
+    });
+    
+    // Função para aplicar estilos dinamicamente quando os elementos forem criados
+    function applyStyles() {
+        let dropdown = document.querySelector('.ts-dropdown');
+        if (dropdown) {
+            dropdown.classList.add(
+                "bg-white", "dark:bg-dark-eval-1", "border", "border-gray-300",
+                "dark:border-gray-600", "rounded-md", "shadow-lg", "p-2",
+                "text-gray-800", "dark:text-gray-400"
+            );
+        }
+
+        let options = document.querySelectorAll('.ts-dropdown .option');
+        options.forEach(option => {
+            option.classList.add(
+                "flex", "items-center", "space-x-2", "px-4", "py-2", "cursor-pointer",
+                "hover:bg-gray-200", "dark:hover:bg-gray-700", "rounded-md",
+                "text-gray-800", "dark:text-gray-300"
+            );
+
+            // Corrigindo a cor do item ativo no modo dark
+            option.addEventListener("mouseenter", () => {
+                option.style.backgroundColor = JSON.parse(window.localStorage.getItem('dark')) == 1 ? "#374151" : "#e5e7eb";
+                option.style.color = JSON.parse(window.localStorage.getItem('dark')) == 1 ? "#d1d5db" : "#111827";
+                console.log(JSON.parse(window.localStorage.getItem('dark')));
+            });
+
+            option.addEventListener("mouseleave", () => {
+                option.style.backgroundColor = "transparent"; // Remove o fundo ao tirar o mouse
+                option.style.color = "";
+            });
+        });
+
+        let checkboxes = document.querySelectorAll('.ts-dropdown .tomselect-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.classList.add(
+                "w-4", "h-4", "text-blue-600", "border-gray-300", "rounded",
+                "focus:ring", "focus:ring-blue-500", "dark:bg-gray-800", "dark:border-gray-600"
+            );
+        });
+
+        // Ajustando os itens selecionados dentro da caixa
+        let selectedItems = document.querySelectorAll('.ts-control .item');
+        selectedItems.forEach(item => {
+            item.style.backgroundColor = JSON.parse(window.localStorage.getItem('dark')) == 1 ? "#374151" : "#e5e7eb";
+            item.style.color = JSON.parse(window.localStorage.getItem('dark')) == 1 ? "#d1d5db" : "#111827";
+            item.style.border = JSON.parse(window.localStorage.getItem('dark')) == 1 ? "1px solid #4b5563" : "none";
+            item.style.borderRadius = "0.375rem";
+            item.style.padding = "2px 6px";
+        });
+    }
+
+    // Observador para detectar mudanças na DOM e aplicar os estilos
+    let observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            applyStyles();
+        });
+    });
+
+    // Observa o dropdown por mudanças
+    let dropdownContainer = document.querySelector('.ts-wrapper');
+    if (dropdownContainer) {
+        observer.observe(dropdownContainer, { childList: true, subtree: true });
+    }
+
+    let control = document.querySelector('.ts-control');
+    if (control) {
+        control.classList.add(
+            "max-w-full", "border", "border-gray-400", "rounded-md", "p-2.5",
+            "focus:border-gray-400", "focus:ring", "focus:ring-gray-500",
+            "focus:ring-offset-2", "focus:ring-offset-white",
+            "dark:border-gray-600", "dark:bg-dark-eval-1",
+            "dark:focus:ring-offset-dark-eval-1", "dark:text-gray-400"
+        );
+    }
+    let professors_control = document.querySelector('#professors-ts-control');
+    if (professors_control) {
+        professors_control.classList.add(
+            "text-base"
+        );
+    }
+});
+</script>

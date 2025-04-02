@@ -26,7 +26,7 @@ class StudentApiController extends Controller
                 'diagnostic' => $student->diagnostic,
                 'school' => $student->school,
                 'grade_school' => $student->grade_school,
-                'class_school' => $student->class_school,
+                'sige' => $student->sige,
                 'turn_school' => $student->turn_school,
                 'age' => $student->age,
             ]);

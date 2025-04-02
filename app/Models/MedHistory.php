@@ -20,7 +20,7 @@ class MedHistory extends Model
         'turn_AEE',
         'school',
         'grade_school',
-        'class_school',
+        'sige',
         'turn_school',
         'not_study_justify',
         'name_mother',

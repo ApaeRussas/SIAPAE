@@ -6,16 +6,29 @@
         onlyHead 
         actionRoute="student">
 
-        <div class="mb-3">
-            <label for="name" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Nome do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
-            </label>
-            <x-form.input id="name" type="text" name="name" value="{{ old('name', $student->name) }}"
-                class="w-full dark:text-gray-400" placeholder="Ex: João" required />
-
-            @error("name")
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-            @enderror
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2 mb-3">
+            <div class="col-span-1">
+                <label for="name" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
+                    Nome do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="name" type="text" name="name" value="{{ old('name', $student->name) }}"
+                    class="w-full dark:text-gray-400" placeholder="Ex: João" required />
+    
+                @error("name")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="col-span-1">
+                <label for="name_mother" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mt-3 mb-2">
+                    Nome da Mãe do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="name_mother" type="text" name="name_mother" value="{{ old('name_mother', $student->name_mother) }}" class="w-full dark:text-gray-400"
+                    placeholder="Ex: Francisca .." required/>
+    
+                @error("name_mother")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-3">
@@ -139,13 +152,13 @@
                 @enderror
             </div>
             <div class="col-span-1">
-                <label for="student_id" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    ID do Estudante: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="cpf" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    CPF: <span class="text-red-700 dark:text-red-500">*</span>
                 </label>
-                <x-form.input id="student_id" type="text" name="student_id" value="{{ old('student_id', $student->student_id) }}"
-                    class="w-full dark:text-gray-400" placeholder="Ex: 2137981" required/>
+                <x-form.input id="cpf" type="text" name="cpf" value="{{ old('cpf', $student->cpf) }}"
+                    class="cpf w-full dark:text-gray-400" placeholder="Ex: 213.798.541-99" required/>
     
-                @error("student_id")
+                @error("cpf")
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>
                 @enderror
             </div>
@@ -165,32 +178,45 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label for="school" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Escola do Aluno: (*opcional)
-            </label>
-            <x-form.input id="school" type="text" name="school" value="{{ old('school', $student->school) }}"
-                class="w-full dark:text-gray-400" placeholder="Ex: Benilce.." />
-
-            @error("school")
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-            @enderror
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-4">
-            <div>
-                <label for="class_school" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Nº do SIGE do Aluno: (*opcional) 
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-3">
+            <div class="col-span-1 sm:col-span-2">
+                <label for="school" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
+                    Escola do Aluno: (*opcional)
                 </label>
-                <x-form.input id="class_school" type="text" name="class_school"
-                    value="{{ old('class_school', $student->class_school) }}" class="w-full dark:text-gray-400"
-                    placeholder="Ex: n}sige 21372" />
-
-                @error("class_school")
+                <x-form.input id="school" type="text" name="school" value="{{ old('school', $student->school) }}"
+                    class="w-full dark:text-gray-400" placeholder="Ex: Benilce.." />
+    
+                @error("school")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+            
+            <div class="col-span-1">
+                <label for="student_id" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
+                    ID do Estudante: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="student_id" type="text" name="student_id" value="{{ old('student_id', $student->student_id) }}"
+                    class="w-full dark:text-gray-400" placeholder="Ex: 2137981" required/>
+    
+                @error("student_id")
                     <span class="text-red-600 dark:text-red-400">{{$message}}</span>
                 @enderror
             </div>
 
+            <div class="col-span-1">
+                <label for="sige" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    Nº do SIGE do Aluno: <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="sige" type="text" name="sige" value="{{ old('sige', $student->sige) }}"
+                    class="w-full dark:text-gray-400" placeholder="Ex: nºsige 21372" required/>
+
+                @error("sige")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-4">
             <div>
                 <label for="grade_school" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
                     Série: (*opcional)

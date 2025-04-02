@@ -15,16 +15,19 @@ class Student extends Model
     protected $state = 'students';
     protected $fillable = [
         'name',
+        'name_mother',
         'date_of_birth',
         'diagnostic',
+        'cpf',
         'student_id',
         'school',
-        'class_school',
+        'sige',
         'turn_school',
         'grade_school',
         'class_apae',
         'turn_apae',
         'service',
+        'professors_service',
         'image',
         'state_student',
     ];

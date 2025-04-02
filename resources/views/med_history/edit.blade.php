@@ -97,8 +97,8 @@
                 <x-anamnesis.input id="grade_school" name="grade_school" value="{{old('grade_school', $medHistory->grade_school ?? '-----')}}" placeholder="Série que faz" required />
             </div>
             <div>
-                <x-anamnesis.label sizeFont="sm" for="class_school">Nº do SIGE: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
-                <x-anamnesis.input id="class_school" name="class_school" value="{{old('class_school', $medHistory->class_school ?? '-----')}}" placeholder="Nº do SIGE" required />
+                <x-anamnesis.label sizeFont="sm" for="sige">Nº do SIGE: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
+                <x-anamnesis.input id="sige" name="sige" value="{{old('sige', $medHistory->sige ?? '-----')}}" placeholder="Nº do SIGE" required />
             </div>
             <div>
                 <x-anamnesis.label sizeFont="sm" for="turn_school">Turno: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -1411,7 +1411,7 @@
                         $('#diagnostic').val(data.diagnostic || '------'); 
                         $('#school').val(data.school || '------'); 
                         $('#grade_school').val(data.grade_school || '------'); 
-                        $('#class_school').val(data.class_school || '------');
+                        $('#sige').val(data.sige || '------');
                         $('#turn_school').val(data.turn_school || '------');
                     }
                 });
@@ -1421,7 +1421,7 @@
                 $('#diagnostic').val('');
                 $('#school').val('');
                 $('#grade_school').val('');
-                $('#class_school').val('');
+                $('#sige').val('');
                 $('#turn_school').val('');
             }
         });

@@ -12,21 +12,23 @@
         :elementShow="$student"
         :labelsVariables="[
         ['Nome do Aluno', 'name', 'text'],
+        ['Nome da Mãe do Aluno', 'name_mother', 'text'],
+        ['CPF do Aluno', 'cpf', 'text'],
         ['Data de Nascimento', 'date_of_birth', 'date'],
         ['Idade', 'age', 'text'],
-        ['ID do Aluno', 'student_id', 'text'],
+        ['Diagnóstico', 'diagnostic', 'text'],
+        ['Serviços do Aluno na Apae', 'service', 'text'],
         ['Dias de Atendimento na APAE', 'class_apae', 'select'],
         ['Turno na Apae', 'turn_apae', 'select'],
         ['Escola', 'school', 'text'],
-        ['Nº do SIGE do Aluno', 'class_school', 'text'],
+        ['ID do Aluno', 'student_id', 'text'],
+        ['Nº do SIGE do Aluno', 'sige', 'text'],
         ['Turno na Escola', 'turn_school', 'select'],
         ['Série na Escola', 'grade_school', 'text'],
-        ['Diagnóstico', 'diagnostic', 'text'],
-        ['Serviços do Aluno na Apae', 'service', 'text'],
         ]" 
         additional 
         divisionLateral 
-        quantLateral="6" 
+        quantLateral="7" 
         notEditDelete
         actionRoute="student" 
         :isArchived="$isArchived">

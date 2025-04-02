@@ -240,7 +240,7 @@ return [
         'class_apae' => 'classe da APAE',
         'turn_apae' => 'turno da APAE',
         'turn_school' => 'turno da escola',
-        'class_school' => 'classe da escola',
+        'sige' => 'classe da escola',
         'grade_school' => 'ano/série da escola',
         'educational_axis' => 'eixo educacional',
         'advances' => 'avanços',

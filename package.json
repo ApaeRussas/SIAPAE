@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "inputmask": "^5.0.9",
-        "toastr": "^2.1.4"
+        "toastr": "^2.1.4",
+        "tom-select": "^2.4.3"
     }
 }

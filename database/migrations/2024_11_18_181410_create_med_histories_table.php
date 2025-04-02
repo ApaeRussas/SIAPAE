@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('turn_AEE')->nullable();
             $table->string('school');
             $table->string('grade_school');
-            $table->string('class_school');
+            $table->string('sige');
             $table->string('turn_school');
             $table->string('not_study_justify')->nullable();
             $table->text('name_mother');

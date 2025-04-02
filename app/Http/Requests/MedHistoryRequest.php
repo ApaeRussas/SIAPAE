@@ -41,7 +41,7 @@ class MedHistoryRequest extends FormRequest
             'turn_AEE' => 'nullable|string|max:100',
             'school' => 'required|string|max:100',
             'grade_school' => 'required|string|max:100',
-            'class_school' => 'required|string|max:100',
+            'sige' => 'required|string|max:100',
             'turn_school' => 'required|string|max:100',
             'study' => 'nullable|string|max:100',
             'name_mother' => 'required|string',
