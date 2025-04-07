@@ -54,7 +54,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     @endif
 
                     @if (isset($withSearchSelect))
-                        <form method="GET" action="{{ route($actionRoute . '.index') }}"  class="w-full sm:w-48">
+                        <form method="GET" action="{{ isset($searchRoute) ? route($searchRoute, $element->id) : route($actionRoute . '.index') }}"  class="w-full sm:w-48">
                             <div class="form-group">
                                 <x-form.select valueName="year" function="this.form.submit()">
                                     <option value="">Selecione o ano:</option>
@@ -70,7 +70,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     @if (isset($withSearchFrequency))
                         @if (!isset($searchFrequencyStudent))
                         @php  
-                            list($turn_apae, $monthYear) = explode('-', $variablesSearchFrequency);
+                            list($turn_apae, $monthYear, $professor_id) = explode('-', $variablesSearchFrequency);
                         @endphp
 
                         <form method="GET" action="{{route('frequency.index')}}" class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
@@ -90,6 +90,17 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                         <div class="text-gray-100 dark:text-gray-100 w-full text-center"> Filtrar </div>
                                     </x-button> 
                                 </div>
+
+                                <x-form.select valueName="professor_select" notRequired>
+                                    <option value="">Professor do aluno</option>
+                                    
+                                    @foreach ($professors as $professor)
+                                        <option value="{{ $professor->id }}"
+                                            {{ old('professor_select', $professor_id ?? '' ) == $professor->id ? 'selected' : '' }}>
+                                            {{ $professor->name }}
+                                        </option>
+                                    @endforeach
+                                </x-form.select> 
                             </div>
                             <div class="hidden sm:flex"> 
                                 <x-button class="w-full sm:w-auto">
@@ -142,7 +153,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                             @if (isset($withExportExcel))
                                 <form action="{{route('export.'.$actionRoute . 's')}}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($rows->items())}}">
+                                    <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($elementsExcelOrPdf)}}">
                                     
                                     <x-button variant="excel" title="Exportar em Excel" size="sm">
                                         <x-icons.excel-icon />
@@ -153,7 +164,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                             @if (isset($withExportPdf))
                                 <form action="{{route($actionRoute . '.export')}}" method="POST" target="_blank">
                                     @csrf
-                                    <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($rows->items())}}">
+                                    <input type="hidden" name="{{$actionRoute.'s'}}" value="{{json_encode($elementsExcelOrPdf)}}">
                                     
                                     <x-button variant="pdf-trash" title="Exportar em PDF" size="sm" class="py-2.5">
                                         <x-icons.pdf />

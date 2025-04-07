@@ -29,6 +29,7 @@ class StudentApiController extends Controller
                 'sige' => $student->sige,
                 'turn_school' => $student->turn_school,
                 'age' => $student->age,
+                'name_mother' => $student->name_mother,
             ]);
         } else {
             return response()->json(['error' => 'Estudante não encontrado'], 404);

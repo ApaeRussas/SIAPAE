@@ -6,6 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Expense;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExpenseRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Ramsey\Uuid\Type\Decimal;
 
 class ExpenseController extends Controller
@@ -20,30 +21,41 @@ class ExpenseController extends Controller
 
         // Se o ano for fornecido, filtra os gastos por year
         if ($year) {
-            $expenses = Expense::whereYear('date_of_emission', $year)
+            $allExpenses = Expense::whereYear('date_of_emission', $year)
             ->orderBy('date_of_emission', 'desc')
-            ->paginate(15);
+            ->get();
         } else {
             // Caso contrário, pega todos os gastos com o ano atual
             $year = \Carbon\Carbon::now()->year;
-            $expenses = Expense::whereYear('date_of_emission', $year)
+            $allExpenses = Expense::whereYear('date_of_emission', $year)
             ->orderBy('date_of_emission', 'desc')
-            ->paginate(15);
+            ->get();
         }
 
-        $quant_expenses = count($expenses);
+        $quant_expenses = count($allExpenses);
         $valueTotal = 0;
         for ($i = 0; $i < $quant_expenses; $i++) {
-            $valueTotal += $expenses[$i]->price; 
+            $valueTotal += $allExpenses[$i]->price; 
         }
         $valueTotal = number_format($valueTotal, 2, ',', '.');
+
+        // Paginação
+        $page = request('page', 1); 
+        $perPage = 15; 
+        $expenses = new LengthAwarePaginator(
+            $allExpenses->forPage($page, $perPage), 
+            $quant_expenses,                 
+            $perPage,                             
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()] // URL correta para os links de paginação
+        );
 
         // Obtém os anos disponíveis para o select
         $years = Expense::selectRaw('YEAR(date_of_emission) as year')
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
         
-        return view('expense.home', compact('expenses', 'valueTotal', 'years', 'year'));
+        return view('expense.home', compact('expenses', 'allExpenses', 'valueTotal', 'years', 'year'));
     }
 
     /**

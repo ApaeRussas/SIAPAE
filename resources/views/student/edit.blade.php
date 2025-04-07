@@ -216,7 +216,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-2 gap-y-3 mb-3">
             <div>
                 <label for="grade_school" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
                     Série: (*opcional)
@@ -250,19 +250,40 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label for="service" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Qual o serviço realizado na Apae ? <span class="text-red-700 dark:text-red-500">*</span>
-            </label>
-            <x-form.input id="service" type="text" name="service" value="{{ old('service', $student->service) }}" class="w-full dark:text-gray-400"
-                placeholder="Ex: AEE" required/>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+            <div class="col-span-1">
+                <label for="service" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
+                    Qual o serviço realizado na Apae ? <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <x-form.input id="service" type="text" name="service" value="{{ old('service', $student->service) }}" class="w-full dark:text-gray-400"
+                    placeholder="Ex: AEE" required/>
+    
+                @error("service")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+            <div class="col-span-1">
+                <label for="professors_service" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    Professores Responsáveis pelos Atendimentos <span class="text-red-700 dark:text-red-500">*</span>
+                </label>
+                <select id="professors_service" name="professors_service[]" multiple required
+                    class="max-w-full border-gray-400 rounded-md focus:border-gray-400 focus:ring focus:ring-gray-500 
+                    focus:ring-offset-2 focus:ring-offset-white dark:border-gray-600 dark:bg-dark-eval-1 dark:text-gray-400">
 
-            @error("service")
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
-            @enderror
+                    @foreach ($professors as $professor) 
+                        <option value="{{ $professor->id }}" 
+                            {{ in_array($professor->id, old('professors_service', $student->professors->pluck('id')->toArray() ?? [])) ? 'selected' : '' }}>
+                            {{ $professor->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error("professors_service")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
         </div>
 
-        <div class="mb-3 mt-4">
+        <div class="mb-3 mt-3">
             <p class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
                 Foto do Aluno: (*opcional)
         </p>

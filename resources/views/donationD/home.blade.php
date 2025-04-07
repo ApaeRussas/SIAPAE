@@ -22,12 +22,13 @@
             alert(errors); 
         </script>
     @endif
-
+    
     <x-table
     iteration="true"
     title="Doação" 
-    :headers="['Nome', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']" 
+    :headers="['Nome', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Total']" 
     :rows="$donations"
+    :elementsExcelOrPdf="$allDonations"
     onlyHead 
     notButtonAdd
     notActions
@@ -38,7 +39,7 @@
     :valueTotal="$valueTotal"
     :years="$years"
     :year="$year">
-
+    
         @forelse ($donations as $donation)
             <tr data-id="{{$donation->id}}" id="tabela-gastos">
 
@@ -119,6 +120,11 @@
                             editable" data-field="Dez">
                     <div class="flex justify-center items-center" class="editable" data-field="Dez">
                         {{ $donation->Dez == '' ? '---' : $donation->Dez}}
+                    </div>
+                </td>
+                <td class="border border-gray-300 dark:border-gray-600 px-1 py-1 text-center text-gray-800 dark:text-gray-300">
+                    <div class="flex justify-center items-center">
+                        {{ $donation->Total == '0' ? '---' : $donation->Total}}
                     </div>
                 </td>
             </tr>

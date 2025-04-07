@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use App\Models\Attendance;
+use App\Models\Educational;
 use App\Models\Frequency;
 use App\Models\MedHistory;
 use App\Models\Student;
@@ -46,20 +48,27 @@ class StudentController extends Controller
     {
         $path = public_path('img/student/');
         $data = $request->validated();
+        
+        // Pegar os dados menos professors_service que não existe na tabela de students
+        $studentData = collect($data)->except('professors_service')->toArray();
+        
         // Convert string to data
-        $data['date_of_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_of_birth'])->format('Y-m-d');
+        $studentData['date_of_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $studentData['date_of_birth'])->format('Y-m-d');
 
         if ($request->hasfile('image') && $request->file('image')->isValid()) {
 
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('img/student/'), $imageName);
-            $data['image'] = $imageName;
+            $studentData['image'] = $imageName;
 
         } else {
-            $data['image'] = "Foto_Desconhecido.jpg";
+            $studentData['image'] = "Foto_Desconhecido.jpg";
         };
 
-        $input = Student::create($data);
+        $input = Student::create($studentData);
+
+        $input->professors()->sync($data['professors_service']);
+
         if ($input) {
             session()->flash('success', 'Aluno adicionado com sucesso!');
             return redirect()->route('student.index');
@@ -67,11 +76,12 @@ class StudentController extends Controller
             session()->flash('error', 'Falha na criação do Aluno');
             return redirect()->route('student.create');
         }
-
     }
     public function show($id)
     {
         $student = Student::findOrFail($id);
+
+        $student->load('professors');
 
         $medHistory = null;
         $medHistoryExists = MedHistory::where('student_id', $id)->exists();
@@ -85,6 +95,7 @@ class StudentController extends Controller
         }
 
         // Parte ATENDIMENTO
+
         $date_range = request('date_range');
         $scrollBack = null;
 
@@ -121,6 +132,7 @@ class StudentController extends Controller
         $student->age = "$ageYears anos, $ageMonths meses e $ageDays dias";
 
         // Parte FREQUÊNCIA
+
         $monthYear = request('monthYear');
         if ($monthYear) {
             $frequency = Frequency::where('student_id', $student->id)
@@ -133,10 +145,10 @@ class StudentController extends Controller
             $monthYear = Carbon::now()->format('m/Y');
         }
 
-        list($month, $year) = explode('/', $monthYear);
+        list($month, $yearN) = explode('/', $monthYear);
         $month = (int) $month;
-        $year = (int) $year;
-        $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $yearN = (int) $yearN;
+        $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $yearN);
 
         $days = [];
         for ($i = 1; $i <= $numberDaysInMonth; $i++) {
@@ -167,12 +179,12 @@ class StudentController extends Controller
             '25-12', // Natal
             '31-12', // Véspera Ano novo
         ];
-        $formattedHolidays = array_map(function ($holiday) use ($year) {
-            return "{$year}-{$holiday}";
+        $formattedHolidays = array_map(function ($holiday) use ($yearN) {
+            return "{$yearN}-{$holiday}";
         }, $holidays);
         $weekends = [];
         for ($i = 1; $i <= $numberDaysInMonth; $i++) {
-            $date = sprintf("%04d-%02d-%02d", $year, $month, $i);
+            $date = sprintf("%04d-%02d-%02d", $yearN, $month, $i);
             $dayOfWeek = date('N', strtotime($date));
             if ($dayOfWeek == 6 || $dayOfWeek == 7) {
                 $weekends[] = $date;
@@ -181,14 +193,14 @@ class StudentController extends Controller
         $daysNotRequired = []; // P/ armazenar os dias normais, mas que não são os alvos
         if (isset($frequency)) {
             // Fazer os dias não clicáveis
-            $daysNotRequired = $this->getDaysNotRequired($frequency->class_apae, $year, $month, $numberDaysInMonth);
+            $daysNotRequired = $this->getDaysNotRequired($frequency->class_apae, $yearN, $month, $numberDaysInMonth);
             $frequency->nonClickableDays = array_merge($formattedHolidays, $weekends, $daysNotRequired);
             $frequency->weekends = array_merge($weekends);
 
             // Contar as Faltas
             $countAbsences = 0;
             for ($day = 1; $day <= $numberDaysInMonth; $day++) {
-                $date = sprintf("%04d-%02d-%02d", $year, $month, $day);
+                $date = sprintf("%04d-%02d-%02d", $yearN, $month, $day);
                 if (!in_array($date, $frequency->nonClickableDays) && $frequency->$day === false) {
                     $countAbsences++;
                 }
@@ -196,16 +208,48 @@ class StudentController extends Controller
             $frequency->countAbsences = $countAbsences;
         }
 
-        return view('student.show', compact('student', 'medHistory', 'attendances', 'frequency', 'date_range', 'scrollBack', 'isArchived', 'monthYear', 'days', 'numberDaysInMonth'));
+        // Parte RELATÓRIO PEDAGÓGICO
+
+        // Pega o ano passado como parâmetro na requisição
+        $year = request('year');
+
+        $scrollBack2 = null;
+        // Se o ano for fornecido, filtra os gastos por year
+        if ($year) {
+            $pedagogicals = Educational::whereYear('date_pedagogical', $year)
+            ->where('student_id', $id)
+            ->orderBy('date_pedagogical', 'desc')
+            ->with('student', 'professor')
+            ->paginate(15);
+
+            $scrollBack2 = true;
+        } else {
+            // Caso contrário, pega todos os gastos com o ano atual
+            $year = Carbon::now()->year;
+            $pedagogicals = Educational::whereYear('date_pedagogical', $year)
+            ->where('student_id', $id)
+            ->orderBy('date_pedagogical', 'desc')
+            ->with('student', 'professor')
+            ->paginate(15);
+        }
+
+        // Obtém os anos disponíveis para o select
+        $years = Educational::selectRaw('YEAR(date_pedagogical) as year')
+            ->distinct()
+            ->orderByDesc('year')->pluck('year', 'year');
+
+        return view('student.show', compact('student', 'medHistory', 'attendances', 'frequency', 'date_range', 'scrollBack', 'isArchived', 'monthYear', 'days', 'numberDaysInMonth', 'pedagogicals', 'years', 'year', 'scrollBack2'));
     }
     public function edit($id)
     {
-        $student = Student::findOrFail($id);
+        $student = Student::with('professors')->findOrFail($id);
 
-        //Convert data to string
+        $professors = User::where('position', 'Professor(a)')->get();
+
+        // Convert data to string
         $student['date_of_birth'] = \Carbon\Carbon::createFromFormat('Y-m-d', $student['date_of_birth'])->format('d/m/Y');
 
-        return view('student.edit', compact('student'));
+        return view('student.edit', compact('student', 'professors'));
     }
 
     public function update(StudentRequest $request, $id)
@@ -213,8 +257,11 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $data = $request->validated();
 
+        // Pegar os dados menos professors_service que não existe na tabela de students
+        $studentData = collect($data)->except('professors_service')->toArray();
+
         // Convert string to data
-        $data['date_of_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_of_birth'])->format('Y-m-d');
+        $studentData['date_of_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $studentData['date_of_birth'])->format('Y-m-d');
 
         if ($request->has('image')) {
             //Check old image
@@ -229,17 +276,18 @@ class StudentController extends Controller
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             //Update new image
             $request->image->move(public_path('img/student/'), $imageName);
-            $data['image'] = $imageName;
+            $studentData['image'] = $imageName;
 
         }
         ;
 
-        $input = $student->update($data);
-        // Dispara o evento p/ att a lista de frequência tbm
-        // event(new StudentUpdated($student, $oldName));
+        $input = $student->update($studentData);
+
+        $student->professors()->sync($data['professors_service']); // Atualiza os professores vinculados
 
         if ($input) {
             session()->flash('success', 'Aluno atualizado com sucesso!');
+            event(new CrudUpdated('updated', $input ));
             return redirect()->route('student.index');
         } else {
             session()->flash('error', 'Falha na edição do Aluno');

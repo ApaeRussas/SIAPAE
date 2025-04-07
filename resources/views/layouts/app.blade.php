@@ -34,6 +34,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script src="{{ asset('js/script.js') }}" defer></script>
+    <script src="{{ asset('js/tom-select.js') }}" defer></script>
     <script src="{{ asset('js/alerts.js') }}" defer></script>
 </head>
 <body 
@@ -84,6 +85,45 @@
                 <!-- Page Footer -->
                 <x-footer />
             </div>
+        </div>
+    </div>
+
+    <!-- Pop-up para avisar o usuário na tabela se tem dados novos -->
+
+    <div 
+        x-data="{ showMessage: false, message: '', type: '' }"
+        x-init="
+            Echo.channel('crud-channel')
+                .listen('.crud-event', (e) => {
+                    type = e.type;
+                    switch (e.type) {
+                        case 'criado':
+                            message = 'Novos dados inserido na tabela.';
+                            break;
+                        case 'atualizado':
+                            message = 'Dados foram atualizados na tabela.';
+                            break;
+                        case 'deletado':
+                            message = 'Dados foram deletados na tabela.';
+                            break;
+                    }
+                    showMessage = true;
+                    setTimeout(() => showMessage = false, 4000);
+                });
+        "
+        class="fixed top-4 right-4 z-50"
+    >
+        <div 
+            x-show="showMessage"
+            x-transition
+            class="px-4 py-2 rounded shadow text-white"
+            :class="{
+                'bg-green-600': type === 'created',
+                'bg-yellow-500': type === 'updated',
+                'bg-red-600': type === 'deleted'
+            }"
+        >
+            <span x-text="message"></span>
         </div>
     </div>
 

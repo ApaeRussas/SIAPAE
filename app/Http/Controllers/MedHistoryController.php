@@ -64,7 +64,7 @@ class MedHistoryController extends Controller
         // Convert string to data
         $data['date_of_anamnesis'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_of_anamnesis'])->format('Y-m-d');
         $data['date_mother'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_mother'])->format('Y-m-d');
-        $data['date_father'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_father'])->format('Y-m-d');
+        $data['date_father'] = (isset($data['date_father']) ? \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_father'])->format('Y-m-d') : null);
 
         $input = MedHistory::create($data);
         if ($input) {
@@ -86,7 +86,7 @@ class MedHistoryController extends Controller
 
         $medHistory['date_of_anamnesis'] = \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_of_anamnesis'])->format('d/m/Y');
         $medHistory['date_mother'] = \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_mother'])->format('d/m/Y');
-        $medHistory['date_father'] = \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y');
+        $medHistory['date_father'] = (isset($medHistory['date_father']) ? \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y') : null);
         
         return view('med_history.show', compact('medHistory'));
     }
@@ -105,7 +105,7 @@ class MedHistoryController extends Controller
 
         $medHistory['date_of_anamnesis'] = \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_of_anamnesis'])->format('d/m/Y');
         $medHistory['date_mother'] = \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_mother'])->format('d/m/Y');
-        $medHistory['date_father'] = \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y');
+        $medHistory['date_father'] = (isset($medHistory['date_father']) ? \Carbon\Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y') : null);
 
         $students = Student::orderBy('name', 'asc')
         ->where('state_student', 'alive')
@@ -126,7 +126,7 @@ class MedHistoryController extends Controller
         // Convert string to data
         $data['date_of_anamnesis'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_of_anamnesis'])->format('Y-m-d');
         $data['date_mother'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_mother'])->format('Y-m-d');
-        $data['date_father'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_father'])->format('Y-m-d');
+        $data['date_father'] = (isset($data['date_father']) ? \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_father'])->format('Y-m-d') : null);
 
         $input = $medHistory->update($data);
         if ($input) {

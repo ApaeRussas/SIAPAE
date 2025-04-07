@@ -23,6 +23,7 @@ class FrequencyController extends Controller
 
         $turn_apae = request('turn_apae');
         $monthYear = request('monthYear');
+        $professor_id = request('professor_select');
 
         $query = Frequency::join('students', 'frequencies.student_id', '=', 'students.id')
             ->select('frequencies.*')
@@ -47,6 +48,12 @@ class FrequencyController extends Controller
 
             $query->where('students.turn_apae', $turn_apae)
                 ->where('frequencies.month_year', $monthYear);
+        }
+        
+        if($professor_id) {
+            $query->whereHas('student.professors', function ($query) use ($professor_id) {
+                $query->where('users.id', $professor_id);
+            });
         }
 
         $frequencies = $query->orderBy('students.name', 'asc')->paginate(15);
@@ -139,7 +146,7 @@ class FrequencyController extends Controller
             $frequency->countAbsences = $countAbsences;
         }
 
-        return view('frequencyF.home', compact('frequencies', 'professors', 'turn_apae', 'monthYear', 'days', 'numberDaysInMonth', 'observation', 'signature_id'));
+        return view('frequencyF.home', compact('frequencies', 'professors', 'turn_apae', 'professor_id', 'monthYear', 'days', 'numberDaysInMonth', 'observation', 'signature_id'));
     }
 
     /**

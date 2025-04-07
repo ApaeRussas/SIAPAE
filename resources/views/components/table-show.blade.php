@@ -80,8 +80,21 @@ route('dashboard')
                                             <x-form.p_show>
                                                 @if ($item[1] == "price")
                                                     {{ 'R$ ' . number_format($elementShow->{$item[1]}, 2, ',', '.') }}
-                                                @elseif ($item[1] == "date_of_birth")
+                                                @elseif ($item[2] == "date")
                                                     {{ \Carbon\Carbon::parse($elementShow->{$item[1]})->format('d/m/Y') }}
+                                                @elseif ($item[2] == "array")
+                                                    @php
+                                                        $numberItens = count(data_get($elementShow, $item[1]));
+                                                    @endphp
+                                                    @foreach (data_get($elementShow, $item[1]) as $index => $itemArray)
+                                                        @if ($index < $numberItens - 2)
+                                                            {{ $itemArray->name . ', ' }}
+                                                        @elseif ($index === $numberItens - 2)
+                                                            {{ $itemArray->name . ' e ' }}
+                                                        @else
+                                                            {{ $itemArray->name }}
+                                                        @endif
+                                                    @endforeach 
                                                 @else
                                                     {{ data_get($elementShow, $item[1]) ?? '-----' }}
                                                 @endif
@@ -99,8 +112,21 @@ route('dashboard')
                                             <x-form.p_show >
                                                 @if ($item[1] == "price")
                                                     {{ 'R$ ' . number_format($elementShow->{$item[1]}, 2, ',', '.') }}
-                                                @elseif ($item[1] == "date_of_birth")
+                                                @elseif ($item[2] == "date")
                                                     {{ \Carbon\Carbon::parse($elementShow->{$item[1]})->format('d/m/Y') }}
+                                                @elseif ($item[2] == "array")
+                                                    @php
+                                                        $numberItens = count(data_get($elementShow, $item[1]));
+                                                    @endphp
+                                                    @foreach (data_get($elementShow, $item[1]) as $index => $itemArray)
+                                                        @if ($index < $numberItens - 2)
+                                                            {{ $itemArray->name . ', ' }}
+                                                        @elseif ($index === $numberItens - 2)
+                                                            {{ $itemArray->name . ' e ' }}
+                                                        @else
+                                                            {{ $itemArray->name }}
+                                                        @endif
+                                                    @endforeach  
                                                 @else
                                                     {{ data_get($elementShow, $item[1]) ?? '-----' }}
                                                 @endif

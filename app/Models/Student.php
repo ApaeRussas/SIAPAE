@@ -7,6 +7,7 @@ use App\Events\StudentUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
@@ -36,6 +37,13 @@ class Student extends Model
         'created' => StudentCreated::class,
         'updated' => StudentUpdated::class, 
     ];
+    // protected static function booted()
+    // {
+    //     static::deleting(function ($student) {
+    //         $student->professors()->detach();
+    //     });
+    // }
+
     
     public function donations(): HasMany
     {
@@ -56,5 +64,11 @@ class Student extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'student_id');
+    }
+    // Aos usuários que são professores
+    public function professors(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'student_user', 'student_id', 'professor_id')
+            ->withTimestamps();
     }
 }

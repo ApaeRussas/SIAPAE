@@ -86,4 +86,26 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Barra de rolagem personalizada */
+/* Cor do input durante o autocomplete */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #f0f9ff inset !important; /* Azul claro */
+    -webkit-text-fill-color: #333 !important; /* Cor do texto */
+    transition: background-color 5000s ease-in-out 0s; /* Evita flickering */
+}
+
+/* Dark mode */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #2d3748 inset !important; /* Cor mais clara que o fundo */
+    -webkit-text-fill-color: #e2e8f0 !important; /* Cinza claro legível */
+    caret-color: #e2e8f0 !important; /* Cor do cursor */
+}
+
+/* Garantindo consistência quando editando no modo dark */
+.dark input:focus {
+    color: #e2e8f0 !important; 
+}

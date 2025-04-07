@@ -25,6 +25,10 @@ module.exports = {
                     'eval-3': '#2C3142',
                 },
             },
+
+            spacing: {
+                '2.75': '0.7rem', 
+            },
         },
     },
 

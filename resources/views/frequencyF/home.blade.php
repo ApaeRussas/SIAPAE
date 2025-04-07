@@ -7,7 +7,7 @@
                     {{ __('Lista de Frequência') }}
                 </h2>
                 <x-button button variant="question" class="mt-2" size="sm"
-                    onclick="guestText('info', 'Esse setor possui a ferramenta de busca com o turno do aluno em questão e o mês/ano a qual se refere a lista de frequência. <br> <br> Na legenda a seguir é possível ver o que cada botão com um símbolo significa: <br> <span class=&quot;text-gray-400 dark:text-gray-400&quot;> - : Neutro ou Indiferente </span> <br> <span class=&quot;text-red-600&quot;> x : Falta Confirmada</span> <br> <span class=&quot;text-green-600&quot;> ✓ : Presença Confirmada</span> <br> <br> Essa tabela contabiliza as faltas e seu dia em questão, além disso pode-se justificar a falta do aluno no campo apropriado além de registrar a assinatura do professor responsável.')">
+                    onclick="guestText('info', 'Esse setor possui a ferramenta de busca com o turno do aluno em questão, mês/ano e o professor responsável pelo atendimento a qual se refere a lista de frequência, em que o único campo obrigatório de pesquisa é o mês/ano. <br> <br> Na legenda a seguir é possível ver o que cada botão com um símbolo significa: <br> <span class=&quot;text-gray-400 dark:text-gray-400&quot;> - : Neutro ou Indiferente </span> <br> <span class=&quot;text-red-600&quot;> x : Falta Confirmada</span> <br> <span class=&quot;text-green-600&quot;> ✓ : Presença Confirmada</span> <br> <br> Essa tabela contabiliza as faltas e seu dia em questão, além disso pode-se justificar a falta do aluno no campo apropriado além de registrar a assinatura do professor responsável.')">
                     <x-icons.question />
                 </x-button>
             </div>
@@ -25,7 +25,7 @@
     @endif
 
     @php
-        $variablesSearchFrequency = $turn_apae . '-' . $monthYear;
+        $variablesSearchFrequency = $turn_apae . '-' . $monthYear . '-' . $professor_id;
     @endphp
 
     <x-table 
@@ -33,6 +33,7 @@
         :headers="array_merge(['Nome'], $days, ['Faltas'])" 
         headersSmall 
         :rows="$frequencies" 
+        :professors="$professors"
         onlyHead
         headFrequency
         withSearchFrequency 

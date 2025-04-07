@@ -12,6 +12,7 @@
         title="Gasto" 
         :headers="['Data de Emissão', 'Tipo', 'Número', 'Empresa', 'Descrição', 'Valor']" 
         :rows="$expenses" 
+        :elementsExcelOrPdf="$allExpenses"
         :variables_DB="['date_of_emission', 'type', 'number', 'enterprise', 'description', 'price']"
         iteration="false"
         withShow

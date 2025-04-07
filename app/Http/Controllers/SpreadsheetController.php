@@ -76,6 +76,7 @@ class SpreadsheetController extends Controller
     public function exportDonations(Request $request)
     {
         $donations = json_decode($request->donations); // Obtém todas as doações do ano escolhido
+        
         if(!$donations || count($donations) === 0) {
             return redirect()->back()->with('error', 'Sem Doações nesse ano para gerar uma tabela Excel');
         }
@@ -101,7 +102,7 @@ class SpreadsheetController extends Controller
         $valueTotal = number_format($valueTotal, 2, ',', '.');
         
         // Definir os cabeçalhos das colunas
-        $headers = ['ID', 'Nome', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Valor Anual'];
+        $headers = ['ID', 'Nome', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Valor Anual Individual'];
         foreach ($headers as $colIndex => $header) {
             $cell = chr(65 + $colIndex) . '1'; // Converte o índice da coluna para letra (A, B, C, ...)
             $sheet->setCellValue($cell, $header);

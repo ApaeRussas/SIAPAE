@@ -50,9 +50,9 @@ class StudentRequest extends FormRequest
             ],
 
             'cpf' => [
-            'required',
-            'min:14',
-            'max:14',
+                'required',
+                'cpf',
+                Rule::unique('students')->ignore($studentId),
             ],
             
             'student_id' => [
@@ -104,9 +104,13 @@ class StudentRequest extends FormRequest
             ], 
 
             'professors_service' => [
-            'nullable',
-            'min:1',
-            'max:500'
+            'required', 
+            'array'
+            ],
+
+            'professors_service.*' => [
+                'integer',
+                'exists:users,id',
             ],
             
             'image' => [
@@ -121,5 +125,13 @@ class StudentRequest extends FormRequest
         ];
         
         return $rules;
+    }
+    public function messages()
+    {
+        return [
+            'cpf.unique' => 'Esse :attribute já está sendo utilizado.', 
+            'cpf.required' => 'O :attribute é obrigatório.',
+            'cpf.cpf' => 'O :attribute fornecido não é válido.',
+        ];
     }
 }

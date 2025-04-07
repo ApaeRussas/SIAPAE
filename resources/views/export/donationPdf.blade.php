@@ -24,6 +24,7 @@
                     <th>Out</th>
                     <th>Nov</th>
                     <th>Dez</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +43,7 @@
                     <td>{{$donation->Out ?? '---'}}</td>
                     <td>{{$donation->Nov ?? '---'}}</td>
                     <td>{{$donation->Dez ?? '---'}}</td>
+                    <td>{{$donation->Total ?? '---'}}</td>
                 </tr>
                 @endforeach
             </tbody>

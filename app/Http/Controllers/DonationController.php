@@ -7,6 +7,7 @@ use App\Models\Donation;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DonationController extends Controller
 {
@@ -20,39 +21,60 @@ class DonationController extends Controller
 
         // Se o ano for fornecido, filtra os gastos por year
         if ($year) {
-            $donations = Donation::where('year_of_donation', $year)
-            ->with('student')
-            ->join('students', 'donations.student_id', '=', 'students.id')  // Realizando o join com a tabela de partners
-            ->select('donations.*','students.name')
-            ->orderBy('students.name', 'asc')  // Ordenando pelo nome do parceiro
-            ->paginate(15);
-        } else {
+            $allDonations = Donation::where('year_of_donation', $year)
+                ->with('student')
+                ->join('students', 'donations.student_id', '=', 'students.id')  // Realizando o join com a tabela de students
+                ->select('donations.*', 'students.name')
+                ->orderBy('students.name', 'asc')
+                ->get();
+        } else {  
             // Caso contrário, pega todos os gastos com o ano atual
             $year = \Carbon\Carbon::now()->year;
-            $donations = Donation::where('year_of_donation', $year)
-            ->with('student')
-            ->join('students', 'donations.student_id', '=', 'students.id')  // Realizando o join com a tabela de partners
-            ->select('donations.*','students.name')
-            ->orderBy('students.name', 'asc')  // Ordenando pelo nome do parceiro
-            ->paginate(15);
+            $allDonations = Donation::where('year_of_donation', $year)
+                ->with('student')
+                ->join('students', 'donations.student_id', '=', 'students.id')  // Realizando o join com a tabela de students
+                ->select('donations.*', 'students.name')
+                ->orderBy('students.name', 'asc')
+                ->get();
         }
 
-        $quant_donations = count($donations);
         $valueTotal = 0.00;
-        for ($i = 0; $i < $quant_donations; $i++) {
-            if(str_contains($donations[$i]->Jan, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Jan); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Jan); }
-            if(str_contains($donations[$i]->Fev, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Fev); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Fev); }
-            if(str_contains($donations[$i]->Mar, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Mar); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Mar); }
-            if(str_contains($donations[$i]->Abr, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Abr); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Abr); }
-            if(str_contains($donations[$i]->Mai, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Mai); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Mai); }
-            if(str_contains($donations[$i]->Jun, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Jun); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Jun); }
-            if(str_contains($donations[$i]->Jul, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Jul); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Jul); }
-            if(str_contains($donations[$i]->Ago, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Ago); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Ago); }
-            if(str_contains($donations[$i]->Set, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Set); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Set); }
-            if(str_contains($donations[$i]->Out, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Out); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Out); }
-            if(str_contains($donations[$i]->Nov, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Nov); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Nov); }
-            if(str_contains($donations[$i]->Dez, '/ ')) { list($etc, $value) = explode('/ ', $donations[$i]->Dez); $valueTotal += (float) str_replace(',', '.', $value);  } else { $valueTotal += (float) str_replace(',', '.', $donations[$i]->Dez); }
+ 
+        foreach ($allDonations as $donation) {
+            $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+            $totalByDonation = 0.00;
+            
+            foreach ($months as $month) {
+                if (isset($donation->{$month})) {
+                    $value = $donation->{$month};
+
+                    // Processa os valores caso contenham '/ '
+                    if (str_contains($value, '/ ')) {
+                        list($etc, $monthValue) = explode('/ ', $value);
+                        $monthValue = (float) str_replace(',', '.', $monthValue);
+                    } else {
+                        $monthValue = (float) str_replace(',', '.', $value);
+                    }
+                    $valueTotal += $monthValue;
+                    $totalByDonation += $monthValue;
+                }
+            }
+            
+            $donation->Total = str_replace('.', ',', $totalByDonation);
         }
+
+        // Paginação
+        $page = request('page', 1); 
+        $perPage = 15; 
+        $donations = new LengthAwarePaginator(
+            $allDonations->forPage($page, $perPage), 
+            $allDonations->count(),                 
+            $perPage,                             
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()] // URL correta para os links de paginação
+        );
+
+        // Formatação do valor total para exibição
         $valueTotal = number_format($valueTotal, 2, ',', '.');
 
         // Obtém os anos disponíveis para o select
@@ -60,7 +82,7 @@ class DonationController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
 
-        return view('donationD.home', compact('donations', 'valueTotal', 'years', 'year'));
+        return view('donationD.home', compact('donations', 'allDonations', 'valueTotal', 'years', 'year'));
     }
 
     /**

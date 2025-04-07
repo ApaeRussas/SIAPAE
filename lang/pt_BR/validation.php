@@ -331,8 +331,10 @@ return [
         'affectionate' => 'afetuoso',
         'inappropriate_behavior' => 'comportamento inapropriado',
         'how_manifests_inappropriate_behavior' => 'como manifesta comportamento inapropriado',
-        'tics_manias' => 'tiques e manias',
+        'tics_manias' => 'tiques, manias e esteriotipias',
+        'what_tics_manias' => 'quais são as tiques, manias e/ou esteriotipias',
         'hyperfocus' => 'hiperfoco',
+        'how_manifests_hyperfocus' => 'Como se manifesto o hiperfoco',
         'waiting_skill' => 'habilidade de espera',
         'tolerates_frustration' => 'tolera frustrações',
         'responds_orders' => 'responde a ordens',
@@ -401,9 +403,9 @@ return [
         '2Q_date' => 'segunda data',
         '2Q_place' => 'segundo local',
         'students_frequency' => 'frequência de alunos',
-        'date_scfv' => 'data do serviço'
+        'date_scfv' => 'data do serviço',
+        'professors_service' => 'Professores responsáveis pelo Atendimento',
+        'cpf' => 'CPF'
     ],
-
-
 
 ];

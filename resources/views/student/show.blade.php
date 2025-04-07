@@ -12,13 +12,14 @@
         :elementShow="$student"
         :labelsVariables="[
         ['Nome do Aluno', 'name', 'text'],
-        ['Nome da Mãe do Aluno', 'name_mother', 'text'],
         ['CPF do Aluno', 'cpf', 'text'],
         ['Data de Nascimento', 'date_of_birth', 'date'],
         ['Idade', 'age', 'text'],
         ['Diagnóstico', 'diagnostic', 'text'],
         ['Serviços do Aluno na Apae', 'service', 'text'],
         ['Dias de Atendimento na APAE', 'class_apae', 'select'],
+        ['Professores responsáveis pelo Atendimento', 'class_apae', 'text'],
+        ['Nome da Mãe do Aluno', 'name_mother', 'text'],
         ['Turno na Apae', 'turn_apae', 'select'],
         ['Escola', 'school', 'text'],
         ['ID do Aluno', 'student_id', 'text'],
@@ -28,7 +29,7 @@
         ]" 
         additional 
         divisionLateral 
-        quantLateral="7" 
+        quantLateral="8" 
         notEditDelete
         actionRoute="student" 
         :isArchived="$isArchived">
@@ -87,8 +88,8 @@
 
                 @for ($day = 1; $day <= $numberDaysInMonth; $day++)
                     @php 
-                        list($month, $year) = explode('/', $monthYear);
-                        $date = sprintf("%04d-%02d-%02d", $year, $month, $day);     
+                        list($month, $yearN) = explode('/', $monthYear);
+                        $date = sprintf("%04d-%02d-%02d", $yearN, $month, $day);     
                         $isNonClickable = in_array($date, $frequency->nonClickableDays);
                         $isWeekend = in_array($date, $frequency->weekends);
                     @endphp
@@ -129,6 +130,35 @@
             </tr>
             @endif
 
+        </x-table>
+
+        <hr class="my-4 border-gray-300 dark:border-gray-500" />
+
+        <h1 class="text-xl font-bold leading-tight -mb-5">
+            Relatórios Pedagógicos do(a) {{$student->name}}
+        </h1>
+
+        @if (isset($scrollBack2))
+            {{-- Alvo para rolagem --}}
+            <div class="scroll-target2"></div>
+        @endif
+
+        <x-table 
+            title="Relatório Pedagógico" 
+            :headers="['Data', 'Texto do Relatório', 'Assinatura']" 
+            :rows="$pedagogicals" 
+            :variables_DB="['date_pedagogical', 'text', 'professor.name']"
+            iteration="false"
+            withSearchSelect
+            notButtonAdd
+            searchRoute="student.show" 
+            :element="$student"
+            :years="$years"
+            :year="$year"
+            withShow
+            strLimit="24"
+            actionRoute="educational"
+            isTableShow>
         </x-table>
 
         <div class="flex items-center justify-between">
@@ -184,7 +214,7 @@
                         </x-button>
 
                         <x-button title="Restaurar {{$student->name}}" variant="blue" class="hidden sm:flex">
-                            <span class="text-gray-100 dark:text-gray-200">Restaurar</span>
+                         <span class="text-gray-100 dark:text-gray-200">Restaurar</span>
                         </x-button>
                     </form>
                 @endif
@@ -205,6 +235,17 @@
     @if(isset($scrollBack))
         document.addEventListener('DOMContentLoaded', function () {
             scrollToSelector();
+        });
+    @endif
+
+    function scrollToSelector2() {
+        const element = document.querySelector(".scroll-target2");
+        element.scrollIntoView({ behavior: 'smooth', });
+    }
+    // Verificar a variável do Blade e rolar para o seletor se necessário 
+    @if(isset($scrollBack2))
+        document.addEventListener('DOMContentLoaded', function () {
+            scrollToSelector2();
         });
     @endif
 </script>

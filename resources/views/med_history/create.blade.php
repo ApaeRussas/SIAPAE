@@ -74,7 +74,7 @@
 
                 <label for="have_caregiver" class="inline-flex items-center">
                     <input type="checkbox" name="have_caregiver" {{ old('have_caregiver') ? 'checked' : '' }} id="have_caregiver"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem Cuidador?</span>
                 </label>
             </div>
@@ -82,11 +82,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-x-4 gap-y-2 my-2">
             <div>
-                <x-anamnesis.label sizeFont="sm" for="school">Escola do Aluno: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
-                <x-anamnesis.input id="school" name="school" value="{{old('school')}}" placeholder="Escola que Estuda" required />
+                <x-anamnesis.label sizeFont="sm" for="school">Escola do Aluno: </x-anamnesis.label>
+                <x-anamnesis.input id="school" name="school" value="{{old('school')}}" placeholder="Escola que Estuda" />
             </div>
             <div>
-                <x-anamnesis.label sizeFont="sm" for="not_study_justify">Se não estuda justifique (*opcional) </x-anamnesis.label>
+                <x-anamnesis.label sizeFont="sm" for="not_study_justify">Se não estuda, justifique </x-anamnesis.label>
                 <x-anamnesis.input name="not_study_justify" id="not_study_justify"
                     value="{{old('not_study_justify')}}" placeholder="Justificação" />
             </div>
@@ -94,23 +94,23 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
-                <x-anamnesis.label sizeFont="sm" for="grade_school">Série: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
-                <x-anamnesis.input id="grade_school" name="grade_school" value="{{old('grade_school')}}" placeholder="Série que faz" required />
+                <x-anamnesis.label sizeFont="sm" for="grade_school">Série: </x-anamnesis.label>
+                <x-anamnesis.input id="grade_school" name="grade_school" value="{{old('grade_school')}}" placeholder="Série que faz" />
             </div>
             <div>
                 <x-anamnesis.label sizeFont="sm" for="sige">Nº do SIGE: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
-                <x-anamnesis.input id="sige" name="sige" value="{{old('sige')}}" placeholder="Nº do SIGE" required />
+                <x-anamnesis.input id="sige" name="sige" value="{{old('sige')}}" placeholder="Nº do SIGE" required readOnly />
             </div>
             <div>
-                <x-anamnesis.label sizeFont="sm" for="turn_school">Turno: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
-                <x-anamnesis.input id="turn_school" name="turn_school" value="{{old('turn_school')}}" placeholder="Turno na Escola" required />
+                <x-anamnesis.label sizeFont="sm" for="turn_school">Turno: </x-anamnesis.label>
+                <x-anamnesis.input id="turn_school" name="turn_school" value="{{old('turn_school')}}" placeholder="Turno na Escola" />
             </div>
             <div>
                 <input type="hidden" name="have_AEE" value="0">
 
                 <label for="have_AEE" class="inline-flex items-center">
                     <input type="checkbox" name="have_AEE" id="have_AEE" {{ old('have_AEE') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="turn_AEE" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="turn_AEE" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz AEE?</span>
                 </label>
                 <x-anamnesis.input class="turn_AEE" name="turn_AEE" id="turn_AEE" value="{{old('turn_AEE')}}" placeholder="Turno da AEE" disabled />
@@ -150,30 +150,30 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1 md:col-span-2">
-                <x-anamnesis.label sizeFont="sm" for="name_father">Nome do Pai <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
+                <x-anamnesis.label sizeFont="sm" for="name_father">Nome do Pai (* Informações do Pai Opcionais) </x-anamnesis.label>
                 <x-anamnesis.input name="name_father" id="name_father" value="{{old('name_father')}}"
-                    placeholder="Nome do Pai" required />
+                    placeholder="Nome do Pai" />
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
-                <x-anamnesis.label sizeFont="sm" for="date_father">Data de Nascimento do Pai <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
+                <x-anamnesis.label sizeFont="sm" for="date_father">Data de Nascimento do Pai </x-anamnesis.label>
                 <x-anamnesis.input class="date dateInput" name="date_father" id="date_father" autocomplete="off"
-                    value="{{old('date_father')}}" placeholder="Ex: 01/11/2000" required x-init="initFlatpickr" />
+                    value="{{old('date_father')}}" placeholder="Ex: 01/11/2000" x-init="initFlatpickr" />
             </div>
             <div>
-                <x-anamnesis.label sizeFont="sm" for="rg_father">RG do Pai <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
+                <x-anamnesis.label sizeFont="sm" for="rg_father">RG do Pai </x-anamnesis.label>
                 <x-anamnesis.input class="rg" name="rg_father" id="rg_father" value="{{old('rg_father')}}"
-                    placeholder="RG do Pai" required />
+                    placeholder="RG do Pai" />
             </div>
             <div>
-                <x-anamnesis.label sizeFont="sm" for="profession_father">Profissão do Pai <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
+                <x-anamnesis.label sizeFont="sm" for="profession_father">Profissão do Pai </x-anamnesis.label>
                 <x-anamnesis.input name="profession_father" id="profession_father" value="{{old('profession_father')}}"
-                    placeholder="Profissão do Pai" required />
+                    placeholder="Profissão do Pai"  />
             </div>
             <div>
-                <x-anamnesis.label sizeFont="sm" for="cellphone_father">Telefone do Pai (*opcional) </x-anamnesis.label>
+                <x-anamnesis.label sizeFont="sm" for="cellphone_father">Telefone do Pai </x-anamnesis.label>
                 <x-anamnesis.input class="cellphone" name="cellphone_father" id="cellphone_father"
                     value="{{old('cellphone_father')}}" placeholder="Ex: (88) 99312-1231" />
             </div>
@@ -190,7 +190,7 @@
 
                 <label for="have_medication" class="inline-flex items-center">
                     <input type="checkbox" name="have_medication" id="have_medication" {{ old('have_medication') ? 'checked' : '' }} 
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="what_medication" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_medication" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Usa Medicação?</span>
                 </label>
                 <x-anamnesis.input class="what_medication" name="what_medication" id="what_medication"
@@ -250,7 +250,7 @@
 
                 <label for="have_kinship_parents" class="inline-flex items-center">
                     <input type="checkbox" name="have_kinship_parents" id="have_kinship_parents" {{ old('have_kinship_parents') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="what_kinship_parents" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_kinship_parents" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Existe Parentesco entre os Pais?</span>
                 </label>
                 <x-anamnesis.input class="what_kinship_parents w-60" notFull name="what_kinship_parents" id="what_kinship_parents"
@@ -264,7 +264,7 @@
 
                 <label for="new_relation_mother" class="inline-flex items-center">
                     <input type="checkbox" name="new_relation_mother" id="new_relation_mother" {{ old('new_relation_mother') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="relation_mother" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="relation_mother" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Mãe: Novo relacionamento?</span>
                 </label>
             </div>
@@ -294,7 +294,7 @@
                     <input type="hidden" name="new_relation_father" value="0">
 
                     <input type="checkbox" name="new_relation_father" id="new_relation_father" {{ old('new_relation_father') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="relation_father" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="relation_father" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Pai: Novo relacionamento?</span>
                 </label>
             </div>
@@ -347,7 +347,7 @@
             </h1>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 gap-y-2 my-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="have_child_desired">A criança foi desejada? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="have_child_desired" full
@@ -388,7 +388,7 @@
 
                 <label for="history_abort" class="inline-flex items-center">
                     <input type="checkbox" name="history_abort" id="history_abort" {{ old('history_abort') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="abort_justify" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="abort_justify" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Histórico de Aborto?</span>
                 </label>
                 <x-anamnesis.input class="abort_justify" name="abort_justify" id="abort_justify"
@@ -417,7 +417,7 @@
 
                 <label for="have_disease_gestation" class="inline-flex items-center">
                     <input type="checkbox" name="have_disease_gestation" id="have_disease_gestation" {{ old('have_disease_gestation') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="disease" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="disease" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Doença durante a Gravidez?</span>
                 </label>
                 <x-anamnesis.input class="disease" name="what_disease_gestation" id="what_disease_gestation"
@@ -445,7 +445,7 @@
 
                 <label for="have_discharged_together" class="inline-flex items-center">
                     <input type="checkbox" name="have_discharged_together" id="have_discharged_together" {{ old('have_discharged_together') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="detail_discharged_together" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_discharged_together" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Receberam Altas Juntos?</span>
                 </label>
                 <x-anamnesis.input class="detail_discharged_together" name="detail_discharged_together" id="detail_discharged_together"
@@ -457,7 +457,7 @@
 
                 <label for="have_problems_birth" class="inline-flex items-center">
                     <input type="checkbox" name="have_problems_birth" id="have_problems_birth" {{ old('have_problems_birth') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="what_problems_birth" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_problems_birth" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Intercorrência no Parto?</span>
                 </label>
                 <x-anamnesis.input class="what_problems_birth" name="what_problems_birth" id="what_problems_birth"
@@ -484,7 +484,7 @@
                     <input type="hidden" name="have_neonatal_tests" value="0">
 
                     <input type="checkbox" name="have_neonatal_tests" id="have_neonatal_tests" {{ old('have_neonatal_tests') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="neonatal_tests" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="neonatal_tests" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Fez os testes neonatais?</span>
                 </label>
             </div>
@@ -526,7 +526,7 @@
 
                 <label for="have_nozzle" class="inline-flex items-center">
                     <input type="checkbox" name="have_nozzle" id="have_nozzle" {{ old('have_nozzle') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="detail_nozzle" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_nozzle" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Faz uso de bicos artificiais?</span>
                 </label>
                 <x-anamnesis.input class="detail_nozzle" name="detail_nozzle" id="detail_nozzle"
@@ -549,7 +549,7 @@
 
                 <label for="have_delay_NPM" class="inline-flex items-center">
                     <input type="checkbox" name="have_delay_NPM" id="have_delay_NPM" {{ old('have_delay_NPM') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="detail_delay_NPM" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_delay_NPM" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Apresentou atraso no Desenv. NPM?</span>
                 </label>
                 <x-anamnesis.input class="detail_delay_NPM" name="detail_delay_NPM" id="detail_delay_NPM"
@@ -561,7 +561,7 @@
 
                 <label for="have_normal_development" class="inline-flex items-center">
                     <input type="checkbox" name="have_normal_development" id="have_normal_development" {{ old('have_normal_development') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="detail_normal_development" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_normal_development" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Desenv. da Linguagem Normal?</span>
                 </label>
                 <x-anamnesis.input class="detail_normal_development" name="detail_normal_development" id="detail_normal_development" 
@@ -573,7 +573,7 @@
 
                 <label for="have_desfrald_yet" class="inline-flex items-center">
                     <input type="checkbox" name="have_desfrald_yet" id="have_desfrald_yet" {{ old('have_desfrald_yet') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="age_desfrald_yet" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="age_desfrald_yet" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Desfralde?</span>
                 </label>
                 <x-anamnesis.input class="age_desfrald_yet" name="age_desfrald_yet" id="age_desfrald_yet"
@@ -584,7 +584,7 @@
 
                 <label for="have_sphincters_control" class="inline-flex items-center">
                     <input type="checkbox" name="have_sphincters_control" id="have_sphincters_control" {{ old('have_sphincters_control') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="age_sphincters_control" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="age_sphincters_control" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Controle dos Esfincteres?</span>
                 </label>
                 <x-anamnesis.input class="age_sphincters_control" name="age_sphincters_control" id="age_sphincters_control"
@@ -636,7 +636,7 @@
             </div>
             <div>
                 <x-anamnesis.label sizeFont="sm" for="sleeps_in_separate">Dorme em quartos separados? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
-                <x-anamnesis.input name="sleeps_in_separate" id="sleeps_in_separate"
+                <x-anamnesis.input name="sleeps_in_separate" id="sleeps_in_separate" required
                     value="{{old('sleeps_in_separate')}}" placeholder="Ex: Dorme no quarto do .." />
             </div>
             <div>
@@ -687,8 +687,8 @@
             </h1>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-8 gap-x-4 gap-y-2 my-2">
-            <div class="col-span-2 md:col-span-3">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6  gap-x-4 gap-y-2 my-2">
+            <div class="col-span-2 md:col-span-4">
                 <x-anamnesis.label sizeFont="sm" for="child_temperament">Temperamento do Assistido: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.input name="child_temperament" id="child_temperament" required
                     value="{{old('child_temperament')}}" placeholder="Ex: Quieta, Tranquila, .." />
@@ -698,7 +698,7 @@
 
                 <label for="stubbornness" class="inline-flex items-center">
                     <input type="checkbox" name="stubbornness" {{ old('stubbornness') ? 'checked' : '' }} id="stubbornness"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Teimosia?</span>
                 </label>
             </div>
@@ -707,45 +707,56 @@
 
                 <label for="tantrum" class="inline-flex items-center">
                     <input type="checkbox" name="tantrum" {{ old('tantrum') ? 'checked' : '' }} id="tantrum"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Birra?</span>
                 </label>
+            </div>
+            <div class="col-span-2 md:col-span-4">
+                <input type="hidden" name="inappropriate_behavior" value="0">
+                
+                <label for="inappropriate_behavior" class="inline-flex items-center">
+                    <input type="checkbox" name="inappropriate_behavior" id="inappropriate_behavior" {{ old('inappropriate_behavior') ? 'checked' : '' }}
+                    class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="how_manifests_inappropriate_behavior" onchange="toggleInput(this)">
+                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Comportamento Inapropriado?</span>
+                </label>
+                <x-anamnesis.input class="how_manifests_inappropriate_behavior" name="how_manifests_inappropriate_behavior" id="how_manifests_inappropriate_behavior"
+                value="{{old('how_manifests_inappropriate_behavior')}}" placeholder="Como se Manifesta:" disabled />
             </div>
             <div class="flex">
                 <input type="hidden" name="lies" value="0">
 
                 <label for="lies" class="inline-flex items-center">
                     <input type="checkbox" name="lies" {{ old('lies') ? 'checked' : '' }} id="lies"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Mente?</span>
                 </label>
-            </div>
-            <div class="col-span-2 md:col-span-3">
-                <input type="hidden" name="inappropriate_behavior" value="0">
-
-                <label for="inappropriate_behavior" class="inline-flex items-center">
-                    <input type="checkbox" name="inappropriate_behavior" id="inappropriate_behavior" {{ old('inappropriate_behavior') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="how_manifests_inappropriate_behavior" onchange="toggleInput(this)">
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Comportamento Inapropriado?</span>
-                </label>
-                <x-anamnesis.input class="how_manifests_inappropriate_behavior" name="how_manifests_inappropriate_behavior" id="how_manifests_inappropriate_behavior"
-                    value="{{old('how_manifests_inappropriate_behavior')}}" placeholder="Como se Manifesta:" disabled />
             </div>
             <div class="flex">
                 <input type="hidden" name="aggressiveness" value="0">
 
                 <label for="aggressiveness" class="inline-flex items-center">
                     <input type="checkbox" name="aggressiveness" {{ old('aggressiveness') ? 'checked' : '' }} id="aggressiveness"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Agressiva?</span>
                 </label>
+            </div>
+            <div class="col-span-2 md:col-span-4">
+                <input type="hidden" name="sexual_curiosity" value="0">
+
+                <label for="sexual_curiosity" class="inline-flex items-center">
+                    <input type="checkbox" name="sexual_curiosity" id="sexual_curiosity" {{ old('sexual_curiosity') ? 'checked' : '' }}
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="how_manifests_sexual_curiosity" onchange="toggleInput(this)">
+                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Manifesta curiosidade sexual?</span>
+                </label>
+                <x-anamnesis.input class="how_manifests_sexual_curiosity" name="how_manifests_sexual_curiosity" id="how_manifests_sexual_curiosity"
+                    value="{{old('how_manifests_sexual_curiosity')}}" placeholder="Como se Manifesta:" disabled />
             </div>
             <div class="flex">
                 <input type="hidden" name="shyness" value="0">
 
                 <label for="shyness" class="inline-flex items-center">
                     <input type="checkbox" name="shyness" {{ old('shyness') ? 'checked' : '' }} id="shyness"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Timidez?</span>
                 </label>
             </div>
@@ -754,76 +765,69 @@
 
                 <label for="affectionate" class="inline-flex items-center">
                     <input type="checkbox" name="affectionate" {{ old('affectionate') ? 'checked' : '' }} id="affectionate"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Carinhoso?</span>
                 </label>
             </div> 
-            <div class="col-span-2 md:col-span-3">
-                <input type="hidden" name="sexual_curiosity" value="0">
-
-                <label for="sexual_curiosity" class="inline-flex items-center">
-                    <input type="checkbox" name="sexual_curiosity" id="sexual_curiosity" {{ old('sexual_curiosity') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="how_manifests_sexual_curiosity" onchange="toggleInput(this)">
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Manifesta curiosidade sexual?</span>
-                </label>
-                <x-anamnesis.input class="how_manifests_sexual_curiosity" name="how_manifests_sexual_curiosity" id="how_manifests_sexual_curiosity"
-                    value="{{old('how_manifests_sexual_curiosity')}}" placeholder="Como se Manifesta:" disabled />
-            </div>
-            <div class="flex">
-                <input type="hidden" name="tics_manias" value="0">
-
-                <label for="tics_manias" class="inline-flex items-center">
-                    <input type="checkbox" name="tics_manias" {{ old('tics_manias') ? 'checked' : '' }} id="tics_manias"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tiques, mania ou estereotipia?</span>
-                </label>
-            </div> 
-            <div class="flex">
-                <input type="hidden" name="hyperfocus" value="0">
-
-                <label for="hyperfocus" class="inline-flex items-center">
-                    <input type="checkbox" name="hyperfocus" {{ old('hyperfocus') ? 'checked' : '' }} id="hyperfocus"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Hiperfoco?</span>
-                </label>
-            </div> 
-            <div class="flex">
-                <input type="hidden" name="waiting_skill" value="0">
-
-                <label for="waiting_skill" class="inline-flex items-center">
-                    <input type="checkbox" name="waiting_skill" {{ old('waiting_skill') ? 'checked' : '' }} id="waiting_skill"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem habilidade de Espera?</span>
-                </label>
-            </div>
-            <div class="col-span-2 md:col-span-3">
+            <div class="col-span-2 md:col-span-4">
                 <input type="hidden" name="sports_activity" value="0">
 
                 <label for="sports_activity" class="inline-flex items-center">
                     <input type="checkbox" name="sports_activity" id="sports_activity" {{ old('sports_activity') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="what_sports_activity" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_sports_activity" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Faz alguma atividade esportiva?</span>
                 </label>
                 <x-anamnesis.input class="what_sports_activity" name="what_sports_activity" id="what_sports_activity"
                     value="{{old('what_sports_activity')}}" placeholder="Qual(is)?" disabled />
             </div>
             <div class="flex">
+                <input type="hidden" name="waiting_skill" value="0">
+
+                <label for="waiting_skill" class="inline-flex items-center">
+                    <input type="checkbox" name="waiting_skill" {{ old('waiting_skill') ? 'checked' : '' }} id="waiting_skill"
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
+                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem habilidade de Espera?</span>
+                </label>
+            </div>
+            <div class="flex">
                 <input type="hidden" name="tolerates_frustration" value="0">
 
                 <label for="tolerates_frustration" class="inline-flex items-center">
                     <input type="checkbox" name="tolerates_frustration" {{ old('tolerates_frustration') ? 'checked' : '' }} id="tolerates_frustration"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tolera Frustações?</span>
                 </label>
+            </div>
+            <div class="col-span-2 md:col-span-4">
+                <input type="hidden" name="hyperfocus" value="0">
+
+                <label for="hyperfocus" class="inline-flex items-center">
+                    <input type="checkbox" name="hyperfocus" id="hyperfocus" {{ old('hyperfocus') ? 'checked' : '' }}
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="how_manifests_hyperfocus" onchange="toggleInput(this)">
+                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Hiperfoco ?</span>
+                </label>
+                <x-anamnesis.input class="how_manifests_hyperfocus" name="how_manifests_hyperfocus" id="how_manifests_hyperfocus"
+                    value="{{old('how_manifests_hyperfocus')}}" placeholder="Como se Manifesta:" disabled />
             </div>
             <div class="flex">
                 <input type="hidden" name="responds_orders" value="0">
 
                 <label for="responds_orders" class="inline-flex items-center">
                     <input type="checkbox" name="responds_orders" {{ old('responds_orders') ? 'checked' : '' }} id="responds_orders"
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Atende Ordens Solicitadas?</span>
                 </label>
+            </div>
+            <div class="col-span-2 md:col-span-4">
+                <input type="hidden" name="tics_manias" value="0">
+
+                <label for="tics_manias" class="inline-flex items-center">
+                    <input type="checkbox" name="tics_manias" id="tics_manias" {{ old('tics_manias') ? 'checked' : '' }}
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_tics_manias" onchange="toggleInput(this)">
+                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Tiques, mania ou estereotipia?</span>
+                </label>
+                <x-anamnesis.input class="what_tics_manias" name="what_tics_manias" id="what_tics_manias"
+                    value="{{old('what_tics_manias')}}" placeholder="Qual(is)?" disabled />
             </div>
         </div>
 
@@ -833,7 +837,7 @@
                     <input type="hidden" name="daily_routine" value="0">
 
                     <input type="checkbox" name="daily_routine" id="daily_routine" {{ old('daily_routine') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="routine" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="routine" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Segue uma Rotina Diária?</span>
                 </label>
             </div>
@@ -925,7 +929,7 @@
 
                 <label for="have_difficulty_learning" class="inline-flex items-center">
                     <input type="checkbox" name="have_difficulty_learning" id="have_difficulty_learning" {{ old('have_difficulty_learning') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="justify_difficulty_learning" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="justify_difficulty_learning" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Dificuldade na aprendizagem?</span>
                 </label>
                 <x-anamnesis.input class="justify_difficulty_learning" name="justify_difficulty_learning" id="justify_difficulty_learning"
@@ -1113,7 +1117,7 @@
 
                 <label for="have_allergy" class="inline-flex items-center">
                     <input type="checkbox" name="have_allergy" id="have_allergy" {{ old('have_allergy') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="what_allergy" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_allergy" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Possui algum tipo de alergia?</span>
                 </label>
                 <x-anamnesis.input class="what_allergy" name="what_allergy" id="what_allergy"
@@ -1161,7 +1165,7 @@
 
                 <label for="have_therapeutic" class="inline-flex items-center">
                     <input type="checkbox" name="have_therapeutic" id="have_therapeutic" {{ old('have_therapeutic') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="times_days_therapeutic" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="times_days_therapeutic" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Faz acompanhamento terapeutico?</span>
                 </label>
                 <x-anamnesis.input class="times_days_therapeutic" name="times_days_therapeutic" id="times_days_therapeutic"
@@ -1173,7 +1177,7 @@
 
                 <label for="history_disorders_family" class="inline-flex items-center">
                     <input type="checkbox" name="history_disorders_family" id="history_disorders_family" {{ old('history_disorders_family') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="what_history_disorders_family" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_history_disorders_family" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Histórico de doenças/distúrbios ou transtorno na família?</span>
                 </label>
                 <x-anamnesis.input class="what_history_disorders_family" name="what_history_disorders_family" id="what_history_disorders_family"
@@ -1184,7 +1188,7 @@
 
                 <label for="have_update_vaccines" class="inline-flex items-center">
                     <input type="checkbox" name="have_update_vaccines" id="have_update_vaccines" {{ old('have_update_vaccines') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Cronograma de Vacinas em dia?</span>
                 </label>
                 <x-anamnesis.input name="detail_update_vaccines" id="detail_update_vaccines"
@@ -1227,7 +1231,7 @@
 
                 <label for="have_access_cellphone" class="inline-flex items-center">
                     <input type="checkbox" name="have_access_cellphone" id="have_access_cellphone" {{ old('have_access_cellphone') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="technology_access" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="technology_access" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Tem acesso ao celular ou a outras telas?</span>
                 </label>
             </div>
@@ -1265,7 +1269,7 @@
 
                 <label for="already_had_information_institution" class="inline-flex items-center">
                     <input type="checkbox" name="already_had_information_institution" id="already_had_information_institution" {{ old('already_had_information_institution') ? 'checked' : '' }}
-                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" value="1" data-target="who_recommend_institution" onchange="toggleInput(this)">
+                        class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="who_recommend_institution" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Já tinha informações da Instituição?</span>
                 </label>
                 <x-anamnesis.input name="who_recommend_institution" id="who_recommend_institution" class="who_recommend_institution"
@@ -1412,7 +1416,8 @@
                         $('#school').val(data.school || '------'); 
                         $('#grade_school').val(data.grade_school || '------'); 
                         $('#sige').val(data.sige || '------');
-                        $('#turn_school').val(data.turn_school || '------');
+                        $('#turn_school').val(data.turn_school || '------'); 
+                        $('#name_mother').val(data.name_mother || '------');
                     }
                 });
             } else {
