@@ -1,7 +1,8 @@
 @props([
     'isActive' => false,
     'title' => '',
-    'collapsible' => false
+    'collapsible' => false,
+    'maxW44' => null,
 ])
 
 @php
@@ -51,8 +52,13 @@
             <x-icons.empty-circle class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         @endif
 
+        @php
+            $defaultSpanClasses = 'text-base font-medium';
+            $addClasses = isset($maxW44) ? ' max-w-44' : '';
+            $spanClasses =  $defaultSpanClasses . $addClasses;
+        @endphp
         <span
-            class="text-base font-medium"
+            class="{{ $spanClasses }}"
             x-show="isSidebarOpen || isSidebarHovered"
         >
             {{ $title }}

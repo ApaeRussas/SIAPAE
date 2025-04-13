@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout notRegularSidebar :element="$student">
 
     @php
         $state_student = '';
@@ -18,7 +18,7 @@
         ['Diagnóstico', 'diagnostic', 'text'],
         ['Serviços do Aluno na Apae', 'service', 'text'],
         ['Dias de Atendimento na APAE', 'class_apae', 'select'],
-        ['Professores responsáveis pelo Atendimento', 'class_apae', 'text'],
+        ['Professores responsáveis pelo Atendimento', 'professor', 'array_pivot'],
         ['Nome da Mãe do Aluno', 'name_mother', 'text'],
         ['Turno na Apae', 'turn_apae', 'select'],
         ['Escola', 'school', 'text'],
@@ -31,152 +31,11 @@
         divisionLateral 
         quantLateral="8" 
         notEditDelete
+        notButtonBack
         actionRoute="student" 
         :isArchived="$isArchived">
 
-        <hr class="my-5 border-gray-300 dark:border-gray-500" />
-
-        <h1 class="text-xl font-bold leading-tight -mb-5">
-            Registros de Atendimento do(a) {{$student->name}}
-        </h1>
-
-        <x-table 
-            title="Atendimento" 
-            :headers="['Date', 'Advances', 'Difficulties', 'Assinatura']" 
-            :rows="$attendances"
-            :variables_DB="['date', 'advances', 'difficulties', 'signature']" 
-            iteration="false" 
-            withSearchDateRange
-            :element="$student" 
-            searchRoute="student.show" 
-            notButtonAdd 
-            :range="$date_range" 
-            withShow
-            actionRoute="attendance"
-            numberPages="5"
-            inTableShow>
-        </x-table>
-        
-        @if (isset($scrollBack))
-            {{-- Alvo para rolagem --}}
-            <div class="scroll-target"></div>
-        @endif
-
-        <hr class="my-4 border-gray-300 dark:border-gray-500" />
-
-        <h1 class="text-xl font-bold leading-tight -mb-5">
-            Lista de Frequência do(a) {{$student->name}}
-        </h1>
-
-        <x-table 
-            title="Frequência"  
-            :headers="array_merge($days, ['Faltas'])" 
-            headersSmall 
-            :rows="$frequency" 
-            onlyHead
-            headFrequency
-            withSearchFrequency 
-            searchFrequencyStudent
-            :student="$student"
-            :monthYear="$monthYear"
-            iteration="false"
-            notPaginate
-            inTableShow>
-        
-            @if (isset($frequency))
-            <tr>
-
-                @for ($day = 1; $day <= $numberDaysInMonth; $day++)
-                    @php 
-                        list($month, $yearN) = explode('/', $monthYear);
-                        $date = sprintf("%04d-%02d-%02d", $yearN, $month, $day);     
-                        $isNonClickable = in_array($date, $frequency->nonClickableDays);
-                        $isWeekend = in_array($date, $frequency->weekends);
-                    @endphp
-
-                    <td class="border border-gray-300 dark:border-gray-600 text-center">
-                        @if (!$isNonClickable)
-                        <x-button
-                            class="btn-toggle {{ $frequency->$day === true ? 'success bg-green-500 hover:bg-green-600' : ($frequency->$day === false ? 'danger bg-red-600 hover:bg-red-700 dark:bg-red-700' : 'indifferent bg-gray-400 hover:bg-gray-500 dark:bg-gray-500') }}"
-                            variant="{{ $frequency->$day === true ? 'success' : ($frequency->$day === false ? 'danger' : 'indifferent') }}"  
-                            size="hyper-sm"
-                            >
-                            <i class="fas {{ $frequency->$day === true ? 'fa-check -mx-0.5' : ($frequency->$day === false ? 'fa-times' : 'fa-minus m-minus') }}"></i>
-                        </x-button>
-                        @elseif ($isWeekend) 
-                            <span class="text-gray-600 dark:text-gray-400 text-sm">
-                                X
-                            </span>
-                        @else
-                            <hr class="mx-1 border-gray-600 dark:border-gray-400"> 
-                        @endif
-                    </td>
-                @endfor
-
-                <td
-                    class="border border-gray-300 dark:border-gray-600 px-2 py-3 text-center text-gray-800 dark:text-gray-300">
-                    <h3 class="">
-                        {{ $frequency->countAbsences }}
-                    </h3>
-                </td>
-
-            </tr>
-            @else
-            <tr class="text-center">
-                <td class="border border-gray-300 dark:border-gray-600 p-3 font-normal dark:text-gray-300"
-                    colspan="{{ (int) $numberDaysInMonth + 3 }}">
-                    Nenhum registro encontrado.
-                </td>
-            </tr>
-            @endif
-
-        </x-table>
-
-        <hr class="my-4 border-gray-300 dark:border-gray-500" />
-
-        <h1 class="text-xl font-bold leading-tight -mb-5">
-            Relatórios Pedagógicos do(a) {{$student->name}}
-        </h1>
-
-        @if (isset($scrollBack2))
-            {{-- Alvo para rolagem --}}
-            <div class="scroll-target2"></div>
-        @endif
-
-        <x-table 
-            title="Relatório Pedagógico" 
-            :headers="['Data', 'Texto do Relatório', 'Assinatura']" 
-            :rows="$pedagogicals" 
-            :variables_DB="['date_pedagogical', 'text', 'professor.name']"
-            iteration="false"
-            withSearchSelect
-            notButtonAdd
-            searchRoute="student.show" 
-            :element="$student"
-            :years="$years"
-            :year="$year"
-            withShow
-            strLimit="24"
-            actionRoute="educational"
-            isTableShow>
-        </x-table>
-
-        <div class="flex items-center justify-between">
-            <div>
-                @if (isset($medHistory))
-                    <x-button href="{{route('anamnesis.show', $medHistory->id)}}" variant="blue">
-                        <p class="dark:text-gray-200 px-2">
-                            Ir para Anamnese
-                        </p>
-                    </x-button>
-                @else
-                    <p class="text-gray-800 dark:text-gray-200">
-                        Aluno não possui uma Anamnese
-                    </p>
-                @endif
-            </div>
-
-            <div class="flex gap-2">
+        <div class="flex items-center justify-between mt-4 sm:mt-6">
                 <x-button href="{{route('student.edit', $student->id)}}" class="flex sm:hidden" title="Editar {{ $student->name }}" variant="edit" size="sm">
                     <x-icons.edit />
                 </x-button>
@@ -218,34 +77,8 @@
                         </x-button>
                     </form>
                 @endif
-            </div>
         </div>
-
 
     </x-table-show>
 
 </x-app-layout>
-
-<script>
-    function scrollToSelector() {
-        const element = document.querySelector(".scroll-target");
-        element.scrollIntoView({ behavior: 'smooth', });
-    }
-    // Verificar a variável do Blade e rolar para o seletor se necessário 
-    @if(isset($scrollBack))
-        document.addEventListener('DOMContentLoaded', function () {
-            scrollToSelector();
-        });
-    @endif
-
-    function scrollToSelector2() {
-        const element = document.querySelector(".scroll-target2");
-        element.scrollIntoView({ behavior: 'smooth', });
-    }
-    // Verificar a variável do Blade e rolar para o seletor se necessário 
-    @if(isset($scrollBack2))
-        document.addEventListener('DOMContentLoaded', function () {
-            scrollToSelector2();
-        });
-    @endif
-</script>

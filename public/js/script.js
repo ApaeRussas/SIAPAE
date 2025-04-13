@@ -1,7 +1,3 @@
-function show(route) {
-    window.location.href = route;
-}
-
 // VIEW Student - Atualiza o nome a direita do input tipo file com o nome do arquivo
 function updateImageLabel(event) {
     const fileInput = event.target;
@@ -229,3 +225,4 @@ function ativarBotao(tempo) {
         button.querySelector('#loadingSpinner').classList.add('hidden'); // Esconde o spinner
     }, tempo);
 }
+

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use App\Http\Controllers\Controller;
+use App\Models\MedHistory;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,6 +41,7 @@ class StudentApiController extends Controller
     
     public function deposit() 
     {
+        $context = 'student';
         $search = request('search');
         
         if ($search) {
@@ -46,14 +49,14 @@ class StudentApiController extends Controller
                 ['name', 'like', '%' . $search . '%']
             ])->where('state_student', 'archived')
             ->orderBy('name', 'asc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         } else {
             $students = Student::where('state_student', 'archived')
             ->orderBy('name', 'asc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
 
-        return view('student.deposit', compact('students', 'search'));
+        return view('student.deposit', compact('students', 'search', 'context'));
     }
     public function archive($id)
     {
@@ -74,6 +77,7 @@ class StudentApiController extends Controller
 
         if ($input) {
             session()->flash('success', 'Aluno arquivado com sucesso!');
+            broadcast(new CrudUpdated('archived',  'student'))->toOthers();
             return redirect()->route('student.index');
         } else {
             session()->flash('error', 'Erro na arquivação do Aluno');
@@ -90,6 +94,7 @@ class StudentApiController extends Controller
 
         if ($input) {
             session()->flash('success', 'Aluno Restaurado com sucesso!');
+            broadcast(new CrudUpdated('restored',  'student'))->toOthers();
             return redirect()->route('student.deposit');
         } else {
             session()->flash('error', 'Erro na restauração do Aluno');

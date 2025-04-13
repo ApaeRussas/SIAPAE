@@ -21,7 +21,10 @@ route('dashboard')
                 <div class="flex items-center justify-between mb-4">
                     <h1 class="text-xl sm:text-2xl font-bold leading-tight">Editar {{ $title }}</h1>
 
-                    <x-button href="{{ route($actionRoute . '.index') }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
+                    @php
+                        $backUrl = session('previous_url', route($actionRoute . '.index'));
+                    @endphp
+                    <x-button href="{{ $backUrl }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
                         <div class="text-white flex sm:hidden">
                             <x-icons.back />
                         </div>

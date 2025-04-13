@@ -8,8 +8,8 @@
     </x-slot>
 
     <div class="h-error center">
-        <div class="text-center padding p-error overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1">
-            <div class="style-error">
+        <div class="text-center p-error overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1 px-8 sm:px-14 py-3 sm:py-4">
+            <div class="style-error text-3xl sm:text-6xl">
                 {{ __('Server Error!') }}
             </div>
         </div>

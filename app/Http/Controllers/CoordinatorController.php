@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use Illuminate\Auth\Events\Registered;
@@ -16,8 +17,10 @@ use Illuminate\Support\Facades\Hash;
 
 class CoordinatorController extends Controller
 {
-    public function index(Request $request): View
+    public function index()
     {
+        session(['previous_url' => url()->full()]);
+        $context = 'coordinator';
         $search = request('search');
         
         if ($search) {
@@ -27,16 +30,16 @@ class CoordinatorController extends Controller
             ->where('position', '!=', '---')
             ->orderBy('access_level', 'asc')
             ->orderBy('name', 'asc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         } else {
             $users = User::where('state_user', 'alive')
             ->where('position', '!=', '---')
             ->orderBy('access_level', 'asc')
             ->orderBy('name', 'asc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
 
-        return view('coordinator.index', compact('users', 'search'));
+        return view('coordinator.index', compact('users', 'search', 'context'));
     }
 
     /**
@@ -74,6 +77,7 @@ class CoordinatorController extends Controller
         // return redirect(route('coordinator.index', absolute: false));
         if ($user) {
             session()->flash('success', 'Usuário adicionado com sucesso!');
+            broadcast(new CrudUpdated('created',  'coordinator'))->toOthers();
             return redirect()->route('coordinator.index');
         } else {
             session()->flash('error', 'Falha na edição do Usuário');
@@ -104,7 +108,7 @@ class CoordinatorController extends Controller
                 ->where('users.name', $user->name)
                 ->with('student', 'professor')
                 ->orderBy('date', 'desc') 
-                ->paginate(15); 
+                ->paginate(15)->appends(request()->query()); 
 
             $scrollBack = true;
         } else { 
@@ -113,7 +117,7 @@ class CoordinatorController extends Controller
             ->where('users.name', $user->name)
             ->with('student', 'professor')
             ->orderBy('date', 'desc') 
-            ->paginate(15); 
+            ->paginate(15)->appends(request()->query()); 
         }
 
         return view('coordinator.show', compact('user', 'date_range', 'scrollBack', 'attendances', 'isArchived'));
@@ -128,6 +132,7 @@ class CoordinatorController extends Controller
 
         if ($input) {
             session()->flash('success', 'Usuário arquivado com sucesso!');
+            broadcast(new CrudUpdated('archived',  'coordinator'))->toOthers();
             return redirect()->route('coordinator.index');
         } else {
             session()->flash('error', 'Erro na arquivação do Usuário');
@@ -136,6 +141,7 @@ class CoordinatorController extends Controller
     }
     public function deposit()
     {
+        $context = 'coordinator';
         $search = request('search');
         
         if ($search) {
@@ -143,14 +149,14 @@ class CoordinatorController extends Controller
                 ['name', 'like', '%' . $search . '%']
             ])->where('state_user', 'archived')
             ->orderBy('name', 'asc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         } else {
             $users = User::where('state_user', 'archived')
             ->orderBy('name', 'asc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
 
-        return view('coordinator.deposit', compact('users', 'search'));
+        return view('coordinator.deposit', compact('users', 'search', 'context'));
     }
     public function restore($id) 
     {
@@ -162,6 +168,7 @@ class CoordinatorController extends Controller
 
         if ($input) {
             session()->flash('success', 'Usuário Restaurado com sucesso!');
+            broadcast(new CrudUpdated('restored',  'coordinator'))->toOthers();
             return redirect()->route('coordinator.deposit');
         } else {
             session()->flash('error', 'Erro na restauração do Usuário');
@@ -198,6 +205,7 @@ class CoordinatorController extends Controller
         // return redirect(route('coordinator.index', absolute: false));
         if ($userUpdate) {
             session()->flash('success', 'Usuário atualizado com sucesso!');
+            broadcast(new CrudUpdated('updated',  'coordinator'))->toOthers();
             return redirect()->route('coordinator.index');
         } else {
             session()->flash('error', 'Falha na atualização do Usuário');
@@ -210,6 +218,7 @@ class CoordinatorController extends Controller
 
         if ($input) {
             session()->flash('success', 'Usuário excluído com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'coordinator'))->toOthers();
             return redirect()->route('coordinator.deposit');
         } else {
             session()->flash('error', 'Erro na exclusão do Usuário');

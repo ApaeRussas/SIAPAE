@@ -122,14 +122,17 @@
         'translate-y-0': scrollingUp,
     }"
 >
-    <x-button
+    {{-- Comentado, por não ter funcionalidade--}}
+    <!-- <x-button
         type="button"
         icon-only
         variant="secondary"
         sr-text="Search"
     >
         <x-heroicon-o-search aria-hidden="true" class="w-6 h-6" />
-    </x-button>
+    </x-button> -->
+
+    <div class="w-10"></div>
 
     <a href="{{ route('dashboard') }}">
         <x-application-logo-light x-show="!isDarkMode" class="w-24" /> 

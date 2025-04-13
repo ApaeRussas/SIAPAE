@@ -163,9 +163,14 @@
   "Diagnostic": "Diagnóstico",
   "Attendance": "Atendimento",
   "Pedagogic": "Pedagógico",
-  "Students": "Alunos",
+  "Pedagogic Report": "Relatórios Pedagógicos",
+  "Students": "Alunos", 
+  "Student": "Aluno",
+  "Base Informations": "Informações Base",
+  "Student Data": "Dados do Estudante",
   "Events": "Eventos",
   "Attendance Register": "Reg. de Atendimento",
+  "Attendance Register and Frequency List": "Reg. de Atendimento e Lista de Frequência", 
   "Reports": "Relatórios",
   "Reunions Records": "Atas de Reuniões",
   "Partnes": "Sócios",
@@ -178,5 +183,6 @@
   "Date": "Data",
   "Educational axis": "Eixo Educacional",
   "Advances": "Avanços", 
-  "Difficulties": "Dificuldades"
+  "Difficulties": "Dificuldades",
+  "Not Found!": "Não Encontrado!"
 }

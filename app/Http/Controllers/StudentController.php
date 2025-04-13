@@ -11,6 +11,7 @@ use App\Models\Student;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\StudentRequest;
 
 class StudentController extends Controller
@@ -20,6 +21,9 @@ class StudentController extends Controller
      */
     public function index()
     {
+        session(['previous_url' => url()->full()]);
+        $context = 'student';
+
         $search = request('search');
 
         if ($search) {
@@ -27,21 +31,21 @@ class StudentController extends Controller
                 ['name', 'like', '%' . $search . '%']
             ])->where('state_student', 'alive')
                 ->orderBy('name', 'asc')
-                ->paginate(15);
+                ->paginate(15)->appends(request()->query());
         } else {
             $students = Student::where('state_student', 'alive')
                 ->orderBy('name', 'asc')
-                ->paginate(15);
+                ->paginate(15)->appends(request()->query());
         }
 
-        return view('student.home', compact('students', 'search'));
+        return view('student.home', compact('students', 'search', 'context'));
     }
 
     public function create()
-    {
+    {   
         $professors = User::where('position', 'Professor(a)')->get();
 
-        return view('student.create', compact('professors'));
+        return view('student.create', compact('professors', 'student_id'));
     }
 
     public function store(StudentRequest $request)
@@ -71,6 +75,7 @@ class StudentController extends Controller
 
         if ($input) {
             session()->flash('success', 'Aluno adicionado com sucesso!');
+            broadcast(new CrudUpdated('created',  'student'))->toOthers();
             return redirect()->route('student.index');
         } else {
             session()->flash('error', 'Falha na criação do Aluno');
@@ -79,6 +84,7 @@ class StudentController extends Controller
     }
     public function show($id)
     {
+        session(['previous_url' => url()->full()]);
         $student = Student::findOrFail($id);
 
         $student->load('professors');
@@ -94,31 +100,6 @@ class StudentController extends Controller
             $isArchived = true;
         }
 
-        // Parte ATENDIMENTO
-
-        $date_range = request('date_range');
-        $scrollBack = null;
-
-        if ($date_range) {
-            $dates = explode(' à ', $date_range);
-            $start_date = Carbon::createFromFormat('d/m/Y', trim($dates[0]))->format('Y-m-d');
-            $end_date = Carbon::createFromFormat('d/m/Y', trim($dates[1]))->format('Y-m-d');
-
-            $attendances = Attendance::whereDate('date', '>=', $start_date)
-                ->whereDate('date', '<=', $end_date)
-                ->where('student_id', $id)
-                ->with('student')
-                ->orderBy('date', 'desc')
-                ->paginate(5);
-
-            $scrollBack = true;
-        } else {
-            $attendances = Attendance::where('student_id', $id)
-                ->with('student')
-                ->orderBy('date', 'desc')
-                ->paginate(5);
-        }
-
         // Calcular a idade do aluno detalhadamente
         $dateOfBirth = Carbon::parse($student->date_of_birth);
         $now = Carbon::now();
@@ -131,8 +112,59 @@ class StudentController extends Controller
 
         $student->age = "$ageYears anos, $ageMonths meses e $ageDays dias";
 
-        // Parte FREQUÊNCIA
+        return view('student.show', compact('student', 'medHistory', 'isArchived'));
+    }
 
+    public function showMedhistory($id) 
+    {
+        session(['previous_url' => url()->full()]);
+        $student = Student::findOrFail($id);
+        $medHistory = MedHistory::with('student')
+            ->where('student_id', $id)
+            ->first();
+
+        // Necessario fazer o else
+        if($medHistory) {
+            $medHistory['date_of_anamnesis'] = Carbon::createFromFormat('Y-m-d', $medHistory['date_of_anamnesis'])->format('d/m/Y');
+            $medHistory['date_mother'] = Carbon::createFromFormat('Y-m-d', $medHistory['date_mother'])->format('d/m/Y');
+            $medHistory['date_father'] = (isset($medHistory['date_father']) ? Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y') : null);
+            
+            return view('student.show_parts.medHistoryShow', compact('student', 'medHistory'));
+        } else {
+            $notRegularSidebar = true;
+            return view('errors.404', compact('notRegularSidebar', 'student'));
+        }
+    }
+    public function showAttendancesAndFrequency($id) 
+    {
+        session(['previous_url' => url()->full()]);
+        $student = Student::findOrFail($id);
+
+        // Parte ATENDIMENTO
+
+        $date_range = request('date_range');
+
+        if ($date_range) {
+            $dates = explode(' à ', $date_range);
+            $start_date = Carbon::createFromFormat('d/m/Y', trim($dates[0]))->format('Y-m-d');
+            $end_date = Carbon::createFromFormat('d/m/Y', trim($dates[1]))->format('Y-m-d');
+
+            $attendances = Attendance::whereDate('date', '>=', $start_date)
+                ->whereDate('date', '<=', $end_date)
+                ->where('student_id', $id)
+                ->with('student')
+                ->orderBy('date', 'desc')
+                ->paginate(10)->appends(request()->query());
+        } else {
+            $attendances = Attendance::where('student_id', $id)
+                ->with('student')
+                ->orderBy('date', 'desc')
+                ->paginate(10)->appends(request()->query());
+        }
+
+        // Parte FREQUÊNCIA 
+
+        $scrollBack = null;
         $monthYear = request('monthYear');
         if ($monthYear) {
             $frequency = Frequency::where('student_id', $student->id)
@@ -145,10 +177,10 @@ class StudentController extends Controller
             $monthYear = Carbon::now()->format('m/Y');
         }
 
-        list($month, $yearN) = explode('/', $monthYear);
+        list($month, $year) = explode('/', $monthYear);
         $month = (int) $month;
-        $yearN = (int) $yearN;
-        $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $yearN);
+        $year = (int) $year;
+        $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
         $days = [];
         for ($i = 1; $i <= $numberDaysInMonth; $i++) {
@@ -179,12 +211,12 @@ class StudentController extends Controller
             '25-12', // Natal
             '31-12', // Véspera Ano novo
         ];
-        $formattedHolidays = array_map(function ($holiday) use ($yearN) {
-            return "{$yearN}-{$holiday}";
+        $formattedHolidays = array_map(function ($holiday) use ($year) {
+            return "{$year}-{$holiday}";
         }, $holidays);
         $weekends = [];
         for ($i = 1; $i <= $numberDaysInMonth; $i++) {
-            $date = sprintf("%04d-%02d-%02d", $yearN, $month, $i);
+            $date = sprintf("%04d-%02d-%02d", $year, $month, $i);
             $dayOfWeek = date('N', strtotime($date));
             if ($dayOfWeek == 6 || $dayOfWeek == 7) {
                 $weekends[] = $date;
@@ -193,14 +225,14 @@ class StudentController extends Controller
         $daysNotRequired = []; // P/ armazenar os dias normais, mas que não são os alvos
         if (isset($frequency)) {
             // Fazer os dias não clicáveis
-            $daysNotRequired = $this->getDaysNotRequired($frequency->class_apae, $yearN, $month, $numberDaysInMonth);
+            $daysNotRequired = $this->getDaysNotRequired($frequency->class_apae, $year, $month, $numberDaysInMonth);
             $frequency->nonClickableDays = array_merge($formattedHolidays, $weekends, $daysNotRequired);
             $frequency->weekends = array_merge($weekends);
 
             // Contar as Faltas
             $countAbsences = 0;
             for ($day = 1; $day <= $numberDaysInMonth; $day++) {
-                $date = sprintf("%04d-%02d-%02d", $yearN, $month, $day);
+                $date = sprintf("%04d-%02d-%02d", $year, $month, $day);
                 if (!in_array($date, $frequency->nonClickableDays) && $frequency->$day === false) {
                     $countAbsences++;
                 }
@@ -208,19 +240,22 @@ class StudentController extends Controller
             $frequency->countAbsences = $countAbsences;
         }
 
-        // Parte RELATÓRIO PEDAGÓGICO
+        return view('student.show_parts.attendanceShow', compact('student', 'attendances', 'date_range', 'frequency', 'monthYear', 'days', 'numberDaysInMonth', 'scrollBack'));
+    }
+    public function showEducationals($id) 
+    {
+        session(['previous_url' => url()->full()]);
+        $student = Student::findOrFail($id);
 
-        // Pega o ano passado como parâmetro na requisição
         $year = request('year');
 
-        $scrollBack2 = null;
         // Se o ano for fornecido, filtra os gastos por year
         if ($year) {
             $pedagogicals = Educational::whereYear('date_pedagogical', $year)
             ->where('student_id', $id)
             ->orderBy('date_pedagogical', 'desc')
             ->with('student', 'professor')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
 
             $scrollBack2 = true;
         } else {
@@ -230,7 +265,7 @@ class StudentController extends Controller
             ->where('student_id', $id)
             ->orderBy('date_pedagogical', 'desc')
             ->with('student', 'professor')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
 
         // Obtém os anos disponíveis para o select
@@ -238,8 +273,9 @@ class StudentController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
 
-        return view('student.show', compact('student', 'medHistory', 'attendances', 'frequency', 'date_range', 'scrollBack', 'isArchived', 'monthYear', 'days', 'numberDaysInMonth', 'pedagogicals', 'years', 'year', 'scrollBack2'));
+        return view('student.show_parts.educationalShow', compact('student', 'pedagogicals', 'years', 'year',));
     }
+
     public function edit($id)
     {
         $student = Student::with('professors')->findOrFail($id);
@@ -287,7 +323,7 @@ class StudentController extends Controller
 
         if ($input) {
             session()->flash('success', 'Aluno atualizado com sucesso!');
-            event(new CrudUpdated('updated', $input ));
+            broadcast(new CrudUpdated('updated', 'student'))->toOthers();
             return redirect()->route('student.index');
         } else {
             session()->flash('error', 'Falha na edição do Aluno');

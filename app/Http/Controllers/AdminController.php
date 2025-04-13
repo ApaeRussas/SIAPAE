@@ -12,6 +12,10 @@ class AdminController extends Controller
 {
     public function index() 
     {
+        session(['previous_url' => url()->full()]);
+        // context não utilizadp  
+        $context = 'admin';
+        
         $students = Student::where('state_student', 'alive');
 
         $yearsArray = Donation::selectRaw('year_of_donation as year')
@@ -30,7 +34,7 @@ class AdminController extends Controller
             array_unshift($years, $nextYear);
         }
 
-        return view('admin.index', compact('students', 'years'));
+        return view('admin.index', compact('students', 'years', 'context'));
     }
 
     public function checkStudentsFrequenciesDonations(Request $request) 

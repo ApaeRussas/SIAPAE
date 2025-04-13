@@ -36,16 +36,21 @@ route('dashboard')
                             </x-button>
                         @endif
                         @if(isset($actionRoute) && !isset($isArchived))
-                            <x-button href="{{ route($actionRoute . '.index') }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
-                                <div class="text-white flex sm:hidden">
-                                    <x-icons.back />
-                                </div>
+                            @if (!isset($notButtonBack))
+                                @php
+                                    $backUrl = session('previous_url', route($actionRoute . '.index'));
+                                @endphp
+                                <x-button href="{{ $backUrl }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
+                                    <div class="text-white flex sm:hidden">
+                                        <x-icons.back />
+                                    </div>
 
-                                <p class="text-base text-white hidden sm:flex px-1.5 py-0.5">
-                                    Voltar
-                                </p>
-                            </x-button>
-                        @else
+                                    <p class="text-base text-white hidden sm:flex px-1.5 py-0.5">
+                                        Voltar
+                                    </p>
+                                </x-button>
+                            @endif
+                            @else
                             <x-button href="{{ route($actionRoute . '.deposit') }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
                                 <div class="text-white flex sm:hidden">
                                     <x-icons.back />
@@ -95,6 +100,22 @@ route('dashboard')
                                                             {{ $itemArray->name }}
                                                         @endif
                                                     @endforeach 
+                                                @elseif ($item[2] == "array_pivot")
+                                                    @php
+                                                        $elementsPivot = $elementShow->professors;
+                                                        $numberItens = count($elementsPivot);
+                                                    @endphp
+                                                    @forelse ($elementsPivot as $index => $itemArray)
+                                                        @if ($index < $numberItens - 2)
+                                                            {{ $itemArray->name . ', ' }}
+                                                        @elseif ($index === $numberItens - 2)
+                                                            {{ $itemArray->name . ' e ' }}
+                                                        @else
+                                                            {{ $itemArray->name ?? '-----'}}
+                                                        @endif
+                                                    @empty
+                                                    -----
+                                                    @endforelse
                                                 @else
                                                     {{ data_get($elementShow, $item[1]) ?? '-----' }}
                                                 @endif
@@ -127,6 +148,22 @@ route('dashboard')
                                                             {{ $itemArray->name }}
                                                         @endif
                                                     @endforeach  
+                                                @elseif ($item[2] == "array_pivot")
+                                                    @php
+                                                        $elementsPivot = $elementShow->professors;
+                                                        $numberItens = count($elementsPivot);
+                                                    @endphp
+                                                    @forelse ($elementsPivot as $index => $itemArray)
+                                                        @if ($index < $numberItens - 2)
+                                                            {{ $itemArray->name . ', ' }}
+                                                        @elseif ($index === $numberItens - 2)
+                                                            {{ $itemArray->name . ' e ' }}
+                                                        @else
+                                                            {{ $itemArray->name ?? '-----'}}
+                                                        @endif
+                                                    @empty
+                                                    -----
+                                                    @endforelse
                                                 @else
                                                     {{ data_get($elementShow, $item[1]) ?? '-----' }}
                                                 @endif

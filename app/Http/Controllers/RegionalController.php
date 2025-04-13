@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Events\CrudUpdated;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\Regional;
 use App\Models\User;
@@ -15,7 +16,9 @@ class RegionalController extends Controller
      */
     public function index()
     {
-        // Pega o ano passado como parâmetro na requisição
+        session(['previous_url' => url()->full()]);
+        $context = 'regional';
+        
         $year = request('year');
 
         // Se o ano for fornecido, filtra os gastos por year
@@ -23,14 +26,14 @@ class RegionalController extends Controller
             $regionals = Regional::whereYear('date', $year)
             ->orderBy('date', 'desc')
             ->with('coordinator')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         } else {
             // Caso contrário, pega todos os gastos com o ano atual
             $year = \Carbon\Carbon::now()->year;
             $regionals = Regional::whereYear('date', $year)
             ->orderBy('date', 'desc')
             ->with('coordinator')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
         
         // Obtém os anos disponíveis para o select
@@ -38,7 +41,7 @@ class RegionalController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
         
-        return view('regional.home', compact('regionals', 'years', 'year'));
+        return view('regional.home', compact('regionals', 'years', 'year', 'context'));
     }
 
     /**
@@ -68,6 +71,7 @@ class RegionalController extends Controller
         $data = Regional::create($data);
         if ($data) {
             session()->flash('success','Relatório adicionado com sucesso');
+            broadcast(new CrudUpdated('created',  'regional'))->toOthers();
             return redirect()->route('regional.index', compact('year'));
         } else {
             session()->flash('error','Falha na criação');
@@ -121,6 +125,7 @@ class RegionalController extends Controller
         $input = $regional->update($data);
         if ($input) {
             session()->flash('success', 'Relatório atualizado com sucesso!');
+            broadcast(new CrudUpdated('updated',  'regional'))->toOthers();
             return redirect()->route('regional.index', compact('year'));
         } else {
             session()->flash('error','Falha na edição');
@@ -141,6 +146,7 @@ class RegionalController extends Controller
         $input = Regional::destroy($id);
         if ($input) {
             session()->flash('success', 'Relatório excluído com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'regional'))->toOthers();
             return redirect()->route('regional.index', compact('year'));
         } else {
             session()->flash('error', 'Erro na exclusão do Relatório');

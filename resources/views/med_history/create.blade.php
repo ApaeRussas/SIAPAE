@@ -37,7 +37,7 @@
                 title="Selecione um Aluno Registrado:">
 
                 @foreach ($students as $student)
-                    <option class="text-sm" value="{{ $student->id }}" {{ old('student_id') ? 'selected' : '' }}>
+                    <option class="text-sm" value="{{ $student->id }}" {{ old('student_id', $student_id) == $student->id ? 'selected' : '' }}>
                         {{ $student->name }}
                     </option>
                 @endforeach  
@@ -1348,6 +1348,33 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+    function loadStudentData(studentId) {
+        if (studentId) {
+            $.ajax({
+                url: '/studentapi/' + studentId,
+                type: 'GET',
+                success: function (data) {
+                    $('#date_of_birth').val(data.date_of_birth || '------'); 
+                    $('#diagnostic').val(data.diagnostic || '------'); 
+                    $('#school').val(data.school || '------'); 
+                    $('#grade_school').val(data.grade_school || '------'); 
+                    $('#sige').val(data.sige || '------');
+                    $('#turn_school').val(data.turn_school || '------'); 
+                    $('#name_mother').val(data.name_mother || '------');
+                }
+            });
+        } else {
+            // Limpa os campos se nenhum estudante estiver selecionado 
+            $('#date_of_birth').val('');
+            $('#diagnostic').val('');
+            $('#school').val('');
+            $('#grade_school').val('');
+            $('#sige').val('');
+            $('#turn_school').val('');
+        }
+    }
+
     $(document).ready(function () {
 
         let currentStep = 0; 
@@ -1406,30 +1433,13 @@
 
         $('#student_id').change(function () {
             var studentId = $(this).val();
-            if (studentId) {
-                $.ajax({
-                    url: '/studentapi/' + studentId,
-                    type: 'GET',
-                    success: function (data) {
-                        $('#date_of_birth').val(data.date_of_birth || '------'); 
-                        $('#diagnostic').val(data.diagnostic || '------'); 
-                        $('#school').val(data.school || '------'); 
-                        $('#grade_school').val(data.grade_school || '------'); 
-                        $('#sige').val(data.sige || '------');
-                        $('#turn_school').val(data.turn_school || '------'); 
-                        $('#name_mother').val(data.name_mother || '------');
-                    }
-                });
-            } else {
-                // Limpa os campos se nenhum estudante estiver selecionado 
-                $('#date_of_birth').val('');
-                $('#diagnostic').val('');
-                $('#school').val('');
-                $('#grade_school').val('');
-                $('#sige').val('');
-                $('#turn_school').val('');
-            }
+            loadStudentData(studentId);
         });
+
+        var initialStudentId = $('#student_id').val();
+        if (initialStudentId) {
+            loadStudentData(initialStudentId);
+        }
 
     });
 </script>

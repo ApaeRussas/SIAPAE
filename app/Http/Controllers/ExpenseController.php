@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Expense;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,9 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        // Pega o ano passado como parâmetro na requisição
+        session(['previous_url' => url()->full()]);
+        $context = 'expense';
+        
         $year = request('year');
 
         // Se o ano for fornecido, filtra os gastos por year
@@ -55,7 +58,7 @@ class ExpenseController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
         
-        return view('expense.home', compact('expenses', 'allExpenses', 'valueTotal', 'years', 'year'));
+        return view('expense.home', compact('expenses', 'allExpenses', 'valueTotal', 'years', 'year', 'context'));
     }
 
     /**
@@ -103,6 +106,7 @@ class ExpenseController extends Controller
         $data = Expense::create($data);
         if ($data) {
             session()->flash('success','Gasto adicionado com sucesso');
+            broadcast(new CrudUpdated('created',  'expense'))->toOthers();
             return redirect()->route('expense.index', compact('year'));
         } else {
             session()->flash('error','Falha na criação do Gasto');
@@ -156,6 +160,7 @@ class ExpenseController extends Controller
         $input = $expense->update($data);
         if ($input) {
             session()->flash('success', 'Gasto atualizado com sucesso!');
+            broadcast(new CrudUpdated('updated',  'expense'))->toOthers();
             return redirect()->route('expense.index', compact('year'));
         } else {
             session()->flash('error','Falha na edição do Gasto');
@@ -176,6 +181,7 @@ class ExpenseController extends Controller
         $input = Expense::destroy($id);
         if ($input) {
             session()->flash('success', 'Gasto excluído com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'expense'))->toOthers();
             return redirect()->route('expense.index', compact('year'));
         } else {
             session()->flash('error', 'Erro na exclusão do Gasto');

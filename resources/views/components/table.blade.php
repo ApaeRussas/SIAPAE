@@ -109,7 +109,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                             </div>
                         </form>         
                         @else
-                        <form action="{{route('student.show', $student->id)}}" method="GET" class="flex gap-2 w-full sm:w-auto">
+                        <form action="{{isset($searchRoute) ? route($searchRoute, $element->id) : route($actionRoute . '.index')}}" method="GET" class="flex gap-2 w-full sm:w-auto">
                             <div class="w-auto">
                                 <x-form.input name="monthYear" placeholder="Mês/Ano" value="{{old('monthYear', $monthYear)}}"
                                     class="period-input form-control w-32 monthYear" /> 
@@ -130,7 +130,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     @if (isset($withSearchDateRange))
                         <div id="search-container" class="flex items-center border border-gray-400 rounded-lg focus:border-gray-400 dark:border-gray-600 dark:bg-dark-eval-1
                                 dark:focus:ring-offset-dark-eval-1 overflow-hidden w-full sm:w-auto">
-                            <form method="GET" action="{{isset($searchRoute) ? route($searchRoute, $element->id) : route($actionRoute . '.index')}}" class="flex w-full sm:w-auto">
+                            <form method="GET" action="{{ route($actionRoute . '.index') }}" class="flex w-full sm:w-auto">
                             @php
                                 if ($range) {
                                     $placeholderValue = 'Intervalo: ' . $range;
@@ -244,8 +244,9 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                         @if (!isset($onlyHead))
                             @forelse ($rows as $row)
-                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-900 {{ isset($withShow) ? 'cursor-pointer' : ''}} transition duration-300"
-                                    @if(isset($withShow)) onclick="show('{{route($actionRoute . '.show', $row->id)}}')" @endif>
+                                <tr x-data @click="window.location.href = '{{ route($actionRoute . '.show', $row->id) }}'"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-900 {{ isset($withShow) ? 'cursor-pointer' : ''}} transition duration-300"
+                                    @if(!isset($withShow)) x-on:click.prevent @endif>
 
                                     @if($iteration == "true")
                                         <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
@@ -281,7 +282,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                                     </a>
                                                     
                                                     @else
-                                                    {{ \Illuminate\Support\Str::limit(data_get($row, $file) ?? '------', $strLimit ?? 20) }}
+                                                        {{ \Illuminate\Support\Str::limit(data_get($row, $file) ?? '------', $strLimit ?? 20) }}
                                                     @endif
                                                 </div>
                                             @elseif ($variable == "number")
@@ -299,7 +300,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                                     @if(isset($actionRoute))
                                         <td class="border border-gray-300 dark:border-gray-600 py-2"
-                                            onclick="event.stopPropagation();">
+                                            @click.stop>
 
                                             <div class="flex align-center justify-center gap-x-1">
                                                 
@@ -312,16 +313,16 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                                     </x-button>
                                                 </form>
                                                     @if (isset($actionsDepositWithDelete) && !isset($isNotAdmin))
-                                                <form method="POST" action="{{ route($actionRoute . '.destroy', $row->id) }}"
-                                                    accept-charet="UTF-8" style="display:inline">
-                                                    {{ method_field('DELETE') }}
-                                                    {{ csrf_field() }}
-    
-                                                    <x-button variant="pdf-trash" title="Deletar {{$title}}" size="sm"
-                                                        onclick="deleteConfirm(event, 'Excluir o item selecionado?', 'Por favor, insira a senha para confirmar a exclusão.', 'Excluir')">
-                                                        <x-icons.trash />
-                                                    </x-button>
-                                                </form>
+                                                    <form method="POST" action="{{ route($actionRoute . '.destroy', $row->id) }}"
+                                                        accept-charet="UTF-8" style="display:inline">
+                                                        {{ method_field('DELETE') }}
+                                                        {{ csrf_field() }}
+        
+                                                        <x-button variant="pdf-trash" title="Deletar {{$title}}" size="sm"
+                                                            onclick="deleteConfirm(event, 'Excluir o item selecionado?', 'Por favor, insira a senha para confirmar a exclusão.', 'Excluir')">
+                                                            <x-icons.trash />
+                                                        </x-button>
+                                                    </form>
                                                     @endif
     
                                                 @else

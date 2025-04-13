@@ -1,9 +1,10 @@
 <!-- Alvo para rolagem --> <div class="scroll-target"></div>
-<x-app-layout>
+<x-app-layout notRegularSidebar :element="$student">
 
-    <x-medHistory.showLayout :medHistory="$medHistory" />
+    <x-medHistory.showLayout :medHistory="$medHistory" notButtonBack/>
 
 </x-app-layout>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

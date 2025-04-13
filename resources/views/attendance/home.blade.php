@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :context="$context">
     <x-slot name="header">
         <div class="flex justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-3">
             <div class="flex items-center gap-x-1">

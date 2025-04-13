@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use App\Models\Attendance;
 use App\Models\Frequency;
 use App\Models\User;
@@ -20,7 +21,11 @@ class AttendanceController extends Controller
      */
     public function index()
     {
+        session(['previous_url' => url()->full()]);
+        $context = 'attendance';
+
         // OPÇÃO CALENDÁRIO
+        
         $dataAtual = Carbon::now();
         $year = Carbon::now()->format('Y');
 
@@ -56,14 +61,14 @@ class AttendanceController extends Controller
                 ->whereDate('date', '<=', $end_date)
                 ->with('student', 'professor')
                 ->orderBy('date', 'desc')
-                ->paginate(15);
+                ->paginate(15)->appends(request()->query());
         } else {
             $attendances = Attendance::orderBy('date', 'desc')
                 ->with('student', 'professor')
-                ->paginate(15);
+                ->paginate(15)->appends(request()->query());
         }
 
-        return view('attendance.home', compact('year', 'faixaSemana', 'diasDaSemana', 'students', 'frequencies', 'attendances', 'date_range'));
+        return view('attendance.home', compact('year', 'faixaSemana', 'diasDaSemana', 'students', 'frequencies', 'attendances', 'date_range', 'context'));
     }
 
     /**
@@ -98,11 +103,12 @@ class AttendanceController extends Controller
         $data['date'] = Carbon::createFromFormat('d/m/Y', $data['date'])->format('Y-m-d');
         
         $existingAttendance = Attendance::where('student_id', $data['student_id'])
+            ->where('signature_id', $data['signature_id'])
             ->whereDate('date', $data['date'])
             ->exists();
         if ($existingAttendance) {
             throw ValidationException::withMessages([
-                'date' => 'Já existe um atendimento para este aluno na data informada.',
+                'date' => 'Já existe um atendimento deste professor para este aluno na data informada.',
             ]);
         }
         
@@ -130,6 +136,7 @@ class AttendanceController extends Controller
         $data = Attendance::create($data);
         if ($data) {
             session()->flash('success', 'Atendimento adicionado com sucesso');
+            broadcast(new CrudUpdated('created',  'attendance'))->toOthers();
             return redirect()->route('attendance.index');
         } else {
             session()->flash('error', 'Falha na criação do Atendimento');
@@ -203,18 +210,20 @@ class AttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
 
         $existingAttendance = Attendance::where('student_id', $data['student_id'])
+            ->where('signature_id', $data['signature_id'])
             ->whereDate('date', $data['date'])
             ->where('id', '!=', $id)  // Ignora o registro atual
             ->exists();
         if ($existingAttendance) {
             throw ValidationException::withMessages([
-                'date' => 'Já existe um atendimento para este aluno na data informada.',
+                'date' => 'Já existe um atendimento deste professor para este aluno na data informada.',
             ]);
         }
 
         $input = $attendance->update($data);
         if ($input) {
             session()->flash('success', 'Atendimento atualizado com sucesso!');
+            broadcast(new CrudUpdated('updated',  'attendance'))->toOthers();
             return redirect()->route('attendance.index');
         } else {
             session()->flash('error', 'Falha na edição do Atendimento');
@@ -242,6 +251,7 @@ class AttendanceController extends Controller
         $input = Attendance::destroy($id);
         if ($input) {
             session()->flash('success', 'Atendimento excluído com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'attendance'))->toOthers();
             return redirect()->route('attendance.index');
         } else { 
             session()->flash('error', 'Erro na exclusão do Atendimento');

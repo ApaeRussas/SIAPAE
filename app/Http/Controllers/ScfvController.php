@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\User;
 use App\Models\Scfv;
@@ -16,6 +17,9 @@ class ScfvController extends Controller
      */
     public function index()
     {
+        session(['previous_url' => url()->full()]);
+        $context = 'scfv';
+        
         $date_range = request('date_range'); 
 
         if ($date_range) { 
@@ -27,14 +31,14 @@ class ScfvController extends Controller
                 ->whereDate('date_scfv', '<=', $end_date) 
                 ->with('professor')
                 ->orderBy('date_scfv', 'desc') 
-                ->paginate(15); 
+                ->paginate(15)->appends(request()->query()); 
         } else { 
             $scfvs = Scfv::orderBy('date_scfv', 'desc')
                 ->with('professor')
-                ->paginate(15);
+                ->paginate(15)->appends(request()->query());
         }
 
-        return view('scfv.home', compact('scfvs', 'date_range'));
+        return view('scfv.home', compact('scfvs', 'date_range', 'context'));
     }
 
     /**
@@ -64,6 +68,7 @@ class ScfvController extends Controller
         $data = Scfv::create($data);
         if ($data) {
             session()->flash('success','SCFV adicionado com sucesso');
+            broadcast(new CrudUpdated('created',  'scfv'))->toOthers();
             return redirect()->route('scfv.index');
         } else {
             session()->flash('error','Falha na criação');
@@ -120,6 +125,7 @@ class ScfvController extends Controller
         $input = $scfv->update($data);
         if ($input) {
             session()->flash('success','SCFV atualizado com sucesso');
+            broadcast(new CrudUpdated( 'updated',  'scfv'))->toOthers();
             return redirect()->route('scfv.index');
         } else {
             session()->flash('error','Falha na atualização');
@@ -135,6 +141,7 @@ class ScfvController extends Controller
         $input = Scfv::destroy($id);
         if ($input) {
             session()->flash('success', 'SCFV excluído com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'scfv'))->toOthers();
             return redirect()->route('scfv.index');
         } else {
             session()->flash('error', 'Erro na exclusão do SCFV');

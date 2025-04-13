@@ -1,3 +1,5 @@
+@props(['context', 'notRegularSidebar' => null, 'element' => null])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -59,8 +61,7 @@
             ></div>
             
             <!-- Sidebar -->
-            <x-sidebar.sidebar class="overflow-auto"/>
-
+            <x-sidebar.sidebar class="overflow-auto" :notRegularSidebar="(isset($notRegularSidebar) && isset($element)) ? true : null" :element="(isset($notRegularSidebar) && isset($element)) ? $element : null" />
             <!-- Page Wrapper -->
             <div class="flex flex-col min-h-screen"
                  :class="{ 'lg:ml-64': isSidebarOpen, 'md:ml-16': !isSidebarOpen}"
@@ -91,40 +92,43 @@
     <!-- Pop-up para avisar o usuário na tabela se tem dados novos -->
 
     <div 
-        x-data="{ showMessage: false, message: '', type: '' }"
+        x-data="{
+            type: '',
+            context: '{{ $context ?? ''}}'
+        }"
         x-init="
             Echo.channel('crud-channel')
                 .listen('.crud-event', (e) => {
+
+                    // Só processa se for da tabela atual
+                    if (e.context === context) {
+
+                    showBroadcastToastr('info', 'Dados foram atualizados nessa tabela.');
+
+                    /* Alerts separados, mas comentados por coveniência de ter apenas um único
                     type = e.type;
                     switch (e.type) {
-                        case 'criado':
-                            message = 'Novos dados inserido na tabela.';
+                        case 'created':
+                            showBroadcastToastr('success', 'Novo registro adicionado!');
                             break;
-                        case 'atualizado':
-                            message = 'Dados foram atualizados na tabela.';
+                        case 'updated':
+                            showBroadcastToastr('info', 'Um registro foi atualizado!');
                             break;
-                        case 'deletado':
-                            message = 'Dados foram deletados na tabela.';
+                        case 'archived':
+                            showBroadcastToastr('warning', 'Um Registro foi arquivado!');
+                            break;
+                        case 'deleted':
+                            showBroadcastToastr('warning', 'Um Registro foi deletado!');
+                            break;
+                        case 'restored':
+                            showBroadcastToastr('info', 'Um registro foi restaurado!');
                             break;
                     }
-                    showMessage = true;
-                    setTimeout(() => showMessage = false, 4000);
+                    */
+                    };
                 });
         "
-        class="fixed top-4 right-4 z-50"
     >
-        <div 
-            x-show="showMessage"
-            x-transition
-            class="px-4 py-2 rounded shadow text-white"
-            :class="{
-                'bg-green-600': type === 'created',
-                'bg-yellow-500': type === 'updated',
-                'bg-red-600': type === 'deleted'
-            }"
-        >
-            <span x-text="message"></span>
-        </div>
     </div>
 
     <!-- Pop-up com o toastr -->
@@ -133,6 +137,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script>
+        // Configuração do Toastr (deve vir DEPOIS da aplicação do tema)
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
@@ -144,18 +149,47 @@
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
+            "hideMethod": "fadeOut",
+            "tapToDismiss": false
         };
+
         @if(Session::has('success'))
             toastr.success("{{ Session::get('success') }}");
         @endif
         @if(Session::has('error'))
             toastr.error("{{ Session::get('error') }}");
         @endif
+        @if(session('warning'))
+            toastr.warning("{{ session('warning') }}");
+        @endif
+        @if(session('info'))
+            toastr.info("{{ session('info') }}");
+        @endif
 
         @if(Session::has('pdf_error'))
-            window.close(); 
+            window.close();
         @endif
+
+        const BROADCAST_TOAST_DELAY = 50000; // 50 segundos
+        if (!window.lastToastrTimestamp) {
+            window.lastToastrTimestamp = 0;
+        }
+
+        function showBroadcastToastr(type, message) {
+            const now = Date.now();
+            const timeSinceLast = now - window.lastToastrTimestamp;
+
+            if (timeSinceLast >= BROADCAST_TOAST_DELAY) {
+                window.lastToastrTimestamp = now;
+
+                if (type === 'success') toastr.success(message);
+                else if (type === 'error') toastr.error(message);
+                else if (type === 'info') toastr.info(message);
+                else if (type === 'warning') toastr.warning(message);
+            } else {
+                console.log(`Notificação ignorada (aguardando delay): ${message}`);
+            }
+        }
     </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\Record;
 use App\Http\Controllers\Controller;
@@ -11,20 +12,22 @@ class RecordController extends Controller
 {
     public function index()
     {
-        // Pega o ano passado como parâmetro na requisição
+        session(['previous_url' => url()->full()]);
+        $context = 'record';
+        
         $year = request('year');
 
         // Se o ano for fornecido, filtra os gastos por year
         if ($year) {
             $records = Record::whereYear('date', $year)
             ->orderBy('date', 'desc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         } else {
             // Caso contrário, pega todos os gastos com o ano atual
             $year = \Carbon\Carbon::now()->year;
             $records = Record::whereYear('date', $year)
             ->orderBy('date', 'desc')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
 
         // Obtém os anos disponíveis para o select
@@ -32,7 +35,7 @@ class RecordController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
 
-        return view('record.home', compact('records', 'years', 'year'));
+        return view('record.home', compact('records', 'years', 'year', 'context'));
     }
 
     /**
@@ -58,6 +61,7 @@ class RecordController extends Controller
         $input = Record::create($data);
         if ($input) {
             session()->flash('success', 'Ata adicionada com sucesso');
+            broadcast(new CrudUpdated('created',  'record'))->toOthers();
             return redirect()->route('record.index', compact('year'));
         } else {
             session()->flash('error', 'Falha na criação');
@@ -102,6 +106,7 @@ class RecordController extends Controller
         $input = $record->update($data);
         if ($input) {
             session()->flash('success', 'Ata atualizada com sucesso!');
+            broadcast(new CrudUpdated('updated',  'record'))->toOthers();
             return redirect()->route('record.index', compact('year'));
         } else {
             session()->flash('error', 'Falha na edição');
@@ -121,6 +126,7 @@ class RecordController extends Controller
         $input = Record::findOrFail($id)->delete();
         if ($input) {
             session()->flash('success', 'Ata excluída com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'record'))->toOthers();
             return redirect()->route('record.index', compact('year'));
         } else {
             session()->flash('error', 'Erro na exclusão do item');

@@ -118,9 +118,10 @@ document.addEventListener('alpine:init', () => {
                 }
 
                 this.applyScrollbarTheme();
+                this.applyToastrDarkTheme();
             },
+            // Aplicação do calendário flatpickr
             initFlatpickr() {
-                //Calendário no input de data
                 flatpickr(".date", {
                     dateFormat: "d/m/Y",
                     allowInput: true,
@@ -129,8 +130,7 @@ document.addEventListener('alpine:init', () => {
                     maxDate: "today",
                     disableMobile: true,
                 });
-
-                // Aplicar o Flatpickr com a opção de intervalo de datas 
+ 
                 flatpickr(".date-range", {
                     mode: "range",
                     dateFormat: "d/m/Y",
@@ -140,6 +140,82 @@ document.addEventListener('alpine:init', () => {
                     maxDate: "today",
                     disableMobile: true,
                 });
+            },
+            // Aplicação da estilização da mensagem do toastr
+            applyToastrDarkTheme() {
+                const isDark = getTheme();
+                
+                if (isDark) {
+                    // Sobrescrever os estilos padrão do Toastr para dark mode
+                    const style = document.createElement('style');
+                    style.id = 'toastr-dark-theme';
+                    style.textContent = `
+                        .toast-bottom-left, .toast-top-left, 
+                        .toast-top-right, .toast-bottom-right {
+                            opacity: 1 !important;
+                        }
+                        .toast {
+                            background-color: #1f2937 !important;
+                            color: #f3f4f6 !important;
+                            border: 1px solid #374151 !important;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5) !important;
+                        }
+                        .toast-success {
+                            background-color: #1f2937 !important;
+                        }
+                        .toast-error {
+                            background-color: #1f2937 !important;
+                        }
+                        .toast-info {
+                            background-color: #1f2937 !important;
+                        }
+                        .toast-warning {
+                            background-color: #1f2937 !important;
+                        }
+                        .toast-progress {
+                            background-color: #3b82f6 !important;
+                            opacity: 0.7;
+                        }
+                        .toast-close-button {
+                            color: #9ca3af !important;
+                        }
+                        .toast-close-button:hover {
+                            color: #f3f4f6 !important;
+                        }
+                        .toast-title {
+                            color: #f3f4f6 !important;
+                        }
+                        .toast-message {
+                            color: #e5e7eb !important;
+                        }
+                        /* Ícones com cores mais suaves para dark mode */
+                        .toast-success .toast-icon {
+                            color: #86efac !important;
+                        }
+                        .toast-error .toast-icon {
+                            color: #fca5a5 !important;
+                        }
+                        .toast-info .toast-icon {
+                            color: #93c5fd !important;
+                        }
+                        .toast-warning .toast-icon {
+                            color: #fcd34d !important;
+                        }
+                    `;
+                    
+                    // Remove o estilo anterior se existir
+                    const existingStyle = document.getElementById('toastr-dark-theme');
+                    if (existingStyle) {
+                        existingStyle.remove();
+                    }
+                    document.head.appendChild(style);
+                } else {
+                    // Remove o estilo dark se existir
+                    const existingStyle = document.getElementById('toastr-dark-theme');
+                    if (existingStyle) {
+                        existingStyle.remove();
+                    }
+                }
             },
             applyScrollbarTheme() {
                 const scrollbarThumbColor = this.isDarkMode ? '#555555' : '#c1c1c1';

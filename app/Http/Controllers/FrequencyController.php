@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use App\Models\Frequency;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,9 @@ class FrequencyController extends Controller
      */
     public function index()
     {
+        session(['previous_url' => url()->full()]);
+        $context = 'frequency';
+        
         $professors = User::where('position', 'professor(a)')
             ->where('state_user', 'alive')
             ->orderBy('name', 'asc')
@@ -56,7 +60,7 @@ class FrequencyController extends Controller
             });
         }
 
-        $frequencies = $query->orderBy('students.name', 'asc')->paginate(15);
+        $frequencies = $query->orderBy('students.name', 'asc')->paginate(15)->appends(request()->query());
 
         //Para funcionar a gambiarra já que cada aluno tem a sua observação e assinatura na coluna
         $observation = null;
@@ -146,7 +150,7 @@ class FrequencyController extends Controller
             $frequency->countAbsences = $countAbsences;
         }
 
-        return view('frequencyF.home', compact('frequencies', 'professors', 'turn_apae', 'professor_id', 'monthYear', 'days', 'numberDaysInMonth', 'observation', 'signature_id'));
+        return view('frequencyF.home', compact('frequencies', 'professors', 'turn_apae', 'professor_id', 'monthYear', 'days', 'numberDaysInMonth', 'observation', 'signature_id', 'context'));
     }
 
     /**
@@ -202,8 +206,11 @@ class FrequencyController extends Controller
 
         $frequency->{$request->day} = $request->status;
         $frequency->save();
-
-        return response()->json(['success' => true]);
+        
+        broadcast(new CrudUpdated('updated',  'frequency'))->toOthers();
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function updateDetails(Request $request)
@@ -239,6 +246,7 @@ class FrequencyController extends Controller
             }
         });
         // Se a transação for bem-sucedida, retornamos com uma mensagem de sucesso
+        broadcast(new CrudUpdated('updated',  'frequency'))->toOthers();
         session()->flash('success', 'Observações atualizadas com sucesso!');
         return redirect()->route('frequency.index', compact('class_apae', 'turn_apae', 'monthYear'));
     }

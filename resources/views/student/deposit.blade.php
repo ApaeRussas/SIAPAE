@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :context="$context">
 
     <x-slot name="header">
         <div class="flex items-center justify-between md:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-4">
@@ -17,7 +17,7 @@
         title="Aluno Arquivado" 
         :headers="['Nome', 'Data Nasc.', 'ID do Aluno', 'Escola', 'Diagnóstico', 'Foto']" 
         :rows="$students" 
-        :variablesDB="['name', 'date_of_birth', 'student_id', 'school', 'diagnostic.name', 'image']"
+        :variablesDB="['name', 'date_of_birth', 'student_id', 'school', 'diagnostic', 'image']"
         iteration="false"
         withSearchInput
         searchArchive

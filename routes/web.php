@@ -60,10 +60,20 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
     Route::get('/student/deposit', [StudentApiController::class, 'deposit'])->name('student.deposit');
     Route::post('/student/restore/{id}', [StudentApiController::class, 'restore'])->name('student.restore');
     Route::post('/studentapi/{id}', [StudentApiController::class, 'archive'])->name('student.archive');
+    Route::get('/student/anamnesis/{id}', [StudentController::class, 'showMedhistory'])->name('student.showMedhistory');
+    Route::get('/student/attendance/{id}', [StudentController::class, 'showAttendancesAndFrequency'])->name('student.showAttendancesAndFrequency');
+    Route::get('/student/educational/{id}', [StudentController::class, 'showEducationals'])->name('student.showEducationals');
+    
     Route::resource('student', StudentController::class)->except('destroy');
 
     Route::post('/frequencies/multiple-details', [FrequencyController::class, 'updateDetails'])->name('frequency_details.update');
     Route::get('/studentapi/{id}', [StudentApiController::class, 'getStudentData']);
+
+    // Repetitive Controller:
+    // Route::get('/student/attendance/{id}', [RepetitiveController::class, 'showAttendance'])->name('repetitive.attendanceShow');
+    // Route::get('/student/attendance/{id}/edit', [RepetitiveController::class, 'editAttendance'])->name('repetitive.attendanceEdit');
+    // Route::put('/student/attendance/{id}', [RepetitiveController::class, 'updateAttendance'])->name('repetitive.attendanceUpdate');
+    // Route::delete('/student/attendance/{id}', [RepetitiveController::class, 'destroyAttendance'])->name('repetitive.attendanceDelete');
 
     // Export - User:
     Route::get('/export/educational/{id}', [EducationalController::class, 'generatePdf'])->name('educational.export');

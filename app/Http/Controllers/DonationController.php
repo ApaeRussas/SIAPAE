@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\Donation;
 use App\Models\User;
@@ -16,7 +17,10 @@ class DonationController extends Controller
      */
     public function index()
     {
-        // Pega o ano passado como parâmetro na requisição
+        session(['previous_url' => url()->full()]);
+        // context não funciona aqui
+        $context = 'donation';
+        
         $year = request('year');
 
         // Se o ano for fornecido, filtra os gastos por year
@@ -82,7 +86,7 @@ class DonationController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
 
-        return view('donationD.home', compact('donations', 'allDonations', 'valueTotal', 'years', 'year'));
+        return view('donationD.home', compact('donations', 'allDonations', 'valueTotal', 'years', 'year', 'context'));
     }
 
     /**

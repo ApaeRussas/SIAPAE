@@ -12,12 +12,12 @@ class CrudUpdated implements ShouldBroadcast
     use InteractsWithSockets, SerializesModels;
 
     public $type;
-    public $data;
+    public string $context;
 
-    public function __construct($type, $data)
+    public function __construct($type, $context)
     {
-        $this->type = $type; // 'create', 'updated' ou 'delete'
-        $this->data = $data;
+        $this->type = $type; 
+        $this->context = $context;
     }
 
     public function broadcastOn()
@@ -27,6 +27,6 @@ class CrudUpdated implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'crud-evento';
+        return 'crud-event';
     }
 }

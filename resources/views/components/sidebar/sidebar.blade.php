@@ -12,7 +12,11 @@
 >
     <x-sidebar.header />
 
-    <x-sidebar.content />
+    @if (!isset($notRegularSidebar))
+        <x-sidebar.content />
+    @else
+        <x-sidebar.contentShowStudent :element="$element"/>
+    @endif
 
     <x-sidebar.footer />
 </aside>

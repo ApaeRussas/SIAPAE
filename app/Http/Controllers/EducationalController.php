@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrudUpdated;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Models\Educational;
 use App\Models\User;
@@ -16,7 +17,9 @@ class EducationalController extends Controller
      */
     public function index()
     {
-        // Pega o ano passado como parâmetro na requisição
+        session(['previous_url' => url()->full()]);
+        $context = 'educational';
+        
         $year = request('year');
 
         // Se o ano for fornecido, filtra os gastos por year
@@ -24,14 +27,14 @@ class EducationalController extends Controller
             $pedagogicals = Educational::whereYear('date_pedagogical', $year)
             ->orderBy('date_pedagogical', 'desc')
             ->with('student', 'professor')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         } else {
             // Caso contrário, pega todos os gastos com o ano atual
             $year = Carbon::now()->year;
             $pedagogicals = Educational::whereYear('date_pedagogical', $year)
             ->orderBy('date_pedagogical', 'desc')
             ->with('student', 'professor')
-            ->paginate(15);
+            ->paginate(15)->appends(request()->query());
         }
 
         // Obtém os anos disponíveis para o select
@@ -39,7 +42,7 @@ class EducationalController extends Controller
             ->distinct()
             ->orderByDesc('year')->pluck('year', 'year');
         
-        return view('educational.home', compact('pedagogicals', 'years', 'year'));
+        return view('educational.home', compact('pedagogicals', 'years', 'year', 'context'));
     }
 
     /**
@@ -75,6 +78,7 @@ class EducationalController extends Controller
         $input = Educational::create($data);
         if ($input) {
             session()->flash('success', 'Relatório Pedagógico adicionado com sucesso');
+            broadcast(new CrudUpdated('created',  'educational'))->toOthers();
             return redirect()->route('educational.index');
         } else {
             session()->flash('error', 'Falha na criação do Relatório Pedagógico');
@@ -132,6 +136,7 @@ class EducationalController extends Controller
         
         if ($input) {
             session()->flash('success', 'Relatório Pedagógico atualizado com sucesso!');
+            broadcast(new CrudUpdated('updated',  'educational'))->toOthers();
             return redirect()->route('educational.index');
         } else {
             session()->flash('error', 'Falha na edição do Relatório Pedagógico');
@@ -148,6 +153,7 @@ class EducationalController extends Controller
 
         if ($input) {
             session()->flash('success', 'Relatório Pedagógico excluído com sucesso!');
+            broadcast(new CrudUpdated('deleted',  'educational'))->toOthers();
             return redirect()->route('educational.index');
         } else {
             session()->flash('error', 'Erro na exclusão do Relatório Pedagógico');

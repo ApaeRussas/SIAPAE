@@ -1,6 +1,8 @@
-
 document.addEventListener("DOMContentLoaded", function() 
-{
+{  
+    if(this.getElementById("professors_service")) 
+    {
+
     let ts = new TomSelect("#professors_service", {
         plugins: ['checkbox_options'],
         placeholder: "Escolha o(s) Professor(es)",
@@ -108,4 +110,6 @@ document.addEventListener("DOMContentLoaded", function()
     setTimeout(() => {
         applyStyles();
     }, 10);
+    
+    }
 }) 
