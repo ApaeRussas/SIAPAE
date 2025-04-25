@@ -22,6 +22,7 @@ class StudentController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'student';
 
         $search = request('search');
@@ -45,7 +46,7 @@ class StudentController extends Controller
     {   
         $professors = User::where('position', 'Professor(a)')->get();
 
-        return view('student.create', compact('professors', 'student_id'));
+        return view('student.create', compact('professors'));
     }
 
     public function store(StudentRequest $request)
@@ -84,7 +85,7 @@ class StudentController extends Controller
     }
     public function show($id)
     {
-        session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $student = Student::findOrFail($id);
 
         $student->load('professors');
@@ -118,6 +119,7 @@ class StudentController extends Controller
     public function showMedhistory($id) 
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $student = Student::findOrFail($id);
         $medHistory = MedHistory::with('student')
             ->where('student_id', $id)
@@ -138,6 +140,7 @@ class StudentController extends Controller
     public function showAttendancesAndFrequency($id) 
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $student = Student::findOrFail($id);
 
         // Parte ATENDIMENTO
@@ -245,6 +248,7 @@ class StudentController extends Controller
     public function showEducationals($id) 
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $student = Student::findOrFail($id);
 
         $year = request('year');
@@ -271,12 +275,13 @@ class StudentController extends Controller
         // Obtém os anos disponíveis para o select
         $years = Educational::selectRaw('YEAR(date_pedagogical) as year')
             ->distinct()
+            ->where('student_id', $id)
             ->orderByDesc('year')->pluck('year', 'year');
 
         return view('student.show_parts.educationalShow', compact('student', 'pedagogicals', 'years', 'year',));
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $student = Student::with('professors')->findOrFail($id);
 
@@ -285,7 +290,13 @@ class StudentController extends Controller
         // Convert data to string
         $student['date_of_birth'] = \Carbon\Carbon::createFromFormat('Y-m-d', $student['date_of_birth'])->format('d/m/Y');
 
-        return view('student.edit', compact('student', 'professors'));
+        $element = null;
+        $notRegularSidebar = null;
+        if($request->notRegularSidebar) {
+            $element = $student;
+            $notRegularSidebar = true;
+        }
+        return view('student.edit', compact('student', 'professors', 'element', 'notRegularSidebar'));
     }
 
     public function update(StudentRequest $request, $id)
@@ -324,7 +335,20 @@ class StudentController extends Controller
         if ($input) {
             session()->flash('success', 'Aluno atualizado com sucesso!');
             broadcast(new CrudUpdated('updated', 'student'))->toOthers();
-            return redirect()->route('student.index');
+            if(route('student.index') == session('previous_url_secondary')) {
+                return redirect()->route('student.index');
+            } 
+            elseif (route('student.deposit') == session('previous_url_secondary')) {
+                return redirect()->route('student.deposit');
+            }
+            else {
+                $notRegularSidebar = true;
+                return redirect()->route('student.show', [
+                    'student' => $id,
+                    'element' => $student,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            }
         } else {
             session()->flash('error', 'Falha na edição do Aluno');
             return redirect()->route('student.edit');

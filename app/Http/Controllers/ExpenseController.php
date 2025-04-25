@@ -18,6 +18,7 @@ class ExpenseController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'expense';
         
         $year = request('year');
@@ -119,6 +120,8 @@ class ExpenseController extends Controller
      */
     public function show($id)
     {
+        session(['previous_url_secondary' => url()->full()]);
+        
         $expense = Expense::findOrFail($id);
         return view("expense.show", compact('expense'));
     }

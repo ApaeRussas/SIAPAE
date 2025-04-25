@@ -22,6 +22,7 @@ class AttendanceController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'attendance';
 
         // OPÇÃO CALENDÁRIO
@@ -60,11 +61,17 @@ class AttendanceController extends Controller
             $attendances = Attendance::whereDate('date', '>=', $start_date)
                 ->whereDate('date', '<=', $end_date)
                 ->with('student', 'professor')
+                ->whereHas('student', function ($query) {
+                    $query->where('state_student', 'alive');
+                })
                 ->orderBy('date', 'desc')
                 ->paginate(15)->appends(request()->query());
         } else {
             $attendances = Attendance::orderBy('date', 'desc')
                 ->with('student', 'professor')
+                ->whereHas('student', function ($query) {
+                    $query->where('state_student', 'alive');
+                })
                 ->paginate(15)->appends(request()->query());
         }
 
@@ -149,6 +156,8 @@ class AttendanceController extends Controller
      */
     public function show($id, Request $request)
     {
+        session(['previous_url_secondary' => url()->full()]);
+
         if($request->student_id && $request->date) {
             $attendanceExists = Attendance::where('student_id', $request->student_id)
                 ->where('date', Carbon::createFromFormat('d/m/Y', $request->date . '/' . Carbon::now()->format('Y'))->format('Y-m-d'))
@@ -159,7 +168,8 @@ class AttendanceController extends Controller
                 ->first();
                 $attendance['date'] = Carbon::createFromFormat('Y-m-d', $attendance['date'])->format('d/m/Y');
                 return view('attendance.show', compact('attendance'));  
-            } else {
+            } 
+            else {
                 $student_id = $request->student_id;
                 $date = $request->date . '/' . Carbon::now()->format('Y');
                 $students = Student::where('state_student', 'alive')
@@ -174,28 +184,45 @@ class AttendanceController extends Controller
         } else {
             $attendance = Attendance::findOrFail($id);
             $attendance['date'] = Carbon::createFromFormat('Y-m-d', $attendance['date'])->format('d/m/Y');
-    
-            return view('attendance.show', compact('attendance'));
+            
+            $element = null;
+            $notRegularSidebar = null;
+            if($request->notRegularSidebar) {
+                $element = Student::where('id', $attendance->student_id)->first();
+                $notRegularSidebar = true;
+            }
+            return view('attendance.show', compact('attendance', 'element','notRegularSidebar'));    
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $attendance = Attendance::findOrFail($id);
         // Formatando a data que está em Y/m/d para d/m/Y, pois estou usando um input type text pra data
         $attendance['date'] = Carbon::createFromFormat('Y-m-d', $attendance['date'])->format('d/m/Y');
 
-        $students = Student::where('state_student', 'alive')
-            ->orderBy('name', 'asc')
-            ->get();
+        if($attendance->student->state_student === 'alive') {
+            $students = Student::where('state_student', 'alive')
+                ->orderBy('name', 'asc')
+                ->get();
+        } else {
+            $students = Student::where('id', $attendance->student->id)
+                ->get();
+        }
         $professors = User::orderBy('name', 'asc')
             ->where('position', 'professor(a)')
             ->get();
 
-        return view('attendance.edit', compact('attendance', 'students', 'professors'));
+        $element = null;
+        $notRegularSidebar = null;
+        if($request->notRegularSidebar) {
+            $element = Student::where('id', $attendance->student_id)->first();
+            $notRegularSidebar = true;
+        }
+        return view('attendance.edit', compact('attendance', 'students', 'professors', 'element', 'notRegularSidebar'));
     }
 
     /**
@@ -208,6 +235,7 @@ class AttendanceController extends Controller
         $data['date'] = Carbon::createFromFormat('d/m/Y', $data['date'])->format('Y-m-d');
         
         $attendance = Attendance::findOrFail($id);
+        $student_id = $attendance->student_id;
 
         $existingAttendance = Attendance::where('student_id', $data['student_id'])
             ->where('signature_id', $data['signature_id'])
@@ -224,7 +252,17 @@ class AttendanceController extends Controller
         if ($input) {
             session()->flash('success', 'Atendimento atualizado com sucesso!');
             broadcast(new CrudUpdated('updated',  'attendance'))->toOthers();
-            return redirect()->route('attendance.index');
+            if(route('attendance.index') != session('previous_url_secondary')) {
+                $element = Student::where('id', $student_id)->first();
+                $notRegularSidebar = true;
+                return redirect()->route('student.showAttendancesAndFrequency', [
+                    'id' => $student_id,
+                    'element' => $element,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            } else {
+                return redirect()->route('attendance.index');
+            }
         } else {
             session()->flash('error', 'Falha na edição do Atendimento');
             return redirect()->route('attendance.edit');
@@ -237,6 +275,7 @@ class AttendanceController extends Controller
     public function destroy($id, Request $request)
     {
         $data = Attendance::find($id);
+        $student_id = $data->student_id;
 
         list($year, $month, $day) = explode('-', $data->date);
         $frequency = Frequency::where('student_id', $data->student_id)
@@ -252,12 +291,56 @@ class AttendanceController extends Controller
         if ($input) {
             session()->flash('success', 'Atendimento excluído com sucesso!');
             broadcast(new CrudUpdated('deleted',  'attendance'))->toOthers();
-            return redirect()->route('attendance.index');
+            if($request->notRegularSidebar) {
+                $element = Student::where('id', $student_id)->first();
+                $notRegularSidebar = true;
+                return redirect()->route('student.showAttendancesAndFrequency', [
+                    'id' => $student_id,
+                    'element' => $element,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            } else {
+                return redirect()->route('attendance.index');
+            }
         } else { 
             session()->flash('error', 'Erro na exclusão do Atendimento');
             return redirect()->route('attendance.index');
         }
     }  
+
+    public function deposit()
+    {
+        session(['previous_url' => url()->full()]);
+        $context = 'attendance';
+
+        // OPÇÃO - TABELA
+
+        $date_range = request('date_range');
+
+        if ($date_range) {
+            $dates = explode(' à ', $date_range);
+            $start_date = Carbon::createFromFormat('d/m/Y', trim($dates[0]))->format('Y-m-d');
+            $end_date = Carbon::createFromFormat('d/m/Y', trim($dates[1]))->format('Y-m-d');
+
+            $attendances = Attendance::whereDate('date', '>=', $start_date)
+                ->whereDate('date', '<=', $end_date)
+                ->with('student', 'professor')
+                ->whereHas('student', function ($query) {
+                    $query->where('state_student', 'archived');
+                })
+                ->orderBy('date', 'desc')
+                ->paginate(15)->appends(request()->query());
+        } else {
+            $attendances = Attendance::orderBy('date', 'desc')
+                ->with('student', 'professor')
+                ->whereHas('student', function ($query) {
+                    $query->where('state_student', 'archived');
+                })
+                ->paginate(15)->appends(request()->query());
+        }
+
+        return view('attendance.deposit', compact('attendances', 'date_range', 'context'));
+    }
 
     public function mudarSemana(Request $request)
     {

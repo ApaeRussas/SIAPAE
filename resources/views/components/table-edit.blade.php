@@ -22,7 +22,8 @@ route('dashboard')
                     <h1 class="text-xl sm:text-2xl font-bold leading-tight">Editar {{ $title }}</h1>
 
                     @php
-                        $backUrl = session('previous_url', route($actionRoute . '.index'));
+                        $backUrlProvisory = session('previous_url', route($actionRoute . '.index'));
+                        $backUrl = session('previous_url_secondary', $backUrlProvisory);
                     @endphp
                     <x-button href="{{ $backUrl }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
                         <div class="text-white flex sm:hidden">

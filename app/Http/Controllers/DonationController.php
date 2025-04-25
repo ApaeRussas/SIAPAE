@@ -18,6 +18,7 @@ class DonationController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         // context não funciona aqui
         $context = 'donation';
         

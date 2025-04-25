@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :notRegularSidebar="$notRegularSidebar" :element="$element">
 
     <x-table-edit 
         title="Registro de Atendimento" 

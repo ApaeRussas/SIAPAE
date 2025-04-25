@@ -6,7 +6,7 @@
                 <h2 class="text-xl md:text-2xl font-bold leading-tight pt-2">
                     {{ __('Controle de Doações') }} 
                 </h2>
-                <p class="py-2 text-xs md:text-base w-20 md:w-auto opacity-50">
+                <p class="hidden sm:block py-2 text-xs md:text-base w-20 md:w-auto opacity-50">
                     (Atualize a Página Antes de Exportar)
                 </p>
             </div>

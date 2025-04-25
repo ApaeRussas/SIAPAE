@@ -119,8 +119,12 @@ class StudentRequest extends FormRequest
             'max:4096'
             ],
 
+            'archiving_justify' => [
+                'nullable'
+            ],
+
             'state_student' => [
-            'nullable'
+                'nullable'
             ],
         ];
         

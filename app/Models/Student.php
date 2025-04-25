@@ -30,6 +30,7 @@ class Student extends Model
         'service',
         'professors_service',
         'image',
+        'archiving_justify',
         'state_student',
     ];
     
@@ -37,13 +38,6 @@ class Student extends Model
         'created' => StudentCreated::class,
         'updated' => StudentUpdated::class, 
     ];
-    // protected static function booted()
-    // {
-    //     static::deleting(function ($student) {
-    //         $student->professors()->detach();
-    //     });
-    // }
-
     
     public function donations(): HasMany
     {

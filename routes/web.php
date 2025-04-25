@@ -45,6 +45,10 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // User Access:
+    Route::get('/anamnesis/deposit', [MedHistoryController::class, 'deposit'])->name('anamnesis.deposit');
+    Route::get('/attendance/deposit', [AttendanceController::class, 'deposit'])->name('attendance.deposit');
+    Route::get('/educational/deposit', [EducationalController::class, 'deposit'])->name('educational.deposit');
+    
     Route::resources([
         'anamnesis' => MedHistoryController::class,
         'attendance' => AttendanceController::class,
@@ -54,6 +58,7 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
         'educational' => EducationalController::class,
         'scfv' => ScfvController::class,
     ]);
+    
     Route::get('/attendanceapi/detail', [AttendanceController::class, 'mudarSemana'])->name('attendance.weekChange');
     Route::post('/clear-session', [AttendanceController::class, 'clearSession'])->name('attendance.clearSession');
 
@@ -68,12 +73,6 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
 
     Route::post('/frequencies/multiple-details', [FrequencyController::class, 'updateDetails'])->name('frequency_details.update');
     Route::get('/studentapi/{id}', [StudentApiController::class, 'getStudentData']);
-
-    // Repetitive Controller:
-    // Route::get('/student/attendance/{id}', [RepetitiveController::class, 'showAttendance'])->name('repetitive.attendanceShow');
-    // Route::get('/student/attendance/{id}/edit', [RepetitiveController::class, 'editAttendance'])->name('repetitive.attendanceEdit');
-    // Route::put('/student/attendance/{id}', [RepetitiveController::class, 'updateAttendance'])->name('repetitive.attendanceUpdate');
-    // Route::delete('/student/attendance/{id}', [RepetitiveController::class, 'destroyAttendance'])->name('repetitive.attendanceDelete');
 
     // Export - User:
     Route::get('/export/educational/{id}', [EducationalController::class, 'generatePdf'])->name('educational.export');

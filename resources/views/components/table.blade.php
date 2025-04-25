@@ -36,11 +36,8 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                             dark:focus:ring-offset-dark-eval-1 overflow-hidden w-full sm:w-auto">
                             @php
                                 $route = $actionRoute . '.index';
-                                if(isset($searchArchive)) {
-                                    $route = $actionRoute . '.deposit';
-                                }
-                                if(isset($adminSearch)) {
-                                    $route = 'coordinator.index';
+                                if(isset($searchRoute)) {
+                                    $route = $searchRoute;
                                 }
                             @endphp
                             <form action="{{ route($route) }}" method="GET" class="flex items-center w-full">
@@ -54,7 +51,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     @endif
 
                     @if (isset($withSearchSelect))
-                        <form method="GET" action="{{ isset($searchRoute) ? route($searchRoute, $element->id) : route($actionRoute . '.index') }}"  class="w-full sm:w-48">
+                        <form method="GET" action="{{ isset($searchRoute) ? route($searchRoute, $element->id ?? null) : route($actionRoute . '.index') }}"  class="w-full sm:w-48">
                             <div class="form-group">
                                 <x-form.select valueName="year" function="this.form.submit()">
                                     <option value="">Selecione o ano:</option>
@@ -128,9 +125,16 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                     @endif
 
                     @if (isset($withSearchDateRange))
+                        @php
+                            $route = $actionRoute . '.index';
+                            if(isset($searchRoute)) {
+                                $route = $searchRoute;
+                                $elementId = $element->id ?? null;
+                            }
+                        @endphp
                         <div id="search-container" class="flex items-center border border-gray-400 rounded-lg focus:border-gray-400 dark:border-gray-600 dark:bg-dark-eval-1
                                 dark:focus:ring-offset-dark-eval-1 overflow-hidden w-full sm:w-auto">
-                            <form method="GET" action="{{ route($actionRoute . '.index') }}" class="flex w-full sm:w-auto">
+                            <form method="GET" action="{{route($route, $elementId)}}" class="flex w-full sm:w-auto">
                             @php
                                 if ($range) {
                                     $placeholderValue = 'Intervalo: ' . $range;
@@ -244,7 +248,16 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                         @if (!isset($onlyHead))
                             @forelse ($rows as $row)
-                                <tr x-data @click="window.location.href = '{{ route($actionRoute . '.show', $row->id) }}'"
+
+                                @php
+                                    if(isset($notRegularSidebarForEditShowDelete)) {
+                                        $parameter = '?notRegularSidebar=1';
+                                    } else {
+                                        $parameter = null;
+                                    }
+                                @endphp
+
+                                <tr x-data @click="window.location.href = '{{ route($actionRoute . '.show', $row->id) . $parameter}}'"
                                     class="hover:bg-gray-100 dark:hover:bg-gray-900 {{ isset($withShow) ? 'cursor-pointer' : ''}} transition duration-300"
                                     @if(!isset($withShow)) x-on:click.prevent @endif>
 
@@ -298,20 +311,25 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                                     @endforeach
 
-                                    @if(isset($actionRoute))
+                                    @if(isset($actionRoute) && !isset($notActions))
                                         <td class="border border-gray-300 dark:border-gray-600 py-2"
                                             @click.stop>
 
                                             <div class="flex align-center justify-center gap-x-1">
                                                 
                                                 @if (isset($actionsDeposit))
-                                                <form action="{{route($actionRoute . '.restore', $row->id)}}" method="POST"
-                                                    onclick="warningConfirm(event, 'Quer restaurar esse Registro?', 'question', 'Restaurar')">
-                                                    {{ csrf_field() }}
-                                                    <x-button title="Restaurar esse {{$title}}" variant="restore" size="sm">
-                                                        <x-icons.restore />
-                                                    </x-button>
-                                                </form>
+                                                    @if (isset($depositWithEdit))
+                                                        <x-button href="{{route($actionRoute . '.edit', $row->id) . $parameter}}" title="Editar {{$title}}" variant="edit" size="sm">
+                                                            <x-icons.edit />
+                                                        </x-button>
+                                                    @endif
+                                                    <form action="{{route($actionRoute . '.restore', $row->id)}}" method="POST"
+                                                        onclick="warningConfirm(event, 'Quer restaurar esse Registro?', 'question', 'Restaurar')">
+                                                        {{ csrf_field() }}
+                                                        <x-button title="Restaurar esse {{$title}}" variant="restore" size="sm">
+                                                            <x-icons.restore />
+                                                        </x-button>
+                                                    </form>
                                                     @if (isset($actionsDepositWithDelete) && !isset($isNotAdmin))
                                                     <form method="POST" action="{{ route($actionRoute . '.destroy', $row->id) }}"
                                                         accept-charet="UTF-8" style="display:inline">
@@ -327,13 +345,13 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
     
                                                 @else
                                                 @if (!isset($isNotAdmin))
-                                                <x-button href="{{route($actionRoute . '.edit', $row->id)}}" title="Editar {{$title}}" variant="edit" size="sm">
+                                                <x-button href="{{route($actionRoute . '.edit', $row->id) . $parameter}}" title="Editar {{$title}}" variant="edit" size="sm">
                                                     <x-icons.edit />
                                                 </x-button>
                                                 @endif
     
-                                                @if (!isset($archiveInsteadDestroy))
-                                                <form method="POST" action="{{ route($actionRoute . '.destroy', $row->id) }}"
+                                                @if (!isset($archiveInsteadDestroy) && !isset($notButtonDelete))
+                                                <form method="POST" action="{{ route($actionRoute . '.destroy', $row->id) . $parameter}}"
                                                     accept-charet="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
@@ -343,6 +361,8 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                                         <x-icons.trash />
                                                     </x-button>
                                                 </form>
+                                                @elseif (isset($notButtonDelete))
+                                                    {{-- Nada --}}
                                                 @else
                                                 <form method="POST" action="{{ route($actionRoute . '.archive', $row->id) }}"
                                                     accept-charset="UTF-8" style="display:inline" >
@@ -357,13 +377,13 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                                     @endphp
     
                                                     <x-button variant="edit" title="Arquivar {{$title}}" size="sm" class="{{isset($notArchiveAdmin) ? $hidden : ''}}"
-                                                        onclick="warningConfirm(event, 'Essa ação irá arquivar o item selecionado!', 'warning', 'Arquivar')">
+                                                        onclick="warningConfirm(event, 'Essa ação irá arquivar o item selecionado!', 'warning', 'Arquivar', '{{ $actionRoute }}')">
                                                         <x-icons.archive />
                                                     </x-button>
                                                 </form>
                                                 @endif
                                                 @endif
-                                            </td>
+                                        </td>
                                         @endif
                                 </tr>
                             @empty
@@ -372,7 +392,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                                         colspan="{{ count($headers) + (isset($actionRoute) ? 2 : 0) }}">
                                         Nenhum registro encontrado.
                                     </td>
-                                </tr>
+                            </tr>
                             @endforelse
 
                         @else

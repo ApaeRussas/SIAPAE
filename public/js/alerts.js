@@ -10,7 +10,7 @@ const getTheme = () => {
 }
 
 // Warning Confirm
-window.warningConfirm = function (e, text, icon, confirmButtonText) {
+window.warningConfirm = function (e, text, icon, confirmButtonText, actionRoute) {
     e.preventDefault();
     const form = e.target.closest('form');
     isDarkMode = getTheme();
@@ -30,12 +30,54 @@ window.warningConfirm = function (e, text, icon, confirmButtonText) {
             cancelButton: isDarkMode ? 'bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded transition duration-300 ease-in-out' : 'bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition duration-300 ease-in-out',
         },
     }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && actionRoute == 'student') {
+            Swal.fire({
+                title: "Justificativa",
+                input: "textarea",
+                inputPlaceholder: "Informe o motivo do desligamento do aluno...",
+                inputAttributes: {
+                    rows: 4,
+                    style: "resize: vertical;",
+                },
+                showCancelButton: true,
+                confirmButtonText: "Enviar",
+                cancelButtonText: "Cancelar",
+                customClass: {
+                    popup: isDarkMode ? 'bg-gray-900' : 'bg-white',
+                    title: isDarkMode ? 'text-white' : 'text-gray-900',
+                    input: isDarkMode ? 'bg-gray-800 text-white placeholder-gray-300' : 'bg-gray-100 text-gray-900 placeholder-gray-600',
+                    inputPlaceholder: isDarkMode ? 'text-gray-200' : 'text-gray-800',
+                    confirmButton: isDarkMode ? 'bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded transition duration-300 ease-in-out' : 'bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition duration-300 ease-in-out',
+                    cancelButton: isDarkMode ? 'bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded transition duration-300 ease-in-out' : 'bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition duration-300 ease-in-out',
+                    validationMessage: isDarkMode ? 'text-white bg-gray-700' : 'text-gray-900 bg-gray-100',
+                },
+                preConfirm: (justificativa) => {
+                    if (!justificativa || justificativa.trim().length < 5 || justificativa.trim().length > 2000) {
+                        Swal.showValidationMessage('A justificativa deve ter entre 5 caracteres e 2000 caracteres');
+                    }
+                    return justificativa;
+                }
+            }).then((justificationResult) => {
+                if (justificationResult.isConfirmed) {
+                    // Adiciona a justificativa em um input hidden do form
+                    let input = form.querySelector('input[name="justificativa"]');
+                    if (!input) {
+                        input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'justificativa';
+                        form.appendChild(input);
+                    }
+                    input.value = justificationResult.value;
+                    form.submit();
+                }
+            });
+        } else if (result.isConfirmed) {
             form.submit();
         }
     });
 };
-// Delete Confirm
+
+// Delete with Password Confirm
 window.deleteConfirm = function (e, title, text, confirmButton) {
     e.preventDefault();
     var form = e.target.closest('form');
@@ -95,6 +137,7 @@ window.deleteConfirm = function (e, title, text, confirmButton) {
             }
     });
 };
+
 // Update Confirm
 window.updateConfirm = function (e, title, text, confirmButton) {
     e.preventDefault(); // Evitar envio imediato do formulário

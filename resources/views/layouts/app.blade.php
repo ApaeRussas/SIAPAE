@@ -170,7 +170,7 @@
             window.close();
         @endif
 
-        const BROADCAST_TOAST_DELAY = 50000; // 50 segundos
+        const BROADCAST_TOAST_DELAY = 50000; 
         if (!window.lastToastrTimestamp) {
             window.lastToastrTimestamp = 0;
         }
@@ -182,12 +182,13 @@
             if (timeSinceLast >= BROADCAST_TOAST_DELAY) {
                 window.lastToastrTimestamp = now;
 
-                if (type === 'success') toastr.success(message);
-                else if (type === 'error') toastr.error(message);
-                else if (type === 'info') toastr.info(message);
-                else if (type === 'warning') toastr.warning(message);
-            } else {
-                console.log(`Notificação ignorada (aguardando delay): ${message}`);
+                // Time out para evitar de aparecer na tela do usuário 
+                setTimeout(() => {
+                    if (type === 'success') toastr.success(message);
+                    else if (type === 'error') toastr.error(message);
+                    else if (type === 'info') toastr.info(message);
+                    else if (type === 'warning') toastr.warning(message);
+                }, 500);
             }
         }
     </script>

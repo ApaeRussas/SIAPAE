@@ -17,6 +17,7 @@ class RegionalController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'regional';
         
         $year = request('year');
@@ -84,7 +85,9 @@ class RegionalController extends Controller
      */
     public function show($id)
     {
+        session(['previous_url_secondary' => url()->full()]);
         $regional = Regional::findOrFail($id);
+        
         $regional['date'] = \Carbon\Carbon::createFromFormat('Y-m-d', $regional['date'])->format('d/m/Y');
 
         return view('regional.show', compact('regional'));

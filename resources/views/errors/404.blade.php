@@ -21,13 +21,19 @@
             </div>
             @if (isset($notRegularSidebar) && isset($student))
                 <div class="flex flex-col  items-center">
-                    <span class="text-base sm:text-xl">A Anamnese desse aluno não está criada, deseja criar ?</span>
+                    @if ($student->state_student === 'alive')
+                        <span class="text-base sm:text-xl">A Anamnese desse aluno não está criada, deseja criar ?</span>
+                    @else
+                        <span class="text-base sm:text-xl">A Anamnese desse aluno não está criada</span>
+                    @endif
                     
-                    <x-button href="{{route('anamnesis.create', ['student_id' => $student->id])}}" variant="blue" class="w-full sm:w-32 mt-2">
-                        <div class="dark:text-gray-100 text-center w-full">
-                            Adicionar 
-                        </div>
-                    </x-button>
+                    @if ($student->state_student === 'alive')
+                        <x-button href="{{route('anamnesis.create', ['student_id' => $student->id])}}" variant="blue" class="w-full sm:w-32 mt-2">
+                            <div class="dark:text-gray-100 text-center w-full">
+                                Adicionar 
+                            </div>
+                        </x-button>
+                    @endif
                 </div>
             @endif
         </div>

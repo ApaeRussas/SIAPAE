@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Student;
 use App\Http\Requests\EducationalRequest;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class EducationalController extends Controller
 {
@@ -18,6 +19,7 @@ class EducationalController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'educational';
         
         $year = request('year');
@@ -27,19 +29,30 @@ class EducationalController extends Controller
             $pedagogicals = Educational::whereYear('date_pedagogical', $year)
             ->orderBy('date_pedagogical', 'desc')
             ->with('student', 'professor')
-            ->paginate(15)->appends(request()->query());
+            ->whereHas('student', function ($query) {
+                $query->where('state_student', 'alive');
+            })
+            ->paginate(15)
+            ->appends(request()->query());
         } else {
             // Caso contrário, pega todos os gastos com o ano atual
             $year = Carbon::now()->year;
             $pedagogicals = Educational::whereYear('date_pedagogical', $year)
             ->orderBy('date_pedagogical', 'desc')
             ->with('student', 'professor')
-            ->paginate(15)->appends(request()->query());
+            ->whereHas('student', function ($query) {
+                $query->where('state_student', 'alive');
+            })
+            ->paginate(15)
+            ->appends(request()->query());
         }
 
         // Obtém os anos disponíveis para o select
         $years = Educational::selectRaw('YEAR(date_pedagogical) as year')
             ->distinct()
+            ->whereHas('student', function ($query) {
+                $query->where('state_student', 'alive');
+            })
             ->orderByDesc('year')->pluck('year', 'year');
         
         return view('educational.home', compact('pedagogicals', 'years', 'year', 'context'));
@@ -89,29 +102,41 @@ class EducationalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        session(['previous_url_secondary' => url()->full()]);
+
         $pedagogical = Educational::with('student', 'professor')->findOrFail($id);
         $pedagogical['date_pedagogical'] = Carbon::createFromFormat('Y-m-d', $pedagogical['date_pedagogical'])->format('d/m/Y');
 
         // Obter a data de nascimento do aluno e formatá-la
         $pedagogical->student->date_of_birth = Carbon::createFromFormat('Y-m-d', $pedagogical->student->date_of_birth)->format('d/m/Y');
 
-        // Passar as variáveis para a view
-        return view('educational.show', compact('pedagogical'));
+        $element = null;
+        $notRegularSidebar = null;
+        if($request->notRegularSidebar) {
+            $element = Student::where('id', $pedagogical->student_id)->first();
+            $notRegularSidebar = true;
+        }
+        return view('educational.show', compact('pedagogical', 'element', 'notRegularSidebar'));
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $pedagogical = Educational::with('student')->findOrFail($id);
 
-        $students = Student::where('state_student', 'alive')
-        ->orderBy('name', 'asc')
-        ->get();
+        if($pedagogical->student->state_student === 'alive') {
+            $students = Student::where('state_student', 'alive')
+                ->orderBy('name', 'asc')
+                ->get();
+        } else {
+            $students = Student::where('id', $pedagogical->student->id)
+                ->get();
+        }
         $professors = User::orderBy('name', 'asc')
         ->where('position', 'professor(a)')  
         ->get();
@@ -119,7 +144,13 @@ class EducationalController extends Controller
         //Convert data to string
         $pedagogical['date_pedagogical'] = Carbon::createFromFormat('Y-m-d', $pedagogical['date_pedagogical'])->format('d/m/Y');
 
-        return view('educational.edit', compact('pedagogical', 'students', 'professors')); 
+        $element = null;
+        $notRegularSidebar = null;
+        if($request->notRegularSidebar) {
+            $element = Student::where('id', $pedagogical->student_id)->first();
+            $notRegularSidebar = true;
+        }
+        return view('educational.edit', compact('pedagogical', 'students', 'professors', 'element', 'notRegularSidebar')); 
     }
 
     /**
@@ -128,6 +159,8 @@ class EducationalController extends Controller
     public function update(EducationalRequest $request, $id)
     {
         $pedagogical = Educational::findOrFail($id);
+        $student_id = $pedagogical->student_id;
+
         $data = $request->validated();
         // Convert string to data
         $data['date_pedagogical'] = Carbon::createFromFormat('d/m/Y', $data['date_pedagogical'])->format('Y-m-d');
@@ -137,7 +170,17 @@ class EducationalController extends Controller
         if ($input) {
             session()->flash('success', 'Relatório Pedagógico atualizado com sucesso!');
             broadcast(new CrudUpdated('updated',  'educational'))->toOthers();
-            return redirect()->route('educational.index');
+            if(route('educational.index') != session('previous_url_secondary')) {
+                $element = Student::where('id', $student_id)->first();
+                $notRegularSidebar = true;
+                return redirect()->route('student.showEducationals', [
+                    'id' => $student_id,
+                    'element' => $element,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            } else {
+                return redirect()->route('educational.index');
+            }
         } else {
             session()->flash('error', 'Falha na edição do Relatório Pedagógico');
             return redirect()->route('educational.edit');
@@ -147,18 +190,71 @@ class EducationalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        $pedagogical = Educational::where('id', $id)->first();
+
         $input = Educational::destroy($id);
 
         if ($input) {
             session()->flash('success', 'Relatório Pedagógico excluído com sucesso!');
             broadcast(new CrudUpdated('deleted',  'educational'))->toOthers();
-            return redirect()->route('educational.index');
+            if($request->notRegularSidebar) {
+                $element = Student::where('id', $pedagogical->student_id)->first();
+                $notRegularSidebar = true;
+                return redirect()->route('student.showEducationals', [
+                    'id' => $pedagogical->student_id,
+                    'element' => $element,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            } else {
+                return redirect()->route('educational.index');
+            }
         } else {
             session()->flash('error', 'Erro na exclusão do Relatório Pedagógico');
             return redirect()->route('educational.index');
         }
+    }
+    public function deposit()
+    {
+        session(['previous_url' => url()->full()]);
+        $context = 'educational';
+        
+        $year = request('year');
+
+        // Se o ano for fornecido, filtra os gastos por year
+        if ($year) {
+            $pedagogicals = Educational::whereYear('date_pedagogical', $year)
+            ->orderBy('date_pedagogical', 'desc')
+            ->with('student', 'professor')
+            ->whereHas('student', function ($query) {
+                $query->where('state_student', 'archived');
+            })
+            ->paginate(15)
+            ->appends(request()->query());
+        } else {
+            // Caso contrário, pega todos os gastos com o ano atual
+            $year = Carbon::now()->year;
+            $pedagogicals = Educational::whereYear('date_pedagogical', $year)
+            ->orderBy('date_pedagogical', 'desc')
+            ->with('student', 'professor')
+            ->whereHas('student', function ($query) {
+                $query->where('state_student', 'archived');
+            })
+            ->paginate(15)
+            ->appends(request()->query());
+        }
+
+        // Obtém os anos disponíveis para o select
+        // TEM ERRO AQUI
+        $years = Educational::selectRaw('YEAR(date_pedagogical) as year')
+            ->distinct()
+            ->whereHas('student', function ($query) {
+                $query->where('state_student', 'archived');
+            })
+            ->orderByDesc('year')->pluck('year', 'year');
+        
+        return view('educational.deposit', compact('pedagogicals', 'years', 'year', 'context'));
     }
     public function generatePdf($id) 
     {

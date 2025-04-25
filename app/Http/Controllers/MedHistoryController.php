@@ -19,6 +19,7 @@ class MedHistoryController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'medHistory';
 
         $search = request('search');
@@ -28,13 +29,15 @@ class MedHistoryController extends Controller
                 ->whereHas('student', function ($query) use ($search) {
                     $query->where('name', 'like', '%' . $search . '%');
                 })->select('med_histories.*')
-                ->join('students', 'students.id', '=', 'med_histories.student_id')  
+                ->join('students', 'students.id', '=', 'med_histories.student_id')
+                ->where('students.state_student', 'alive')
                 ->orderBy('students.name', 'asc')
                 ->paginate(15)->appends(request()->query());
         } else {
             $medHistories = MedHistory::select('med_histories.*')
                 ->join('students', 'students.id', '=', 'med_histories.student_id')
                 ->with('student', 'user')
+                ->where('students.state_student', 'alive')
                 ->orderBy('students.name', 'asc')
                 ->paginate(15)->appends(request()->query());
         }
@@ -89,6 +92,7 @@ class MedHistoryController extends Controller
      */
     public function show($id)
     {
+        session(['previous_url_secondary' => url()->full()]);
         $medHistory = MedHistory::with('student')->findOrFail($id);
 
         $medHistory['date_of_anamnesis'] = Carbon::createFromFormat('Y-m-d', $medHistory['date_of_anamnesis'])->format('d/m/Y');
@@ -101,7 +105,7 @@ class MedHistoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $medHistory = MedHistory::with('student')
         ->findOrFail($id);
@@ -114,11 +118,22 @@ class MedHistoryController extends Controller
         $medHistory['date_mother'] = Carbon::createFromFormat('Y-m-d', $medHistory['date_mother'])->format('d/m/Y');
         $medHistory['date_father'] = (isset($medHistory['date_father']) ? Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y') : null);
 
-        $students = Student::orderBy('name', 'asc')
-        ->where('state_student', 'alive')
-        ->get();
+        $query = Student::orderBy('name', 'asc');
+        if($medHistory->student->state_student === 'alive') {
+            $query = $query->where('state_student', 'alive');
+        } else {
+            $query = $query->where('id', $medHistory->student->id);
+        }
+        $students = $query->get();
 
-        return view('med_history.edit', compact('medHistory', 'students', 'users'));
+        $element = null;
+        $notRegularSidebar = null;
+        if($request->notRegularSidebar) {
+            $element = Student::where('id', $medHistory->student_id)->first();
+            $notRegularSidebar = true;
+        }
+
+        return view('med_history.edit', compact('medHistory', 'students', 'users', 'element', 'notRegularSidebar'));
     }
 
     /**
@@ -127,6 +142,7 @@ class MedHistoryController extends Controller
     public function update(MedHistoryRequest $request, $id)
     {
         $medHistory = MedHistory::findOrFail($id);
+        $student_id = $medHistory->student_id;
 
         $data = $request->validated();
 
@@ -139,7 +155,21 @@ class MedHistoryController extends Controller
         if ($input) {
             session()->flash('success', 'Anamnese atualizada com sucesso');
             broadcast(new CrudUpdated('updated',  'medHistory'))->toOthers();
-            return redirect()->route('anamnesis.index');
+            if(route('anamnesis.index') == session('previous_url')) {
+                return redirect()->route('anamnesis.index');
+            } 
+            elseif (route('anamnesis.deposit') == session('previous_url')) {
+                return redirect()->route('anamnesis.deposit');
+            } 
+            else {
+                $element = Student::where('id', $student_id)->first();
+                $notRegularSidebar = true;
+                return redirect()->route('student.showMedhistory', [
+                    'id' => $student_id,
+                    'element' => $element,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            }
 
         } else {
             session()->flash('error', 'Falha na atualização da Anamnese');
@@ -150,9 +180,10 @@ class MedHistoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $data = MedHistory::findOrFail($id);
+        $student_id = $data->student_id;
         // Para a data criada seja aquela que vai aparecer no .index
         $carbonDate = Carbon::parse($data['date']);
         $year = $carbonDate->year; 
@@ -161,10 +192,49 @@ class MedHistoryController extends Controller
         if ($input) {
             session()->flash('success', 'Anamnese excluída com sucesso!');
             broadcast(new CrudUpdated('deleted',  'medHistory'))->toOthers();
-            return redirect()->route('anamnesis.index');
+            if($request->notRegularSidebar) {
+                $element = Student::where('id', $student_id)->first();
+                $notRegularSidebar = true;
+                return redirect()->route('student.showMedhistory', [
+                    'id' => $student_id,
+                    'element' => $element,
+                    'notRegularSidebar' => $notRegularSidebar,
+                ]);
+            } else {
+                return redirect()->route('anamnesis.index');
+            }
         } else {
             session()->flash('error', 'Erro na exclusão da Anamnese');
             return redirect()->route('anamnesis.index');
         }
+    }
+
+    public function deposit() 
+    {
+        session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
+        $context = 'medHistory';
+
+        $search = request('search');
+        
+        if ($search) {
+            $medHistories = MedHistory::with('student', 'user')
+                ->whereHas('student', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                })->select('med_histories.*')
+                ->join('students', 'students.id', '=', 'med_histories.student_id')  
+                ->where('students.state_student', 'archived')
+                ->orderBy('students.name', 'asc')
+                ->paginate(15)->appends(request()->query());
+        } else {
+            $medHistories = MedHistory::select('med_histories.*')
+                ->join('students', 'students.id', '=', 'med_histories.student_id')
+                ->with('student', 'user')
+                ->where('students.state_student', 'archived')
+                ->orderBy('students.name', 'asc')
+                ->paginate(15)->appends(request()->query());
+        }
+
+        return view('med_history.deposit', compact('medHistories', 'search', 'context'));
     }
 }

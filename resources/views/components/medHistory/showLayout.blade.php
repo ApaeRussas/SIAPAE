@@ -1,5 +1,20 @@
-<x-table-show :title="'Anamnese do aluno ' . $medHistory->student->name" :elementShow="$medHistory" onlyHead
-    notEditDelete actionRoute="anamnesis" :notButtonBack="isset($notButtonBack) ? true : null">
+@php
+    $titleBase = 'Anamnese do Aluno ';
+    $studentName = \Illuminate\Support\Str::limit($medHistory->student->name, 15);
+    $state_student = '';
+    if ($medHistory->student->state_student === 'archived') {
+        $state_student = ' (Arquivado)';
+    }
+    $title = $titleBase . $studentName . $state_student;
+@endphp
+
+<x-table-show 
+    :title="$title" 
+    :elementShow="$medHistory" 
+    onlyHead
+    notEditDelete 
+    actionRoute="anamnesis" 
+    :notButtonBack="isset($notButtonBack) ? true : null">
 
     <!-- PÁGINA 1 -->
 
@@ -915,7 +930,7 @@
     </div>
 
     <div class="flex items-center justify-between">
-        <div>
+        <div class="flex items-center my-4">
             <x-button href="{{route('student.show', $medHistory->student->id)}}" variant="blue">
                 <p class="flex dark:text-gray-200 px-2">
                     Ir para Aluno <span class="hidden sm:flex ml-1">{{ \Illuminate\Support\Str::limit($medHistory->student->name, 12)}}</span>
@@ -924,18 +939,27 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <x-button href="{{route('anamnesis.edit', $medHistory->id)}}" class="flex sm:hidden" title="Editar {{ $medHistory->student->name }}" variant="edit" size="sm">
+            @php
+                if(isset($routesNotCommomEditDelete)) {
+                    $parameter = '?notRegularSidebar=1';
+                } else {
+                    $parameter = null;
+                }
+            @endphp
+
+            <x-button href="{{route('anamnesis.edit', $medHistory->id) . $parameter}}" class="flex sm:hidden" title="Editar {{ $medHistory->student->name }}" variant="edit" size="sm">
                 <x-icons.edit />
             </x-button>
 
-            <x-button href="{{route('anamnesis.edit', $medHistory->id)}}" class="hidden sm:flex" title="Editar {{ $medHistory->student->name }}" variant="warning" 
+            <x-button href="{{route('anamnesis.edit', $medHistory->id) . $parameter}}" class="hidden sm:flex" title="Editar {{ $medHistory->student->name }}" variant="warning" 
                 title="Editar {{$medHistory->student->name}}">
                 <p class="text-gray-900 px-2">
                     {{ __('Editar') }}
                 </p>
             </x-button>
 
-            <form method="POST" action="{{ route('anamnesis.destroy', $medHistory->id) }}" accept-charset="UTF-8" class="flex items-center justify-center mt-4">
+            @if ($medHistory->student->state_student !== 'archived')
+            <form method="POST" action="{{ route('anamnesis.destroy', $medHistory->id) . $parameter }}" accept-charset="UTF-8" class="flex items-center justify-center mt-4">
                 {{ method_field('DELETE') }}
                 {{ csrf_field() }}
 
@@ -951,6 +975,7 @@
                     </div>
                 </x-button>
             </form>
+            @endif
         </div>
     </div>
 

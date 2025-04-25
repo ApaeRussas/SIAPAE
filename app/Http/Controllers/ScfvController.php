@@ -18,6 +18,7 @@ class ScfvController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'scfv';
         
         $date_range = request('date_range'); 
@@ -81,6 +82,7 @@ class ScfvController extends Controller
      */
     public function show($id)
     {
+        session(['previous_url_secondary' => url()->full()]);
         $scfv = Scfv::with('professor')->findOrFail($id);
         // Formatando a data que está em Y/m/d para d/m/Y, pois estou usando um input type text pra data
         $scfv['1Q_date'] = \Carbon\Carbon::createFromFormat('Y-m-d', $scfv['1Q_date'])->format('d/m/Y');

@@ -20,6 +20,7 @@ class CoordinatorController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'coordinator';
         $search = request('search');
         
@@ -86,6 +87,7 @@ class CoordinatorController extends Controller
     }
     public function show($id) 
     {
+        session(['previous_url_secondary' => url()->full()]);
         $user = User::find($id);
 
         $isArchived = null;

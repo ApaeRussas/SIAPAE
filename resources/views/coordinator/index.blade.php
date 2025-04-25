@@ -27,7 +27,7 @@
         :variablesDB="['name', 'email', 'position', 'access_level']"
         iteration="false"
         withSearchInput
-        adminSearch
+        searchRoute="coordinator.index"
         :search="$search"
         withShow
         archiveInsteadDestroy

@@ -1,5 +1,5 @@
 <!-- Alvo para rolagem --> <div class="scroll-target"></div>
-<x-app-layout>
+<x-app-layout :notRegularSidebar="$notRegularSidebar" :element="$element">
 
     <x-table-edit 
         title="Anamnese" 

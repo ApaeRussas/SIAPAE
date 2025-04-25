@@ -1,7 +1,7 @@
 <!-- Alvo para rolagem --> <div class="scroll-target"></div>
 <x-app-layout notRegularSidebar :element="$student">
 
-    <x-medHistory.showLayout :medHistory="$medHistory" notButtonBack/>
+    <x-medHistory.showLayout :medHistory="$medHistory" notButtonBack routesNotCommomEditDelete/>
 
 </x-app-layout>
 

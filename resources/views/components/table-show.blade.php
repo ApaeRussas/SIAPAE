@@ -38,7 +38,8 @@ route('dashboard')
                         @if(isset($actionRoute) && !isset($isArchived))
                             @if (!isset($notButtonBack))
                                 @php
-                                    $backUrl = session('previous_url', route($actionRoute . '.index'));
+                                    $backUrlProvisory = session('previous_url_secondary', route($actionRoute . '.index'));
+                                    $backUrl = session('previous_url', $backUrlProvisory);
                                 @endphp
                                 <x-button href="{{ $backUrl }}" title="Voltar para a tabela de {{ $title }}" variant="primary" size="sm">
                                     <div class="text-white flex sm:hidden">
@@ -207,21 +208,31 @@ route('dashboard')
 
                     <div>
                         @if(isset($actionRoute) && !isset($isArchived) && !isset($notEditDelete))
+
+                            @php
+                                if(isset($notRegularSidebar)) {
+                                    $parameter = '?notRegularSidebar=1';
+                                } else {
+                                    $parameter = null;
+                                }
+                            @endphp
+
                             <div class="py-2 flex items-center justify-between mt-4">
-                                <x-button href="{{route('student.edit', $elementShow->id)}}" class="flex sm:hidden" title="Editar {{ $title }}" variant="edit" size="sm">
+                                <x-button href="{{route('student.edit', $elementShow->id) . $parameter}}" class="flex sm:hidden" title="Editar {{ $title }}" variant="edit" size="sm">
                                     <x-icons.edit />
                                 </x-button>
 
                                 <x-button
-                                    href="{{route($actionRoute . '.edit', $elementShow->id)}}"
+                                    href="{{route($actionRoute . '.edit', $elementShow->id) . $parameter}}"
                                     variant="warning" title="Editar {{$title}}" class="hidden sm:flex">
                                     <p class="text-gray-900 px-2">
                                         {{ __('Editar') }}
                                     </p>
                                 </x-button>
 
+                                @if (!isset($notButtonDelete))
                                 <form method="POST"
-                                    action="{{ route($actionRoute . '.destroy', $elementShow->id) }}"
+                                    action="{{ route($actionRoute . '.destroy', $elementShow->id) . $parameter}}"
                                     accept-charset="UTF-8" style="display:inline">
                                     {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
@@ -238,6 +249,7 @@ route('dashboard')
                                         </div>
                                     </x-button>
                                 </form>
+                                @endif
                             </div>
                         @endif
                     </div>

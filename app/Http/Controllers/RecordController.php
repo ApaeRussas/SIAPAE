@@ -13,6 +13,7 @@ class RecordController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'record';
         
         $year = request('year');
@@ -74,6 +75,7 @@ class RecordController extends Controller
      */
     public function show(string $id)
     {
+        session(['previous_url_secondary' => url()->full()]);
         $record = Record::findOrFail($id);
         $record['date'] = \Carbon\Carbon::createFromFormat('Y-m-d', $record['date'])->format('d/m/Y');
 

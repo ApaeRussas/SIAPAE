@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :notRegularSidebar="$notRegularSidebar" :element="$element">
 
     <x-table-edit 
         title="Aluno - {{$student->name}}" 
@@ -283,10 +283,27 @@
             </div>
         </div>
 
+        @if ($student->state_student === 'archived')
+            <div class="mb-3 mt-3">
+                <label for="archiving_justify" class="block text-gray-700 dark:text-gray-300 font-sm sm:font-base mb-2">
+                    Motivo de Desligamento:
+                </label>
+
+                <x-form.textarea id="archiving_justify" name="archiving_justify" class="w-full dark:text-gray-400" sizeFont="base"
+                    placeholder="Ex: Aluno saiu da Apae e ...">
+                    {{old('archiving_justify', $student->archiving_justify)}}
+                </x-form.textarea>
+
+                @error("image")
+                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                @enderror
+            </div>
+        @endif
+
         <div class="mb-3 mt-3">
             <p class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
                 Foto do Aluno: (*opcional)
-        </p>
+            </p>
             <div class="flex flex-col sm:flex-row gap-2">
                 <div class="flex">
                     <x-form.button-image />

@@ -41,7 +41,9 @@ class StudentApiController extends Controller
     
     public function deposit() 
     {
+        session(['previous_url' => url()->full()]);
         $context = 'student';
+        
         $search = request('search');
         
         if ($search) {
@@ -58,10 +60,14 @@ class StudentApiController extends Controller
 
         return view('student.deposit', compact('students', 'search', 'context'));
     }
-    public function archive($id)
+    public function archive($id, Request $request)
     {
-        $student = Student::find($id);
+        $request->validate([
+            'justificativa' => 'required|string|min:5|max:2000',
+        ]);
 
+        $student = Student::find($id);
+        
         $student['state_student'] = 'archived';
 
         if ($student->image) {
@@ -72,6 +78,9 @@ class StudentApiController extends Controller
                 unlink($destination); // Comando para retirar a imagem
             };
         };
+
+        // Justificativa do desligamento
+        $student->archiving_justify = $request->input('justificativa');
 
         $input = $student->save();
 
@@ -88,6 +97,7 @@ class StudentApiController extends Controller
     {
         $student = Student::find($id);
 
+        $student['archiving_justify'] = null;
         $student['state_student'] = 'alive';
 
         $input = $student->save();

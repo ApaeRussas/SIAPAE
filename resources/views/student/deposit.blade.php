@@ -20,11 +20,12 @@
         :variablesDB="['name', 'date_of_birth', 'student_id', 'school', 'diagnostic', 'image']"
         iteration="false"
         withSearchInput
-        searchArchive
+        searchRoute="student.deposit"
         :search="$search"
         withShow
         actionRoute="student"
-        actionsDeposit>
+        actionsDeposit
+        depositWithEdit>
     </x-table>
     
 </x-app-layout> 

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('turn_apae');
             $table->string('image')->nullable();
             $table->string('service');
+            $table->text('archiving_justify')->nullable();
             $table->string('state_student')->default('alive');
             $table->timestamps();
         });

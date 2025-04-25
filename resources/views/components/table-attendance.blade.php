@@ -596,12 +596,6 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                             dark:focus:ring-offset-dark-eval-1 overflow-hidden">
                             @php
                                 $route = $actionRoute . '.index';
-                                if(isset($searchArchive)) {
-                                    $route = $actionRoute . '.deposit';
-                                }
-                                if(isset($adminSearch)) {
-                                    $route = 'coordinator.index';
-                                }
                             @endphp
                             <form action="{{ route($route) }}" method="GET">
                                 <x-form.input type="text" id="search" name="search"
@@ -787,8 +781,9 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                         @if (!isset($onlyHead))
                             @forelse ($rows as $row)
-                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-900 {{ isset($withShow) ? 'cursor-pointer' : ''}} transition duration-300"
-                                    @if(isset($withShow)) onclick="show('{{route($actionRoute . '.show', $row->id)}}')" @endif>
+                                <tr x-data @click="window.location.href = '{{ route($actionRoute . '.show', [$row->id]) }}'"
+                                class="hover:bg-gray-100 dark:hover:bg-gray-900 {{ isset($withShow) ? 'cursor-pointer' : ''}} transition duration-300"
+                                @if(!isset($withShow)) x-on:click.prevent @endif>
 
                                     @if($iteration == "true")
                                         <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
@@ -798,7 +793,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                                     @foreach ($variablesDB as $variable)
                                         <td
-                                            class="border border-gray-300 dark:border-gray-600 px-2 py-3 text-center text-gray-800 dark:text-gray-400">
+                                            class="border border-gray-300 dark:border-gray-600 px-2 py-3 text-center text-gray-800 dark:text-gray-300">
                                             @if ($variable == "date_of_birth" || $variable == "date_of_emission" || $variable == "date" || $variable == "date_of_anamnesis" || $variable == "date_pedagogical" || $variable == "date_scfv")
                                                 {{ \Carbon\Carbon::parse($row->{$variable})->format('d/m/Y') }}
 
@@ -842,7 +837,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
 
                                     @if(isset($actionRoute))
                                         <td class="border border-gray-300 dark:border-gray-600 py-2"
-                                            onclick="event.stopPropagation();">
+                                            @click.stop>
 
                                             <div class="flex align-center justify-center gap-x-1">
                                                 

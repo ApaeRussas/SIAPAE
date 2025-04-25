@@ -27,7 +27,7 @@
         :variablesDB="['name', 'email', 'position', 'access_level']"
         iteration="false"
         withSearchInput
-        searchArchive
+        searchRoute="coordinator.deposit"
         :search="$search"
         withShow
         actionRoute="coordinator"

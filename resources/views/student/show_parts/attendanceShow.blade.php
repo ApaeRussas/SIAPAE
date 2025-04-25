@@ -19,7 +19,7 @@
         withSearchDateRange
         :element="$student" 
         searchRoute="student.showAttendancesAndFrequency" 
-        notRoutesCommomForShowEditDelete
+        notRegularSidebarForEditShowDelete
         notButtonAdd 
         :range="$date_range" 
         withShow

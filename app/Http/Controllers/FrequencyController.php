@@ -18,6 +18,7 @@ class FrequencyController extends Controller
     public function index()
     {
         session(['previous_url' => url()->full()]);
+        session(['previous_url_secondary' => url()->full()]);
         $context = 'frequency';
         
         $professors = User::where('position', 'professor(a)')

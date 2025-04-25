@@ -1,14 +1,19 @@
 <x-app-layout notRegularSidebar :element="$student">
 
     @php
+        $titleBase = 'Informações do Aluno(a) ';
+        $studentName = \Illuminate\Support\Str::limit($student->name, 15);
         $state_student = '';
-        if (isset($isArchived)) {
+        if ($student->state_student === 'archived') {
             $state_student = ' (Arquivado)';
         }
+        $title = $titleBase . $studentName . $state_student;
+    
+        $parameter = '?notRegularSidebar=1';
     @endphp
 
     <x-table-show 
-        :title="'Informações do Aluno(a) ' . $student->name . $state_student" 
+        :title="$title" 
         :elementShow="$student"
         :labelsVariables="[
         ['Nome do Aluno', 'name', 'text'],
@@ -31,16 +36,24 @@
         divisionLateral 
         quantLateral="8" 
         notEditDelete
-        notButtonBack
         actionRoute="student" 
         :isArchived="$isArchived">
 
+        @if ($student->state_student === 'archived')
+            <x-anamnesis.label isShow>
+                Motivo do Arquivamento:
+            </x-anamnesis.label>
+            <x-form.textarea disabled disabled_normal="null" class="w-full dark:text-gray-400" sizeFont="base">
+                {{ $student->archiving_justify }}
+            </x-form.textarea>
+        @endif
+
         <div class="flex items-center justify-between mt-4 sm:mt-6">
-                <x-button href="{{route('student.edit', $student->id)}}" class="flex sm:hidden" title="Editar {{ $student->name }}" variant="edit" size="sm">
+                <x-button href="{{route('student.edit', $student->id) . $parameter}}" class="flex sm:hidden" title="Editar {{ $student->name }}" variant="edit" size="sm">
                     <x-icons.edit />
                 </x-button>
 
-                <x-button href="{{route('student.edit', $student->id)}}" class="hidden sm:flex" title="Editar {{ $student->name }}" variant="warning"
+                <x-button href="{{route('student.edit', $student->id) . $parameter}}" class="hidden sm:flex" title="Editar {{ $student->name }}" variant="warning"
                     title="Editar {{$student->name}}">
                     <p class="text-gray-900 px-2">
                         {{ __('Editar') }}
@@ -48,7 +61,7 @@
                 </x-button>
 
                 @if(!isset($isArchived))
-                    <form method="POST" action="{{ route('student.archive', $student->id) }}" accept-charset="UTF-8"
+                    <form method="POST" action="{{ route('student.archive', $student->id)}}" accept-charset="UTF-8"
                         style="display:inline" class="flex">
                         {{ csrf_field() }}
 

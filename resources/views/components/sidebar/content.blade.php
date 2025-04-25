@@ -18,14 +18,14 @@
     </div>
 
     <x-sidebar.link title="{{__('Anamnesis')}}" href="{{route('anamnesis.index')}}"
-        :isActive="request()->routeIs('anamnesis.index', 'anamnesis.create', 'anamnesis.edit', 'anamnesis.show')">
+        :isActive="request()->routeIs('anamnesis.index', 'anamnesis.create', 'anamnesis.edit', 'anamnesis.show', 'anamnesis.deposit')">
         <x-slot name="icon">
             <x-icons.anamnesis class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
     </x-sidebar.link>
 
     <x-sidebar.link title="{{__('Student File')}}" href="{{route('student.index')}}"
-        :isActive="request()->routeIs('student.index', 'student.create', 'student.edit', 'student.show')">
+        :isActive="request()->routeIs('student.index', 'student.create', 'student.edit', 'student.show', 'student.deposit')">
         <x-slot name="icon">
             <x-icons.person class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
@@ -39,7 +39,7 @@
     </x-sidebar.link>
 
     <x-sidebar.link title="{{__('Attendance Register')}}" href="{{route('attendance.index')}}"
-        :isActive="request()->routeIs('attendance.index', 'attendance.create', 'attendance.edit', 'attendance.show')">
+        :isActive="request()->routeIs('attendance.index', 'attendance.create', 'attendance.edit', 'attendance.show', 'attendance.deposit')">
         <x-slot name="icon">
             <x-icons.register class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
         </x-slot>
@@ -51,7 +51,7 @@
         </x-slot>
 
         <x-sidebar.sublink title="{{__('Pedagogic')}}" href="{{route('educational.index')}}"
-            :active="request()->routeIs('educational.index', 'educational.create', 'educational.edit', 'educational.show')" />
+            :active="request()->routeIs('educational.index', 'educational.create', 'educational.edit', 'educational.show', 'educational.deposit')" />
 
         <x-sidebar.sublink title="{{__('Regional')}}" href="{{route('regional.index')}}"
             :active="request()->routeIs('regional.index', 'regional.create', 'regional.edit', 'regional.show')" />

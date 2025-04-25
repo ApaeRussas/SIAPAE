@@ -11,9 +11,17 @@
                 </x-button>
             </div>
 
-            <x-button id="clearLocalStorageBtn" size="sm" variant="restart" title="Recarregar para Voltar ao Estado Original do Calendário">
-                <x-icons.restart />  
-            </x-button>
+            <div class="flex gap-x-2">
+                <x-button id="clearLocalStorageBtn" size="sm" variant="restart" title="Recarregar para Voltar ao Estado Original do Calendário">
+                    <x-icons.restart />  
+                </x-button>
+    
+                <x-button href="{{route('attendance.deposit')}}" class="justify-center gap-2" variant="edit" bg="bg-gray-100 dark:bg-dark-eval-0">
+                    <x-icons.archive class="w-6 h-6 dark:text-gray-300 -ml-1" aria-hidden="true" />
+    
+                    <span class="hidden sm:block">{{ __('Armazém') }}</span>
+                </x-button>
+            </div>
         </div>
     </x-slot>
 

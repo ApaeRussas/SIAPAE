@@ -1,4 +1,12 @@
-<x-app-layout>
+<x-app-layout :notRegularSidebar="$notRegularSidebar" :element="$element">
+
+    @php
+        if(isset($notRegularSidebar)) {
+            $parameter = '?notRegularSidebar=1';
+        } else {
+            $parameter = null;
+        }
+    @endphp
 
     <x-table-show 
         :title="'Atendimento de data ' . ' - ' . $attendance->date" 
@@ -12,6 +20,7 @@
         ]" 
         actionRoute="attendance"
         additional
+        notRegularSidebar
         notEditDelete>
 
         <div class="flex gap-2 items-center justify-between mt-5">
@@ -24,35 +33,37 @@
             </div>
 
             <div class="flex gap-2">
-                <x-button href="{{route('attendance.edit', $attendance->id)}}" class="flex sm:hidden" title="Editar Atendimento" variant="edit" size="sm">
+                <x-button href="{{route('attendance.edit', $attendance->id) . $parameter}}" class="flex sm:hidden" title="Editar Atendimento" variant="edit" size="sm">
                     <x-icons.edit />
                 </x-button>
 
-                <x-button href="{{route('attendance.edit', $attendance->id)}}" class="hidden sm:flex" title="Editar Atendimento" variant="warning"
+                <x-button href="{{route('attendance.edit', $attendance->id) . $parameter}}" class="hidden sm:flex" title="Editar Atendimento" variant="warning"
                     title="Editar {{$attendance->student->name}}">
                     <p class="text-gray-900 px-2">
                         {{ __('Editar') }}
                     </p>
                 </x-button>
     
-                <form method="POST" action="{{ route('attendance.destroy', $attendance->id) }}" accept-charset="UTF-8"
-                    style="display:inline">
-                    {{ method_field('DELETE') }}
-                    {{ csrf_field() }}
-    
-                    <x-button variant="pdf-trash" title="Deletar Atendimento" size="sm" class="flex sm:hidden"
-                        onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')">
-                        <x-icons.trash />
-                    </x-button>
+                @if ($attendance->student->state_student === 'alive')
+                    <form method="POST" action="{{ route('attendance.destroy', $attendance->id) . $parameter}}" accept-charset="UTF-8"
+                        style="display:inline">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+        
+                        <x-button variant="pdf-trash" title="Deletar Atendimento" size="sm" class="flex sm:hidden"
+                            onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')">
+                            <x-icons.trash />
+                        </x-button>
 
-                    <x-button type="submit" variant="danger" title="Deletar {{$attendance->student->name}}"  class="hidden sm:flex"
-                        onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')">
-
-                        <div class="text-gray-100 dark:text-gray-200 px-2">
-                            {{ __('Deletar') }}
-                        </div>
-                    </x-button>
-                </form>
+                        <x-button type="submit" variant="danger" title="Deletar {{$attendance->student->name}}"  class="hidden sm:flex"
+                            onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')">
+                            
+                            <div class="text-gray-100 dark:text-gray-200 px-2">
+                                {{ __('Deletar') }}
+                            </div>
+                        </x-button>
+                    </form>
+                @endif
             </div>
         </div>
 

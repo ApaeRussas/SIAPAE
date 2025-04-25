@@ -10,6 +10,10 @@
         </div>
     </x-slot>
     
+    @php
+        $student_archived = ($student->state_student == 'archived' ? true : null)
+    @endphp
+
     <x-table 
         title="Relatório Pedagógico" 
         :headers="['Data', 'Texto do Relatório', 'Assinatura']" 
@@ -19,11 +23,13 @@
         withSearchSelect
         notButtonAdd
         searchRoute="student.showEducationals" 
+        notRegularSidebarForEditShowDelete
         :element="$student"
         :years="$years"
         :year="$year"
         withShow
         strLimit="24"
-        actionRoute="educational" />
+        actionRoute="educational"
+        :notButtonDelete="$student_archived" />
 
 </x-app-layout>

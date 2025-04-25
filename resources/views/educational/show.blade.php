@@ -1,4 +1,9 @@
-<x-app-layout>
+<x-app-layout :notRegularSidebar="$notRegularSidebar" :element="$element">
+
+    @php
+        $student_archived = ($pedagogical->student->state_student == 'archived' ? true : null);
+    @endphp
+
     <x-table-show 
         :title="'Relatório Pedagógico'" 
         :elementShow="$pedagogical" 
@@ -16,6 +21,9 @@
             ['Assinatura', 'professor.name', 'select'],
         ]" 
         exportPdf
-        actionRoute="educational">
+        notRegularSidebar
+        actionRoute="educational"
+        :notButtonDelete="$student_archived">
     </x-table-show>
+
 </x-app-layout>

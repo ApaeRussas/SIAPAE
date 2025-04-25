@@ -6,7 +6,7 @@
                 <h2 class="text-xl md:text-2xl font-bold leading-tight pt-2">
                     {{ __('Lista de Frequência') }}
                 </h2>
-                <x-button button variant="question" class="mt-2" size="sm"
+                <x-button button variant="question" class="mt-1 sm:mt-2" size="sm"
                     onclick="guestText('info', 'Esse setor possui a ferramenta de busca com o turno do aluno em questão, mês/ano e o professor responsável pelo atendimento a qual se refere a lista de frequência, em que o único campo obrigatório de pesquisa é o mês/ano. <br> <br> Legenda: <br> dos botões (o que cada símbolo significa): <br> <span class=&quot;text-gray-400 dark:text-gray-400&quot;> - : Neutro ou Indiferente </span> <br> <span class=&quot;text-red-600&quot;> x : Falta Confirmada</span> <br> <span class=&quot;text-green-600&quot;> ✓ : Presença Confirmada</span> <br> dos campos sem botões: <br> <div class=&quot;flex items-center&quot;> <hr class=&quot;w-[18px] border-gray-500 dark:border-white mr-2 mb-4&quot;>: Dia de semana em que o aluno não tem atendimento ou fériado </div> x : Fim de semana (mascara/não mostra um feriado) <br> <br> Essa tabela contabiliza as faltas e seu dia em questão, além disso pode-se justificar a falta do aluno no campo apropriado além de registrar a assinatura do professor responsável.')">
                     <x-icons.question />
                 </x-button>
