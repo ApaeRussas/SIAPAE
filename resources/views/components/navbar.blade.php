@@ -83,21 +83,21 @@
                     {{ __('Profile') }}
                 </x-dropdown-link>
                 <!-- Coordinator Part -->
-                @if(Auth::user()->can('coordinator-view') || Auth::user()->can('admin-view'))
+                @canany(['coordinator-view', 'admin-view'])
                 <x-dropdown-link
                     :href="route('coordinator.index')"
                 >
-                    {{ __('Users Table') }}
+                    {{ __('Users Table') }} 
                 </x-dropdown-link>
-                @endif
+                @endcanany
                 <!-- Admin Part -->
-                @if(Auth::user()->can('admin-view'))
+                @can('admin-view')
                 <x-dropdown-link
                     :href="route('admin.index')"
                 >
                     {{ __('Admin') }}
                 </x-dropdown-link>
-                @endif
+                @endcan
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

@@ -134,7 +134,7 @@ passo 4: vá no perfil e no campo de redefinir senha, troque para uma senha pess
                         @endphp
                         <div id="search-container" class="flex items-center border border-gray-400 rounded-lg focus:border-gray-400 dark:border-gray-600 dark:bg-dark-eval-1
                                 dark:focus:ring-offset-dark-eval-1 overflow-hidden w-full sm:w-auto">
-                            <form method="GET" action="{{route($route, $elementId)}}" class="flex w-full sm:w-auto">
+                            <form method="GET" action="{{route($route, $elementId ?? null)}}" class="flex w-full sm:w-auto">
                             @php
                                 if ($range) {
                                     $placeholderValue = 'Intervalo: ' . $range;

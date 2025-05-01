@@ -53,8 +53,10 @@
         <x-sidebar.sublink title="{{__('Pedagogic')}}" href="{{route('educational.index')}}"
             :active="request()->routeIs('educational.index', 'educational.create', 'educational.edit', 'educational.show', 'educational.deposit')" />
 
-        <x-sidebar.sublink title="{{__('Regional')}}" href="{{route('regional.index')}}"
-            :active="request()->routeIs('regional.index', 'regional.create', 'regional.edit', 'regional.show')" />
+        @canany(['coordinator-view', 'admin-view'])
+            <x-sidebar.sublink title="{{__('Regional')}}" href="{{route('regional.index')}}"
+                :active="request()->routeIs('regional.index', 'regional.create', 'regional.edit', 'regional.show')" />
+        @endcanany
     </x-sidebar.dropdown>
 
     <x-sidebar.link title="{{__('SCFV')}}" href="{{route('scfv.index')}}" 
@@ -65,18 +67,21 @@
     </x-sidebar.link>
 
     <!-- Transition - REUNIÕES -->
+    
+    @canany(['coordinator-view', 'admin-view'])
 
-    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 dark:text-gray-300">
-        {{__('Events')}}
-    </div>
+        <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 dark:text-gray-300">
+            {{__('Events')}}
+        </div>
 
-    <x-sidebar.link title="{{__('Reunions Records')}}" href="{{route('record.index')}}"
-        :isActive="request()->routeIs('record.index', 'record.create', 'record.edit')">
-        <x-slot name="icon">
-            <x-icons.meeting class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
+        <x-sidebar.link title="{{__('Reunions Records')}}" href="{{route('record.index')}}"
+            :isActive="request()->routeIs('record.index', 'record.create', 'record.edit')">
+            <x-slot name="icon">
+                <x-icons.meeting class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+            </x-slot>
+        </x-sidebar.link>
 
+    @endcanany
 
     <!-- Transition - ADMIN -->
 

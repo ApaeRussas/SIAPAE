@@ -53,8 +53,6 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
         'anamnesis' => MedHistoryController::class,
         'attendance' => AttendanceController::class,
         'frequency' => FrequencyController::class,
-        'record' => RecordController::class,
-        'regional' => RegionalController::class,
         'educational' => EducationalController::class,
         'scfv' => ScfvController::class,
     ]);
@@ -85,7 +83,12 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
         Route::post('/coordinator/archive/{id}', [CoordinatorController::class, 'archive'])->name('coordinator.archive');
         Route::get('/coordinator/deposit', [CoordinatorController::class, 'deposit'])->name('coordinator.deposit');
         Route::post('/coordinator/restore/{id}', [CoordinatorController::class, 'restore'])->name('coordinator.restore');
-        Route::resource('coordinator', CoordinatorController::class);
+        
+        Route::resources([
+            'coordinator'=> CoordinatorController::class,
+            'regional' => RegionalController::class,
+            'record' => RecordController::class,
+        ]);
     });
 
     // Admin Access:
