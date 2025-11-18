@@ -15,62 +15,126 @@
 
 <body>
 
-    <header class="center-text">
-        <table id="header">
-            <tr>
-                <td style="{{isset($scfv) ? 'width: 18%;' : 'width: 15%;'}}" class="center-image">
-                    <img src="{{public_path('logo/mini-logo-light.png')}}" alt="Logo" style="width: 60px; height: auto;">
-                </td>
+<header>
+    <style>
+        /* ===========================
+        TIMBRE APAE — ADAPTADO PARA PDF
+        =========================== */
 
-                @if (isset($headerOld))
-                <td style="width: 65%">
-                    <strong class="font-arial" style="">
-                        <p style="font-size: 14px">APAE RUSSAS</p>
-                        <p style="font-size: 11px">CENTRO DE ATENDIMENTO EDUCACIONAL</p>
-                        <p style="font-size: 11px">ESPECIALIZADO JOSÉ ALVES DOS SANTOS</p>
-                        <p style="font-size: 11px">EMAIL: <a href="mailto:russas@apaece.org.br">russas@apaece.org.br</a> | CONTATO: 88 21451829</p>
-                    </strong>
-                </td>
-                <td style="width: 20%; text-align: right; place-items: center;">
-                    <strong>
-                        <p style="width: 130px; border: 1px solid #000; display: inline-block; text-align: center;">
-                            RELATÓRIO
-                        </p>
-                    </strong>
-                </td>
+        .header-apae {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: nowrap;
+            color: #0b5934;
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px;
+        }
 
-                @elseif (isset($headerNew))
-                <td style="width: 67%">
-                    <strong class="font-arial center-text">
-                        <p style="font-size: 11px" class="capslock">Associação de Pais e Amigos dos Exepcionais - APAE RUSSAS</p>
-                        @if (isset($scfv))
-                        <p style="font-size: 11px" class="capslock">Serviço de Convivência e Fortalecimento de Vínculo da APAE RUSSAS</p>
-                        @endif
-                        <p style="font-size: 11px" class="capslock">Tv. Joaquim Felix, 332, Bairro N.S. de Fátima, Russas - CE, CEP: 62900000</p>
-                        <p style="font-size: 11px">CNPJ 08.691.213/0001-19 | EMAIL: <a href="mailto:russas@apaece.org.br">russas@apaece.org.br</a> | CONTATO: 88 21451829</p>
-                    </strong>
-                </td>
-                <td style="width: 18%; text-align: right; place-items: center;">
-                    <strong>
-                        @if (isset($ata))
-                            <p style="width: 130px; border: 1px solid #000; display: inline-block; text-align: center;">
-                                {{$data->type_ata}}
-                            </p>
-                        @elseif (isset($donation))
-                            <p style="width: 140px; border: 1px solid #000; display: inline-block; text-align: center;">
-                                CONTRIBUIÇÃO
-                            </p>
-                        @elseif(isset($scfv))
-                            <p style="width: 80px; border: 1px solid #000; display: inline-block; text-align: center;">
-                                SCFV
-                            </p>
-                        @endif
-                    </strong>
-                </td>
+        .logo-area img {
+            width: 130px;
+        }
+
+        .text-area h1 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .text-area h2 {
+            font-size: 12px;
+            margin: 4px 0 8px;
+            text-align: center;
+        }
+
+        .divider {
+            width: 100%;
+            height: 3px;
+            background-color: #0b5934;
+            border-radius: 4px;
+            margin: 8px 0 10px;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 25px;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .info-line {
+            display: flex;
+            flex: 1;
+            gap: 6px;
+        }
+
+        .info-icon {
+            font-weight: bold;
+            font-size: 12px;
+            padding-top: 1px;
+        }
+    </style>
+
+    <div class="header-apae">
+
+        <div class="logo-area">
+            <img src="{{public_path('logo/logoTimbre.png')}}" alt="Logo APAE">
+        </div>
+
+        <div class="text-area">
+
+            <h1>ASSOCIAÇÃO DE PAIS E AMIGOS DOS EXCEPCIONAIS DE RUSSAS - APAE RUSSAS</h1>
+            <h2>CENTRO DE ATENDIMENTO EDUCACIONAL ESPECIALIZADO JOSÉ ALVES DOS SANTOS</h2>
+
+            <div class="divider"></div>
+
+            <div class="info-row">
+                <div class="info-line">
+                    <span class="info-icon">●</span>
+                    <span><strong>CNPJ:</strong> 08.691.213/0001-19</span>
+                </div>
+
+                <div class="info-line">
+                    <span class="info-icon">●</span>
+                    <span><strong>LOCAL:</strong> Tv. Joaquim Félix, 340 - N. Sra de Fátima, Russas - CE</span>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-line">
+                    <span class="info-icon">●</span>
+                    <span><strong>E-MAIL:</strong> russas@apaece.org.br</span>
+                </div>
+
+                <div class="info-line">
+                    <span class="info-icon">●</span>
+                    <span><strong>FONE:</strong> (88) 2145-1829</span>
+                </div>
+            </div>
+
+        </div>
+
+        @if(isset($headerNew) || isset($headerOld))
+        <div style="width:130px; text-align:right;">
+            <p style="border:1px solid #000; padding:4px 0; font-size:12px; text-align:center;">
+                @if (isset($ata))
+                    {{$data->type_ata}}
+                @elseif(isset($donation))
+                    CONTRIBUIÇÃO
+                @elseif(isset($scfv))
+                    SCFV
+                @else
+                    RELATÓRIO
                 @endif
-            </tr>
-        </table>
-    </header>
+            </p>
+        </div>
+        @endif
+
+    </div>
+</header>
+
 
     @if (isset($withFooterLandscape))
     <footer>
