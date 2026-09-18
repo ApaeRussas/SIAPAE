@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AttendanceRequest;
 use Illuminate\Validation\ValidationException;
-
+use Pest\Support\View;
 
 class AttendanceController extends Controller
 {
@@ -167,7 +167,13 @@ class AttendanceController extends Controller
                 ->where('date', Carbon::createFromFormat('d/m/Y', $request->date . '/' . Carbon::now()->format('Y'))->format('Y-m-d'))
                 ->first();
                 $attendance['date'] = Carbon::createFromFormat('Y-m-d', $attendance['date'])->format('d/m/Y');
-                return view('attendance.show', compact('attendance'));  
+                $element = null;
+                $notRegularSidebar = null;
+                return View('attendance.show', compact(
+                                'attendance',
+                                'element',
+                                'notRegularSidebar'
+                ));
             } 
             else {
                 $student_id = $request->student_id;
