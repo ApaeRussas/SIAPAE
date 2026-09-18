@@ -8,22 +8,22 @@
 @php
     if ($isActive) {
         $isActiveClasses = '
-            text-gray-700
-            bg-blue-50
+            text-[var(--primary-dark,#23543E)]
+            bg-[var(--primary-light,#E7F0E9)]
             shadow-sm
-            hover:bg-blue-100
-            dark:!text-gray-800
-            dark:!bg-gray-100
-            dark:hover:!bg-gray-200
+            hover:bg-[var(--sage,#B8CCBD)]
+            dark:!text-[var(--paper,#FFFDF9)]
+            dark:!bg-[var(--primary,#2F6B4F)]
+            dark:hover:!bg-[var(--primary-dark,#23543E)]
         ';
     } else {
         $isActiveClasses = '
-            text-gray-500
-            hover:text-gray-700
-            hover:bg-gray-100
-            dark:text-gray-300
-            dark:hover:text-white
-            dark:hover:bg-dark-eval-2
+            text-[var(--muted,#6E7A72)]
+            hover:text-[var(--text,#243129)]
+            hover:bg-[var(--cream,#F8F7F2)]
+            dark:text-[var(--sage,#B8CCBD)]
+            dark:hover:text-[var(--white,#FFFFFF)]
+            dark:hover:bg-[var(--primary-dark,#23543E)]
         ';
     }
 
@@ -64,7 +64,7 @@
             class="text-sm font-medium whitespace-nowrap"
             x-show="isSidebarOpen || isSidebarHovered"
             @if($isActive)
-                style="color: #1f2937 !important;"
+                style="color: var(--primary-dark, #23543E) !important;"
             @endif
         >
             {{ $title }}
@@ -80,8 +80,8 @@
                 class="
                     absolute
                     right-[7px]
-                    bg-gray-400
-                    dark:bg-gray-500
+                    bg-[var(--muted,#6E7A72)]
+                    dark:bg-[var(--sage,#B8CCBD)]
                     mt-[-5px]
                     h-2
                     w-[2px]
@@ -96,8 +96,8 @@
                 class="
                     absolute
                     left-[7px]
-                    bg-gray-400
-                    dark:bg-gray-500
+                    bg-[var(--muted,#6E7A72)]
+                    dark:bg-[var(--sage,#B8CCBD)]
                     mt-[-5px]
                     h-2
                     w-[2px]
@@ -147,7 +147,7 @@
             class="{{ $spanClasses }}"
             x-show="isSidebarOpen || isSidebarHovered"
             @if($isActive)
-                style="color: #1f2937 !important;"
+                style="color: var(--primary-dark, #23543E) !important;"
             @endif
         >
             {{ $title }}

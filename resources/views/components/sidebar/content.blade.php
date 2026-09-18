@@ -1,40 +1,41 @@
 <style>
 
     /* =========================================================
-       SIAPAE - NOVO MENU
+       SIAPAE - NOVO MENU (APAE RUSSAS)
        ========================================================= */
 
     .siapae-sidebar-nav {
-        --sidebar-text: #64748b;
-        --sidebar-title: #334155;
-        --sidebar-muted: #94a3b8;
+        --sidebar-text: #243129;
+        --sidebar-title: #23543E;
+        --sidebar-muted: #6E7A72;
 
-        --sidebar-hover: #f8fafc;
+        --sidebar-hover: #F8F7F2;
 
-        --sidebar-active-bg: #eff6ff;
-        --sidebar-active-text: #2563eb;
-        --sidebar-active-icon: #3b82f6;
+        --sidebar-active-bg: #E7F0E9;
+        --sidebar-active-text: #23543E;
+        --sidebar-active-icon: #2F6B4F;
 
-        --sidebar-divider: #e2e8f0;
+        --sidebar-divider: #E4E8E2;
     }
 
 
     /* =========================================================
-       TEMA ESCURO
+       TEMA ESCURO (VERDE DISCRETO QUASE COR DO FUNDO)
        ========================================================= */
 
     .dark .siapae-sidebar-nav {
-        --sidebar-text: #cbd5e1;
-        --sidebar-title: #e2e8f0;
-        --sidebar-muted: #94a3b8;
+        --sidebar-text: #E4E8E2;
+        --sidebar-title: #B8CCBD;
+        --sidebar-muted: #8A99AD;
 
-        --sidebar-hover: #1e293b;
+        --sidebar-hover: rgba(255, 255, 255, 0.05);
 
-        --sidebar-active-bg: #1e3a5f;
-        --sidebar-active-text: #60a5fa;
-        --sidebar-active-icon: #60a5fa;
+        /* Fundo super discreto (apenas 10% de opacidade do tom escuro) */
+        --sidebar-active-bg: rgba(35, 84, 62, 0.22); 
+        --sidebar-active-text: #FFFFFF;
+        --sidebar-active-icon: #D5A85A; /* Dourado suave para o ícone */
 
-        --sidebar-divider: #334155;
+        --sidebar-divider: rgba(255, 255, 255, 0.08);
     }
 
 
@@ -44,11 +45,11 @@
 
     .siapae-sidebar-nav {
         scrollbar-width: thin;
-        scrollbar-color: #cbd5e1 transparent;
+        scrollbar-color: #B8CCBD transparent;
     }
 
     .dark .siapae-sidebar-nav {
-        scrollbar-color: #475569 transparent;
+        scrollbar-color: #23543E transparent;
     }
 
 
@@ -101,16 +102,20 @@
 
 
     /* =========================================================
-       ITEM ATIVO
+       ITEM ATIVO (DISCRETO E ELEGANTE)
        ========================================================= */
 
     .siapae-sidebar-nav .siapae-menu-item.is-active {
-        background-color: var(--sidebar-active-bg);
-        color: var(--sidebar-active-text);
+        background-color: var(--sidebar-active-bg) !important;
+        color: var(--sidebar-active-text) !important;
+    }
+
+    .dark .siapae-sidebar-nav .siapae-menu-item.is-active {
+        border: 1px solid rgba(47, 107, 79, 0.4); /* Linha fina e suave em volta */
     }
 
 
-    /* Pequeno indicador lateral do item ativo */
+    /* Indicador lateral fino do item ativo */
 
     .siapae-sidebar-nav .siapae-menu-item.is-active::before {
         content: "";
@@ -121,7 +126,7 @@
         top: 50%;
 
         width: 3px;
-        height: 20px;
+        height: 18px;
 
         border-radius: 0 4px 4px 0;
 
@@ -153,7 +158,7 @@
 
 
     .siapae-sidebar-nav .siapae-menu-item.is-active svg {
-        color: var(--sidebar-active-icon);
+        color: var(--sidebar-active-icon) !important;
     }
 
 
@@ -168,7 +173,7 @@
 
 
     .siapae-sidebar-nav .siapae-menu-item.is-active span {
-        color: var(--sidebar-active-text);
+        color: var(--sidebar-active-text) !important;
         font-weight: 600;
     }
 
