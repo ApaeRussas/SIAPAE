@@ -1,110 +1,597 @@
-<x-perfect-scrollbar 
-    as="nav" 
-    aria-label="main" 
-    class="flex flex-col flex-1 gap-3 px-3 z-20"
+<style>
+
+    /* =========================================================
+       SIAPAE - NOVO MENU
+       ========================================================= */
+
+    .siapae-sidebar-nav {
+        --sidebar-text: #64748b;
+        --sidebar-title: #334155;
+        --sidebar-muted: #94a3b8;
+
+        --sidebar-hover: #f8fafc;
+
+        --sidebar-active-bg: #eff6ff;
+        --sidebar-active-text: #2563eb;
+        --sidebar-active-icon: #3b82f6;
+
+        --sidebar-divider: #e2e8f0;
+    }
+
+
+    /* =========================================================
+       TEMA ESCURO
+       ========================================================= */
+
+    .dark .siapae-sidebar-nav {
+        --sidebar-text: #cbd5e1;
+        --sidebar-title: #e2e8f0;
+        --sidebar-muted: #94a3b8;
+
+        --sidebar-hover: #1e293b;
+
+        --sidebar-active-bg: #1e3a5f;
+        --sidebar-active-text: #60a5fa;
+        --sidebar-active-icon: #60a5fa;
+
+        --sidebar-divider: #334155;
+    }
+
+
+    /* =========================================================
+       NAVEGAÇÃO
+       ========================================================= */
+
+    .siapae-sidebar-nav {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .dark .siapae-sidebar-nav {
+        scrollbar-color: #475569 transparent;
+    }
+
+
+    /* =========================================================
+       TÍTULOS DAS SEÇÕES
+       ========================================================= */
+
+    .siapae-section-title {
+        padding: 0 12px;
+        margin-top: 14px;
+        margin-bottom: 4px;
+
+        font-size: 10px;
+        line-height: 1.2;
+        font-weight: 700;
+
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+
+        color: var(--sidebar-muted);
+
+        transition:
+            opacity 150ms ease,
+            transform 150ms ease;
+    }
+
+
+    /* =========================================================
+       ESPAÇAMENTO DOS ITENS
+       ========================================================= */
+
+    .siapae-menu-item {
+        position: relative;
+        border-radius: 10px;
+
+        transition:
+            background-color 150ms ease,
+            color 150ms ease,
+            transform 150ms ease;
+    }
+
+
+    /* =========================================================
+       HOVER
+       ========================================================= */
+
+    .siapae-menu-item:hover {
+        background-color: var(--sidebar-hover);
+    }
+
+
+    /* =========================================================
+       ITEM ATIVO
+       ========================================================= */
+
+    .siapae-sidebar-nav .siapae-menu-item.is-active {
+        background-color: var(--sidebar-active-bg);
+        color: var(--sidebar-active-text);
+    }
+
+
+    /* Pequeno indicador lateral do item ativo */
+
+    .siapae-sidebar-nav .siapae-menu-item.is-active::before {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        top: 50%;
+
+        width: 3px;
+        height: 20px;
+
+        border-radius: 0 4px 4px 0;
+
+        background-color: var(--sidebar-active-icon);
+
+        transform: translateY(-50%);
+    }
+
+
+    /* =========================================================
+       ÍCONES
+       ========================================================= */
+
+    .siapae-sidebar-nav .siapae-menu-item svg {
+        width: 20px;
+        height: 20px;
+
+        color: var(--sidebar-muted);
+
+        transition:
+            color 150ms ease,
+            transform 150ms ease;
+    }
+
+
+    .siapae-sidebar-nav .siapae-menu-item:hover svg {
+        color: var(--sidebar-text);
+    }
+
+
+    .siapae-sidebar-nav .siapae-menu-item.is-active svg {
+        color: var(--sidebar-active-icon);
+    }
+
+
+    /* =========================================================
+       TEXTO
+       ========================================================= */
+
+    .siapae-sidebar-nav .siapae-menu-item span {
+        color: var(--sidebar-text);
+        transition: color 150ms ease;
+    }
+
+
+    .siapae-sidebar-nav .siapae-menu-item.is-active span {
+        color: var(--sidebar-active-text);
+        font-weight: 600;
+    }
+
+
+    /* =========================================================
+       SUBMENU
+       ========================================================= */
+
+    .siapae-sidebar-nav [x-show] {
+        border-left: 1px solid var(--sidebar-divider);
+        margin-left: 20px;
+        padding-left: 8px;
+    }
+
+
+    /* =========================================================
+       QUANDO A SIDEBAR ESTÁ RECOLHIDA
+       ========================================================= */
+
+    @media (min-width: 768px) {
+
+        .siapae-sidebar-nav {
+            transition: padding 150ms ease;
+        }
+
+    }
+
+</style>
+
+
+<x-perfect-scrollbar
+    as="nav"
+    aria-label="main"
+    class="siapae-sidebar-nav flex flex-col flex-1 px-3 pb-4 z-20"
 >
 
-    <!-- Dashboard -->
-    <x-sidebar.link title="Home" href="{{ route('dashboard') }}" :isActive="request()->routeIs('dashboard')">
-        <x-slot name="icon">
-            <x-icons.dashboard class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
 
-    <!-- Transition - ALUNOS -->
-     
-    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 dark:text-gray-300">
-        {{__('Students')}}
+    {{-- =====================================================
+         INÍCIO
+         ===================================================== --}}
+
+    <div
+        x-transition
+        x-show="isSidebarOpen || isSidebarHovered"
+        class="siapae-section-title"
+    >
+        Início
     </div>
 
-    <x-sidebar.link title="{{__('Anamnesis')}}" href="{{route('anamnesis.index')}}"
-        :isActive="request()->routeIs('anamnesis.index', 'anamnesis.create', 'anamnesis.edit', 'anamnesis.show', 'anamnesis.deposit')">
-        <x-slot name="icon">
-            <x-icons.anamnesis class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
 
-    <x-sidebar.link title="{{__('Student File')}}" href="{{route('student.index')}}"
-        :isActive="request()->routeIs('student.index', 'student.create', 'student.edit', 'student.show', 'student.deposit')">
-        <x-slot name="icon">
-            <x-icons.person class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
+    {{-- DASHBOARD --}}
 
-    <x-sidebar.link title="{{__('Frequency List')}}" href="{{route('frequency.index')}}"
-        :isActive="request()->routeIs('frequency.index')">
-        <x-slot name="icon">
-            <x-icons.frequency class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
+    <div class="siapae-menu-item">
 
-    <x-sidebar.link title="{{__('Attendance Register')}}" href="{{route('attendance.index')}}"
-        :isActive="request()->routeIs('attendance.index', 'attendance.create', 'attendance.edit', 'attendance.show', 'attendance.deposit')">
-        <x-slot name="icon">
-            <x-icons.register class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
+        <x-sidebar.link
+            title="Visão geral"
+            href="{{ route('dashboard') }}"
+            :isActive="request()->routeIs('dashboard')"
+        >
 
-    <x-sidebar.dropdown title="{{ __('Reports') }}" :active="Str::startsWith(request()->route()->uri(), ['educational', 'regional'])">
-        <x-slot name="icon">
-            <x-icons.report class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-        </x-slot>
+            <x-slot name="icon">
 
-        <x-sidebar.sublink title="{{__('Pedagogic')}}" href="{{route('educational.index')}}"
-            :active="request()->routeIs('educational.index', 'educational.create', 'educational.edit', 'educational.show', 'educational.deposit')" />
+                <x-icons.dashboard
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
 
-        @canany(['coordinator-view', 'admin-view'])
-            <x-sidebar.sublink title="{{__('Regional')}}" href="{{route('regional.index')}}"
-                :active="request()->routeIs('regional.index', 'regional.create', 'regional.edit', 'regional.show')" />
-        @endcanany
-    </x-sidebar.dropdown>
+            </x-slot>
 
-    <x-sidebar.link title="{{__('SCFV')}}" href="{{route('scfv.index')}}" 
-        :isActive="request()->routeIs('scfv.index', 'scfv.create', 'scfv.edit', 'scfv.show')">
-        <x-slot name="icon">
-            <x-icons.scfv class="flex-shrink-0 w-6 h-6 text-gray-200" aria-hidden="true" />
-        </x-slot>
-    </x-sidebar.link>
+        </x-sidebar.link>
 
-    <!-- Transition - REUNIÕES -->
-    
+    </div>
+
+
+
+    {{-- =====================================================
+         ATENDIMENTO
+         ===================================================== --}}
+
+    <div
+        x-transition
+        x-show="isSidebarOpen || isSidebarHovered"
+        class="siapae-section-title"
+    >
+        Atendimento
+    </div>
+
+
+    {{-- ANAMNESE --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.link
+            title="{{ __('Anamnesis') }}"
+            href="{{ route('anamnesis.index') }}"
+            :isActive="request()->routeIs(
+                'anamnesis.index',
+                'anamnesis.create',
+                'anamnesis.edit',
+                'anamnesis.show',
+                'anamnesis.deposit'
+            )"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.anamnesis
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
+
+
+
+    {{-- ESTUDANTES --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.link
+            title="{{ __('Student File') }}"
+            href="{{ route('student.index') }}"
+            :isActive="request()->routeIs(
+                'student.index',
+                'student.create',
+                'student.edit',
+                'student.show',
+                'student.deposit'
+            )"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.person
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
+
+
+
+    {{-- FREQUÊNCIA --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.link
+            title="{{ __('Frequency List') }}"
+            href="{{ route('frequency.index') }}"
+            :isActive="request()->routeIs('frequency.index')"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.frequency
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
+
+
+
+    {{-- ATENDIMENTOS --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.link
+            title="{{ __('Attendance Register') }}"
+            href="{{ route('attendance.index') }}"
+            :isActive="request()->routeIs(
+                'attendance.index',
+                'attendance.create',
+                'attendance.edit',
+                'attendance.show',
+                'attendance.deposit'
+            )"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.register
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
+
+
+
+    {{-- SCFV --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.link
+            title="{{ __('SCFV') }}"
+            href="{{ route('scfv.index') }}"
+            :isActive="request()->routeIs(
+                'scfv.index',
+                'scfv.create',
+                'scfv.edit',
+                'scfv.show'
+            )"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.scfv
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
+
+
+
+    {{-- =====================================================
+         GESTÃO
+         ===================================================== --}}
+
+    <div
+        x-transition
+        x-show="isSidebarOpen || isSidebarHovered"
+        class="siapae-section-title"
+    >
+        Gestão
+    </div>
+
+
+    {{-- RELATÓRIOS --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.dropdown
+            title="{{ __('Reports') }}"
+            :active="Str::startsWith(
+                request()->route()->uri(),
+                ['educational', 'regional']
+            )"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.report
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+
+            {{-- PEDAGÓGICO --}}
+
+            <x-sidebar.sublink
+                title="{{ __('Pedagogic') }}"
+                href="{{ route('educational.index') }}"
+                :active="request()->routeIs(
+                    'educational.index',
+                    'educational.create',
+                    'educational.edit',
+                    'educational.show',
+                    'educational.deposit'
+                )"
+            />
+
+
+            {{-- REGIONAL --}}
+
+            @canany(['coordinator-view', 'admin-view'])
+
+                <x-sidebar.sublink
+                    title="{{ __('Regional') }}"
+                    href="{{ route('regional.index') }}"
+                    :active="request()->routeIs(
+                        'regional.index',
+                        'regional.create',
+                        'regional.edit',
+                        'regional.show'
+                    )"
+                />
+
+            @endcanany
+
+        </x-sidebar.dropdown>
+
+    </div>
+
+
+
+    {{-- =====================================================
+         REUNIÕES
+         ===================================================== --}}
+
     @canany(['coordinator-view', 'admin-view'])
 
-        <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 dark:text-gray-300">
-            {{__('Events')}}
+        <div
+            x-transition
+            x-show="isSidebarOpen || isSidebarHovered"
+            class="siapae-section-title"
+        >
+            Gestão
         </div>
 
-        <x-sidebar.link title="{{__('Reunions Records')}}" href="{{route('record.index')}}"
-            :isActive="request()->routeIs('record.index', 'record.create', 'record.edit')">
-            <x-slot name="icon">
-                <x-icons.meeting class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </x-slot>
-        </x-sidebar.link>
+
+        {{-- ATAS DE REUNIÕES --}}
+
+        <div class="siapae-menu-item">
+
+            <x-sidebar.link
+                title="{{ __('Reunions Records') }}"
+                href="{{ route('record.index') }}"
+                :isActive="request()->routeIs(
+                    'record.index',
+                    'record.create',
+                    'record.edit'
+                )"
+            >
+
+                <x-slot name="icon">
+
+                    <x-icons.meeting
+                        class="flex-shrink-0 w-5 h-5"
+                        aria-hidden="true"
+                    />
+
+                </x-slot>
+
+            </x-sidebar.link>
+
+        </div>
 
     @endcanany
 
-    <!-- Transition - ADMIN -->
+
+
+    {{-- =====================================================
+         ADMINISTRAÇÃO
+         ===================================================== --}}
 
     @can('admin-view')
 
-        <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 dark:text-gray-300">
-            {{__('Admin')}}
+        <div
+            x-transition
+            x-show="isSidebarOpen || isSidebarHovered"
+            class="siapae-section-title"
+        >
+            Administração
         </div>
 
-        <x-sidebar.link title="{{ __('Donation Control')}}" href="{{route('donation.index')}}"
-            :isActive="request()->routeIs('donation.index')">
-            <x-slot name="icon">
-                <x-icons.partner class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </x-slot>
-        </x-sidebar.link>
 
-        <x-sidebar.link title="{{__('Expense Control')}}" href="{{route('expense.index')}}"
-            :isActive="request()->routeIs('expense.index', 'expense.create', 'expense.edit', 'expense.show')">
-            <x-slot name="icon">
-                <x-icons.expense class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </x-slot>
-        </x-sidebar.link>
+        {{-- DOAÇÕES --}}
+
+        <div class="siapae-menu-item">
+
+            <x-sidebar.link
+                title="{{ __('Donation Control') }}"
+                href="{{ route('donation.index') }}"
+                :isActive="request()->routeIs('donation.index')"
+            >
+
+                <x-slot name="icon">
+
+                    <x-icons.partner
+                        class="flex-shrink-0 w-5 h-5"
+                        aria-hidden="true"
+                    />
+
+                </x-slot>
+
+            </x-sidebar.link>
+
+        </div>
+
+
+        {{-- GASTOS --}}
+
+        <div class="siapae-menu-item">
+
+            <x-sidebar.link
+                title="{{ __('Expense Control') }}"
+                href="{{ route('expense.index') }}"
+                :isActive="request()->routeIs(
+                    'expense.index',
+                    'expense.create',
+                    'expense.edit',
+                    'expense.show'
+                )"
+            >
+
+                <x-slot name="icon">
+
+                    <x-icons.expense
+                        class="flex-shrink-0 w-5 h-5"
+                        aria-hidden="true"
+                    />
+
+                </x-slot>
+
+            </x-sidebar.link>
+
+        </div>
 
     @endcan
+
 
 </x-perfect-scrollbar>

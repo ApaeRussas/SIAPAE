@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Student extends Model
 {
     use HasFactory;
-    protected $state = 'students';
+
+    protected $table = 'students';
+
     protected $fillable = [
         'name',
         'name_mother',
@@ -33,36 +35,44 @@ class Student extends Model
         'archiving_justify',
         'state_student',
     ];
-    
-    protected $dispatchesEvents = [ 
+
+    protected $dispatchesEvents = [
         'created' => StudentCreated::class,
-        'updated' => StudentUpdated::class, 
+        'updated' => StudentUpdated::class,
     ];
-    
+
     public function donations(): HasMany
     {
         return $this->hasMany(Donation::class, 'student_id');
     }
+
     public function educationals(): HasMany
     {
         return $this->hasMany(Educational::class, 'student_id');
     }
+
     public function frequencies(): HasMany
     {
         return $this->hasMany(Frequency::class, 'student_id');
     }
+
     public function medHistory(): BelongsTo
     {
         return $this->belongsTo(MedHistory::class, 'student_id');
     }
+
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'student_id');
     }
-    // Aos usuários que são professores
+
     public function professors(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'student_user', 'student_id', 'professor_id')
-            ->withTimestamps();
+        return $this->belongsToMany(
+            User::class,
+            'student_user',
+            'student_id',
+            'professor_id'
+        )->withTimestamps();
     }
 }

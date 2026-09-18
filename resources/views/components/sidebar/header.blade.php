@@ -1,26 +1,34 @@
 <div class="flex items-center justify-between flex-shrink-0 px-3">
+
     <!-- Logo -->
     <a
         href="{{ route('dashboard') }}"
-        class="inline-flex items-center gap-2"
+        class="inline-flex items-center gap-3 min-w-0"
     >
 
-        <x-application-mini-light-logo    
-            x-show="!isSidebarOpen && !isDarkMode"
-            aria-hidden="true" 
-            class="mini-logo" />
-        <x-application-mini-dark-logo    
-            x-show="!isSidebarOpen && isDarkMode"
-            aria-hidden="true" 
-            class="mini-logo" /> 
-        <x-application-logo-light
-            x-show="isSidebarOpen && !isDarkMode" 
-            class="h-logo" /> 
-        <x-application-logo-dark 
-            x-show="isSidebarOpen && isDarkMode" 
-            class="h-logo" />
+        <!-- Logo oficial -->
+        <img
+            src="https://apaerussas.com.br/assets/logo.png"
+            alt="APAE Russas"
+            class="flex-shrink-0 w-11 h-11 object-contain"
+        >
 
-        <span class="sr-only">Dashboard</span>
+        <!-- Nome da instituição -->
+        <div
+            x-show="isSidebarOpen || isSidebarHovered"
+            x-transition
+            class="flex flex-col whitespace-nowrap"
+        >
+            <span class="text-base font-bold tracking-wide text-gray-700 dark:text-gray-200">
+                APAE
+            </span>
+
+            <span class="text-xs font-medium tracking-wider text-gray-500 dark:text-gray-400">
+                RUSSAS - CE
+            </span>
+        </div>
+
+        <span class="sr-only">APAE Russas - CE</span>
     </a>
 
     <!-- Toggle button -->
@@ -49,4 +57,5 @@
             class="w-6 h-6 lg:hidden"
         />
     </x-button>
+
 </div>
