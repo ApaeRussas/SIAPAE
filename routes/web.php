@@ -35,9 +35,18 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Rotas de Usuários Comuns
-    Route::get('/anamnesis/deposit', [MedHistoryController::class, 'deposit'])->name('anamnesis.deposit');
-    Route::get('/attendance/deposit', [AttendanceController::class, 'deposit'])->name('attendance.deposit');
-    Route::get('/educational/deposit', [EducationalController::class, 'deposit'])->name('educational.deposit');
+    Route::get('/anamnesis/deposit', [MedHistoryController::class, 'deposit'])
+    ->name('anamnesis.deposit');
+
+    Route::get('/attendance/deposit', [AttendanceController::class, 'deposit'])
+        ->name('attendance.deposit');
+
+    Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
+        ->name('educational.deposit');
+
+    // Lista de atendimentos de uma determinada data
+    Route::get('/attendance/day', [AttendanceController::class, 'day'])
+        ->name('attendance.day');
 
     Route::resources([
         'anamnesis' => MedHistoryController::class,
