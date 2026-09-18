@@ -151,6 +151,23 @@ class AttendanceController extends Controller
         }
     }
 
+        /**
+     * Lista todos os atendimentos de uma determinada data.
+     */
+    public function day(Request $request)
+    {
+        $date = Carbon::createFromFormat('Y-m-d', $request->date);
+
+        $attendances = Attendance::with(['student', 'professor'])
+            ->whereDate('date', $date->format('Y-m-d'))
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return view('attendance.day', [
+            'attendances' => $attendances,
+            'date' => $date->format('d/m/Y'),
+        ]);
+    }
     /**
      * Display the specified resource.
      */
@@ -169,10 +186,10 @@ class AttendanceController extends Controller
                 $attendance['date'] = Carbon::createFromFormat('Y-m-d', $attendance['date'])->format('d/m/Y');
                 $element = null;
                 $notRegularSidebar = null;
-                return View('attendance.show', compact(
-                                'attendance',
-                                'element',
-                                'notRegularSidebar'
+                return view('attendance.show', compact(
+                    'attendance',
+                    'element',
+                    'notRegularSidebar'
                 ));
             } 
             else {

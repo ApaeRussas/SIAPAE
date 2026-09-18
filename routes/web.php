@@ -66,6 +66,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
         ->name('educational.deposit');
 
+    // Lista de atendimentos de uma determinada data
+    Route::get('/attendance/day', [AttendanceController::class, 'day'])
+        ->name('attendance.day');
 
     Route::resources([
         'anamnesis' => MedHistoryController::class,
