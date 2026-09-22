@@ -716,7 +716,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
                         <table class="min-w-full mt-4 border-collapse border border-gray-300 dark:border-gray-800">
 
-                            <thead class="bg-blue-100 dark:bg-gray-700 dark:text-gray-200">
+                            <thead class="bg-green-100 dark:bg-gray-700 dark:text-gray-200">
 
                                 <tr>
 
@@ -858,7 +858,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                                 <a 
                                                                     href="{{ route('record.export', $row->id) }}" 
                                                                     target="_blank"
-                                                                    class="text-blue-500 underline">
+                                                                    class="text-green-600 underline">
 
                                                                     {{ \Illuminate\Support\Str::limit($row->title_header, $strLimit ?? 35) }}
 
