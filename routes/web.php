@@ -63,12 +63,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendance/deposit', [AttendanceController::class, 'deposit'])
         ->name('attendance.deposit');
 
-    Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
-        ->name('educational.deposit');
+    /*
+    |--------------------------------------------------------------------------
+    | LISTA DE ATENDIMENTOS
+    |--------------------------------------------------------------------------
+    | Precisa ficar ANTES do Route::resources('attendance')
+    */
 
-    // Lista de atendimentos de uma determinada data
-    Route::get('/attendance/day', [AttendanceController::class, 'day'])
-        ->name('attendance.day');
+    Route::get('/attendance/list', [AttendanceController::class, 'attendanceList'])
+        ->name('attendance.list');
+
 
     Route::resources([
         'anamnesis' => MedHistoryController::class,

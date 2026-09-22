@@ -20,7 +20,7 @@
 
 
     /* =========================================================
-       TEMA ESCURO (VERDE DISCRETO QUASE COR DO FUNDO)
+       TEMA ESCURO
        ========================================================= */
 
     .dark .siapae-sidebar-nav {
@@ -30,10 +30,9 @@
 
         --sidebar-hover: rgba(255, 255, 255, 0.05);
 
-        /* Fundo super discreto (apenas 10% de opacidade do tom escuro) */
-        --sidebar-active-bg: rgba(35, 84, 62, 0.22); 
+        --sidebar-active-bg: rgba(35, 84, 62, 0.22);
         --sidebar-active-text: #FFFFFF;
-        --sidebar-active-icon: #D5A85A; /* Dourado suave para o ícone */
+        --sidebar-active-icon: #D5A85A;
 
         --sidebar-divider: rgba(255, 255, 255, 0.08);
     }
@@ -102,7 +101,7 @@
 
 
     /* =========================================================
-       ITEM ATIVO (DISCRETO E ELEGANTE)
+       ITEM ATIVO
        ========================================================= */
 
     .siapae-sidebar-nav .siapae-menu-item.is-active {
@@ -111,11 +110,11 @@
     }
 
     .dark .siapae-sidebar-nav .siapae-menu-item.is-active {
-        border: 1px solid rgba(47, 107, 79, 0.4); /* Linha fina e suave em volta */
+        border: 1px solid rgba(47, 107, 79, 0.4);
     }
 
 
-    /* Indicador lateral fino do item ativo */
+    /* Indicador lateral */
 
     .siapae-sidebar-nav .siapae-menu-item.is-active::before {
         content: "";
@@ -151,11 +150,9 @@
             transform 150ms ease;
     }
 
-
     .siapae-sidebar-nav .siapae-menu-item:hover svg {
         color: var(--sidebar-text);
     }
-
 
     .siapae-sidebar-nav .siapae-menu-item.is-active svg {
         color: var(--sidebar-active-icon) !important;
@@ -170,7 +167,6 @@
         color: var(--sidebar-text);
         transition: color 150ms ease;
     }
-
 
     .siapae-sidebar-nav .siapae-menu-item.is-active span {
         color: var(--sidebar-active-text) !important;
@@ -190,7 +186,7 @@
 
 
     /* =========================================================
-       QUANDO A SIDEBAR ESTÁ RECOLHIDA
+       SIDEBAR RECOLHIDA
        ========================================================= */
 
     @media (min-width: 768px) {
@@ -248,7 +244,6 @@
     </div>
 
 
-
     {{-- =====================================================
          ATENDIMENTO
          ===================================================== --}}
@@ -292,7 +287,6 @@
     </div>
 
 
-
     {{-- ESTUDANTES --}}
 
     <div class="siapae-menu-item">
@@ -323,7 +317,6 @@
     </div>
 
 
-
     {{-- FREQUÊNCIA --}}
 
     <div class="siapae-menu-item">
@@ -348,13 +341,12 @@
     </div>
 
 
-
-    {{-- ATENDIMENTOS --}}
+    {{-- REG. DE ATENDIMENTO --}}
 
     <div class="siapae-menu-item">
 
         <x-sidebar.link
-            title="{{ __('Attendance Register') }}"
+            title="Reg. de Atendimento"
             href="{{ route('attendance.index') }}"
             :isActive="request()->routeIs(
                 'attendance.index',
@@ -378,6 +370,29 @@
 
     </div>
 
+
+    {{-- LISTA DE ATENDIMENTO --}}
+
+    <div class="siapae-menu-item">
+
+        <x-sidebar.link
+            title="Lista de Atendimento"
+            href="{{ route('attendance.list') }}"
+            :isActive="request()->routeIs('attendance.list')"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.register
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
 
 
     {{-- SCFV --}}
@@ -407,7 +422,6 @@
         </x-sidebar.link>
 
     </div>
-
 
 
     {{-- =====================================================
@@ -482,7 +496,6 @@
     </div>
 
 
-
     {{-- =====================================================
          REUNIÕES
          ===================================================== --}}
@@ -526,7 +539,6 @@
         </div>
 
     @endcanany
-
 
 
     {{-- =====================================================
