@@ -26,7 +26,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
                 <button @click="setActiveTab('calendar')" 
                     :class="{
-                        'border-blue-500 text-blue-600 dark:text-blue-400': activeTab === 'calendar',
+                        'border-green-600 text-green-700 dark:text-green-400': activeTab === 'calendar',
                         'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300': activeTab !== 'calendar'
                     }"
                     class="px-4 py-2 text-sm font-medium focus:outline-none border-b-2 border-transparent transition-colors duration-300">
@@ -35,7 +35,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
             
                 <button @click="setActiveTab('table')" 
                     :class="{
-                        'border-blue-500 text-blue-600 dark:text-blue-400': activeTab === 'table',
+                        'border-green-600 text-green-700 dark:text-green-400': activeTab === 'table',
                         'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300': activeTab !== 'table'
                     }"
                     class="px-4 py-2 text-sm font-medium focus:outline-none border-b-2 border-transparent transition-colors duration-300">
