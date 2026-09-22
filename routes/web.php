@@ -63,6 +63,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendance/deposit', [AttendanceController::class, 'deposit'])
         ->name('attendance.deposit');
 
+    Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
+        ->name('educational.deposit');
+
     /*
     |--------------------------------------------------------------------------
     | LISTA DE ATENDIMENTOS
