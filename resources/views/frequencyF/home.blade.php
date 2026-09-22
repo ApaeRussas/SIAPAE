@@ -429,6 +429,22 @@ Home.blade · PHP
         border-color: var(--siapae-green) !important;
         box-shadow: 0 0 0 3px rgba(59, 125, 90, 0.10) !important;
     }
+ 
+    /* Cabeçalho da tabela (#, Nome, dias, Faltas) -> verde */
+    .frequency-list-page table thead,
+    .frequency-list-page table thead tr,
+    .frequency-list-page table thead th,
+    .frequency-list-page .bg-blue-50,
+    .frequency-list-page .bg-blue-100 {
+        background-color: rgba(59, 125, 90, 0.08) !important;
+    }
+ 
+    .frequency-list-page table thead th,
+    .frequency-list-page table thead th *,
+    .frequency-list-page .text-blue-800,
+    .frequency-list-page .text-blue-900 {
+        color: var(--siapae-green-dark) !important;
+    }
 </style>
  
  
