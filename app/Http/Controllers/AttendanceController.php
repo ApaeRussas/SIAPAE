@@ -46,16 +46,24 @@ class AttendanceController extends Controller
             Carbon::parse($primeiroDiaSemana)->format('d/m');
 
         $diasDaSemana['terca'] =
-            Carbon::parse($primeiroDiaSemana)->addDay()->format('d/m');
+            Carbon::parse($primeiroDiaSemana)
+                ->addDay()
+                ->format('d/m');
 
         $diasDaSemana['quarta'] =
-            Carbon::parse($primeiroDiaSemana)->addDays(2)->format('d/m');
+            Carbon::parse($primeiroDiaSemana)
+                ->addDays(2)
+                ->format('d/m');
 
         $diasDaSemana['quinta'] =
-            Carbon::parse($primeiroDiaSemana)->addDays(3)->format('d/m');
+            Carbon::parse($primeiroDiaSemana)
+                ->addDays(3)
+                ->format('d/m');
 
         $diasDaSemana['sexta'] =
-            Carbon::parse($primeiroDiaSemana)->addDays(4)->format('d/m');
+            Carbon::parse($primeiroDiaSemana)
+                ->addDays(4)
+                ->format('d/m');
 
         $students = Student::orderBy('name', 'asc')->get();
 
@@ -81,6 +89,7 @@ class AttendanceController extends Controller
             )
         );
     }
+
 
     /**
      * Lista de atendimentos
@@ -147,6 +156,7 @@ class AttendanceController extends Controller
         );
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -180,12 +190,47 @@ class AttendanceController extends Controller
         );
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(AttendanceRequest $request)
     {
         $data = $request->validated();
+
+        /*
+         * Os novos campos já foram validados pelo AttendanceRequest.
+         */
+        /*
+         * Se marcou NÃO em avanços, não salva o texto.
+         */
+        if ($data['advances_status'] === 'Não') {
+            $data['advances'] = '';
+        }
+
+        /*
+         * Se marcou NÃO em dificuldades, não salva o texto.
+         */
+        if ($data['difficulties_status'] === 'Não') {
+            $data['difficulties'] = '';
+        }
+
+        /*
+         * Se marcou que não realizou a atividade,
+         * não salva a descrição.
+         */
+        if (filter_var($data['activity_not_performed'], FILTER_VALIDATE_BOOLEAN)) {
+            $data['activity_description'] = null;
+        }
+
+        /*
+         * Os status são usados somente na interface.
+         * Não são colunas da tabela attendances.
+         */
+        unset(
+            $data['advances_status'],
+            $data['difficulties_status']
+        );
 
         $data['date'] = Carbon::createFromFormat(
             'd/m/Y',
@@ -228,7 +273,10 @@ class AttendanceController extends Controller
             ->first();
 
         if ($frequency) {
-            $day = ltrim($day, '0');
+            $day = ltrim(
+                $day,
+                '0'
+            );
 
             if ($frequency->{$day} === null) {
                 $frequency->{$day} = true;
@@ -279,6 +327,7 @@ class AttendanceController extends Controller
             'attendance.create'
         );
     }
+
 
     /**
      * Display the specified resource.
@@ -402,6 +451,7 @@ class AttendanceController extends Controller
         );
     }
 
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -462,6 +512,7 @@ class AttendanceController extends Controller
         );
     }
 
+
     /**
      * Update the specified resource in storage.
      */
@@ -470,6 +521,36 @@ class AttendanceController extends Controller
         $id
     ) {
         $data = $request->validated();
+
+        /*
+         * Os novos campos já foram validados pelo AttendanceRequest.
+         */
+        /*
+         * Se marcou NÃO em avanços, remove o texto.
+         */
+        if ($data['advances_status'] === 'Não') {
+            $data['advances'] = '';
+        }
+
+        /*
+         * Se marcou NÃO em dificuldades, remove o texto.
+         */
+        if ($data['difficulties_status'] === 'Não') {
+            $data['difficulties'] = '';
+        }
+
+        /*
+         * Se marcou que não realizou a atividade,
+         * remove a descrição.
+         */
+        if (filter_var($data['activity_not_performed'], FILTER_VALIDATE_BOOLEAN)) {
+            $data['activity_description'] = null;
+        }
+
+        unset(
+            $data['advances_status'],
+            $data['difficulties_status']
+        );
 
         $data['date'] = Carbon::createFromFormat(
             'd/m/Y',
@@ -520,7 +601,9 @@ class AttendanceController extends Controller
                 )
             )->toOthers();
 
-            $previousUrl = session('previous_url_secondary');
+            $previousUrl = session(
+                'previous_url_secondary'
+            );
 
             if (
                 $previousUrl &&
@@ -570,6 +653,7 @@ class AttendanceController extends Controller
             $id
         );
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -640,7 +724,9 @@ class AttendanceController extends Controller
                 );
             }
 
-            $previousUrl = session('previous_url_secondary');
+            $previousUrl = session(
+                'previous_url_secondary'
+            );
 
             if (
                 $previousUrl &&
@@ -668,6 +754,7 @@ class AttendanceController extends Controller
             'attendance.index'
         );
     }
+
 
     /**
      * Arquivados
@@ -763,19 +850,24 @@ class AttendanceController extends Controller
         );
     }
 
+
     /**
      * Alterar semana do calendário
      */
     public function mudarSemana(Request $request)
     {
-        $faixaSemana = $request->get('faixaSemana');
+        $faixaSemana = $request->get(
+            'faixaSemana'
+        );
 
         $direcao = $request->get(
             'direcao',
             0
         );
 
-        $ano = $request->get('year');
+        $ano = $request->get(
+            'year'
+        );
 
         list(
             $primeiroDia,
@@ -795,7 +887,11 @@ class AttendanceController extends Controller
             $ultimoDia . '/' . $ano
         )->endOfDay();
 
-        if ($ultimoDiaSemana->lt($primeiroDiaSemana)) {
+        if (
+            $ultimoDiaSemana->lt(
+                $primeiroDiaSemana
+            )
+        ) {
             $ultimoDiaSemana->addYear();
         }
 
@@ -812,7 +908,9 @@ class AttendanceController extends Controller
                 $primeiroDia == '07/01'
             ) {
                 $ano = (int) $ano;
-                $anoAtualizado = (string) (--$ano);
+
+                $anoAtualizado =
+                    (string) (--$ano);
             }
 
             $primeiroDiaSemana->subWeek();
@@ -828,7 +926,9 @@ class AttendanceController extends Controller
                 $ultimoDia == '25/12'
             ) {
                 $ano = (int) $ano;
-                $anoAtualizado = (string) (++$ano);
+
+                $anoAtualizado =
+                    (string) (++$ano);
             }
 
             $primeiroDiaSemana->addWeek();
@@ -849,32 +949,46 @@ class AttendanceController extends Controller
         }
 
         $novaFaixaSemana =
-            Carbon::parse($primeiroDiaSemana)->format('d/m') .
+            Carbon::parse(
+                $primeiroDiaSemana
+            )->format('d/m') .
             ' - ' .
-            Carbon::parse($ultimoDiaSemana)->format('d/m');
+            Carbon::parse(
+                $ultimoDiaSemana
+            )->format('d/m');
 
         $diasDaSemana = [];
 
         $diasDaSemana['segunda'] =
-            Carbon::parse($primeiroDiaSemana)->format('d/m');
+            Carbon::parse(
+                $primeiroDiaSemana
+            )->format('d/m');
 
         $diasDaSemana['terca'] =
-            Carbon::parse($primeiroDiaSemana)
+            Carbon::parse(
+                $primeiroDiaSemana
+            )
                 ->addDay()
                 ->format('d/m');
 
         $diasDaSemana['quarta'] =
-            Carbon::parse($primeiroDiaSemana)
+            Carbon::parse(
+                $primeiroDiaSemana
+            )
                 ->addDays(2)
                 ->format('d/m');
 
         $diasDaSemana['quinta'] =
-            Carbon::parse($primeiroDiaSemana)
+            Carbon::parse(
+                $primeiroDiaSemana
+            )
                 ->addDays(3)
                 ->format('d/m');
 
         $diasDaSemana['sexta'] =
-            Carbon::parse($primeiroDiaSemana)
+            Carbon::parse(
+                $primeiroDiaSemana
+            )
                 ->addDays(4)
                 ->format('d/m');
 
@@ -957,21 +1071,38 @@ class AttendanceController extends Controller
             }
 
             $studentsWithFrequency[] = [
-                'student' => $student,
-                'frequencies' => $studentFrequencies,
-                'attendanceExists' => $attendanceExists,
+                'student' =>
+                    $student,
+
+                'frequencies' =>
+                    $studentFrequencies,
+
+                'attendanceExists' =>
+                    $attendanceExists,
             ];
         }
 
         return response()->json([
-            'faixaSemana' => $novaFaixaSemana,
-            'primeiroDia' => $primeiroDiaSemana,
-            'últimoDia' => $ultimoDiaSemana,
-            'diasDaSemana' => $diasDaSemana,
-            'studentsWithFrequency' => $studentsWithFrequency,
-            'year' => $anoAtualizado,
+            'faixaSemana' =>
+                $novaFaixaSemana,
+
+            'primeiroDia' =>
+                $primeiroDiaSemana,
+
+            'últimoDia' =>
+                $ultimoDiaSemana,
+
+            'diasDaSemana' =>
+                $diasDaSemana,
+
+            'studentsWithFrequency' =>
+                $studentsWithFrequency,
+
+            'year' =>
+                $anoAtualizado,
         ]);
     }
+
 
     /**
      * Limpar sessão
@@ -987,6 +1118,7 @@ class AttendanceController extends Controller
             'success' => true
         ]);
     }
+
 
     /**
      * Identifica os dias em que cada aluno possui atendimento/aula.
@@ -1012,9 +1144,11 @@ class AttendanceController extends Controller
                 ->first();
 
             if ($frequency) {
-                $classType = $frequency->class_apae;
+                $classType =
+                    $frequency->class_apae;
             } else {
-                $classType = $student->class_apae;
+                $classType =
+                    $student->class_apae;
             }
 
             $student->monday = null;
