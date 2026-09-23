@@ -2,13 +2,26 @@
     aria-label="secondary"
     x-data="{ open: false }"
     class="
-        sticky top-0 z-10
-        flex items-center justify-between
+        sticky
+        top-0
+        z-10
+        flex
+        items-center
+        justify-between
         h-20
-        px-5 sm:px-7
-        bg-white dark:bg-dark-eval-1
-        shadow-sm dark:shadow-black/10
-        transition-transform duration-500
+        px-5
+        sm:px-7
+
+        bg-white
+        border-b
+        border-[#E4E8E2]
+        shadow-sm
+
+        dark:bg-[#10251B]
+        dark:border-[#294236]
+
+        transition-transform
+        duration-500
     "
     :class="{
         '-translate-y-full': scrollingDown,
@@ -16,7 +29,10 @@
     }"
 >
 
-    <!-- LADO ESQUERDO -->
+    <!-- ==========================================================
+         LADO ESQUERDO
+         ========================================================== -->
+
     <div class="flex items-center gap-3">
 
         <!-- Tema no mobile -->
@@ -25,49 +41,20 @@
             class="
                 md:hidden
                 !rounded-xl
-                !border-0
-                !bg-gray-50
-                dark:!bg-dark-eval-2
-                hover:!bg-gray-100
-                dark:hover:!bg-dark-eval-3
-            "
-            icon-only
-            variant="secondary"
-            sr-text="Toggle dark mode"
-            x-on:click="toggleTheme"
-        >
-            <x-heroicon-o-moon
-                x-show="!isDarkMode"
-                aria-hidden="true"
-                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-            />
+                !border
+                !border-[#DCE5DE]
+                !bg-[#F4F7F4]
+                !text-[#2F6B4F]
 
-            <x-heroicon-o-sun
-                x-show="isDarkMode"
-                aria-hidden="true"
-                class="w-5 h-5 text-gray-400"
-            />
-        </x-button>
+                hover:!bg-[#E8F0EA]
+                hover:!border-[#C8D8CC]
 
-    </div>
+                dark:!border-[#294236]
+                dark:!bg-[#173126]
+                dark:!text-[#D8B56A]
 
+                dark:hover:!bg-[#1E3A2C]
 
-    <!-- LADO DIREITO -->
-    <div class="flex items-center gap-3 sm:gap-4">
-
-        <!-- BOTÃO TEMA -->
-        <x-button
-            type="button"
-            class="
-                hidden md:inline-flex
-                !w-11
-                !h-11
-                !rounded-xl
-                !border-0
-                !bg-gray-50
-                dark:!bg-dark-eval-2
-                hover:!bg-gray-100
-                dark:hover:!bg-dark-eval-3
                 transition-all
                 duration-200
             "
@@ -80,19 +67,82 @@
             <x-heroicon-o-moon
                 x-show="!isDarkMode"
                 aria-hidden="true"
-                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                class="w-5 h-5 text-[#2F6B4F] dark:text-[#D8B56A]"
             />
 
             <x-heroicon-o-sun
                 x-show="isDarkMode"
                 aria-hidden="true"
-                class="w-5 h-5 text-gray-400"
+                class="w-5 h-5 text-[#D8B56A]"
+            />
+
+        </x-button>
+
+    </div>
+
+
+    <!-- ==========================================================
+         LADO DIREITO
+         ========================================================== -->
+
+    <div class="flex items-center gap-3 sm:gap-4">
+
+        <!-- ======================================================
+             BOTÃO TEMA
+             ====================================================== -->
+
+        <x-button
+            type="button"
+            class="
+                hidden
+                md:inline-flex
+                !w-11
+                !h-11
+                !rounded-xl
+
+                !border
+                !border-[#DCE5DE]
+                !bg-[#F4F7F4]
+                !text-[#2F6B4F]
+
+                hover:!bg-[#E8F0EA]
+                hover:!border-[#C8D8CC]
+
+                dark:!border-[#294236]
+                dark:!bg-[#173126]
+                dark:!text-[#D8B56A]
+
+                dark:hover:!bg-[#1E3A2C]
+                dark:hover:!border-[#3B604B]
+
+                transition-all
+                duration-200
+            "
+            icon-only
+            variant="secondary"
+            sr-text="Toggle dark mode"
+            x-on:click="toggleTheme"
+        >
+
+            <x-heroicon-o-moon
+                x-show="!isDarkMode"
+                aria-hidden="true"
+                class="w-5 h-5 text-[#2F6B4F] dark:text-[#D8B56A]"
+            />
+
+            <x-heroicon-o-sun
+                x-show="isDarkMode"
+                aria-hidden="true"
+                class="w-5 h-5 text-[#D8B56A]"
             />
 
         </x-button>
 
 
-        <!-- USUÁRIO -->
+        <!-- ======================================================
+             USUÁRIO
+             ====================================================== -->
+
         <x-dropdown align="right" width="48">
 
             <x-slot name="trigger">
@@ -107,14 +157,18 @@
                         pr-3
                         py-1.5
                         rounded-xl
+
                         transition-all
                         duration-200
-                        hover:bg-gray-50
-                        dark:hover:bg-dark-eval-2
+
+                        hover:bg-[#F1F5F2]
+
                         focus:outline-none
                         focus:ring-2
-                        focus:ring-gray-200/70
-                        dark:focus:ring-gray-700
+                        focus:ring-[#2F6B4F]/20
+
+                        dark:hover:bg-[#173126]
+                        dark:focus:ring-[#D8B56A]/30
                     "
                 >
 
@@ -127,11 +181,13 @@
                             w-9
                             h-9
                             rounded-full
-                            bg-gray-100
-                            dark:bg-dark-eval-3
+
+                            bg-[#E8F0EA]
                             border
-                            border-gray-200/70
-                            dark:border-gray-700/60
+                            border-[#C8D8CC]
+
+                            dark:bg-[#173126]
+                            dark:border-[#3B604B]
                         "
                     >
 
@@ -139,20 +195,23 @@
                             class="
                                 w-5
                                 h-5
-                                text-gray-500
-                                dark:text-gray-400
+                                text-[#2F6B4F]
+
+                                dark:text-[#8FC5A5]
                             "
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                             aria-hidden="true"
                         >
+
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="1.8"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                             />
+
                         </svg>
 
                     </div>
@@ -174,8 +233,10 @@
                             class="
                                 text-[11px]
                                 font-medium
-                                text-gray-400
-                                dark:text-gray-500
+
+                                text-[#7A867E]
+
+                                dark:text-[#91A197]
                             "
                         >
                             Usuário
@@ -187,8 +248,10 @@
                                 truncate
                                 text-sm
                                 font-semibold
-                                text-gray-700
-                                dark:text-gray-200
+
+                                text-[#1B4632]
+
+                                dark:text-[#F5F1E8]
                             "
                         >
                             {{ Auth::user()->name }}
@@ -202,22 +265,29 @@
                         class="
                             w-4
                             h-4
-                            text-gray-400
+
+                            text-[#7A867E]
+
                             transition-all
                             duration-200
-                            group-hover:text-gray-600
-                            dark:group-hover:text-gray-300
+
+                            group-hover:text-[#2F6B4F]
+
+                            dark:text-[#91A197]
+                            dark:group-hover:text-[#D8B56A]
                         "
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
                     >
+
                         <path
                             fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                             clip-rule="evenodd"
                         />
+
                     </svg>
 
                 </button>
@@ -225,7 +295,10 @@
             </x-slot>
 
 
-            <!-- MENU DO USUÁRIO -->
+            <!-- ==================================================
+                 MENU DO USUÁRIO
+                 ================================================== -->
+
             <x-slot name="content">
 
                 <!-- Perfil -->
@@ -265,6 +338,7 @@
                     method="POST"
                     action="{{ route('logout') }}"
                 >
+
                     @csrf
 
                     <x-dropdown-link
@@ -285,9 +359,9 @@
 </nav>
 
 
-<!-- ========================================================== -->
-<!-- BARRA INFERIOR MOBILE -->
-<!-- ========================================================== -->
+<!-- ==========================================================
+     BARRA INFERIOR MOBILE
+     ========================================================== -->
 
 <div
     class="
@@ -300,15 +374,18 @@
         px-4
         py-3
         sm:px-6
+
         bg-white
-        dark:bg-dark-eval-1
         border-t
-        border-gray-100/70
-        dark:border-gray-800/60
+        border-[#E4E8E2]
         shadow-lg
-        dark:shadow-black/20
+
+        dark:bg-[#10251B]
+        dark:border-[#294236]
+
         md:hidden
         z-10
+
         transition-transform
         duration-500
     "
@@ -352,7 +429,29 @@
         variant="secondary"
         sr-text="Open main menu"
         x-on:click="toggleSidebar"
-        class="sidebar-toggle-button !rounded-xl !border-0"
+        class="
+            sidebar-toggle-button
+
+            !rounded-xl
+
+            !border
+            !border-[#DCE5DE]
+
+            !bg-[#F4F7F4]
+            !text-[#2F6B4F]
+
+            hover:!bg-[#E8F0EA]
+            hover:!border-[#C8D8CC]
+
+            dark:!border-[#294236]
+            dark:!bg-[#173126]
+            dark:!text-[#D8B56A]
+
+            dark:hover:!bg-[#1E3A2C]
+
+            transition-all
+            duration-200
+        "
     >
 
         <x-heroicon-o-menu
