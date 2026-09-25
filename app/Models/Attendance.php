@@ -10,20 +10,38 @@ class Attendance extends Model
 {
     use HasFactory;
 
-    protected $state = 'attendances';
+    protected $table = 'attendances';
+
+    protected $casts = [
+        'activity_not_performed' => 'boolean',
+        'advances_level' => 'integer',
+        'difficulties_level' => 'integer',
+    ];
+
     protected $fillable = [
         'student_id',
         'date',
         'educational_axis',
+
+        'skills',
+        'skills_evolution',
+
         'advances',
+        'advances_level',
+
         'difficulties',
+        'difficulties_level',
+
+        'activity_description',
+        'activity_not_performed',
         'signature_id',
     ];
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id');
     }
+
     public function professor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'signature_id');

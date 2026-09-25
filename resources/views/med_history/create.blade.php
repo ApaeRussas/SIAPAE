@@ -2,6 +2,8 @@
 
 <x-app-layout>
 
+    <div class="anamnesis-create-page">
+
     <x-table-create 
         title="Anamnese" 
         onlyHead 
@@ -1337,14 +1339,228 @@
 
         <div>
             <x-button id="submitButton" variant="blue" class="w-full mt-2 -mb-4" onclick="handleClick()">
-                <p class="text-center w-full">Adicionar</p>
+                <p class="text-center w-full">Adicionar Anamnese</p>
                 <i id="loadingSpinner" class="fa fa-spinner fa-spin hidden ml-2"></i> 
             </x-button>
         </div>
 
     </x-table-create>
 
+    </div>
+
 </x-app-layout>
+
+
+<style>
+    /* =========================================================
+       PADRÃO VISUAL SIAPAE - ANAMNESE
+       Paleta inspirada na tela inicial: verde, branco e neutros.
+       ========================================================= */
+
+    .anamnesis-create-page {
+        --siapae-green: #2f7d5a;
+        --siapae-green-dark: #256747;
+        --siapae-green-soft: #eaf4ee;
+        --siapae-text: #24352d;
+        --siapae-muted: #68786f;
+        --siapae-border: #dfe7e2;
+        --siapae-bg: #f5f8f6;
+        --siapae-white: #ffffff;
+    }
+
+    /* Fundo da página */
+    body {
+        background-color: #f5f8f6 !important;
+    }
+
+    /* Cartão principal */
+    .anamnesis-create-page .bg-white {
+        background-color: var(--siapae-white) !important;
+    }
+
+    .anamnesis-create-page .border-gray-200 {
+        border-color: var(--siapae-border) !important;
+    }
+
+    .anamnesis-create-page .shadow-sm {
+        box-shadow: 0 8px 24px rgba(39, 67, 54, 0.06) !important;
+    }
+
+    /* Títulos */
+    .anamnesis-create-page h1,
+    .anamnesis-create-page h2,
+    .anamnesis-create-page h3 {
+        color: var(--siapae-text) !important;
+    }
+
+    .anamnesis-create-page .form-step h1 {
+        color: var(--siapae-text) !important;
+        font-weight: 700 !important;
+        border-left: 4px solid var(--siapae-green) !important;
+        padding-left: 12px !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Labels e textos */
+    .anamnesis-create-page .form-step label,
+    .anamnesis-create-page .form-step .text-gray-700,
+    .anamnesis-create-page .form-step .text-gray-800,
+    .anamnesis-create-page .form-step .text-gray-600,
+    .anamnesis-create-page .form-step .text-gray-500 {
+        color: var(--siapae-text) !important;
+    }
+
+    /* Campos */
+    .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+    .anamnesis-create-page .form-step select,
+    .anamnesis-create-page .form-step textarea {
+        width: 100%;
+        min-height: 42px;
+        background-color: #ffffff !important;
+        color: var(--siapae-text) !important;
+        border: 1px solid var(--siapae-border) !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
+        outline: none !important;
+        transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+    }
+
+    .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):hover,
+    .anamnesis-create-page .form-step select:hover,
+    .anamnesis-create-page .form-step textarea:hover {
+        border-color: #c9d8cf !important;
+    }
+
+    .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):focus,
+    .anamnesis-create-page .form-step select:focus,
+    .anamnesis-create-page .form-step textarea:focus {
+        border-color: var(--siapae-green) !important;
+        box-shadow: 0 0 0 3px rgba(47, 125, 90, 0.10) !important;
+    }
+
+    .anamnesis-create-page .form-step input::placeholder,
+    .anamnesis-create-page .form-step textarea::placeholder {
+        color: #8a978f !important;
+        opacity: 1;
+    }
+
+    /* Campos preenchidos automaticamente */
+    .anamnesis-create-page .form-step input[readonly] {
+        background-color: #f2f6f3 !important;
+        color: #62746a !important;
+        border-color: #dbe6df !important;
+    }
+
+    .anamnesis-create-page .form-step input:disabled,
+    .anamnesis-create-page .form-step select:disabled {
+        background-color: #f2f5f3 !important;
+        color: #8a978f !important;
+        cursor: not-allowed;
+    }
+
+    /* Checkbox e radio */
+    .anamnesis-create-page .form-step input[type="checkbox"],
+    .anamnesis-create-page .form-step input[type="radio"] {
+        accent-color: var(--siapae-green) !important;
+    }
+
+    /* Separadores */
+    .anamnesis-create-page .form-step hr {
+        border-color: var(--siapae-border) !important;
+    }
+
+    /* Indicador das páginas */
+    .anamnesis-create-page .step-indicator {
+        color: var(--siapae-muted) !important;
+        font-size: .9rem;
+        font-weight: 500;
+    }
+
+    .anamnesis-create-page .step-indicator .current-step,
+    .anamnesis-create-page .step-indicator .total-steps {
+        color: var(--siapae-green) !important;
+        font-weight: 700;
+    }
+
+    /* Botões */
+    .anamnesis-create-page .next-step,
+    .anamnesis-create-page .prev-step,
+    .anamnesis-create-page #submitButton {
+        background-color: var(--siapae-green) !important;
+        background-image: none !important;
+        border-color: var(--siapae-green) !important;
+        color: #ffffff !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
+        font-weight: 600 !important;
+        transition: background-color .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+
+    .anamnesis-create-page .next-step:hover,
+    .anamnesis-create-page .prev-step:hover,
+    .anamnesis-create-page #submitButton:hover {
+        background-color: var(--siapae-green-dark) !important;
+        border-color: var(--siapae-green-dark) !important;
+        box-shadow: 0 5px 14px rgba(47, 125, 90, 0.18) !important;
+    }
+
+    .anamnesis-create-page .next-step:active,
+    .anamnesis-create-page .prev-step:active,
+    .anamnesis-create-page #submitButton:active {
+        transform: translateY(1px);
+    }
+
+    /* Remove tons azuis do x-button neste formulário */
+    .anamnesis-create-page #submitButton[class*="bg-blue"],
+    .anamnesis-create-page .next-step[class*="bg-blue"],
+    .anamnesis-create-page .prev-step[class*="bg-blue"] {
+        background-color: var(--siapae-green) !important;
+    }
+
+    .anamnesis-create-page .prev-step[style*="display: none"] {
+        display: none !important;
+    }
+
+    /* Mensagem de erro */
+    .anamnesis-create-page #errorMessage {
+        color: #a55225 !important;
+        background-color: #fff7ef !important;
+        border: 1px solid #f1d3bc !important;
+        border-radius: 9px !important;
+        padding: 11px 14px !important;
+    }
+
+    .anamnesis-create-page .text-red-700,
+    .anamnesis-create-page .text-red-600 {
+        color: #ba4d38 !important;
+    }
+
+    /* Destaques que ainda possam vir com classes azuis */
+    .anamnesis-create-page .form-step .bg-blue-50,
+    .anamnesis-create-page .form-step .bg-blue-100 {
+        background-color: var(--siapae-green-soft) !important;
+    }
+
+    .anamnesis-create-page .form-step .text-blue-600,
+    .anamnesis-create-page .form-step .text-blue-700,
+    .anamnesis-create-page .form-step .text-blue-800 {
+        color: var(--siapae-green-dark) !important;
+    }
+
+    /* Responsividade */
+    @media (max-width: 640px) {
+        .anamnesis-create-page .form-step h1 {
+            font-size: 1.08rem !important;
+            margin-bottom: 16px !important;
+        }
+
+        .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+        .anamnesis-create-page .form-step select,
+        .anamnesis-create-page .form-step textarea {
+            min-height: 40px;
+        }
+    }
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
