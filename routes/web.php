@@ -16,13 +16,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoordinatorController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\DiagnosticAssessmentController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckCoordinatorOrAdmin;
 use App\Http\Middleware\RestrictIPMiddleware;
 
 use Illuminate\Support\Facades\Route;
-
 
 // ======================================================
 // ROTAS ACESSÍVEIS SOMENTE PARA USUÁRIOS AUTENTICADOS
@@ -65,6 +64,18 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
         ->name('educational.deposit');
+
+
+        
+    // ==================================================
+    // SONDAGEM DIAGNÓSTICA
+    // ==================================================
+
+    Route::resource(
+        'diagnostic-assessments',
+        DiagnosticAssessmentController::class
+    );
+
 
     /*
     |--------------------------------------------------------------------------

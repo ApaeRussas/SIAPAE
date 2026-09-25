@@ -247,6 +247,50 @@
         </x-sidebar.link>
  
     </div>
+
+
+    {{-- =====================================================
+         SONDAGEM DIAGNÓSTICA
+         ===================================================== --}}
+
+    <div
+        x-transition
+        x-show="isSidebarOpen || isSidebarHovered"
+        class="siapae-section-title"
+    >
+        Sondagem Diagnóstica
+    </div>
+
+
+    {{-- SONDAGEM DIAGNÓSTICA --}}
+
+    <div>
+
+        <x-sidebar.link
+            title="Sondagem Diagnóstica"
+            href="{{ route('diagnostic-assessments.index') }}"
+            :isActive="request()->routeIs(
+                'diagnostic-assessments.index',
+                'diagnostic-assessments.create',
+                'diagnostic-assessments.edit',
+                'diagnostic-assessments.show'
+            )"
+        >
+
+            <x-slot name="icon">
+
+                <x-icons.register
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+
+            </x-slot>
+
+        </x-sidebar.link>
+
+    </div>
+
+
  
  
     {{-- =====================================================

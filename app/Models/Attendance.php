@@ -14,14 +14,24 @@ class Attendance extends Model
 
     protected $casts = [
         'activity_not_performed' => 'boolean',
+        'advances_level' => 'integer',
+        'difficulties_level' => 'integer',
     ];
 
     protected $fillable = [
         'student_id',
         'date',
         'educational_axis',
+
+        'skills',
+        'skills_evolution',
+
         'advances',
+        'advances_level',
+
         'difficulties',
+        'difficulties_level',
+
         'activity_description',
         'activity_not_performed',
         'signature_id',

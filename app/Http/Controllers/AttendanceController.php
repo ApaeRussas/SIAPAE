@@ -199,27 +199,33 @@ class AttendanceController extends Controller
         $data = $request->validated();
 
         /*
-         * Os novos campos já foram validados pelo AttendanceRequest.
-         */
-        /*
-         * Se marcou NÃO em avanços, não salva o texto.
+         * Se marcou NÃO em avanços,
+         * não salva o texto nem o nível.
          */
         if ($data['advances_status'] === 'Não') {
             $data['advances'] = '';
+            $data['advances_level'] = null;
         }
 
         /*
-         * Se marcou NÃO em dificuldades, não salva o texto.
+         * Se marcou NÃO em dificuldades,
+         * não salva o texto nem o nível.
          */
         if ($data['difficulties_status'] === 'Não') {
             $data['difficulties'] = '';
+            $data['difficulties_level'] = null;
         }
 
         /*
          * Se marcou que não realizou a atividade,
          * não salva a descrição.
          */
-        if (filter_var($data['activity_not_performed'], FILTER_VALIDATE_BOOLEAN)) {
+        if (
+            filter_var(
+                $data['activity_not_performed'],
+                FILTER_VALIDATE_BOOLEAN
+            )
+        ) {
             $data['activity_description'] = null;
         }
 
@@ -253,7 +259,8 @@ class AttendanceController extends Controller
 
         if ($existingAttendance) {
             throw ValidationException::withMessages([
-                'date' => 'Já existe um atendimento deste professor para este aluno na data informada.',
+                'date' =>
+                    'Já existe um atendimento deste professor para este aluno na data informada.',
             ]);
         }
 
@@ -283,7 +290,8 @@ class AttendanceController extends Controller
                 $frequency->save();
             } elseif ($frequency->{$day} === false) {
                 throw ValidationException::withMessages([
-                    'date' => 'Na data informada, a frequência do Aluno consta como se ele tivesse faltado, mude na lista de frequência.',
+                    'date' =>
+                        'Na data informada, a frequência do Aluno consta como se ele tivesse faltado, mude na lista de frequência.',
                 ]);
             }
         }
@@ -523,27 +531,33 @@ class AttendanceController extends Controller
         $data = $request->validated();
 
         /*
-         * Os novos campos já foram validados pelo AttendanceRequest.
-         */
-        /*
-         * Se marcou NÃO em avanços, remove o texto.
+         * Se marcou NÃO em avanços,
+         * remove o texto e o nível.
          */
         if ($data['advances_status'] === 'Não') {
             $data['advances'] = '';
+            $data['advances_level'] = null;
         }
 
         /*
-         * Se marcou NÃO em dificuldades, remove o texto.
+         * Se marcou NÃO em dificuldades,
+         * remove o texto e o nível.
          */
         if ($data['difficulties_status'] === 'Não') {
             $data['difficulties'] = '';
+            $data['difficulties_level'] = null;
         }
 
         /*
          * Se marcou que não realizou a atividade,
          * remove a descrição.
          */
-        if (filter_var($data['activity_not_performed'], FILTER_VALIDATE_BOOLEAN)) {
+        if (
+            filter_var(
+                $data['activity_not_performed'],
+                FILTER_VALIDATE_BOOLEAN
+            )
+        ) {
             $data['activity_description'] = null;
         }
 
@@ -582,7 +596,8 @@ class AttendanceController extends Controller
 
         if ($existingAttendance) {
             throw ValidationException::withMessages([
-                'date' => 'Já existe um atendimento deste professor para este aluno na data informada.',
+                'date' =>
+                    'Já existe um atendimento deste professor para este aluno na data informada.',
             ]);
         }
 
@@ -898,6 +913,7 @@ class AttendanceController extends Controller
         $anoAtualizado = $ano;
 
         if ($direcao == -1) {
+
             if (
                 $primeiroDia == '01/01' ||
                 $primeiroDia == '02/01' ||
@@ -915,7 +931,9 @@ class AttendanceController extends Controller
 
             $primeiroDiaSemana->subWeek();
             $ultimoDiaSemana->subWeek();
+
         } elseif ($direcao == 1) {
+
             if (
                 $ultimoDia == '31/12' ||
                 $ultimoDia == '30/12' ||
@@ -939,9 +957,11 @@ class AttendanceController extends Controller
             $primeiroDiaSemana->year !==
             $ultimoDiaSemana->year
         ) {
+
             if ($direcao == -1) {
                 $primeiroDiaSemana->subWeek();
                 $ultimoDiaSemana->subWeek();
+
             } elseif ($direcao == 1) {
                 $primeiroDiaSemana->addWeek();
                 $ultimoDiaSemana->addWeek();
@@ -1008,6 +1028,7 @@ class AttendanceController extends Controller
         $studentsWithFrequency = [];
 
         foreach ($students as $student) {
+
             $student->frequencyExists = null;
 
             $attendanceExists = [];
@@ -1017,6 +1038,7 @@ class AttendanceController extends Controller
             foreach (
                 $diasDaSemana as $dayKey => $day
             ) {
+
                 list(
                     $day,
                     $month
@@ -1129,6 +1151,7 @@ class AttendanceController extends Controller
         $primeiroDiaSemana
     ) {
         foreach ($students as $student) {
+
             $month = Carbon::parse(
                 $primeiroDiaSemana
             )->format('m');
@@ -1158,6 +1181,7 @@ class AttendanceController extends Controller
             $student->friday = null;
 
             switch ($classType) {
+
                 case 'Segunda':
                     $student->monday = true;
                     break;
