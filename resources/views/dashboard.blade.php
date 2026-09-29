@@ -56,18 +56,6 @@
 
             --shadow:
                 0 10px 30px rgba(31, 81, 58, 0.06);
-
-            min-height: 100%;
-
-            color: var(--text);
-
-            background-color: var(--bg);
-
-            border-radius: 24px;
-
-            transition:
-                background-color 250ms ease,
-                color 250ms ease;
         }
 
 
