@@ -463,33 +463,33 @@
                             </h3>
 
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-                                @foreach ([
-                                    'pre_syllabic' => 'Pré-silábico',
-                                    'syllabic' => 'Silábico',
-                                    'syllabic_alphabetic' => 'Silábico-alfabético',
-                                    'alphabetic' => 'Alfabético'
-                                ] as $key => $label)
+                    @foreach ([
+                        'pre_syllabic' => 'Pré-silábico',
+                        'syllabic' => 'Silábico',
+                        'syllabic_alphabetic' => 'Silábico-alfabético',
+                        'alphabetic' => 'Alfabético',
+                        'orthographic' => 'Ortográfico'
+                    ] as $key => $label)
 
-                                    <label class="assessment-radio">
+                        <label class="assessment-radio">
 
-                                        <input
-                                            type="radio"
-                                            name="language[writing_level]"
-                                            value="{{ $key }}"
-                                            {{ old('language.writing_level') === $key ? 'checked' : '' }}
-                                        >
+                            <input
+                                type="radio"
+                                name="language[writing_level]"
+                                value="{{ $key }}"
+                                {{ old('language.writing_level') === $key ? 'checked' : '' }}
+                            >
 
-                                        <span>
-                                            {{ $label }}
-                                        </span>
+                            <span>
+                                {{ $label }}
+                            </span>
 
-                                    </label>
+                        </label>
 
-                                @endforeach
+                    @endforeach
 
-                            </div>
+
 
                         </div>
 

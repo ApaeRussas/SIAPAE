@@ -246,7 +246,8 @@
                                 'pre_syllabic' => 'Pré-silábico',
                                 'syllabic' => 'Silábico',
                                 'syllabic_alphabetic' => 'Silábico-alfabético',
-                                'alphabetic' => 'Alfabético'
+                                'alphabetic' => 'Alfabético',
+                                'orthographic' => 'Ortográfico'
                             ];
                         @endphp
 
