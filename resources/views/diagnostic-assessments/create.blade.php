@@ -339,6 +339,7 @@
                                     'understands_verbal_instructions' => 'Capacidade de compreender instruções verbais',
                                     'holds_pencil_correctly' => 'Segura corretamente o lápis',
                                     'interest_in_writing' => 'Demonstra interesse pela escrita (letras, numerais, palavras, Braille e Libras)',
+                                    'other_languages' => 'Outras línguas',
                                 ];
 
                             @endphp
@@ -463,33 +464,33 @@
                             </h3>
 
 
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-                    @foreach ([
-                        'pre_syllabic' => 'Pré-silábico',
-                        'syllabic' => 'Silábico',
-                        'syllabic_alphabetic' => 'Silábico-alfabético',
-                        'alphabetic' => 'Alfabético',
-                        'orthographic' => 'Ortográfico'
-                    ] as $key => $label)
+                                @foreach ([
+                                    'pre_syllabic' => 'Pré-silábico',
+                                    'syllabic' => 'Silábico',
+                                    'syllabic_alphabetic' => 'Silábico-alfabético',
+                                    'alphabetic' => 'Alfabético'
+                                ] as $key => $label)
 
-                        <label class="assessment-radio">
+                                    <label class="assessment-radio">
 
-                            <input
-                                type="radio"
-                                name="language[writing_level]"
-                                value="{{ $key }}"
-                                {{ old('language.writing_level') === $key ? 'checked' : '' }}
-                            >
+                                        <input
+                                            type="radio"
+                                            name="language[writing_level]"
+                                            value="{{ $key }}"
+                                            {{ old('language.writing_level') === $key ? 'checked' : '' }}
+                                        >
 
-                            <span>
-                                {{ $label }}
-                            </span>
+                                        <span>
+                                            {{ $label }}
+                                        </span>
 
-                        </label>
+                                    </label>
 
-                    @endforeach
+                                @endforeach
 
-
+                            </div>
 
                         </div>
 

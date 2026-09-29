@@ -186,6 +186,7 @@
                             'understands_verbal_instructions' => 'Compreende instruções verbais',
                             'holds_pencil_correctly' => 'Segura corretamente o lápis',
                             'interest_in_writing' => 'Demonstra interesse pela escrita',
+                            'other_languages' => 'Outras línguas',
                         ];
                     @endphp
 
@@ -246,8 +247,7 @@
                                 'pre_syllabic' => 'Pré-silábico',
                                 'syllabic' => 'Silábico',
                                 'syllabic_alphabetic' => 'Silábico-alfabético',
-                                'alphabetic' => 'Alfabético',
-                                'orthographic' => 'Ortográfico'
+                                'alphabetic' => 'Alfabético'
                             ];
                         @endphp
 
