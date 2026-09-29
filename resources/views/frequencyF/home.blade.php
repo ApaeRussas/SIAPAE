@@ -1,5 +1,3 @@
-
-Frequency.blade · PHP
 <x-app-layout :context="$context">
  
     <div class="frequency-page">
