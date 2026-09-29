@@ -36,26 +36,16 @@
 
             --surface-hover: #EAF0EB;
 
-            --title: #183C2C;
+            --title: #111827;
+            --text: #374151;
+            --muted: #6B7280;
+            --border: #E5E7EB;
 
-            --text: #42564A;
-
-            --muted: #78857D;
-
-            --border: #E2E8E2;
-
-            --green: #2F6B4F;
-
-            --green-dark: #1F513A;
-
-            --green-light: #E3EFE7;
-
-            --gold: #C99B4A;
-
-            --gold-light: #F7EFDD;
-
-            --shadow:
-                0 10px 30px rgba(31, 81, 58, 0.06);
+            /* Identidade APAE (Usada pontualmente em destaques/ícones) */
+            --brand-primary: #2F6B4F;
+            --brand-primary-bg: #E7F0E9;
+            --brand-accent: #D5A85A;
+            --brand-accent-bg: #FAF3E6;
         }
 
 

@@ -1,15 +1,16 @@
-<!-- Alvo para rolagem --> <div class="scroll-target"></div>
-
+<!-- Alvo para rolagem -->
+<div class="scroll-target"></div>
+ 
 <x-app-layout>
-
+ 
     <div class="anamnesis-create-page">
-
+ 
     <x-table-create 
         title="Anamnese" 
         onlyHead 
         actionRoute="anamnesis"
         notButtonAdd>
-
+ 
         <!-- Validation Errors -->
         <div class="mt-2 mb-4">
             <x-auth-validation-errors :errors="$errors" />
@@ -18,26 +19,26 @@
                 Data(s) Inválida(s), Insira datas que respeitem o seu respectivo campo
             </ul>
         </div>
-
-
+ 
+ 
         <!-- PÁGINA 1 -->
-
+ 
         <div id="step-1" class="form-step">
-
+ 
         <!-- I - Identificação -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 I - Identificação
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1 md:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="student_id">Nome do Assistido <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select full idSelect="student_id" valueName="student_id"
                 title="Selecione um Aluno Registrado:">
-
+ 
                 @foreach ($students as $student)
                     <option class="text-sm" value="{{ $student->id }}" {{ old('student_id', $student_id) == $student->id ? 'selected' : '' }}>
                         {{ $student->name }}
@@ -56,7 +57,7 @@
                     class="date" required value="{{old('date_of_anamnesis', \Carbon\Carbon::now()->format('d/m/Y'))}}" />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="date_of_birth">Data de Nascimento <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -73,7 +74,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="have_caregiver" value="0">
-
+ 
                 <label for="have_caregiver" class="inline-flex items-center">
                     <input type="checkbox" name="have_caregiver" {{ old('have_caregiver') ? 'checked' : '' }} id="have_caregiver"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -81,7 +82,7 @@
                 </label>
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="school">Escola do Aluno: </x-anamnesis.label>
@@ -93,7 +94,7 @@
                     value="{{old('not_study_justify')}}" placeholder="Justificação" />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="grade_school">Série: </x-anamnesis.label>
@@ -109,7 +110,7 @@
             </div>
             <div>
                 <input type="hidden" name="have_AEE" value="0">
-
+ 
                 <label for="have_AEE" class="inline-flex items-center">
                     <input type="checkbox" name="have_AEE" id="have_AEE" {{ old('have_AEE') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="turn_AEE" onchange="toggleInput(this)">
@@ -118,7 +119,7 @@
                 <x-anamnesis.input class="turn_AEE" name="turn_AEE" id="turn_AEE" value="{{old('turn_AEE')}}" placeholder="Turno da AEE" disabled />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1 md:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="name_mother">Nome da Mãe <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -126,7 +127,7 @@
                     placeholder="Nome da Mãe" required />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="date_mother">Data de Nascimento da Mãe <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -149,7 +150,7 @@
                     value="{{old('cellphone_mother')}}" placeholder="Ex: (88) 99312-1231" />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1 md:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="name_father">Nome do Pai (* Informações do Pai Opcionais) </x-anamnesis.label>
@@ -157,7 +158,7 @@
                     placeholder="Nome do Pai" />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="date_father">Data de Nascimento do Pai </x-anamnesis.label>
@@ -180,7 +181,7 @@
                     value="{{old('cellphone_father')}}" placeholder="Ex: (88) 99312-1231" />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1 md:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="address">Endereço <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -189,7 +190,7 @@
             </div>
             <div>
                 <input type="hidden" name="have_medication" value="0">
-
+ 
                 <label for="have_medication" class="inline-flex items-center">
                     <input type="checkbox" name="have_medication" id="have_medication" {{ old('have_medication') ? 'checked' : '' }} 
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_medication" onchange="toggleInput(this)">
@@ -199,36 +200,36 @@
                     value="{{old('what_medication')}}" placeholder="Qual(is)?" disabled />
             </div>
         </div>
-
+ 
         <!-- II - Queixa Inicial -->
-
+ 
         <div class="my-3">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 II - Queixa Inicial
             </h1>
         </div>
-
+ 
         <div>
             <x-anamnesis.label sizeFont="sm" for="compplaint">Queixa Inicial (*opcional) </x-anamnesis.label>
             <x-form.textarea name="compplaint" id="compplaint" class="h-14" placeholder="Ex: O Assistido normalmente ...">
                 {{old('compplaint')}}
             </x-form.textarea>
         </div>
-
+ 
         <!-- III - Situação Sociofamiliar -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 III - Situação Sociofamiliar
             </h1>
         </div>
-
+ 
         <div>
             <x-anamnesis.label sizeFont="sm" for="who_lives">Com quem mora? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
             <x-anamnesis.input name="who_lives" id="who_lives" value="{{old('who_lives')}}"
                 placeholder="Ex: Pai, Mãe, ..." required />
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="state_parents_relation">Pais Casados ou Separados? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -249,7 +250,7 @@
             </div>
             <div class="col-span-1 md:col-span-2">
                 <input type="hidden" name="have_kinship_parents" value="0">
-
+ 
                 <label for="have_kinship_parents" class="inline-flex items-center">
                     <input type="checkbox" name="have_kinship_parents" id="have_kinship_parents" {{ old('have_kinship_parents') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_kinship_parents" onchange="toggleInput(this)">
@@ -259,11 +260,11 @@
                     value="{{old('what_kinship_parents')}}" placeholder="Qual?" disabled />
             </div>
         </div>  
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="flex">
                 <input type="hidden" name="new_relation_mother" value="0">
-
+ 
                 <label for="new_relation_mother" class="inline-flex items-center">
                     <input type="checkbox" name="new_relation_mother" id="new_relation_mother" {{ old('new_relation_mother') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="relation_mother" onchange="toggleInput(this)">
@@ -289,12 +290,12 @@
                 </x-anamnesis.select>
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="flex">
                 <label for="new_relation_father" class="inline-flex items-center">
                     <input type="hidden" name="new_relation_father" value="0">
-
+ 
                     <input type="checkbox" name="new_relation_father" id="new_relation_father" {{ old('new_relation_father') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="relation_father" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Pai: Novo relacionamento?</span>
@@ -319,7 +320,7 @@
                 </x-anamnesis.select>
             </div>
         </div>
-
+ 
         <div class="flex items-center justify-center grid grid-cols-4 sm:grid-cols-3 mt-6"> 
             <div class="col-span-1"> 
                 
@@ -336,19 +337,19 @@
         </div>
         
         </div>
-
+ 
         <!-- PÁGINA 2 -->
-
+ 
         <div id="step-2" class="form-step hidden">
        
         <!-- IV - Gestação / Condições do Nascimento -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 IV - Gestação / Condições do Nascimento
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="have_child_desired">A criança foi desejada? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -384,10 +385,10 @@
                 <x-anamnesis.input name="time_gestation" id="time_gestation" required
                     value="{{old('time_gestation')}}" placeholder="Ex: 8 meses e 2 semanas" />
             </div>
-
+ 
             <div class="col-span-1 md:col-span-2">
                 <input type="hidden" name="history_abort" value="0">
-
+ 
                 <label for="history_abort" class="inline-flex items-center">
                     <input type="checkbox" name="history_abort" id="history_abort" {{ old('history_abort') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="abort_justify" onchange="toggleInput(this)">
@@ -416,7 +417,7 @@
         
             <div>
                 <input type="hidden" name="have_disease_gestation" value="0">
-
+ 
                 <label for="have_disease_gestation" class="inline-flex items-center">
                     <input type="checkbox" name="have_disease_gestation" id="have_disease_gestation" {{ old('have_disease_gestation') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="disease" onchange="toggleInput(this)">
@@ -444,7 +445,7 @@
             </div>
             <div>
                 <input type="hidden" name="have_discharged_together" value="0">
-
+ 
                 <label for="have_discharged_together" class="inline-flex items-center">
                     <input type="checkbox" name="have_discharged_together" id="have_discharged_together" {{ old('have_discharged_together') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_discharged_together" onchange="toggleInput(this)">
@@ -453,10 +454,10 @@
                 <x-anamnesis.input class="detail_discharged_together" name="detail_discharged_together" id="detail_discharged_together"
                     value="{{old('detail_discharged_together')}}" placeholder="Detalhe:" disabled />
             </div>
-
+ 
             <div class="col-span-1 md:col-span-2">
                 <input type="hidden" name="have_problems_birth" value="0">
-
+ 
                 <label for="have_problems_birth" class="inline-flex items-center">
                     <input type="checkbox" name="have_problems_birth" id="have_problems_birth" {{ old('have_problems_birth') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_problems_birth" onchange="toggleInput(this)">
@@ -477,14 +478,14 @@
                 </option>
                 </x-anamnesis.select>
             </div>
-
+ 
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="flex">
                 <label for="have_neonatal_tests" class="inline-flex items-center">
                     <input type="hidden" name="have_neonatal_tests" value="0">
-
+ 
                     <input type="checkbox" name="have_neonatal_tests" id="have_neonatal_tests" {{ old('have_neonatal_tests') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="neonatal_tests" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Fez os testes neonatais?</span>
@@ -509,7 +510,7 @@
                     disabled />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="have_mother_breastfeed">A Mãe Amamentou? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -525,7 +526,7 @@
             </div>
             <div>
                 <input type="hidden" name="have_nozzle" value="0">
-
+ 
                 <label for="have_nozzle" class="inline-flex items-center">
                     <input type="checkbox" name="have_nozzle" id="have_nozzle" {{ old('have_nozzle') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_nozzle" onchange="toggleInput(this)">
@@ -535,20 +536,20 @@
                     value="{{old('detail_nozzle')}}" placeholder="Detalhe:" disabled />
             </div>
         </div>
-
+ 
         <!-- V - Desenvolvimento -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 V - Desenvolvimento
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             
             <div class="col-span-1 md:col-span-2">
                 <input type="hidden" name="have_delay_NPM" value="0">
-
+ 
                 <label for="have_delay_NPM" class="inline-flex items-center">
                     <input type="checkbox" name="have_delay_NPM" id="have_delay_NPM" {{ old('have_delay_NPM') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_delay_NPM" onchange="toggleInput(this)">
@@ -557,10 +558,10 @@
                 <x-anamnesis.input class="detail_delay_NPM" name="detail_delay_NPM" id="detail_delay_NPM"
                     value="{{old('detail_delay_NPM')}}" placeholder="Detalhe:" disabled />
             </div>
-
+ 
             <div class="col-span-1 md:col-span-2">
                 <input type="hidden" name="have_normal_development" value="0">
-
+ 
                 <label for="have_normal_development" class="inline-flex items-center">
                     <input type="checkbox" name="have_normal_development" id="have_normal_development" {{ old('have_normal_development') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="detail_normal_development" onchange="toggleInput(this)">
@@ -569,10 +570,10 @@
                 <x-anamnesis.input class="detail_normal_development" name="detail_normal_development" id="detail_normal_development" 
                 value="{{old('detail_normal_development')}}" placeholder="Detalhe:" disabled />
             </div>
-
+ 
             <div> 
                 <input type="hidden" name="have_desfrald_yet" value="0">
-
+ 
                 <label for="have_desfrald_yet" class="inline-flex items-center">
                     <input type="checkbox" name="have_desfrald_yet" id="have_desfrald_yet" {{ old('have_desfrald_yet') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="age_desfrald_yet" onchange="toggleInput(this)">
@@ -583,7 +584,7 @@
             </div>
             <div>
                 <input type="hidden" name="have_sphincters_control" value="0">
-
+ 
                 <label for="have_sphincters_control" class="inline-flex items-center">
                     <input type="checkbox" name="have_sphincters_control" id="have_sphincters_control" {{ old('have_sphincters_control') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="age_sphincters_control" onchange="toggleInput(this)">
@@ -592,7 +593,7 @@
                 <x-anamnesis.input class="age_sphincters_control" name="age_sphincters_control" id="age_sphincters_control"
                     value="{{old('age_sphincters_control')}}" placeholder="Idade em que conseguiu:" disabled />
             </div>
-
+ 
             <div>
                 <x-anamnesis.label sizeFont="sm" for="bites_nails">Rói Unhas? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="bites_nails" full
@@ -623,7 +624,7 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div>
                 <x-anamnesis.label sizeFont="sm" for="state_sleep">Sobre o Sono: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="state_sleep" full
@@ -658,7 +659,7 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div class="col-span-1 md:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="independent_daily_activities">Realiza atividade da vida diária de forma independente? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="independent_daily_activities" full
@@ -671,24 +672,24 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div class="col-span-1 md:col-span-3 lg:col-span-4">
                 <x-anamnesis.label sizeFont="sm" for="other_difficulty">Outras Dificildades (*opcional): </x-anamnesis.label>
                 <x-form.textarea name="other_difficulty" id="other_difficulty" class="h-14" placeholder="Ex: Além disso, a criança normalmente .....">
                     {{old('other_difficulty')}}
                 </x-form.textarea>
             </div>
-
+ 
         </div>
-
+ 
         <!-- VI - Atitudes Comportamentais -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 VI - Atitudes Comportamentais
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6  gap-x-4 gap-y-2 my-2">
             <div class="col-span-2 md:col-span-4">
                 <x-anamnesis.label sizeFont="sm" for="child_temperament">Temperamento do Assistido: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -697,7 +698,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="stubbornness" value="0">
-
+ 
                 <label for="stubbornness" class="inline-flex items-center">
                     <input type="checkbox" name="stubbornness" {{ old('stubbornness') ? 'checked' : '' }} id="stubbornness"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -706,7 +707,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="tantrum" value="0">
-
+ 
                 <label for="tantrum" class="inline-flex items-center">
                     <input type="checkbox" name="tantrum" {{ old('tantrum') ? 'checked' : '' }} id="tantrum"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -726,7 +727,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="lies" value="0">
-
+ 
                 <label for="lies" class="inline-flex items-center">
                     <input type="checkbox" name="lies" {{ old('lies') ? 'checked' : '' }} id="lies"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -735,7 +736,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="aggressiveness" value="0">
-
+ 
                 <label for="aggressiveness" class="inline-flex items-center">
                     <input type="checkbox" name="aggressiveness" {{ old('aggressiveness') ? 'checked' : '' }} id="aggressiveness"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -744,7 +745,7 @@
             </div>
             <div class="col-span-2 md:col-span-4">
                 <input type="hidden" name="sexual_curiosity" value="0">
-
+ 
                 <label for="sexual_curiosity" class="inline-flex items-center">
                     <input type="checkbox" name="sexual_curiosity" id="sexual_curiosity" {{ old('sexual_curiosity') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="how_manifests_sexual_curiosity" onchange="toggleInput(this)">
@@ -755,7 +756,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="shyness" value="0">
-
+ 
                 <label for="shyness" class="inline-flex items-center">
                     <input type="checkbox" name="shyness" {{ old('shyness') ? 'checked' : '' }} id="shyness"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -764,7 +765,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="affectionate" value="0">
-
+ 
                 <label for="affectionate" class="inline-flex items-center">
                     <input type="checkbox" name="affectionate" {{ old('affectionate') ? 'checked' : '' }} id="affectionate"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -773,7 +774,7 @@
             </div> 
             <div class="col-span-2 md:col-span-4">
                 <input type="hidden" name="sports_activity" value="0">
-
+ 
                 <label for="sports_activity" class="inline-flex items-center">
                     <input type="checkbox" name="sports_activity" id="sports_activity" {{ old('sports_activity') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_sports_activity" onchange="toggleInput(this)">
@@ -784,7 +785,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="waiting_skill" value="0">
-
+ 
                 <label for="waiting_skill" class="inline-flex items-center">
                     <input type="checkbox" name="waiting_skill" {{ old('waiting_skill') ? 'checked' : '' }} id="waiting_skill"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -793,7 +794,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="tolerates_frustration" value="0">
-
+ 
                 <label for="tolerates_frustration" class="inline-flex items-center">
                     <input type="checkbox" name="tolerates_frustration" {{ old('tolerates_frustration') ? 'checked' : '' }} id="tolerates_frustration"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -802,7 +803,7 @@
             </div>
             <div class="col-span-2 md:col-span-4">
                 <input type="hidden" name="hyperfocus" value="0">
-
+ 
                 <label for="hyperfocus" class="inline-flex items-center">
                     <input type="checkbox" name="hyperfocus" id="hyperfocus" {{ old('hyperfocus') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="how_manifests_hyperfocus" onchange="toggleInput(this)">
@@ -813,7 +814,7 @@
             </div>
             <div class="flex">
                 <input type="hidden" name="responds_orders" value="0">
-
+ 
                 <label for="responds_orders" class="inline-flex items-center">
                     <input type="checkbox" name="responds_orders" {{ old('responds_orders') ? 'checked' : '' }} id="responds_orders"
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -822,7 +823,7 @@
             </div>
             <div class="col-span-2 md:col-span-4">
                 <input type="hidden" name="tics_manias" value="0">
-
+ 
                 <label for="tics_manias" class="inline-flex items-center">
                     <input type="checkbox" name="tics_manias" id="tics_manias" {{ old('tics_manias') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_tics_manias" onchange="toggleInput(this)">
@@ -832,12 +833,12 @@
                     value="{{old('what_tics_manias')}}" placeholder="Qual(is)?" disabled />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="flex">
                 <label for="daily_routine" class="inline-flex items-center">
                     <input type="hidden" name="daily_routine" value="0">
-
+ 
                     <input type="checkbox" name="daily_routine" id="daily_routine" {{ old('daily_routine') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="routine" onchange="toggleInput(this)">
                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Segue uma Rotina Diária?</span>
@@ -856,7 +857,7 @@
                     disabled />
             </div>
         </div>
-
+ 
         <div class="flex items-center justify-center grid grid-cols-4 sm:grid-cols-3 mt-6"> 
             <div class="col-span-1 flex"> 
                 <x-button class="prev-step" button> 
@@ -876,19 +877,19 @@
         </div>
         
         </div>
-
+ 
         <!-- PÁGINA 3 -->
-
+ 
         <div id="step-3" class="form-step hidden">
-
+ 
         <!-- VII - Escolaridade -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 VII - Escolaridade
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="age_start_school">Idade em que iniciou a escola: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -912,7 +913,7 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div class="col-span-1 md:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="parents_participate_school_life">Os Pais participam da vida escolar do filho? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.input name="parents_participate_school_life" id="parents_participate_school_life" required
@@ -924,11 +925,11 @@
                     value="{{old('favorite_activity_school')}}" placeholder="Ex: Brincar, escrever ..." />
             </div>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div> 
                 <input type="hidden" name="have_difficulty_learning" value="0">
-
+ 
                 <label for="have_difficulty_learning" class="inline-flex items-center">
                     <input type="checkbox" name="have_difficulty_learning" id="have_difficulty_learning" {{ old('have_difficulty_learning') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="justify_difficulty_learning" onchange="toggleInput(this)">
@@ -974,15 +975,15 @@
                 </x-anamnesis.select>
             </div>
         </div>
-
+ 
         <!-- VIII - Habilidades Escolares -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 VIII - Habilidades Escolares
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div>
                 <x-anamnesis.label sizeFont="sm" for="knows_handle_pencil">Sabe pegar no lápis? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -1020,7 +1021,7 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div>
                 <x-anamnesis.label sizeFont="sm" for="reading_texts">Faz leitura de textos? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="reading_texts" full
@@ -1057,7 +1058,7 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div>
              <x-anamnesis.label sizeFont="sm" for="follows_school_routine">Segue rotina e horário da escola? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="follows_school_routine" full
@@ -1070,9 +1071,9 @@
                     </option>
                 </x-anamnesis.select>
             </div>
-
+ 
             <div class="col-span-1 hidden sm:block"></div>
-
+ 
             <div>
                 <x-anamnesis.label sizeFont="sm" for="adapted_activities">Atividades são adaptadas? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
                 <x-anamnesis.select valueName="adapted_activities" full
@@ -1104,19 +1105,19 @@
                 </x-anamnesis.select>
             </div>
         </div>
-
+ 
         <!-- IX - Histórico Médico -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 IX - Histórico Médico
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div> 
                 <input type="hidden" name="have_allergy" value="0">
-
+ 
                 <label for="have_allergy" class="inline-flex items-center">
                     <input type="checkbox" name="have_allergy" id="have_allergy" {{ old('have_allergy') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_allergy" onchange="toggleInput(this)">
@@ -1161,10 +1162,10 @@
                     </option>
                 </x-anamnesis.select>
             </div> 
-
+ 
             <div class="col-span-1 md:col-span-4"> 
                 <input type="hidden" name="have_therapeutic" value="0">
-
+ 
                 <label for="have_therapeutic" class="inline-flex items-center">
                     <input type="checkbox" name="have_therapeutic" id="have_therapeutic" {{ old('have_therapeutic') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="times_days_therapeutic" onchange="toggleInput(this)">
@@ -1173,10 +1174,10 @@
                 <x-anamnesis.input class="times_days_therapeutic" name="times_days_therapeutic" id="times_days_therapeutic"
                     value="{{old('times_days_therapeutic')}}" placeholder="Quais atendimentos e horários?" disabled />
             </div>
-
+ 
             <div class="col-span-1 md:col-span-2"> 
                 <input type="hidden" name="history_disorders_family" value="0">
-
+ 
                 <label for="history_disorders_family" class="inline-flex items-center">
                     <input type="checkbox" name="history_disorders_family" id="history_disorders_family" {{ old('history_disorders_family') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="what_history_disorders_family" onchange="toggleInput(this)">
@@ -1187,7 +1188,7 @@
             </div>
             <div class="col-span-1 md:col-span-2"> 
                 <input type="hidden" name="have_update_vaccines" value="0">
-
+ 
                 <label for="have_update_vaccines" class="inline-flex items-center">
                     <input type="checkbox" name="have_update_vaccines" id="have_update_vaccines" {{ old('have_update_vaccines') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1">
@@ -1197,15 +1198,15 @@
                     value="{{old('detail_update_vaccines')}}" placeholder="Detalhe: (*opcional)"/>
             </div>
         </div>
-
+ 
         <!-- X - Ambiente Social e Familiar -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 X - Ambiente Social e Familiar
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1 lg:col-span-3">
                 <x-anamnesis.label sizeFont="sm" for="relation_family_members">Relação entre pais, filhos, irmãos e avós? <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -1227,10 +1228,10 @@
                     </option>
                 </x-anamnesis.select>
             </div> 
-
+ 
             <div class="flex">
                 <input type="hidden" name="have_access_cellphone" value="0">
-
+ 
                 <label for="have_access_cellphone" class="inline-flex items-center">
                     <input type="checkbox" name="have_access_cellphone" id="have_access_cellphone" {{ old('have_access_cellphone') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="technology_access" onchange="toggleInput(this)">
@@ -1256,19 +1257,19 @@
                 </x-anamnesis.select>
             </div>
         </div>    
-
+ 
         <!-- XI - Avaliando o CAEE da APAE Russas -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 XI - Avaliando o CAEE da APAE Russas
             </h1>
         </div>
-
+ 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 my-2">
             <div class="col-span-1"> 
                 <input type="hidden" name="already_had_information_institution" value="0">
-
+ 
                 <label for="already_had_information_institution" class="inline-flex items-center">
                     <input type="checkbox" name="already_had_information_institution" id="already_had_information_institution" {{ old('already_had_information_institution') ? 'checked' : '' }}
                         class="form-checkbox rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 hover:bg-gray-100 dark:hover:bg-dark-eval-0 dark:checked:border-gray-600 dark:checked:bg-dark-eval-1" value="1" data-target="who_recommend_institution" onchange="toggleInput(this)">
@@ -1290,9 +1291,9 @@
                 </x-anamnesis.select>
             </div> 
         </div>
-
+ 
         <!-- XII - Observações Gerais -->
-
+ 
         <div class="my-4">
             <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
                 XII - Observações Gerais:
@@ -1304,9 +1305,9 @@
                 {{old('general_observations')}}
             </x-form.textarea>
         </div>
-
+ 
         <!-- Assinatura do Profissional que realizou a Anamnese -->
-
+ 
         <div class="mt-2 grid grid-cols-1 sm:grid-cols-4">
             <div class="col-span-1 sm:col-span-2">
                 <x-anamnesis.label sizeFont="sm" for="signature_id">Assinatura do Profissional que realizou a Anamnese: <span class="text-red-700 dark:text-red-500">*</span> </x-anamnesis.label>
@@ -1320,7 +1321,7 @@
                 </x-anamnesis.select>
             </div>
         </div>
-
+ 
         <div class="flex items-center justify-center grid grid-cols-4 sm:grid-cols-3 mt-6"> 
             <div class="col-span-1 flex"> 
                 <x-button class="prev-step" button> 
@@ -1334,29 +1335,29 @@
             <div class="col-span-1 flex justify-end" > 
             </div> 
         </div>
-
+ 
         </div>
-
+ 
         <div>
             <x-button id="submitButton" variant="blue" class="w-full mt-2 -mb-4" onclick="handleClick()">
                 <p class="text-center w-full">Adicionar Anamnese</p>
                 <i id="loadingSpinner" class="fa fa-spinner fa-spin hidden ml-2"></i> 
             </x-button>
         </div>
-
+ 
     </x-table-create>
-
+ 
     </div>
-
+ 
 </x-app-layout>
-
-
+ 
+ 
 <style>
     /* =========================================================
        PADRÃO VISUAL SIAPAE - ANAMNESE
        Paleta inspirada na tela inicial: verde, branco e neutros.
        ========================================================= */
-
+ 
     .anamnesis-create-page {
         --siapae-green: #2f7d5a;
         --siapae-green-dark: #256747;
@@ -1366,33 +1367,43 @@
         --siapae-border: #dfe7e2;
         --siapae-bg: #f5f8f6;
         --siapae-white: #ffffff;
+ 
+        /* Campos */
+        --siapae-field: #ffffff;
+        --siapae-field-hover: #c9d8cf;
+        --siapae-field-readonly: #f2f6f3;
+        --siapae-field-readonly-text: #62746a;
+        --siapae-field-disabled: #f2f5f3;
+        --siapae-field-disabled-text: #8a978f;
+        --siapae-placeholder: #8a978f;
+        --siapae-ring: rgba(47, 125, 90, 0.10);
     }
-
+ 
     /* Fundo da página */
     body {
         background-color: #f5f8f6 !important;
     }
-
+ 
     /* Cartão principal */
     .anamnesis-create-page .bg-white {
         background-color: var(--siapae-white) !important;
     }
-
+ 
     .anamnesis-create-page .border-gray-200 {
         border-color: var(--siapae-border) !important;
     }
-
+ 
     .anamnesis-create-page .shadow-sm {
         box-shadow: 0 8px 24px rgba(39, 67, 54, 0.06) !important;
     }
-
+ 
     /* Títulos */
     .anamnesis-create-page h1,
     .anamnesis-create-page h2,
     .anamnesis-create-page h3 {
         color: var(--siapae-text) !important;
     }
-
+ 
     .anamnesis-create-page .form-step h1 {
         color: var(--siapae-text) !important;
         font-weight: 700 !important;
@@ -1400,7 +1411,7 @@
         padding-left: 12px !important;
         margin-bottom: 20px !important;
     }
-
+ 
     /* Labels e textos */
     .anamnesis-create-page .form-step label,
     .anamnesis-create-page .form-step .text-gray-700,
@@ -1409,14 +1420,14 @@
     .anamnesis-create-page .form-step .text-gray-500 {
         color: var(--siapae-text) !important;
     }
-
+ 
     /* Campos */
     .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
     .anamnesis-create-page .form-step select,
     .anamnesis-create-page .form-step textarea {
         width: 100%;
         min-height: 42px;
-        background-color: #ffffff !important;
+        background-color: var(--siapae-field) !important;
         color: var(--siapae-text) !important;
         border: 1px solid var(--siapae-border) !important;
         border-radius: 9px !important;
@@ -1424,64 +1435,80 @@
         outline: none !important;
         transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
     }
-
+ 
     .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):hover,
     .anamnesis-create-page .form-step select:hover,
     .anamnesis-create-page .form-step textarea:hover {
-        border-color: #c9d8cf !important;
+        border-color: var(--siapae-field-hover) !important;
     }
-
+ 
     .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):focus,
     .anamnesis-create-page .form-step select:focus,
     .anamnesis-create-page .form-step textarea:focus {
         border-color: var(--siapae-green) !important;
-        box-shadow: 0 0 0 3px rgba(47, 125, 90, 0.10) !important;
+        box-shadow: 0 0 0 3px var(--siapae-ring) !important;
     }
-
+ 
     .anamnesis-create-page .form-step input::placeholder,
     .anamnesis-create-page .form-step textarea::placeholder {
-        color: #8a978f !important;
+        color: var(--siapae-placeholder) !important;
         opacity: 1;
     }
-
+ 
+    /* Opções do select */
+    .anamnesis-create-page .form-step select option {
+        background-color: var(--siapae-field);
+        color: var(--siapae-text);
+    }
+ 
+    /* Autofill do navegador */
+    .anamnesis-create-page .form-step input:-webkit-autofill,
+    .anamnesis-create-page .form-step input:-webkit-autofill:hover,
+    .anamnesis-create-page .form-step input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px var(--siapae-field) inset !important;
+        -webkit-text-fill-color: var(--siapae-text) !important;
+        caret-color: var(--siapae-text);
+        transition: background-color 9999s ease-in-out 0s;
+    }
+ 
     /* Campos preenchidos automaticamente */
     .anamnesis-create-page .form-step input[readonly] {
-        background-color: #f2f6f3 !important;
-        color: #62746a !important;
+        background-color: var(--siapae-field-readonly) !important;
+        color: var(--siapae-field-readonly-text) !important;
         border-color: #dbe6df !important;
     }
-
+ 
     .anamnesis-create-page .form-step input:disabled,
     .anamnesis-create-page .form-step select:disabled {
-        background-color: #f2f5f3 !important;
-        color: #8a978f !important;
+        background-color: var(--siapae-field-disabled) !important;
+        color: var(--siapae-field-disabled-text) !important;
         cursor: not-allowed;
     }
-
+ 
     /* Checkbox e radio */
     .anamnesis-create-page .form-step input[type="checkbox"],
     .anamnesis-create-page .form-step input[type="radio"] {
         accent-color: var(--siapae-green) !important;
     }
-
+ 
     /* Separadores */
     .anamnesis-create-page .form-step hr {
         border-color: var(--siapae-border) !important;
     }
-
+ 
     /* Indicador das páginas */
     .anamnesis-create-page .step-indicator {
         color: var(--siapae-muted) !important;
         font-size: .9rem;
         font-weight: 500;
     }
-
+ 
     .anamnesis-create-page .step-indicator .current-step,
     .anamnesis-create-page .step-indicator .total-steps {
         color: var(--siapae-green) !important;
         font-weight: 700;
     }
-
+ 
     /* Botões */
     .anamnesis-create-page .next-step,
     .anamnesis-create-page .prev-step,
@@ -1495,7 +1522,7 @@
         font-weight: 600 !important;
         transition: background-color .18s ease, border-color .18s ease, transform .18s ease, box-shadow .18s ease;
     }
-
+ 
     .anamnesis-create-page .next-step:hover,
     .anamnesis-create-page .prev-step:hover,
     .anamnesis-create-page #submitButton:hover {
@@ -1503,24 +1530,24 @@
         border-color: var(--siapae-green-dark) !important;
         box-shadow: 0 5px 14px rgba(47, 125, 90, 0.18) !important;
     }
-
+ 
     .anamnesis-create-page .next-step:active,
     .anamnesis-create-page .prev-step:active,
     .anamnesis-create-page #submitButton:active {
         transform: translateY(1px);
     }
-
+ 
     /* Remove tons azuis do x-button neste formulário */
     .anamnesis-create-page #submitButton[class*="bg-blue"],
     .anamnesis-create-page .next-step[class*="bg-blue"],
     .anamnesis-create-page .prev-step[class*="bg-blue"] {
         background-color: var(--siapae-green) !important;
     }
-
+ 
     .anamnesis-create-page .prev-step[style*="display: none"] {
         display: none !important;
     }
-
+ 
     /* Mensagem de erro */
     .anamnesis-create-page #errorMessage {
         color: #a55225 !important;
@@ -1529,42 +1556,100 @@
         border-radius: 9px !important;
         padding: 11px 14px !important;
     }
-
+ 
     .anamnesis-create-page .text-red-700,
     .anamnesis-create-page .text-red-600 {
         color: #ba4d38 !important;
     }
-
+ 
     /* Destaques que ainda possam vir com classes azuis */
     .anamnesis-create-page .form-step .bg-blue-50,
     .anamnesis-create-page .form-step .bg-blue-100 {
         background-color: var(--siapae-green-soft) !important;
     }
-
+ 
     .anamnesis-create-page .form-step .text-blue-600,
     .anamnesis-create-page .form-step .text-blue-700,
     .anamnesis-create-page .form-step .text-blue-800 {
         color: var(--siapae-green-dark) !important;
     }
-
+ 
     /* Responsividade */
     @media (max-width: 640px) {
         .anamnesis-create-page .form-step h1 {
             font-size: 1.08rem !important;
             margin-bottom: 16px !important;
         }
-
+ 
         .anamnesis-create-page .form-step input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
         .anamnesis-create-page .form-step select,
         .anamnesis-create-page .form-step textarea {
             min-height: 40px;
         }
     }
+ 
+    /* =========================================================
+       TEMA ESCURO - ANAMNESE
+       Campos com o mesmo fundo do campo de busca da lista.
+       ========================================================= */
+ 
+    .dark .anamnesis-create-page {
+        --siapae-green: #3f9d74;
+        --siapae-green-dark: #55b98c;
+        --siapae-green-soft: rgba(63, 157, 116, 0.14);
+        --siapae-text: #e6ece8;
+        --siapae-muted: #9fb0a7;
+        --siapae-border: #33443a;
+        --siapae-bg: #16211b;
+        --siapae-white: #1c2a22;
+ 
+        /* Campos */
+        --siapae-field: #0F2018;
+        --siapae-field-hover: #3a5646;
+        --siapae-field-readonly: #1a3025;
+        --siapae-field-readonly-text: #aab8b0;
+        --siapae-field-disabled: #12241b;
+        --siapae-field-disabled-text: #6f8077;
+        --siapae-placeholder: #7c8b82;
+        --siapae-ring: rgba(118, 181, 143, 0.25);
+ 
+        /* Escurece controles nativos (lista do select, calendário, scrollbar) */
+        color-scheme: dark;
+    }
+ 
+    .dark body {
+        background-color: #101913 !important;
+    }
+ 
+    /* Campos preenchidos automaticamente (readonly) */
+    .dark .anamnesis-create-page .form-step input[readonly] {
+        border-color: var(--siapae-border) !important;
+    }
+ 
+    /* Checkbox e radio (evita o quadrado sólido sem contraste) */
+    .dark .anamnesis-create-page .form-step input[type="checkbox"],
+    .dark .anamnesis-create-page .form-step input[type="radio"] {
+        accent-color: var(--siapae-green) !important;
+        background-color: #1c2a22 !important;
+        border-color: var(--siapae-border) !important;
+    }
+ 
+    /* Mensagem de erro */
+    .dark .anamnesis-create-page #errorMessage {
+        color: #f2b58a !important;
+        background-color: #2c2014 !important;
+        border-color: #4a3420 !important;
+    }
+ 
+    .dark .anamnesis-create-page .text-red-700,
+    .dark .anamnesis-create-page .text-red-600 {
+        color: #e08a72 !important;
+    }
 </style>
-
+ 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
+ 
     function loadStudentData(studentId) {
         if (studentId) {
             $.ajax({
@@ -1590,29 +1675,29 @@
             $('#turn_school').val('');
         }
     }
-
+ 
     $(document).ready(function () {
-
+ 
         let currentStep = 0; 
         const steps = $(".form-step"); 
-
+ 
         function updateStepIndicator() { 
             $(".current-step").text(currentStep + 1); 
             $(".total-steps").text(steps.length); 
             $(".prev-step").toggle(currentStep > 0); 
         } 
-
+ 
         function scrollToSelector() { 
             const element = document.querySelector(".scroll-target"); 
             element.scrollIntoView({ 
                 behavior: 'smooth',
             }); 
         }
-
+ 
         function validateStep() {
             let isValid = true;
             const elements = steps.eq(currentStep).find('input[required], select[required]'); // Seleciona inputs e selects
-
+ 
             // Validar os elementos na ordem
             elements.each(function() {
                 if (!this.checkValidity()) {
@@ -1626,7 +1711,7 @@
         
         steps.eq(currentStep).show(); 
         updateStepIndicator(); 
-
+ 
         $(".next-step").on("click", function () { 
             if (validateStep()) {
                 steps.eq(currentStep).hide(); 
@@ -1645,17 +1730,18 @@
                 scrollToSelector();
             }
         });
-
-
+ 
+ 
         $('#student_id').change(function () {
             var studentId = $(this).val();
             loadStudentData(studentId);
         });
-
+ 
         var initialStudentId = $('#student_id').val();
         if (initialStudentId) {
             loadStudentData(initialStudentId);
         }
-
+ 
     });
 </script>
+ 
