@@ -1,3 +1,4 @@
+
 <style>
  
     /* Cores vêm de resources/css/siapae-theme.css (variáveis --sp-*) */
@@ -116,10 +117,9 @@
  
     <div>
  
-        <x-sidebar.link
-            title="{{ __('Student File') }}"
-            href="{{ route('student.index') }}"
-            :isActive="request()->routeIs(
+        <x-sidebar.dropdown
+            title="Estudantes"
+            :active="request()->routeIs(
                 'student.index',
                 'student.create',
                 'student.edit',
@@ -137,7 +137,34 @@
  
             </x-slot>
  
-        </x-sidebar.link>
+            {{-- FICHA DOS ESTUDANTES --}}
+            <x-sidebar.sublink
+                title="Ficha dos Estudantes"
+                href="{{ route('student.index') }}"
+                :active="request()->routeIs(
+                    'student.index',
+                    'student.create',
+                    'student.edit',
+                    'student.show',
+                    'student.deposit'
+                )"
+            />
+ 
+            {{-- DOCUMENTOS --}}
+            <x-sidebar.sublink
+                title="Documentos"
+                href="#"
+                :active="false"
+            />
+ 
+            {{-- PERFIL DO ESTUDANTE --}}
+            <x-sidebar.sublink
+                title="Perfil do estudante"
+                href="{{ route('student.index') }}"
+                :active="false"
+            />
+ 
+        </x-sidebar.dropdown>
  
     </div>
  
@@ -248,8 +275,7 @@
  
     </div>
 
-
-    {{-- =====================================================
+        {{-- =====================================================
          SONDAGEM DIAGNÓSTICA
          ===================================================== --}}
 
@@ -279,7 +305,7 @@
 
             <x-slot name="icon">
 
-                <x-icons.register
+                <x-icons.report
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
@@ -289,8 +315,6 @@
         </x-sidebar.link>
 
     </div>
-
-
  
  
     {{-- =====================================================
@@ -380,7 +404,7 @@
         </div>
  
  
-        {{-- ATAS DE REUNIÕES --}}
+        {{-- ATAS DE REUNIÕES --}}    
  
         <div>
  
