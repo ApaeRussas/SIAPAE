@@ -1,109 +1,63 @@
 <x-app-layout>
 
     <x-slot name="header">
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
             <p class="text-sm font-semibold tracking-wide text-[#3B7D5A] mb-1">
                 SIAPAE
             </p>
-
             <h2 class="text-2xl md:text-3xl font-bold leading-tight text-[#102A43]">
                 Sondagem Diagnóstica
             </h2>
-
         </div>
-
     </x-slot>
 
-
-    <div class="py-6 bg-[#F4F6F8] min-h-screen">
-
+    <div class="py-6 bg-[#EAF3ED] min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-
-            {{-- =====================================================
-                 CARD PRINCIPAL
-                 ===================================================== --}}
 
             <div class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden">
 
-
-                {{-- CABEÇALHO --}}
-
-                <div class="px-6 md:px-8 pt-7 pb-6 border-b border-[#E1E7EC]">
-
+                <div class="px-6 md:px-8 pt-7 pb-6 border-b border-[#DCE7E1]">
                     <h1 class="text-xl md:text-2xl font-bold text-[#102A43]">
                         Sondagem Diagnóstica Psicopedagógica
                     </h1>
-
                     <p class="mt-1 text-sm md:text-base text-[#66788A]">
                         Preencha os dados do aluno e registre os resultados da sondagem.
                     </p>
-
                 </div>
 
-
-                {{-- ERROS --}}
-
                 @if ($errors->any())
-
                     <div class="mx-6 md:mx-8 mt-6 rounded-xl border border-red-200 bg-red-50 px-5 py-4">
-
                         <p class="font-semibold text-red-700 mb-2">
                             Verifique os campos abaixo:
                         </p>
-
                         <ul class="list-disc list-inside text-sm text-red-600 space-y-1">
-
                             @foreach ($errors->all() as $error)
-
                                 <li>{{ $error }}</li>
-
                             @endforeach
-
                         </ul>
-
                     </div>
-
                 @endif
-
 
                 <form
                     method="POST"
                     action="{{ route('diagnostic-assessments.store') }}"
                     class="px-6 md:px-8 py-6"
                 >
-
                     @csrf
 
-
-                    {{-- =====================================================
-                         IDENTIFICAÇÃO
-                         ===================================================== --}}
-
                     <section class="mb-8">
-
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 1. Identificação
                             </h2>
-
                             <p class="mt-1 text-sm text-[#66788A]">
                                 Dados de identificação do aluno, conforme a ficha da sondagem.
                             </p>
-
                         </div>
-
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
 
-
-                            {{-- ALUNO --}}
-
                             <div class="lg:col-span-2">
-
                                 <label
                                     for="student_id"
                                     class="block text-sm font-semibold text-[#334E68] mb-2"
@@ -118,39 +72,28 @@
                                     required
                                     class="w-full rounded-lg border border-[#D7DEE5] bg-white px-3 py-2.5 text-[#243B53] focus:border-[#3B7D5A] focus:ring-2 focus:ring-[#3B7D5A]/10 outline-none"
                                 >
-
                                     <option value="">
                                         Selecione um aluno
                                     </option>
 
                                     @foreach ($students as $student)
-
                                         <option
                                             value="{{ $student->id }}"
                                             {{ old('student_id', $student_id) == $student->id ? 'selected' : '' }}
                                         >
                                             {{ $student->name }}
                                         </option>
-
                                     @endforeach
-
                                 </select>
 
                                 @error('student_id')
-
                                     <p class="mt-1 text-sm text-red-600">
                                         {{ $message }}
                                     </p>
-
                                 @enderror
-
                             </div>
 
-
-                            {{-- IDADE --}}
-
                             <div>
-
                                 <label
                                     for="age"
                                     class="block text-sm font-semibold text-[#334E68] mb-2"
@@ -167,14 +110,9 @@
                                     value="{{ old('age') }}"
                                     class="w-full rounded-lg border border-[#D7DEE5] bg-white px-3 py-2.5 text-[#243B53] focus:border-[#3B7D5A] focus:ring-2 focus:ring-[#3B7D5A]/10 outline-none"
                                 >
-
                             </div>
 
-
-                            {{-- SÉRIE --}}
-
                             <div>
-
                                 <label
                                     for="series"
                                     class="block text-sm font-semibold text-[#334E68] mb-2"
@@ -191,14 +129,9 @@
                                     maxlength="100"
                                     class="w-full rounded-lg border border-[#D7DEE5] bg-white px-3 py-2.5 text-[#243B53] focus:border-[#3B7D5A] focus:ring-2 focus:ring-[#3B7D5A]/10 outline-none"
                                 >
-
                             </div>
 
-
-                            {{-- ESCOLA --}}
-
                             <div class="lg:col-span-2">
-
                                 <label
                                     for="school"
                                     class="block text-sm font-semibold text-[#334E68] mb-2"
@@ -214,14 +147,9 @@
                                     maxlength="255"
                                     class="w-full rounded-lg border border-[#D7DEE5] bg-white px-3 py-2.5 text-[#243B53] focus:border-[#3B7D5A] focus:ring-2 focus:ring-[#3B7D5A]/10 outline-none"
                                 >
-
                             </div>
 
-
-                            {{-- CID --}}
-
                             <div>
-
                                 <label
                                     for="cid"
                                     class="block text-sm font-semibold text-[#334E68] mb-2"
@@ -237,14 +165,9 @@
                                     maxlength="100"
                                     class="w-full rounded-lg border border-[#D7DEE5] bg-white px-3 py-2.5 text-[#243B53] focus:border-[#3B7D5A] focus:ring-2 focus:ring-[#3B7D5A]/10 outline-none"
                                 >
-
                             </div>
 
-
-                            {{-- DATA --}}
-
                             <div>
-
                                 <label
                                     for="date"
                                     class="block text-sm font-semibold text-[#334E68] mb-2"
@@ -268,35 +191,20 @@
                                 >
 
                                 @error('date')
-
                                     <p class="mt-1 text-sm text-red-600">
                                         {{ $message }}
                                     </p>
-
                                 @enderror
-
                             </div>
 
                         </div>
-
                     </section>
 
-
-                    {{-- =====================================================
-                         COMPONENTES AUXILIARES
-                         ===================================================== --}}
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         LINGUAGEM
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 2. Linguagem
                             </h2>
@@ -304,14 +212,9 @@
                             <p class="mt-1 text-sm text-[#66788A]">
                                 Registre os itens observados durante a avaliação.
                             </p>
-
                         </div>
 
-
-                        {{-- JOGOS PARA AVALIAÇÃO --}}
-
                         <div class="rounded-xl bg-[#EDF5F0] border border-[#DCEBE2] px-5 py-4 mb-5">
-
                             <p class="text-sm font-bold text-[#2F684A] mb-2">
                                 Jogos para avaliação
                             </p>
@@ -320,14 +223,11 @@
                                 Linguístico, alfabeto móvel, loto palavra, texto simples,
                                 texto paragrafado e frases.
                             </p>
-
                         </div>
-
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
 
                             @php
-
                                 $languageItems = [
                                     'represents_letters' => 'Representa as letras',
                                     'recognizes_letters' => 'Reconhece as letras',
@@ -341,14 +241,10 @@
                                     'interest_in_writing' => 'Demonstra interesse pela escrita (letras, numerais, palavras, Braille e Libras)',
                                     'other_languages' => 'Outras línguas',
                                 ];
-
                             @endphp
 
-
                             @foreach ($languageItems as $key => $label)
-
                                 <label class="assessment-check">
-
                                     <input
                                         type="checkbox"
                                         name="language[{{ $key }}]"
@@ -359,30 +255,22 @@
                                     <span>
                                         {{ $label }}
                                     </span>
-
                                 </label>
-
                             @endforeach
 
                         </div>
 
-
-                        {{-- TEXTOS --}}
-
-                        <div class="mt-6 rounded-xl border border-[#E1E7EC] p-5">
+                        <div class="mt-6 rounded-xl border border-[#E1E7EC] bg-white p-5">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Leitura e interpretação
                             </h3>
 
-
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
 
                                 <div class="space-y-3">
 
                                     <label class="assessment-check">
-
                                         <input
                                             type="checkbox"
                                             name="language[simple_text]"
@@ -393,12 +281,9 @@
                                         <span>
                                             Texto simples
                                         </span>
-
                                     </label>
 
-
                                     <label class="assessment-check">
-
                                         <input
                                             type="checkbox"
                                             name="language[simple_text_interprets]"
@@ -409,16 +294,13 @@
                                         <span>
                                             Interpreta texto simples
                                         </span>
-
                                     </label>
 
                                 </div>
 
-
                                 <div class="space-y-3">
 
                                     <label class="assessment-check">
-
                                         <input
                                             type="checkbox"
                                             name="language[paragraph_text]"
@@ -429,12 +311,9 @@
                                         <span>
                                             Texto com três parágrafos ou mais
                                         </span>
-
                                     </label>
 
-
                                     <label class="assessment-check">
-
                                         <input
                                             type="checkbox"
                                             name="language[paragraph_text_interprets]"
@@ -445,24 +324,18 @@
                                         <span>
                                             Interpreta texto com três parágrafos ou mais
                                         </span>
-
                                     </label>
 
                                 </div>
 
                             </div>
-
                         </div>
 
-
-                        {{-- NÍVEIS DE ESCRITA --}}
-
-                        <div class="mt-6 rounded-xl border border-[#E1E7EC] p-5">
+                        <div class="mt-6 rounded-xl border border-[#E1E7EC] bg-white p-5">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Níveis de escrita
                             </h3>
-
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
@@ -474,7 +347,6 @@
                                 ] as $key => $label)
 
                                     <label class="assessment-radio">
-
                                         <input
                                             type="radio"
                                             name="language[writing_level]"
@@ -485,35 +357,24 @@
                                         <span>
                                             {{ $label }}
                                         </span>
-
                                     </label>
 
                                 @endforeach
 
                             </div>
-
                         </div>
 
                     </section>
 
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         LÓGICO MATEMÁTICO
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 3. Lógico Matemático
                             </h2>
-
                         </div>
-
 
                         <div class="rounded-xl bg-[#EDF5F0] border border-[#DCEBE2] px-5 py-4 mb-5">
 
@@ -530,11 +391,9 @@
 
                         </div>
 
-
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
 
                             @php
-
                                 $mathItems = [
                                     'identifies_numbers_contexts' => 'Identifica números nos diferentes contextos em que se encontram (relógio, placa de carro, calculadora)',
                                     'identifies_number_position' => 'Identifica posição do número',
@@ -546,9 +405,7 @@
                                     'differentiates_money_values' => 'Consegue diferenciar valores',
                                     'solves_word_problems' => 'Consegue resolver situações-problemas',
                                 ];
-
                             @endphp
-
 
                             @foreach ($mathItems as $key => $label)
 
@@ -571,10 +428,7 @@
 
                         </div>
 
-
-                        {{-- FORMAS GEOMÉTRICAS --}}
-
-                        <div class="mt-6 rounded-xl border border-[#E1E7EC] p-5">
+                        <div class="mt-6 rounded-xl border border-[#E1E7EC] bg-white p-5">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Formas geométricas
@@ -607,13 +461,9 @@
                                 @endforeach
 
                             </div>
-
                         </div>
 
-
-                        {{-- OPERAÇÕES --}}
-
-                        <div class="mt-6 rounded-xl border border-[#E1E7EC] p-5">
+                        <div class="mt-6 rounded-xl border border-[#E1E7EC] bg-white p-5">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Consegue fazer operações
@@ -646,13 +496,9 @@
                                 @endforeach
 
                             </div>
-
                         </div>
 
-
-                        {{-- CONHECIMENTO ESPACIAL --}}
-
-                        <div class="mt-6 rounded-xl border border-[#E1E7EC] p-5">
+                        <div class="mt-6 rounded-xl border border-[#E1E7EC] bg-white p-5">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Conhecimento para
@@ -701,29 +547,19 @@
                                 @endforeach
 
                             </div>
-
                         </div>
 
                     </section>
 
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         VIDA FUNCIONAL
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 4. Vida Funcional — AVD's e AVP's
                             </h2>
-
                         </div>
-
 
                         <div class="rounded-xl bg-[#EDF5F0] border border-[#DCEBE2] px-5 py-4 mb-5">
 
@@ -736,7 +572,6 @@
                             </p>
 
                         </div>
-
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
 
@@ -773,24 +608,15 @@
 
                     </section>
 
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         VIVÊNCIA CORPORAL
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 5. Vivência Corporal
                             </h2>
-
                         </div>
-
 
                         <div class="rounded-xl bg-[#EDF5F0] border border-[#DCEBE2] px-5 py-4 mb-5">
 
@@ -803,7 +629,6 @@
                             </p>
 
                         </div>
-
 
                         <label class="assessment-check mb-5">
 
@@ -820,7 +645,6 @@
 
                         </label>
 
-
                         <label class="assessment-check mb-6">
 
                             <input
@@ -836,10 +660,7 @@
 
                         </label>
 
-
-                        {{-- FASE DO DESENHO --}}
-
-                        <div class="rounded-xl border border-[#E1E7EC] p-5 mb-6">
+                        <div class="rounded-xl border border-[#E1E7EC] bg-white p-5 mb-6">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 O desenho do corpo está na fase
@@ -872,13 +693,9 @@
                                 @endforeach
 
                             </div>
-
                         </div>
 
-
-                        {{-- LADO DOMINANTE --}}
-
-                        <div class="rounded-xl border border-[#E1E7EC] p-5 mb-6">
+                        <div class="rounded-xl border border-[#E1E7EC] bg-white p-5 mb-6">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Qual o seu lado dominante?
@@ -895,10 +712,11 @@
                                         {{ old('body_experience.dominant_side') === 'Direita' ? 'checked' : '' }}
                                     >
 
-                                    <span>Direita</span>
+                                    <span>
+                                        Direita
+                                    </span>
 
                                 </label>
-
 
                                 <label class="assessment-radio">
 
@@ -909,18 +727,16 @@
                                         {{ old('body_experience.dominant_side') === 'Esquerda' ? 'checked' : '' }}
                                     >
 
-                                    <span>Esquerda</span>
+                                    <span>
+                                        Esquerda
+                                    </span>
 
                                 </label>
 
                             </div>
-
                         </div>
 
-
-                        {{-- EXPRESSÃO FACIAL --}}
-
-                        <div class="rounded-xl border border-[#E1E7EC] p-5">
+                        <div class="rounded-xl border border-[#E1E7EC] bg-white p-5">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Expressão facial
@@ -945,36 +761,28 @@
                                             {{ old("body_experience.facial_expression.$key") ? 'checked' : '' }}
                                         >
 
-                                        <span>{{ $label }}</span>
+                                        <span>
+                                            {{ $label }}
+                                        </span>
 
                                     </label>
 
                                 @endforeach
 
                             </div>
-
                         </div>
 
                     </section>
 
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         NATUREZA E SOCIEDADE
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 6. Natureza e Sociedade
                             </h2>
-
                         </div>
-
 
                         <div class="rounded-xl bg-[#EDF5F0] border border-[#DCEBE2] px-5 py-4 mb-5">
 
@@ -989,7 +797,6 @@
                             </p>
 
                         </div>
-
 
                         <label class="assessment-check mb-5">
 
@@ -1006,15 +813,11 @@
 
                         </label>
 
-
-                        {{-- PLACAS --}}
-
-                        <div class="rounded-xl border border-[#E1E7EC] p-5 mb-6">
+                        <div class="rounded-xl border border-[#E1E7EC] bg-white p-5 mb-6">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Conhece as placas de trânsito
                             </h3>
-
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
 
@@ -1036,16 +839,16 @@
                                             {{ old("nature_society.traffic_signs.$key") ? 'checked' : '' }}
                                         >
 
-                                        <span>{{ $label }}</span>
+                                        <span>
+                                            {{ $label }}
+                                        </span>
 
                                     </label>
 
                                 @endforeach
 
                             </div>
-
                         </div>
-
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
 
@@ -1064,7 +867,9 @@
                                         {{ old("nature_society.$key") ? 'checked' : '' }}
                                     >
 
-                                    <span>{{ $label }}</span>
+                                    <span>
+                                        {{ $label }}
+                                    </span>
 
                                 </label>
 
@@ -1074,24 +879,15 @@
 
                     </section>
 
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         INFORMÁTICA PEDAGÓGICA
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 7. Informática Pedagógica
                             </h2>
-
                         </div>
-
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
 
@@ -1111,7 +907,9 @@
                                         {{ old("educational_informatics.$key") ? 'checked' : '' }}
                                     >
 
-                                    <span>{{ $label }}</span>
+                                    <span>
+                                        {{ $label }}
+                                    </span>
 
                                 </label>
 
@@ -1121,24 +919,15 @@
 
                     </section>
 
-
-                    <div class="h-px bg-[#E1E7EC] mb-8"></div>
-
-
-                    {{-- =====================================================
-                         COGNITIVO
-                         ===================================================== --}}
+                    <div class="h-px bg-[#DCE7E1] mb-8"></div>
 
                     <section class="mb-8">
 
                         <div class="mb-5">
-
                             <h2 class="text-lg md:text-xl font-bold text-[#102A43]">
                                 8. Cognitivo
                             </h2>
-
                         </div>
-
 
                         <div class="rounded-xl bg-[#EDF5F0] border border-[#DCEBE2] px-5 py-4 mb-5">
 
@@ -1153,15 +942,11 @@
 
                         </div>
 
-
-                        {{-- CONHECIMENTO TEMPORAL --}}
-
-                        <div class="rounded-xl border border-[#E1E7EC] p-5 mb-6">
+                        <div class="rounded-xl border border-[#E1E7EC] bg-white p-5 mb-6">
 
                             <h3 class="font-semibold text-[#102A43] mb-4">
                                 Conhecimento para
                             </h3>
-
 
                             <div class="space-y-5">
 
@@ -1194,7 +979,9 @@
                                                         {{ old("cognitive.time_knowledge.$key") === $value ? 'checked' : '' }}
                                                     >
 
-                                                    <span>{{ $option }}</span>
+                                                    <span>
+                                                        {{ $option }}
+                                                    </span>
 
                                                 </label>
 
@@ -1207,11 +994,7 @@
                                 @endforeach
 
                             </div>
-
                         </div>
-
-
-                        {{-- ITENS COGNITIVOS --}}
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
 
@@ -1233,7 +1016,9 @@
                                         {{ old("cognitive.$key") ? 'checked' : '' }}
                                     >
 
-                                    <span>{{ $label }}</span>
+                                    <span>
+                                        {{ $label }}
+                                    </span>
 
                                 </label>
 
@@ -1243,12 +1028,7 @@
 
                     </section>
 
-
-                    {{-- =====================================================
-                         BOTÕES
-                         ===================================================== --}}
-
-                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-[#E1E7EC]">
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-[#DCE7E1]">
 
                         <a
                             href="{{ route('diagnostic-assessments.index') }}"
@@ -1256,7 +1036,6 @@
                         >
                             Cancelar
                         </a>
-
 
                         <button
                             type="submit"
@@ -1272,91 +1051,96 @@
             </div>
 
         </div>
-
     </div>
 
-
-    {{-- =========================================================
-         ESTILOS
-         ========================================================= --}}
-
     <style>
-
         body {
-            background-color: #F4F6F8 !important;
+            background-color: #EAF3ED !important;
         }
-
 
         .assessment-check,
         .assessment-radio {
-
             display: flex;
-
             align-items: flex-start;
-
             gap: 10px;
-
             padding: 10px 12px;
-
             border: 1px solid transparent;
-
             border-radius: 8px;
-
             color: #334E68;
-
             font-size: 14px;
-
             line-height: 1.5;
-
             cursor: pointer;
-
             transition:
                 background-color .2s ease,
                 border-color .2s ease;
         }
 
-
         .assessment-check:hover,
         .assessment-radio:hover {
-
             background-color: #F8FAFB;
-
-            border-color: #E1E7EC;
+            border-color: #DCE7E1;
         }
-
 
         .assessment-check input,
         .assessment-radio input {
-
             margin-top: 3px;
-
             flex-shrink: 0;
-
             accent-color: #3B7D5A;
-
             width: 16px;
-
             height: 16px;
         }
 
-
         input:focus,
         select:focus {
-
             outline: none;
         }
 
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #3B7D5A !important;
+            box-shadow: 0 0 0 3px rgba(59, 125, 90, 0.10) !important;
+        }
+
+        .assessment-check:has(input:checked),
+        .assessment-radio:has(input:checked) {
+            background-color: #EDF5F0;
+            border-color: #CFE1D6;
+            color: #2F684A;
+        }
+
+        .assessment-check:has(input:checked) span,
+        .assessment-radio:has(input:checked) span {
+            color: #2F684A;
+            font-weight: 600;
+        }
+
+        button[type="submit"] {
+            background-color: #3B7D5A !important;
+            border-color: #3B7D5A !important;
+            color: #FFFFFF !important;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2F684A !important;
+            border-color: #2F684A !important;
+        }
+
+        a[href*="diagnostic-assessments.index"] {
+            background-color: #FFFFFF;
+            border-color: #D7DEE5;
+        }
+
+        @media (max-width: 640px) {
+            .assessment-check,
+            .assessment-radio {
+                padding: 9px 10px;
+            }
+        }
     </style>
 
-
-    {{-- =========================================================
-         MÁSCARA DA DATA
-         ========================================================= --}}
-
     <script>
-
         function formatarData(input) {
-
             if (!input) {
                 return;
             }
@@ -1366,27 +1150,29 @@
             valor = valor.substring(0, 8);
 
             if (valor.length >= 5) {
-
                 input.value =
                     valor.substring(0, 2) +
                     '/' +
                     valor.substring(2, 4) +
                     '/' +
                     valor.substring(4);
-
             } else if (valor.length >= 3) {
-
                 input.value =
                     valor.substring(0, 2) +
                     '/' +
                     valor.substring(2);
-
             } else {
-
                 input.value = valor;
             }
         }
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateInput = document.getElementById('date');
+
+            if (dateInput && dateInput.value) {
+                formatarData(dateInput);
+            }
+        });
     </script>
 
 </x-app-layout>
