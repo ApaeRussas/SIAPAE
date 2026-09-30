@@ -1,4 +1,21 @@
-@props(['context', 'notRegularSidebar' => null, 'element' => null])
+@props([
+    'context',
+    'notRegularSidebar' => null,
+    'element' => null
+])
+
+@php
+    /*
+    |--------------------------------------------------------------------------
+    | PERFIL DO ESTUDANTE
+    |--------------------------------------------------------------------------
+    |
+    | No perfil individual do estudante queremos uma experiência própria,
+    | sem sidebar lateral e sem deixar o espaço reservado para ela.
+    |
+    */
+    $isStudentProfile = request()->routeIs('student.show');
+@endphp
 
 <!DOCTYPE html>
 
@@ -12,19 +29,33 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title> @yield('title', config('app.name', 'Laravel')) </title>
+    <title>
+        @yield('title', config('app.name', 'Laravel'))
+    </title>
 
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+        rel="stylesheet"
+    >
+
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet"
+    />
+
 
     <!-- Styles -->
+
     <style>
 
         [x-cloak] {
             display: none;
         }
+
 
         /* =========================================================
            FUNDO GERAL DO SISTEMA
@@ -34,47 +65,109 @@
             background-color: #E8F0EA;
         }
 
+
         .dark .siapae-system-bg {
             background-color: #0B1712;
         }
 
+
+        /* =========================================================
+           PERFIL DO ESTUDANTE
+           
+           O perfil individual ocupa toda a largura da janela,
+           sem o espaço lateral reservado para a sidebar.
+           ========================================================= */
+
+        .student-profile-page-wrapper {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+
     </style>
 
-    <link rel="stylesheet" href="{{ asset('css/etc.css') }}">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css">
+    <link
+        rel="stylesheet"
+        href="{{ asset('css/etc.css') }}"
+    >
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css"
+    >
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" id="flatpickr-light">
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        rel="stylesheet"
+    >
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css" id="flatpickr-dark" disabled>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+        id="flatpickr-light"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css"
+        id="flatpickr-dark"
+        disabled
+    >
+
 
     <!-- Scripts -->
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js" defer></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/sweetalert2@11"
+        defer
+    ></script>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"
+        defer
+    ></script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <script src="{{ asset('js/script.js') }}" defer></script>
 
-    <script src="{{ asset('js/tom-select.js') }}" defer></script>
+    <script
+        src="{{ asset('js/script.js') }}"
+        defer
+    ></script>
 
-    <script src="{{ asset('js/alerts.js') }}" defer></script>
+
+    <script
+        src="{{ asset('js/tom-select.js') }}"
+        defer
+    ></script>
+
+
+    <script
+        src="{{ asset('js/alerts.js') }}"
+        defer
+    ></script>
 
 </head>
+
 
 <body
     class="font-sans antialiased"
     :class="{ 'sidebar-open': isSidebarOpen }"
 >
 
+
     <!-- Carregar jQuery antes de qualquer outro script -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <div
         x-data="mainState"
@@ -87,47 +180,102 @@
             class="min-h-screen siapae-system-bg text-gray-900 dark:text-gray-200 transition duration-200 ease-in-out"
         >
 
-            <!-- Overlay para mobile -->
-            <div
-                x-show="isSidebarOpen && window.innerWidth < 1024"
-                class="fixed inset-0 bg-black bg-opacity-50 z-30"
-                x-on:click="toggleSidebar"
-            ></div>
 
-            <!-- Sidebar -->
+            <!-- =====================================================
+                 OVERLAY PARA MOBILE
+                 ===================================================== -->
+
+            @if (!$isStudentProfile)
+
+                <div
+                    x-show="isSidebarOpen && window.innerWidth < 1024"
+                    class="fixed inset-0 bg-black bg-opacity-50 z-30"
+                    x-on:click="toggleSidebar"
+                ></div>
+
+            @endif
+
+
+            <!-- =====================================================
+                 SIDEBAR
+                 
+                 No perfil individual ela não é exibida.
+                 ===================================================== -->
+
             <x-sidebar.sidebar
                 class="overflow-auto"
-                :notRegularSidebar="(isset($notRegularSidebar) && isset($element)) ? true : null"
-                :element="(isset($notRegularSidebar) && isset($element)) ? $element : null"
+                :notRegularSidebar="(
+                    isset($notRegularSidebar) &&
+                    isset($element)
+                ) ? true : null"
+                :element="(
+                    isset($notRegularSidebar) &&
+                    isset($element)
+                ) ? $element : null"
             />
 
-            <!-- Page Wrapper -->
+
+            <!-- =====================================================
+                 PAGE WRAPPER
+                 
+                 Páginas normais:
+                    mantém a margem da sidebar.
+                 
+                 Perfil do estudante:
+                    ocupa toda a largura.
+                 ===================================================== -->
+
             <div
-                class="flex flex-col min-h-screen"
-                :class="{ 'lg:ml-64': isSidebarOpen, 'md:ml-16': !isSidebarOpen }"
+                @if ($isStudentProfile)
+                    class="flex flex-col min-h-screen student-profile-page-wrapper"
+                @else
+                    class="flex flex-col min-h-screen"
+                    :class="{
+                        'lg:ml-64': isSidebarOpen,
+                        'md:ml-16': !isSidebarOpen
+                    }"
+                @endif
                 style="transition-property: margin; transition-duration: 150ms;"
             >
 
-                <!-- Navbar -->
+
+                <!-- =================================================
+                     NAVBAR
+                     ================================================= -->
+
                 <x-navbar />
 
-                <!-- Page Heading -->
+
+                <!-- =================================================
+                     PAGE HEADING
+                     ================================================= -->
+
                 <header>
 
                     <div class="p-3 sm:p-6">
-                        {{ $header ?? ''}}
+
+                        {{ $header ?? '' }}
+
                     </div>
 
                 </header>
 
-                <!-- Page Content -->
+
+                <!-- =================================================
+                     PAGE CONTENT
+                     ================================================= -->
+
                 <main class="px-4 sm:px-6 flex-1">
 
                     {{ $slot }}
 
                 </main>
 
-                <!-- Page Footer -->
+
+                <!-- =================================================
+                     PAGE FOOTER
+                     ================================================= -->
+
                 <x-footer />
 
             </div>
@@ -136,11 +284,15 @@
 
     </div>
 
-    <!-- Pop-up para avisar o usuário na tabela se tem dados novos -->
+
+    <!-- =============================================================
+         POP-UP PARA AVISAR O USUÁRIO NA TABELA
+         ============================================================= -->
+
     <div
         x-data="{
             type: '',
-            context: '{{ $context ?? ''}}'
+            context: '{{ $context ?? '' }}'
         }"
         x-init="
             Echo.channel('crud-channel')
@@ -154,50 +306,6 @@
                             'Dados foram atualizados nessa tabela.'
                         );
 
-                        /*
-                        Alerts separados, mas comentados por conveniência
-                        de ter apenas um único alerta.
-
-                        type = e.type;
-
-                        switch (e.type) {
-
-                            case 'created':
-                                showBroadcastToastr(
-                                    'success',
-                                    'Novo registro adicionado!'
-                                );
-                                break;
-
-                            case 'updated':
-                                showBroadcastToastr(
-                                    'info',
-                                    'Um registro foi atualizado!'
-                                );
-                                break;
-
-                            case 'archived':
-                                showBroadcastToastr(
-                                    'warning',
-                                    'Um Registro foi arquivado!'
-                                );
-                                break;
-
-                            case 'deleted':
-                                showBroadcastToastr(
-                                    'warning',
-                                    'Um Registro foi deletado!'
-                                );
-                                break;
-
-                            case 'restored':
-                                showBroadcastToastr(
-                                    'info',
-                                    'Um registro foi restaurado!'
-                                );
-                                break;
-                        }
-                        */
                     };
 
                 });
@@ -205,26 +313,33 @@
     >
     </div>
 
-    <!-- Pop-up com o toastr -->
+
+    <!-- =============================================================
+         POP-UP COM O TOASTR
+         ============================================================= -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"
         defer
     ></script>
 
+
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
     ></script>
+
 
     <link
         href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         rel="stylesheet"
     >
 
+
     <script>
 
-        // Configuração do Toastr
-        // deve vir DEPOIS da aplicação do tema
+        // =========================================================
+        // CONFIGURAÇÃO DO TOASTR
+        // =========================================================
 
         toastr.options = {
 
@@ -254,29 +369,23 @@
 
         };
 
-        @if(Session::has('success'))
 
-            toastr.success("{{ Session::get('success') }}");
-
+        @if (session('success'))
+            toastr.success(@json(session('success')));
         @endif
 
-        @if(Session::has('error'))
-
-            toastr.error("{{ Session::get('error') }}");
-
+        @if (session('error'))
+            toastr.error(@json(session('error')));
         @endif
 
-        @if(session('warning'))
-
-            toastr.warning("{{ session('warning') }}");
-
+        @if (session('warning'))
+            toastr.warning(@json(session('warning')));
         @endif
 
-        @if(session('info'))
-
-            toastr.info("{{ session('info') }}");
-
+        @if (session('info'))
+            toastr.info(@json(session('info')));
         @endif
+
 
         @if(Session::has('pdf_error'))
 
@@ -284,41 +393,64 @@
 
         @endif
 
+
         const BROADCAST_TOAST_DELAY = 50000;
 
+
         if (!window.lastToastrTimestamp) {
+
             window.lastToastrTimestamp = 0;
+
         }
 
-        function showBroadcastToastr(type, message) {
+
+        function showBroadcastToastr(
+            type,
+            message
+        ) {
 
             const now = Date.now();
+
 
             const timeSinceLast =
                 now - window.lastToastrTimestamp;
 
-            if (timeSinceLast >= BROADCAST_TOAST_DELAY) {
+
+            if (
+                timeSinceLast >=
+                BROADCAST_TOAST_DELAY
+            ) {
 
                 window.lastToastrTimestamp = now;
 
+
                 // Time out para evitar de aparecer na tela do usuário
+
                 setTimeout(() => {
 
                     if (type === 'success') {
 
-                        toastr.success(message);
+                        toastr.success(
+                            message
+                        );
 
                     } else if (type === 'error') {
 
-                        toastr.error(message);
+                        toastr.error(
+                            message
+                        );
 
                     } else if (type === 'info') {
 
-                        toastr.info(message);
+                        toastr.info(
+                            message
+                        );
 
                     } else if (type === 'warning') {
 
-                        toastr.warning(message);
+                        toastr.warning(
+                            message
+                        );
 
                     }
 

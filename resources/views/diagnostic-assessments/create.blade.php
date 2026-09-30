@@ -339,6 +339,7 @@
                                     'understands_verbal_instructions' => 'Capacidade de compreender instruções verbais',
                                     'holds_pencil_correctly' => 'Segura corretamente o lápis',
                                     'interest_in_writing' => 'Demonstra interesse pela escrita (letras, numerais, palavras, Braille e Libras)',
+                                    'other_languages' => 'Outras línguas',
                                 ];
 
                             @endphp
