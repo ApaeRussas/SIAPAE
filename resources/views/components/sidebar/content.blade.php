@@ -1,42 +1,30 @@
-
 <style>
- 
-    /* Cores vêm de resources/css/siapae-theme.css (variáveis --sp-*) */
- 
     .siapae-sidebar-nav {
         scrollbar-width: thin;
         scrollbar-color: var(--sp-border) transparent;
     }
- 
+
     .siapae-section-title {
         padding: 0 12px;
         margin-top: 16px;
         margin-bottom: 4px;
- 
         font-size: 10px;
         line-height: 1.2;
         font-weight: 700;
- 
         letter-spacing: 0.12em;
         text-transform: uppercase;
- 
         color: var(--sp-section);
     }
- 
 </style>
- 
- 
+
 <x-perfect-scrollbar
     as="nav"
     aria-label="main"
     class="siapae-sidebar-nav flex flex-col flex-1 px-3 pb-4 z-20"
 >
- 
- 
-    {{-- =====================================================
-         INÍCIO
-         ===================================================== --}}
- 
+
+    {{-- INÍCIO --}}
+
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -44,36 +32,25 @@
     >
         Início
     </div>
- 
- 
-    {{-- DASHBOARD --}}
- 
+
     <div>
- 
         <x-sidebar.link
             title="Visão geral"
             href="{{ route('dashboard') }}"
             :isActive="request()->routeIs('dashboard')"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.dashboard
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
         </x-sidebar.link>
- 
     </div>
- 
- 
-    {{-- =====================================================
-         ATENDIMENTO
-         ===================================================== --}}
- 
+
+
+    {{-- ATENDIMENTO --}}
+
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -81,12 +58,11 @@
     >
         Atendimento
     </div>
- 
- 
+
+
     {{-- ANAMNESE --}}
- 
+
     <div>
- 
         <x-sidebar.link
             title="{{ __('Anamnesis') }}"
             href="{{ route('anamnesis.index') }}"
@@ -98,25 +74,19 @@
                 'anamnesis.deposit'
             )"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.anamnesis
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
         </x-sidebar.link>
- 
     </div>
- 
- 
+
+
     {{-- ESTUDANTES --}}
- 
+
     <div>
- 
         <x-sidebar.dropdown
             title="Estudantes"
             :active="request()->routeIs(
@@ -127,17 +97,13 @@
                 'student.deposit'
             )"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.person
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
-            {{-- FICHA DOS ESTUDANTES --}}
+
             <x-sidebar.sublink
                 title="Ficha dos Estudantes"
                 href="{{ route('student.index') }}"
@@ -149,108 +115,87 @@
                     'student.deposit'
                 )"
             />
- 
-            {{-- DOCUMENTOS --}}
+
             <x-sidebar.sublink
                 title="Documentos"
                 href="#"
                 :active="false"
             />
- 
-            {{-- PERFIL DO ESTUDANTE --}}
+
             <x-sidebar.sublink
                 title="Perfil do estudante"
                 href="{{ route('student.index') }}"
                 :active="false"
             />
- 
+
         </x-sidebar.dropdown>
- 
     </div>
- 
- 
+
+
     {{-- FREQUÊNCIA --}}
- 
+
     <div>
- 
         <x-sidebar.link
             title="{{ __('Frequency List') }}"
             href="{{ route('frequency.index') }}"
             :isActive="request()->routeIs('frequency.index')"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.frequency
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
         </x-sidebar.link>
- 
     </div>
- 
- 
-    {{-- REG. DE ATENDIMENTO --}}
- 
+
+
+    {{-- REGISTROS DE ATENDIMENTO --}}
+
     <div>
- 
-        <x-sidebar.link
-            title="Reg. de Atendimento"
-            href="{{ route('attendance.index') }}"
-            :isActive="request()->routeIs(
+        <x-sidebar.dropdown
+            title="Atendimentos"
+            :active="request()->routeIs(
                 'attendance.index',
                 'attendance.create',
                 'attendance.edit',
                 'attendance.show',
-                'attendance.deposit'
+                'attendance.deposit',
+                'attendance.list'
             )"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.register
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
-        </x-sidebar.link>
- 
+
+            <x-sidebar.sublink
+                title="Reg. de Atendimento"
+                href="{{ route('attendance.index') }}"
+                :active="request()->routeIs(
+                    'attendance.index',
+                    'attendance.create',
+                    'attendance.edit',
+                    'attendance.show',
+                    'attendance.deposit'
+                )"
+            />
+
+            <x-sidebar.sublink
+                title="Lista de Atendimento"
+                href="{{ route('attendance.list') }}"
+                :active="request()->routeIs('attendance.list')"
+            />
+
+        </x-sidebar.dropdown>
     </div>
- 
- 
-    {{-- LISTA DE ATENDIMENTO --}}
- 
-    <div>
- 
-        <x-sidebar.link
-            title="Lista de Atendimento"
-            href="{{ route('attendance.list') }}"
-            :isActive="request()->routeIs('attendance.list')"
-        >
- 
-            <x-slot name="icon">
- 
-                <x-icons.register
-                    class="flex-shrink-0 w-5 h-5"
-                    aria-hidden="true"
-                />
- 
-            </x-slot>
- 
-        </x-sidebar.link>
- 
-    </div>
- 
- 
+
+
     {{-- SCFV --}}
- 
+
     <div>
- 
         <x-sidebar.link
             title="{{ __('SCFV') }}"
             href="{{ route('scfv.index') }}"
@@ -261,23 +206,17 @@
                 'scfv.show'
             )"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.scfv
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
         </x-sidebar.link>
- 
     </div>
 
-        {{-- =====================================================
-         SONDAGEM DIAGNÓSTICA
-         ===================================================== --}}
+
+    {{-- SONDAGEM DIAGNÓSTICA --}}
 
     <div
         x-transition
@@ -287,11 +226,7 @@
         Sondagem Diagnóstica
     </div>
 
-
-    {{-- SONDAGEM DIAGNÓSTICA --}}
-
     <div>
-
         <x-sidebar.link
             title="Sondagem Diagnóstica"
             href="{{ route('diagnostic-assessments.index') }}"
@@ -302,25 +237,18 @@
                 'diagnostic-assessments.show'
             )"
         >
-
             <x-slot name="icon">
-
                 <x-icons.report
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
-
             </x-slot>
-
         </x-sidebar.link>
-
     </div>
- 
- 
-    {{-- =====================================================
-         GESTÃO
-         ===================================================== --}}
- 
+
+
+    {{-- GESTÃO --}}
+
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -328,12 +256,11 @@
     >
         Gestão
     </div>
- 
- 
+
+
     {{-- RELATÓRIOS --}}
- 
+
     <div>
- 
         <x-sidebar.dropdown
             title="{{ __('Reports') }}"
             :active="Str::startsWith(
@@ -341,19 +268,13 @@
                 ['educational', 'regional']
             )"
         >
- 
             <x-slot name="icon">
- 
                 <x-icons.report
                     class="flex-shrink-0 w-5 h-5"
                     aria-hidden="true"
                 />
- 
             </x-slot>
- 
- 
-            {{-- PEDAGÓGICO --}}
- 
+
             <x-sidebar.sublink
                 title="{{ __('Pedagogic') }}"
                 href="{{ route('educational.index') }}"
@@ -365,12 +286,9 @@
                     'educational.deposit'
                 )"
             />
- 
- 
-            {{-- REGIONAL --}}
- 
+
             @canany(['coordinator-view', 'admin-view'])
- 
+
                 <x-sidebar.sublink
                     title="{{ __('Regional') }}"
                     href="{{ route('regional.index') }}"
@@ -381,20 +299,17 @@
                         'regional.show'
                     )"
                 />
- 
+
             @endcanany
- 
+
         </x-sidebar.dropdown>
- 
     </div>
- 
- 
-    {{-- =====================================================
-         REUNIÕES
-         ===================================================== --}}
- 
+
+
+    {{-- REUNIÕES --}}
+
     @canany(['coordinator-view', 'admin-view'])
- 
+
         <div
             x-transition
             x-show="isSidebarOpen || isSidebarHovered"
@@ -402,12 +317,8 @@
         >
             Reuniões
         </div>
- 
- 
-        {{-- ATAS DE REUNIÕES --}}    
- 
+
         <div>
- 
             <x-sidebar.link
                 title="{{ __('Reunions Records') }}"
                 href="{{ route('record.index') }}"
@@ -417,29 +328,22 @@
                     'record.edit'
                 )"
             >
- 
                 <x-slot name="icon">
- 
                     <x-icons.meeting
                         class="flex-shrink-0 w-5 h-5"
                         aria-hidden="true"
                     />
- 
                 </x-slot>
- 
             </x-sidebar.link>
- 
         </div>
- 
+
     @endcanany
- 
- 
-    {{-- =====================================================
-         ADMINISTRAÇÃO
-         ===================================================== --}}
- 
+
+
+    {{-- ADMINISTRAÇÃO --}}
+
     @can('admin-view')
- 
+
         <div
             x-transition
             x-show="isSidebarOpen || isSidebarHovered"
@@ -447,36 +351,23 @@
         >
             Administração
         </div>
- 
- 
-        {{-- DOAÇÕES --}}
- 
+
         <div>
- 
             <x-sidebar.link
                 title="{{ __('Donation Control') }}"
                 href="{{ route('donation.index') }}"
                 :isActive="request()->routeIs('donation.index')"
             >
- 
                 <x-slot name="icon">
- 
                     <x-icons.partner
                         class="flex-shrink-0 w-5 h-5"
                         aria-hidden="true"
                     />
- 
                 </x-slot>
- 
             </x-sidebar.link>
- 
         </div>
- 
- 
-        {{-- GASTOS --}}
- 
+
         <div>
- 
             <x-sidebar.link
                 title="{{ __('Expense Control') }}"
                 href="{{ route('expense.index') }}"
@@ -487,21 +378,15 @@
                     'expense.show'
                 )"
             >
- 
                 <x-slot name="icon">
- 
                     <x-icons.expense
                         class="flex-shrink-0 w-5 h-5"
                         aria-hidden="true"
                     />
- 
                 </x-slot>
- 
             </x-sidebar.link>
- 
         </div>
- 
+
     @endcan
- 
- 
+
 </x-perfect-scrollbar>

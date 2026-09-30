@@ -3,15 +3,42 @@
     'title' => ''
 ])
 
+<style>
+    .siapae-dropdown-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .siapae-dropdown-trigger {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .siapae-dropdown-trigger span {
+        white-space: nowrap !important;
+    }
+
+    .siapae-dropdown-submenu {
+        position: relative;
+        width: 100%;
+    }
+
+    .siapae-dropdown-submenu ul {
+        width: calc(100% - 20px);
+    }
+</style>
+
 <div
-    class="relative"
+    class="relative siapae-dropdown-wrapper"
     x-data="{ open: @json($active) }"
 >
+
     <x-sidebar.link
         collapsible
         title="{{ $title }}"
         x-on:click="open = !open"
         isActive="{{ $active }}"
+        class="siapae-dropdown-trigger"
     >
         @if ($icon ?? false)
             <x-slot name="icon">
@@ -21,6 +48,7 @@
     </x-sidebar.link>
 
     <div
+        class="siapae-dropdown-submenu"
         x-show="open && (isSidebarOpen || isSidebarHovered)"
         x-collapse
     >
@@ -30,4 +58,5 @@
             {{ $slot }}
         </ul>
     </div>
+
 </div>
