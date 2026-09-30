@@ -46,9 +46,9 @@
 <style>
     .attendance-page {
         --bg: transparent;
-        --surface: #F7F5EF;
+        --surface: #FFFFFF;
         --surface-soft: #E3EFE7;
-        --surface-hover: #F0EEE6;
+        --surface-hover: #f7f7f7;
         --input-bg: #FFFFFF;
         --title: #183C2C;
         --text: #42564A;
