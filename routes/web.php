@@ -17,6 +17,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoordinatorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiagnosticAssessmentController;
+use App\Http\Controllers\StudentDocumentController;
+
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckCoordinatorOrAdmin;
 use App\Http\Middleware\RestrictIPMiddleware;
@@ -66,7 +68,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('educational.deposit');
 
 
-        
     // ==================================================
     // SONDAGEM DIAGNÓSTICA
     // ==================================================
@@ -131,6 +132,19 @@ Route::middleware(['auth'])->group(function () {
 
 
     // ==================================================
+    // DOCUMENTOS DOS ESTUDANTES
+    // ==================================================
+
+    // Visualizar a lista de documentos
+    Route::get('/documents', [StudentDocumentController::class, 'index'])
+        ->name('student-documents.index');
+
+    // Baixar um documento
+    Route::get('/documents/{studentDocument}/download', [StudentDocumentController::class, 'download'])
+        ->name('student-documents.download');
+
+
+    // ==================================================
     // FREQUÊNCIAS
     // ==================================================
 
@@ -183,6 +197,23 @@ Route::middleware(['auth'])->group(function () {
             'regional' => RegionalController::class,
             'record' => RecordController::class,
         ]);
+
+
+        // ==================================================
+        // DOCUMENTOS DOS ESTUDANTES
+        // ==================================================
+
+        // Formulário para adicionar documento
+        Route::get('/documents/create', [StudentDocumentController::class, 'create'])
+            ->name('student-documents.create');
+
+        // Salvar documento
+        Route::post('/documents', [StudentDocumentController::class, 'store'])
+            ->name('student-documents.store');
+
+        // Excluir documento
+        Route::delete('/documents/{studentDocument}', [StudentDocumentController::class, 'destroy'])
+            ->name('student-documents.destroy');
     });
 
 

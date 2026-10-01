@@ -18,19 +18,11 @@ return new class extends Migration
                 ->constrained('students')
                 ->onDelete('cascade');
 
-            $table->foreignId('uploaded_by')
-                ->constrained('users')
-                ->onDelete('cascade');
-
             $table->string('document_type');
 
-            $table->string('title');
-
-            $table->text('description')->nullable();
+            $table->string('original_name');
 
             $table->string('file_path');
-
-            $table->string('original_name');
 
             $table->string('mime_type')->nullable();
 

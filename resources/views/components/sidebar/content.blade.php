@@ -118,10 +118,13 @@
 
             <x-sidebar.sublink
                 title="Documentos"
-                href="#"
-                :active="false"
+                href="{{ route('student-documents.index') }}"
+                :active="request()->routeIs(
+                    'student-documents.index',
+                    'student-documents.create'
+                )"
             />
-
+            
             <x-sidebar.sublink
                 title="Perfil do estudante"
                 href="{{ route('student.index') }}"
