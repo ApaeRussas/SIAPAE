@@ -3,8 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Http\Request;
 
 class AttendanceRequest extends FormRequest
 {
@@ -12,7 +10,7 @@ class AttendanceRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    { 
+    {
         return true;
     }
 
@@ -22,8 +20,105 @@ class AttendanceRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   
-        $rules = [
+    {
+        return [
+            /*
+            |--------------------------------------------------------------------------
+            | Avanços
+            |--------------------------------------------------------------------------
+            */
+
+            'advances_status' => [
+                'required',
+                'in:Sim,Não',
+            ],
+
+            'advances' => [
+                'nullable',
+                'string',
+                'min:1',
+                'max:5000',
+                'required_if:advances_status,Sim',
+            ],
+
+            'advances_level' => [
+                'nullable',
+                'integer',
+                'in:1,2,3,4,5',
+                'required_if:advances_status,Sim',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dificuldades
+            |--------------------------------------------------------------------------
+            */
+
+            'difficulties_status' => [
+                'required',
+                'in:Sim,Não',
+            ],
+
+            'difficulties' => [
+                'nullable',
+                'string',
+                'min:1',
+                'max:5000',
+                'required_if:difficulties_status,Sim',
+            ],
+
+            'difficulties_level' => [
+                'nullable',
+                'integer',
+                'in:1,2,3,4,5',
+                'required_if:difficulties_status,Sim',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Atividade
+            |--------------------------------------------------------------------------
+            */
+
+            'activity_not_performed' => [
+                'required',
+                'boolean',
+            ],
+
+            'activity_description' => [
+                'nullable',
+                'string',
+                'min:1',
+                'max:5000',
+                'required_if:activity_not_performed,0',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Habilidades
+            |--------------------------------------------------------------------------
+            */
+
+            'skills' => [
+                'nullable',
+                'string',
+                'min:1',
+                'max:5000',
+            ],
+
+            'skills_evolution' => [
+                'nullable',
+                'string',
+                'min:1',
+                'max:5000',
+            ],
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dados do atendimento
+            |--------------------------------------------------------------------------
+            */
+
             'student_id' => [
                 'required',
                 'min:1',
@@ -31,7 +126,7 @@ class AttendanceRequest extends FormRequest
 
             'date' => [
                 'required',
-                'min:1',
+                'date_format:d/m/Y',
             ],
 
             'educational_axis' => [
@@ -41,20 +136,6 @@ class AttendanceRequest extends FormRequest
                 'max:100',
             ],
 
-            'advances' => [
-                'required',
-               'string',
-                'min:1',
-                'max:5000',
-            ],
-            
-            'difficulties' => [
-                'required',
-                'string',
-               ' min:1',
-                'max:5000',
-            ],
-            
             'signature_id' => [
                 'required',
                 'string',
@@ -62,14 +143,37 @@ class AttendanceRequest extends FormRequest
                 'max:100',
             ],
         ];
-        
-        return $rules;
     }
+
+    /**
+     * Custom validation messages.
+     */
     public function messages(): array
-{
-    return [
-        'date.unique' => 'Já existe um registro para este aluno na data fornecida.',
-        'date.date_format' => 'O formato da data deve ser d/m/Y.',
-    ];
-}
+    {
+        return [
+            'date.date_format' =>
+                'O formato da data deve ser dd/mm/aaaa.',
+
+            'advances.required_if' =>
+                'Informe os avanços quando selecionar "Sim".',
+
+            'advances_level.required_if' =>
+                'Selecione o nível dos avanços quando selecionar "Sim".',
+
+            'advances_level.in' =>
+                'O nível dos avanços deve estar entre 1 e 5.',
+
+            'difficulties.required_if' =>
+                'Informe as dificuldades quando selecionar "Sim".',
+
+            'difficulties_level.required_if' =>
+                'Selecione o nível das dificuldades quando selecionar "Sim".',
+
+            'difficulties_level.in' =>
+                'O nível das dificuldades deve estar entre 1 e 5.',
+
+            'activity_description.required_if' =>
+                'Informe a descrição da atividade ou marque "Não realizou a atividade".',
+        ];
+    }
 }

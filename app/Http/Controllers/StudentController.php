@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StudentRequest;
+use App\Models\DiagnosticAssessment;
 
 class StudentController extends Controller
 {
@@ -83,202 +84,141 @@ class StudentController extends Controller
             return redirect()->route('student.create');
         }
     }
-    public function show($id)
+    public function show($id, Request $request)
     {
         session(['previous_url_secondary' => url()->full()]);
+
         $student = Student::findOrFail($id);
 
         $student->load('professors');
 
+        /*
+        |--------------------------------------------------------------------------
+        | ABA ATUAL DO PERFIL
+        |--------------------------------------------------------------------------
+        */
+
+        $tab = $request->get('tab', 'perfil');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HISTÓRICO MÉDICO
+        |--------------------------------------------------------------------------
+        */
+
         $medHistory = null;
-        $medHistoryExists = MedHistory::where('student_id', $id)->exists();
+
+        $medHistoryExists = MedHistory::where(
+            'student_id',
+            $id
+        )->exists();
+
         if ($medHistoryExists) {
-            $medHistory = MedHistory::where('student_id', $id)->first();
+
+            $medHistory = MedHistory::where(
+                'student_id',
+                $id
+            )->first();
+
         }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | STATUS
+        |--------------------------------------------------------------------------
+        */
 
         $isArchived = null;
-        if ($student['state_student'] == 'archived') {
+
+        if ($student->state_student === 'archived') {
+
             $isArchived = true;
+
         }
 
-        // Calcular a idade do aluno detalhadamente
-        $dateOfBirth = Carbon::parse($student->date_of_birth);
+
+        /*
+        |--------------------------------------------------------------------------
+        | IDADE
+        |--------------------------------------------------------------------------
+        */
+
+        $dateOfBirth = Carbon::parse(
+            $student->date_of_birth
+        );
+
         $now = Carbon::now();
 
         $ageYears = (int) $dateOfBirth->diffInYears($now);
+
         $dateOfBirth = $dateOfBirth->addYears($ageYears);
+
         $ageMonths = (int) $dateOfBirth->diffInMonths($now);
+
         $dateOfBirth = $dateOfBirth->addMonths($ageMonths);
+
         $ageDays = (int) $dateOfBirth->diffInDays($now);
 
-        $student->age = "$ageYears anos, $ageMonths meses e $ageDays dias";
+        $student->age =
+            "$ageYears anos, $ageMonths meses e $ageDays dias";
 
-        return view('student.show', compact('student', 'medHistory', 'isArchived'));
-    }
 
-    public function showMedhistory($id) 
-    {
-        session(['previous_url' => url()->full()]);
-        session(['previous_url_secondary' => url()->full()]);
-        $student = Student::findOrFail($id);
-        $medHistory = MedHistory::with('student')
-            ->where('student_id', $id)
-            ->first();
+        /*
+        |--------------------------------------------------------------------------
+        | SONDAGENS DO ALUNO
+        |--------------------------------------------------------------------------
+        */
 
-        // Necessario fazer o else
-        if($medHistory) {
-            $medHistory['date_of_anamnesis'] = Carbon::createFromFormat('Y-m-d', $medHistory['date_of_anamnesis'])->format('d/m/Y');
-            $medHistory['date_mother'] = Carbon::createFromFormat('Y-m-d', $medHistory['date_mother'])->format('d/m/Y');
-            $medHistory['date_father'] = (isset($medHistory['date_father']) ? Carbon::createFromFormat('Y-m-d', $medHistory['date_father'])->format('d/m/Y') : null);
-            
-            return view('student.show_parts.medHistoryShow', compact('student', 'medHistory'));
-        } else {
-            $notRegularSidebar = true;
-            return view('errors.404', compact('notRegularSidebar', 'student'));
-        }
-    }
-    public function showAttendancesAndFrequency($id) 
-    {
-        session(['previous_url' => url()->full()]);
-        session(['previous_url_secondary' => url()->full()]);
-        $student = Student::findOrFail($id);
+        $diagnosticAssessments = collect();
 
-        // Parte ATENDIMENTO
+        if ($tab === 'sondagens') {
 
-        $date_range = request('date_range');
+            $diagnosticAssessments = DiagnosticAssessment::where(
+                'student_id',
+                $id
+            )
+                ->orderByDesc('date')
+                ->paginate(10)
+                ->appends(request()->query());
 
-        if ($date_range) {
-            $dates = explode(' à ', $date_range);
-            $start_date = Carbon::createFromFormat('d/m/Y', trim($dates[0]))->format('Y-m-d');
-            $end_date = Carbon::createFromFormat('d/m/Y', trim($dates[1]))->format('Y-m-d');
-
-            $attendances = Attendance::whereDate('date', '>=', $start_date)
-                ->whereDate('date', '<=', $end_date)
-                ->where('student_id', $id)
-                ->with('student')
-                ->orderBy('date', 'desc')
-                ->paginate(10)->appends(request()->query());
-        } else {
-            $attendances = Attendance::where('student_id', $id)
-                ->with('student')
-                ->orderBy('date', 'desc')
-                ->paginate(10)->appends(request()->query());
         }
 
-        // Parte FREQUÊNCIA 
 
-        $scrollBack = null;
-        $monthYear = request('monthYear');
-        if ($monthYear) {
-            $frequency = Frequency::where('student_id', $student->id)
-                ->where('month_year', $monthYear)
-                ->first();
+        /*
+        |--------------------------------------------------------------------------
+        | EVOLUÇÕES PEDAGÓGICAS DO ALUNO
+        |--------------------------------------------------------------------------
+        */
 
-            $scrollBack = true;
-        } else {
-            $frequency = Frequency::where('student_id', $student->id)->first();
-            $monthYear = Carbon::now()->format('m/Y');
+        $pedagogicals = collect();
+
+        if ($tab === 'evolucao') {
+
+            $pedagogicals = Educational::where(
+                'student_id',
+                $id
+            )
+                ->orderByDesc('date_pedagogical')
+                ->with('student', 'professor')
+                ->paginate(10)
+                ->appends(request()->query());
+
         }
 
-        list($month, $year) = explode('/', $monthYear);
-        $month = (int) $month;
-        $year = (int) $year;
-        $numberDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
-        $days = [];
-        for ($i = 1; $i <= $numberDaysInMonth; $i++) {
-            $days[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-        }
-
-        // Definir os feriados 
-        $holidays = [
-            '01-01', // Ano Novo 
-            '03-03', // Carnaval
-            '04-03', // Carnaval
-            '05-03', // Quarta-feira de cinzas
-            '19-03', // Dia de São José
-            '25-03', // Abolição da escravidão no Ceará
-            '21-04', // Tiradentes
-            '01-05', // Dia do Trabalho
-            '19-06', // Corpus Christ
-            '06-08', // Aniversário de Russas
-            '15-08', // Dia de Nossa Senhora da Assunção
-            '07-09', // Independência do Brasil
-            '07-10', // Dia da Padroeira Nossa Senhora do Rosário
-            '12-10', // Nossa Senhora Aparecida
-            '02-11', // Finados
-            '15-11', // Proclamação da República
-            '20-11', // Dia Nacional de Zumbi e da Consciência Negra
-            '27-11', // Aniversário da passagem da imagem de Nossa Senhora de Fátima no município
-            '24-12', // Véspera Natal 
-            '25-12', // Natal
-            '31-12', // Véspera Ano novo
-        ];
-        $formattedHolidays = array_map(function ($holiday) use ($year) {
-            return "{$year}-{$holiday}";
-        }, $holidays);
-        $weekends = [];
-        for ($i = 1; $i <= $numberDaysInMonth; $i++) {
-            $date = sprintf("%04d-%02d-%02d", $year, $month, $i);
-            $dayOfWeek = date('N', strtotime($date));
-            if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                $weekends[] = $date;
-            }
-        }
-        $daysNotRequired = []; // P/ armazenar os dias normais, mas que não são os alvos
-        if (isset($frequency)) {
-            // Fazer os dias não clicáveis
-            $daysNotRequired = $this->getDaysNotRequired($frequency->class_apae, $year, $month, $numberDaysInMonth);
-            $frequency->nonClickableDays = array_merge($formattedHolidays, $weekends, $daysNotRequired);
-            $frequency->weekends = array_merge($weekends);
-
-            // Contar as Faltas
-            $countAbsences = 0;
-            for ($day = 1; $day <= $numberDaysInMonth; $day++) {
-                $date = sprintf("%04d-%02d-%02d", $year, $month, $day);
-                if (!in_array($date, $frequency->nonClickableDays) && $frequency->$day === false) {
-                    $countAbsences++;
-                }
-            }
-            $frequency->countAbsences = $countAbsences;
-        }
-
-        return view('student.show_parts.attendanceShow', compact('student', 'attendances', 'date_range', 'frequency', 'monthYear', 'days', 'numberDaysInMonth', 'scrollBack'));
-    }
-    public function showEducationals($id) 
-    {
-        session(['previous_url' => url()->full()]);
-        session(['previous_url_secondary' => url()->full()]);
-        $student = Student::findOrFail($id);
-
-        $year = request('year');
-
-        // Se o ano for fornecido, filtra os gastos por year
-        if ($year) {
-            $pedagogicals = Educational::whereYear('date_pedagogical', $year)
-            ->where('student_id', $id)
-            ->orderBy('date_pedagogical', 'desc')
-            ->with('student', 'professor')
-            ->paginate(15)->appends(request()->query());
-
-            $scrollBack2 = true;
-        } else {
-            // Caso contrário, pega todos os gastos com o ano atual
-            $year = Carbon::now()->year;
-            $pedagogicals = Educational::whereYear('date_pedagogical', $year)
-            ->where('student_id', $id)
-            ->orderBy('date_pedagogical', 'desc')
-            ->with('student', 'professor')
-            ->paginate(15)->appends(request()->query());
-        }
-
-        // Obtém os anos disponíveis para o select
-        $years = Educational::selectRaw('YEAR(date_pedagogical) as year')
-            ->distinct()
-            ->where('student_id', $id)
-            ->orderByDesc('year')->pluck('year', 'year');
-
-        return view('student.show_parts.educationalShow', compact('student', 'pedagogicals', 'years', 'year',));
+        return view(
+            'student.show',
+            compact(
+                'student',
+                'medHistory',
+                'isArchived',
+                'tab',
+                'diagnosticAssessments',
+                'pedagogicals'
+            )
+        );
     }
 
     public function edit($id, Request $request)

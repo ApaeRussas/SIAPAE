@@ -11,12 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('student_id');
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->unsignedBigInteger('professor_id');
-            $table->foreign('professor_id')->references('id')->on('users')->onDelete('cascade');
-            
+        Schema::create('student_documents', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('student_id')
+                ->constrained('students')
+                ->onDelete('cascade');
+
+            $table->foreignId('uploaded_by')
+                ->constrained('users')
+                ->onDelete('cascade');
+
+            $table->string('document_type');
+
+            $table->string('title');
+
+            $table->text('description')->nullable();
+
+            $table->string('file_path');
+
+            $table->string('original_name');
+
+            $table->string('mime_type')->nullable();
+
+            $table->unsignedBigInteger('file_size')->nullable();
+
             $table->timestamps();
         });
     }
@@ -26,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_user');
+        Schema::dropIfExists('student_documents');
     }
 };
