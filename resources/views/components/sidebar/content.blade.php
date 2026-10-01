@@ -1,4 +1,5 @@
 <style>
+
     .siapae-sidebar-nav {
         scrollbar-width: thin;
         scrollbar-color: var(--sp-border) transparent;
@@ -15,6 +16,7 @@
         text-transform: uppercase;
         color: var(--sp-section);
     }
+
 </style>
 
 <x-perfect-scrollbar
@@ -48,7 +50,6 @@
         </x-sidebar.link>
     </div>
 
-
     {{-- ATENDIMENTO --}}
 
     <div
@@ -58,7 +59,6 @@
     >
         Atendimento
     </div>
-
 
     {{-- ANAMNESE --}}
 
@@ -83,7 +83,6 @@
         </x-sidebar.link>
     </div>
 
-
     {{-- ESTUDANTES --}}
 
     <div>
@@ -94,7 +93,8 @@
                 'student.create',
                 'student.edit',
                 'student.show',
-                'student.deposit'
+                'student.deposit',
+                'monthlyStudentRecord.index'
             )"
         >
             <x-slot name="icon">
@@ -105,15 +105,9 @@
             </x-slot>
 
             <x-sidebar.sublink
-                title="Ficha dos Estudantes"
-                href="{{ route('student.index') }}"
-                :active="request()->routeIs(
-                    'student.index',
-                    'student.create',
-                    'student.edit',
-                    'student.show',
-                    'student.deposit'
-                )"
+                title="Ficha mensal"
+                href="{{ route('monthlyStudentRecord.index') }}"
+                :active="request()->routeIs('monthlyStudentRecord.index')"
             />
 
             <x-sidebar.sublink
@@ -131,7 +125,6 @@
         </x-sidebar.dropdown>
     </div>
 
-
     {{-- FREQUÊNCIA --}}
 
     <div>
@@ -148,7 +141,6 @@
             </x-slot>
         </x-sidebar.link>
     </div>
-
 
     {{-- REGISTROS DE ATENDIMENTO --}}
 
@@ -192,7 +184,6 @@
         </x-sidebar.dropdown>
     </div>
 
-
     {{-- SCFV --}}
 
     <div>
@@ -214,7 +205,6 @@
             </x-slot>
         </x-sidebar.link>
     </div>
-
 
     {{-- SONDAGEM DIAGNÓSTICA --}}
 
@@ -246,7 +236,6 @@
         </x-sidebar.link>
     </div>
 
-
     {{-- GESTÃO --}}
 
     <div
@@ -256,7 +245,6 @@
     >
         Gestão
     </div>
-
 
     {{-- RELATÓRIOS --}}
 
@@ -305,7 +293,6 @@
         </x-sidebar.dropdown>
     </div>
 
-
     {{-- REUNIÕES --}}
 
     @canany(['coordinator-view', 'admin-view'])
@@ -338,7 +325,6 @@
         </div>
 
     @endcanany
-
 
     {{-- ADMINISTRAÇÃO --}}
 

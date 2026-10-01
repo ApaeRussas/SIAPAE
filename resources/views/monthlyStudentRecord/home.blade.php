@@ -1,0 +1,164 @@
+<x-app-layout>
+
+    <x-slot name="header">
+        <div>
+            <h2 class="text-2xl font-semibold leading-tight text-[#243129] dark:text-white md:text-3xl">
+                Ficha mensal
+            </h2>
+
+            <p class="mt-1 text-sm text-[#6E7A72] dark:text-gray-400">
+                Histórico de acompanhamento dos estudantes
+            </p>
+        </div>
+    </x-slot>
+
+    <div class="py-8">
+
+        <div class="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
+
+            <div class="rounded-3xl border border-[#E4E8E2] bg-[#FFFDF9] p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+
+                <div class="mb-6">
+
+                    <h3 class="text-xl font-semibold text-[#243129] dark:text-white">
+                        Estudantes
+                    </h3>
+
+                    <p class="mt-1 text-sm text-[#6E7A72] dark:text-gray-400">
+                        Selecione um estudante para consultar seu histórico de acompanhamento.
+                    </p>
+
+                </div>
+
+                <form
+                    method="GET"
+                    action="{{ route('monthlyStudentRecord.index') }}"
+                    class="flex flex-col gap-4 md:flex-row md:items-end"
+                >
+
+                    <div class="flex-1">
+
+                        <label
+                            for="search"
+                            class="mb-2 block text-sm font-medium text-[#243129] dark:text-gray-200"
+                        >
+                            Pesquisar estudante
+                        </label>
+
+                        <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            value="{{ $search }}"
+                            placeholder="Digite o nome do estudante"
+                            class="w-full rounded-xl border border-[#D7DED8] bg-white px-4 py-3 text-sm text-[#243129] outline-none transition placeholder:text-[#9AA59E] focus:border-[#2F6B4F] focus:ring-2 focus:ring-[#2F6B4F]/20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="rounded-xl bg-[#2F6B4F] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#23543E]"
+                    >
+                        Pesquisar
+                    </button>
+
+                </form>
+
+            </div>
+
+            @php
+                $studentsWithAttendance = $students->filter(function ($student) {
+                    return $student->attendances->isNotEmpty();
+                });
+            @endphp
+
+            @if ($studentsWithAttendance->isNotEmpty())
+
+                <div class="space-y-4">
+
+                    @foreach ($studentsWithAttendance as $student)
+
+                        @php
+                            $attendanceCount = $student->attendances->count();
+
+                            $professorCount = $student->attendances
+                                ->pluck('signature_id')
+                                ->filter()
+                                ->unique()
+                                ->count();
+
+                            $lastAttendance = $student->attendances->first();
+                        @endphp
+
+                        <div class="rounded-3xl border border-[#E4E8E2] bg-[#FFFDF9] p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+
+                            <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+
+                                <div>
+
+                                    <h3 class="text-lg font-semibold text-[#243129] dark:text-white">
+                                        {{ $student->name }}
+                                    </h3>
+
+                                    <div class="mt-2 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#6E7A72] dark:text-gray-400">
+
+                                        <span>
+                                            {{ $attendanceCount }}
+                                            {{ $attendanceCount === 1 ? 'atendimento' : 'atendimentos' }}
+                                        </span>
+
+                                        <span>
+                                            {{ $professorCount }}
+                                            {{ $professorCount === 1 ? 'professor' : 'professores' }}
+                                        </span>
+
+                                        @if ($lastAttendance?->date)
+
+                                            <span>
+                                                Último atendimento:
+                                                {{ \Carbon\Carbon::parse($lastAttendance->date)->format('d/m/Y') }}
+                                            </span>
+
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
+                                <a
+                                    href="{{ route('monthlyStudentRecord.show', ['student' => $student->id]) }}"
+                                    class="inline-flex items-center justify-center rounded-xl bg-[#2F6B4F] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#23543E]"
+                                >
+                                    Ver ficha
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+            @else
+
+                <div class="rounded-3xl border border-[#E4E8E2] bg-[#FFFDF9] px-6 py-12 text-center dark:border-gray-700 dark:bg-gray-800">
+
+                    <h3 class="text-lg font-semibold text-[#243129] dark:text-white">
+                        Nenhum estudante encontrado
+                    </h3>
+
+                    <p class="mt-1 text-sm text-[#6E7A72] dark:text-gray-400">
+                        Não encontramos estudantes com registros de atendimento.
+                    </p>
+
+                </div>
+
+            @endif
+
+        </div>
+
+    </div>
+
+</x-app-layout>
