@@ -111,36 +111,12 @@
         </x-sidebar.link>
  
     </div>
- 
- 
-    {{-- ESTUDANTES --}}
- 
+        
+        
+        {{-- ESTUDANTES --}}
     <div>
- 
-        <x-sidebar.dropdown
-            title="Estudantes"
-            :active="request()->routeIs(
-                'student.index',
-                'student.create',
-                'student.edit',
-                'student.show',
-                'student.deposit'
-            )"
-        >
- 
-            <x-slot name="icon">
- 
-                <x-icons.person
-                    class="flex-shrink-0 w-5 h-5"
-                    aria-hidden="true"
-                />
- 
-            </x-slot>
- 
-            {{-- FICHA DOS ESTUDANTES --}}
-            <x-sidebar.sublink
-                title="Ficha dos Estudantes"
-                href="{{ route('student.index') }}"
+            <x-sidebar.dropdown
+                title="Estudantes"
                 :active="request()->routeIs(
                     'student.index',
                     'student.create',
@@ -148,26 +124,36 @@
                     'student.show',
                     'student.deposit'
                 )"
-            />
- 
-            {{-- DOCUMENTOS --}}
-            <x-sidebar.sublink
-                title="Documentos"
-                href="#"
-                :active="false"
-            />
- 
-            {{-- PERFIL DO ESTUDANTE --}}
-            <x-sidebar.sublink
-                title="Perfil do estudante"
-                href="{{ route('student.index') }}"
-                :active="false"
-            />
- 
-        </x-sidebar.dropdown>
- 
+            >
+                <x-slot name="icon">
+                    <x-icons.person
+                        class="flex-shrink-0 w-5 h-5"
+                        aria-hidden="true"
+                    />
+                </x-slot>
+
+                {{-- DOCUMENTOS --}}
+                <x-sidebar.sublink
+                    title="Documentos"
+                    href="#"
+                    :active="false"
+                />
+
+                {{-- PERFIL DO ESTUDANTE --}}
+                <x-sidebar.sublink
+                    title="Perfil do estudante"
+                    href="{{ route('student.index') }}"
+                    :active="request()->routeIs(
+                        'student.index',
+                        'student.create',
+                        'student.edit',
+                        'student.show',
+                        'student.deposit'
+                    )"
+                />
+            </x-sidebar.dropdown>
     </div>
- 
+        
  
     {{-- FREQUÊNCIA --}}
  
