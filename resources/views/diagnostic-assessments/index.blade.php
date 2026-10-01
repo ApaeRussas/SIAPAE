@@ -1,9 +1,4 @@
-
 <x-app-layout :context="$context">
-
-    {{-- =========================================================
-         CABEÇALHO
-         ========================================================= --}}
 
     <x-slot name="header">
 
@@ -21,40 +16,24 @@
 
             </div>
 
-
-            {{-- BOTÃO ADICIONAR --}}
-
             <x-button
                 href="{{ route('diagnostic-assessments.create') }}"
                 class="!bg-[#3B7D5A] hover:!bg-[#2F684A] !text-white !border-0 shadow-sm"
             >
-
                 <span class="px-1">
                     Adicionar Sondagem
                 </span>
-
             </x-button>
 
         </div>
 
     </x-slot>
 
-
-    {{-- =========================================================
-         CONTEÚDO
-         ========================================================= --}}
-
-    <div class="py-6 bg-[#F4F6F8] min-h-screen">
+    <div class="diagnostic-page min-h-screen py-6">
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-
-            {{-- CARD PRINCIPAL --}}
-
-            <div class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden">
-
-
-                {{-- CABEÇALHO DO CARD --}}
+            <div class="diagnostic-card overflow-hidden">
 
                 <div class="px-6 md:px-8 pt-7 pb-5">
 
@@ -68,36 +47,31 @@
 
                 </div>
 
-
-                {{-- =================================================
-                     TABELA
-                     ================================================= --}}
-
                 <div class="overflow-x-auto">
 
                     <table class="w-full">
 
                         <thead>
 
-                            <tr class="border-t border-b border-[#E1E7EC] bg-[#F8FAFB]">
+                            <tr>
 
-                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#66788A]">
+                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">
                                     Data
                                 </th>
 
-                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#66788A]">
+                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">
                                     Aluno
                                 </th>
 
-                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#66788A]">
+                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">
                                     Série
                                 </th>
 
-                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#66788A]">
+                                <th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider">
                                     Escola
                                 </th>
 
-                                <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-[#66788A]">
+                                <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider">
                                     Ações
                                 </th>
 
@@ -105,15 +79,11 @@
 
                         </thead>
 
-
-                        <tbody class="divide-y divide-[#E1E7EC]">
+                        <tbody>
 
                             @forelse ($assessments as $assessment)
 
-                                <tr class="hover:bg-[#F8FAFB] transition">
-
-
-                                    {{-- DATA --}}
+                                <tr>
 
                                     <td class="px-6 py-4 whitespace-nowrap">
 
@@ -123,23 +93,13 @@
 
                                     </td>
 
-
-                                    {{-- ALUNO --}}
-
                                     <td class="px-6 py-4">
 
-                                        <div class="flex flex-col">
-
-                                            <span class="text-sm font-semibold text-[#102A43]">
-                                                {{ $assessment->student->name ?? 'Aluno não encontrado' }}
-                                            </span>
-
-                                        </div>
+                                        <span class="text-sm font-semibold text-[#102A43]">
+                                            {{ $assessment->student->name ?? 'Aluno não encontrado' }}
+                                        </span>
 
                                     </td>
-
-
-                                    {{-- SÉRIE --}}
 
                                     <td class="px-6 py-4">
 
@@ -149,9 +109,6 @@
 
                                     </td>
 
-
-                                    {{-- ESCOLA --}}
-
                                     <td class="px-6 py-4">
 
                                         <span class="text-sm text-[#66788A]">
@@ -160,15 +117,9 @@
 
                                     </td>
 
-
-                                    {{-- AÇÕES --}}
-
                                     <td class="px-6 py-4">
 
                                         <div class="flex items-center justify-end gap-2">
-
-
-                                            {{-- VISUALIZAR --}}
 
                                             <a
                                                 href="{{ route('diagnostic-assessments.show', $assessment->id) }}"
@@ -177,18 +128,12 @@
                                                 Visualizar
                                             </a>
 
-
-                                            {{-- EDITAR --}}
-
                                             <a
                                                 href="{{ route('diagnostic-assessments.edit', $assessment->id) }}"
                                                 class="inline-flex items-center justify-center rounded-lg bg-[#3B7D5A] px-3 py-2 text-sm font-semibold text-white hover:bg-[#2F684A] transition"
                                             >
                                                 Editar
                                             </a>
-
-
-                                            {{-- EXCLUIR --}}
 
                                             <form
                                                 method="POST"
@@ -272,11 +217,6 @@
 
                 </div>
 
-
-                {{-- =================================================
-                     PAGINAÇÃO
-                     ================================================= --}}
-
                 @if ($assessments->hasPages())
 
                     <div class="px-6 md:px-8 py-5 border-t border-[#E1E7EC]">
@@ -292,5 +232,89 @@
         </div>
 
     </div>
+
+    <style>
+
+        .diagnostic-page {
+            background-color: #EAF3ED !important;
+        }
+
+        .diagnostic-card {
+            background-color: #FFFFFF !important;
+            border: 1px solid #DCE7E1 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 2px 8px rgba(39, 67, 54, 0.04) !important;
+        }
+
+        .diagnostic-card table {
+            width: 100% !important;
+            background-color: #FFFFFF !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+        }
+
+        .diagnostic-card thead {
+            background-color: #EAF3ED !important;
+        }
+
+        .diagnostic-card thead tr {
+            background-color: #EAF3ED !important;
+            border-top: 1px solid #DCE7E1 !important;
+            border-bottom: 1px solid #DCE7E1 !important;
+        }
+
+        .diagnostic-card thead th {
+            background-color: #EAF3ED !important;
+            color: #286048 !important;
+            border-color: #DCE7E1 !important;
+        }
+
+        .diagnostic-card tbody {
+            background-color: #FFFFFF !important;
+        }
+
+        .diagnostic-card tbody tr {
+            background-color: #FFFFFF !important;
+            transition: background-color 0.18s ease !important;
+        }
+
+        .diagnostic-card tbody tr:hover {
+            background-color: #F1F7F3 !important;
+        }
+
+        .diagnostic-card tbody td {
+            background-color: transparent !important;
+            border-color: #E2ECE6 !important;
+        }
+
+        .diagnostic-card tbody tr:hover td {
+            background-color: #F1F7F3 !important;
+        }
+
+        .diagnostic-card a,
+        .diagnostic-card button {
+            transition:
+                background-color 0.18s ease,
+                border-color 0.18s ease,
+                color 0.18s ease,
+                box-shadow 0.18s ease;
+        }
+
+        @media (max-width: 768px) {
+
+            .diagnostic-page {
+                padding-top: 1rem;
+            }
+
+            .diagnostic-card {
+                border-radius: 12px !important;
+            }
+
+            .diagnostic-card table {
+                min-width: 850px;
+            }
+        }
+
+    </style>
 
 </x-app-layout>

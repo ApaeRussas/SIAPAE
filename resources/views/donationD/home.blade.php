@@ -20,11 +20,6 @@
             </div>
         </x-slot>
 
-
-        {{-- =====================================================
-             MENSAGENS DE ERRO
-             ===================================================== --}}
-
         @if ($errors->any())
             <script>
                 let errors = '';
@@ -36,11 +31,6 @@
                 alert(errors);
             </script>
         @endif
-
-
-        {{-- =====================================================
-             TABELA DE DOAÇÕES
-             ===================================================== --}}
 
         <x-table
             iteration="true"
@@ -66,12 +56,10 @@
                     id="tabela-gastos"
                     class="donation-row">
 
-                    {{-- Nº --}}
                     <td class="donation-cell donation-index">
                         {{ $loop->iteration }}
                     </td>
 
-                    {{-- NOME --}}
                     <td class="donation-cell donation-student">
                         {{ $donation->student
                             ? \Illuminate\Support\Str::words($donation->student->name, 2, ' ...')
@@ -79,16 +67,12 @@
                         }}
                     </td>
 
-
-                    {{-- JANEIRO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Jan">
                         {{ $donation->Jan == '' ? '---' : $donation->Jan }}
                     </td>
 
-
-                    {{-- FEVEREIRO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Fev">
@@ -97,8 +81,6 @@
                         </div>
                     </td>
 
-
-                    {{-- MARÇO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Mar">
@@ -107,8 +89,6 @@
                         </div>
                     </td>
 
-
-                    {{-- ABRIL --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Abr">
@@ -117,8 +97,6 @@
                         </div>
                     </td>
 
-
-                    {{-- MAIO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Mai">
@@ -127,8 +105,6 @@
                         </div>
                     </td>
 
-
-                    {{-- JUNHO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Jun">
@@ -137,8 +113,6 @@
                         </div>
                     </td>
 
-
-                    {{-- JULHO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Jul">
@@ -147,8 +121,6 @@
                         </div>
                     </td>
 
-
-                    {{-- AGOSTO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Ago">
@@ -157,8 +129,6 @@
                         </div>
                     </td>
 
-
-                    {{-- SETEMBRO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Set">
@@ -167,8 +137,6 @@
                         </div>
                     </td>
 
-
-                    {{-- OUTUBRO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Out">
@@ -177,8 +145,6 @@
                         </div>
                     </td>
 
-
-                    {{-- NOVEMBRO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Nov">
@@ -187,8 +153,6 @@
                         </div>
                     </td>
 
-
-                    {{-- DEZEMBRO --}}
                     <td
                         class="donation-cell editable donation-month"
                         data-field="Dez">
@@ -197,8 +161,6 @@
                         </div>
                     </td>
 
-
-                    {{-- TOTAL --}}
                     <td class="donation-cell donation-total">
                         <div class="flex justify-center items-center">
                             {{ $donation->Total == '0' ? '---' : $donation->Total }}
@@ -212,7 +174,7 @@
                 <tr class="text-center">
                     <td
                         class="donation-empty"
-                        colspan="{{ 14 }}">
+                        colspan="14">
                         Nenhum registro encontrado.
                     </td>
                 </tr>
@@ -223,23 +185,12 @@
 
     </div>
 
-
     <style>
-        /* =========================================================
-           CONTROLE DE DOAÇÕES
-           IDENTIDADE VISUAL SIAPAE / ANAMNESE
-           ========================================================= */
-
         .donation-page {
-            background-color: #F4F6F8;
+            background-color: #EAF3ED;
             min-height: calc(100vh - 64px);
             padding-bottom: 2rem;
         }
-
-
-        /* =========================================================
-           CARD PRINCIPAL
-           ========================================================= */
 
         .donation-page .bg-white {
             background-color: #FFFFFF !important;
@@ -256,34 +207,23 @@
             box-shadow: 0 8px 24px rgba(39, 67, 54, 0.06) !important;
         }
 
-
-        /* =========================================================
-           TABELA
-           ========================================================= */
-
         .donation-page table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
         }
 
-
-        /* Cabeçalho */
-
         .donation-page table thead {
-            background-color: #F4F6F8 !important;
+            background-color: #EDF5F0 !important;
         }
 
         .donation-page table thead th {
-            color: #102A43 !important;
-            background-color: #F4F6F8 !important;
-            border-color: #E1E7EC !important;
+            color: #286048 !important;
+            background-color: #EDF5F0 !important;
+            border-color: #D6E5DC !important;
             font-weight: 600;
             white-space: nowrap;
         }
-
-
-        /* Linhas */
 
         .donation-page .donation-row {
             background-color: #FFFFFF !important;
@@ -291,30 +231,21 @@
         }
 
         .donation-page .donation-row:hover {
-            background-color: #F8FAF9 !important;
+            background-color: #F1F7F3 !important;
         }
-
-
-        /* Células */
 
         .donation-page .donation-cell {
             color: #334E68 !important;
-            border-color: #E8EDF1 !important;
+            border-color: #E2ECE6 !important;
             border-width: 1px;
             padding: 0.7rem 0.45rem;
             text-align: center;
         }
 
-
-        /* Número */
-
         .donation-page .donation-index {
             color: #66788A !important;
             font-weight: 500;
         }
-
-
-        /* Nome do estudante */
 
         .donation-page .donation-student {
             color: #102A43 !important;
@@ -322,19 +253,11 @@
             min-width: 160px;
         }
 
-
-        /* Total */
-
         .donation-page .donation-total {
-            color: #102A43 !important;
+            color: #1F513A !important;
             font-weight: 600;
-            background-color: #F8FAF9 !important;
+            background-color: #F4F8F5 !important;
         }
-
-
-        /* =========================================================
-           CÉLULAS EDITÁVEIS
-           ========================================================= */
 
         .donation-page .donation-month {
             cursor: pointer;
@@ -346,11 +269,8 @@
 
         .donation-page .donation-month:hover {
             background-color: #EDF5F0 !important;
-            box-shadow: inset 0 0 0 1px #C9DED1;
+            box-shadow: inset 0 0 0 1px #BFD8C9;
         }
-
-
-        /* Input criado pelo JavaScript */
 
         .donation-page .donation-edit-input {
             width: 5rem;
@@ -359,16 +279,11 @@
             text-align: center;
             color: #102A43 !important;
             background-color: #FFFFFF !important;
-            border: 1px solid #D7DEE5 !important;
+            border: 1px solid #3B7D5A !important;
             border-radius: 8px !important;
             outline: none !important;
             box-shadow: 0 0 0 3px rgba(59, 125, 90, 0.10) !important;
         }
-
-
-        /* =========================================================
-           BUSCA
-           ========================================================= */
 
         .donation-page #search-container {
             background-color: #FFFFFF !important;
@@ -393,11 +308,6 @@
             box-shadow: 0 0 0 3px rgba(59, 125, 90, 0.10) !important;
         }
 
-
-        /* =========================================================
-           SELECT DE ANO
-           ========================================================= */
-
         .donation-page select {
             color: #102A43 !important;
             background-color: #FFFFFF !important;
@@ -411,11 +321,6 @@
             box-shadow: 0 0 0 3px rgba(59, 125, 90, 0.10) !important;
             outline: none !important;
         }
-
-
-        /* =========================================================
-           BOTÕES DE EXPORTAÇÃO / COMPONENTE x-table
-           ========================================================= */
 
         .donation-page .bg-blue-500,
         .donation-page .bg-blue-600,
@@ -435,11 +340,6 @@
             color: #FFFFFF !important;
         }
 
-
-        /* =========================================================
-           BOTÕES E LINKS
-           ========================================================= */
-
         .donation-page button,
         .donation-page a {
             transition:
@@ -448,11 +348,6 @@
                 color 0.18s ease,
                 box-shadow 0.18s ease;
         }
-
-
-        /* =========================================================
-           PAGINAÇÃO
-           ========================================================= */
 
         .donation-page nav .bg-blue-500,
         .donation-page nav .bg-blue-600 {
@@ -466,11 +361,6 @@
             background-color: #2F684A !important;
         }
 
-
-        /* =========================================================
-           ESTADO VAZIO
-           ========================================================= */
-
         .donation-page .donation-empty {
             padding: 1rem;
             color: #66788A !important;
@@ -478,11 +368,6 @@
             border-color: #E1E7EC !important;
             font-weight: 400;
         }
-
-
-        /* =========================================================
-           RESPONSIVIDADE
-           ========================================================= */
 
         @media (max-width: 768px) {
 
@@ -511,18 +396,16 @@
         }
     </style>
 
-
-    {{-- =========================================================
-         EDIÇÃO INLINE DAS DOAÇÕES
-         ========================================================= --}}
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         $(document).ready(function () {
 
-            // Quando o usuário clicar em uma célula para editar
             $('#tabela-gastos .editable').on('click', function () {
+
+                if ($(this).find('input').length) {
+                    return;
+                }
 
                 var currentText = $(this).text().trim();
 
@@ -541,8 +424,6 @@
 
                 inputField.focus();
 
-
-                // Quando o usuário sair da célula
                 inputField.on('blur', function () {
 
                     var newValue = $(this).val();
@@ -555,19 +436,14 @@
                         .closest('tr')
                         .data('id');
 
-
-                    // Atualiza visualmente a célula
                     $(this)
                         .closest('td')
                         .html(newValue);
-
 
                     if (newValue === '0,01') {
                         newValue = '---';
                     }
 
-
-                    // Envia a atualização para o servidor
                     $.ajax({
                         url: '/donation/' + rowId,
                         method: 'PUT',

@@ -4,13 +4,13 @@
         <div class="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div class="flex items-center gap-2">
-                <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#1F513A] dark:text-[#E5EAE7]">
+                <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#00000] dark:text-[#E5EAE7]">
                     {{ __('Lista de Estudantes') }}
                 </h2>
 
                 <button
                     type="button"
-                    class="!bg-transparent hover:!bg-transparent !border-0 !shadow-none !p-0 !outline-none text-[#2F7658] dark:text-[#5FBE8C]"
+                    class="!bg-transparent hover:!bg-transparent !border-0 !shadow-none !p-0 !outline-none text-[#00000] dark:text-[#5FBE8C]"
                     onclick="guestText('info', 'Esta tabela é essencial para registros relacionados, como anamnese, lista de frequência, registro de atendimento e relatório pedagógico, que dependem de um estudante criado para funcionarem. <br> <br> <span class=&quot;text-red-500&quot;> Importante: </span> ao arquivar um estudante, seus registros associados, como anamnese, atendimento e relatório pedagógico, serão automaticamente arquivados para fins de organização e espaço. Esses registros só podem ser restaurados se o estudante também for restaurado. Observação: a lista de frequência não será arquivada.')"
                 >
                     <x-icons.question class="w-6 h-6" />
@@ -35,7 +35,7 @@
     {{-- CONTEÚDO --}}
     <div class="student-list-page py-6 bg-transparent overflow-x-hidden">
 
-        <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="w-full px-4 sm:px-6 lg:px-8 mx-4">
 
             <x-table
                 title="Aluno"
@@ -73,7 +73,7 @@
         --siapae-secondary: #66788A;
         --siapae-border: #E1E7EC;
         --siapae-row-border: #E8EDF1;
-        --siapae-card-bg: #F7F5EF;
+        --siapae-card-bg: #FFFFFF;
         --siapae-input-bg: #FFFFFF;
         --siapae-listing-bg: #FFFFFF;
         --siapae-header-bg: #EAF0EB;

@@ -35,9 +35,9 @@
         /* ---------- MODO CLARO ---------- */
  
         :root {
-            --sa-surface: #F7F5EF;
+            --sa-surface: #FFFFFF;
             --sa-soft: #F1F4EF;
-            --sa-hover: #EAF0EB;
+            --sa-hover: #f7f7f7;
  
             --sa-title: #000000;
             --sa-text: #42564A;

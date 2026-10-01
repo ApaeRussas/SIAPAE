@@ -15,20 +15,9 @@
 
     <style>
 
-        /* =========================================================
-           SIAPAE — DASHBOARD
-           SOMENTE O VISUAL DO PAINEL
-           VERDE + CREME + DOURADO
-           ========================================================= */
-
-
-        /* =========================================================
-           MODO CLARO
-           ========================================================= */
-
         .siapae-dashboard {
 
-            --bg: #F7F5EF;
+            --bg: #FFFFFF;
 
             --surface: #FFFDF9;
 
@@ -41,17 +30,33 @@
             --muted: #6B7280;
             --border: #E5E7EB;
 
+<<<<<<< HEAD
+            --text: #42564A;
+
+            --muted: #78857D;
+
+            --border: #E2E8E2;
+
+            --green: #2F6B4F;
+
+            --green-dark: #1F513A;
+
+            --green-light: #E3EFE7;
+
+            --gold: #C99B4A;
+
+            --gold-light: #F7EFDD;
+
+            --shadow:
+                0 10px 30px rgba(31, 81, 58, 0.06);
+=======
             /* Identidade APAE (Usada pontualmente em destaques/ícones) */
             --brand-primary: #2F6B4F;
             --brand-primary-bg: #E7F0E9;
             --brand-accent: #D5A85A;
             --brand-accent-bg: #FAF3E6;
+>>>>>>> origin/lorena
         }
-
-
-        /* =========================================================
-           MODO ESCURO
-           ========================================================= */
 
         .dark .siapae-dashboard {
 
@@ -85,12 +90,6 @@
                 0 14px 35px rgba(0, 0, 0, 0.20);
         }
 
-
-        /* =========================================================
-           TÍTULO DO HEADER
-           NÃO ALTERA O FUNDO DO HEADER
-           ========================================================= */
-
         .siapae-header-title {
             color: #183C2C !important;
         }
@@ -107,11 +106,6 @@
             color: #91A197 !important;
         }
 
-
-        /* =========================================================
-           PAINEL
-           ========================================================= */
-
         .siapae-dashboard {
 
             min-height: 100%;
@@ -124,11 +118,6 @@
                 background-color 250ms ease,
                 color 250ms ease;
         }
-
-
-        /* =========================================================
-           PEQUENO TÍTULO SIAPAE
-           ========================================================= */
 
         .siapae-eyebrow {
 
@@ -205,11 +194,6 @@
                 0 18px 38px rgba(0, 0, 0, 0.28);
         }
 
-
-        /* =========================================================
-           DETALHE DOS CARDS
-           ========================================================= */
-
         .siapae-stat-card::after {
 
             content: "";
@@ -230,11 +214,6 @@
 
             pointer-events: none;
         }
-
-
-        /* =========================================================
-           TEXTOS DOS CARDS
-           ========================================================= */
 
         .siapae-stat-label {
 
@@ -460,20 +439,16 @@
     </style>
 
 
-    {{-- =========================================================
-         PAINEL PRINCIPAL
-         ========================================================= --}}
-
     <div class="siapae-dashboard py-8">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 rounded-3xl overflow-hidden">
 
 
             {{-- =====================================================
                  INTRODUÇÃO
                  ===================================================== --}}
 
-            <div class="mb-8">
+            <div class="mb-8 ">
 
                 <p class="siapae-eyebrow">
                     SIAPAE
