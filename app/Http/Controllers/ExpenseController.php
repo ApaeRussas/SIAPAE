@@ -78,7 +78,7 @@ class ExpenseController extends Controller
         $data = $request->validated();
         // dd($data);
         // Convert 'string' to data
-        $data['date_of_emission'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date_of_emission'])->format('Y-m-d');
+        $data['date_of_emission'] = \Carbon\Carbon::createFromFormat('Y-m-d', $data['date_of_emission'])->format('Y-m-d');
         //Para a data criada seja aquela que vai aparecer no .index
         $carbonDate = \Carbon\Carbon::parse($data['date_of_emission']);
         $year = $carbonDate->year;  
