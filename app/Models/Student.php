@@ -75,4 +75,9 @@ class Student extends Model
             'professor_id'
         )->withTimestamps();
     }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(StudentDocument::class, 'student_id');
+    }
 }

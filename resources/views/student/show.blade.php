@@ -225,15 +225,101 @@
 
         /*
         |--------------------------------------------------------------------------
-        | EVOLUÇÃO PEDAGÓGICA DO ALUNO
+        | EVOLUÇÃO DO ALUNO
         |--------------------------------------------------------------------------
         */
 
         $pedagogicals =
             collect();
 
+        $evolutionAttendances =
+            collect();
+
+        $evolutionTotal = 0;
+
+        $evolutionWithAdvances = 0;
+        $evolutionWithDifficulties = 0;
+        $evolutionWithSkills = 0;
+        $evolutionActivitiesPerformed = 0;
+        $evolutionActivitiesNotPerformed = 0;
+
+        $firstEvolutionAttendance = null;
+        $latestEvolutionAttendance = null;
+
+        $firstAdvancesLevel = null;
+        $latestAdvancesLevel = null;
+        $firstDifficultiesLevel = null;
+        $latestDifficultiesLevel = null;
+
+        $evolutionAxes = collect();
 
         if ($tab === 'evolucao') {
+
+            $evolutionAttendances =
+                \App\Models\Attendance::where(
+                    'student_id',
+                    $student->id
+                )
+                ->with('professor')
+                ->orderBy('date')
+                ->get();
+
+            $evolutionTotal =
+                $evolutionAttendances->count();
+
+            $evolutionWithAdvances =
+                $evolutionAttendances
+                    ->filter(fn ($item) => !empty($item->advances))
+                    ->count();
+
+            $evolutionWithDifficulties =
+                $evolutionAttendances
+                    ->filter(fn ($item) => !empty($item->difficulties))
+                    ->count();
+
+            $evolutionWithSkills =
+                $evolutionAttendances
+                    ->filter(fn ($item) => !empty($item->skills_evolution))
+                    ->count();
+
+            $evolutionActivitiesPerformed =
+                $evolutionAttendances
+                    ->filter(fn ($item) => $item->activity_not_performed === false)
+                    ->count();
+
+            $evolutionActivitiesNotPerformed =
+                $evolutionAttendances
+                    ->filter(fn ($item) => $item->activity_not_performed)
+                    ->count();
+
+            $firstEvolutionAttendance =
+                $evolutionAttendances->first();
+
+            $latestEvolutionAttendance =
+                $evolutionAttendances->last();
+
+            if ($firstEvolutionAttendance) {
+                $firstAdvancesLevel =
+                    $firstEvolutionAttendance->advances_level;
+
+                $firstDifficultiesLevel =
+                    $firstEvolutionAttendance->difficulties_level;
+            }
+
+            if ($latestEvolutionAttendance) {
+                $latestAdvancesLevel =
+                    $latestEvolutionAttendance->advances_level;
+
+                $latestDifficultiesLevel =
+                    $latestEvolutionAttendance->difficulties_level;
+            }
+
+            $evolutionAxes =
+                $evolutionAttendances
+                    ->pluck('educational_axis')
+                    ->filter()
+                    ->countBy()
+                    ->sortDesc();
 
             $pedagogicals =
                 \App\Models\Educational::where(
@@ -245,8 +331,7 @@
                     'professor'
                 )
                 ->orderByDesc('date_pedagogical')
-                ->paginate(10)
-                ->withQueryString();
+                ->get();
 
         }
 
@@ -353,9 +438,37 @@
                 {{-- =================================================
                      AÇÕES
                      ================================================= --}}
+                @if ($tab === 'perfil')
 
-                <div class="flex flex-wrap items-center gap-2">
+                    <a
+                        href="{{ route('student.print-report', [
+                            'id' => $student->id,
+                            'monthYear' => now()->format('m/Y')
+                        ]) }}"
+                        target="_blank"
+                        class="no-print inline-flex items-center justify-center rounded-lg border border-[#D7DEE5] bg-white px-5 py-2.5 text-sm font-semibold text-[#334E68] hover:bg-[#F8FAF9] transition shadow-sm"
+                    >
 
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-4 h-4 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-10 0h8v3H6v-3zm0-3h12"
+                            />
+                        </svg>
+
+                        Imprimir relatório
+
+                    </a>
+
+                @endif
 
                     {{-- EDITAR --}}
 
@@ -712,17 +825,6 @@
                     >
                         Evolução
                     </a>
-
-
-                    {{-- DOCUMENTOS --}}
-
-                    <button
-                        type="button"
-                        class="profile-tab profile-tab-disabled"
-                        title="Documentos será implementado posteriormente."
-                    >
-                        Documentos
-                    </button>
 
                 </div>
 
@@ -1608,26 +1710,545 @@
             @elseif ($tab === 'evolucao')
 
 
-                <section class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden">
+                {{-- =====================================================
+                     CABEÇALHO
+                     ===================================================== --}}
 
-
-                    {{-- CABEÇALHO --}}
+                <section class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden mb-6">
 
                     <div class="px-6 md:px-8 py-6 border-b border-[#E1E7EC]">
 
-
                         <p class="text-sm font-semibold text-[#3B7D5A] mb-1">
-                            Acompanhamento pedagógico
+                            Análise de acompanhamento
                         </p>
-
 
                         <h2 class="text-xl md:text-2xl font-bold text-[#102A43]">
                             Evolução de {{ $student->name }}
                         </h2>
 
+                        <p class="mt-1 text-sm text-[#66788A]">
+                            Análise construída a partir dos atendimentos registrados para este estudante.
+                        </p>
+
+                    </div>
+
+
+                    @if ($evolutionTotal > 0)
+
+                        {{-- =================================================
+                             INDICADORES
+                             ================================================= --}}
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 md:p-8 border-b border-[#E1E7EC]">
+
+                            <div class="rounded-2xl border border-[#DCEBE2] bg-[#EDF5F0] p-5">
+
+                                <p class="text-xs font-semibold uppercase tracking-wide text-[#66788A]">
+                                    Atendimentos analisados
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-[#2F684A]">
+                                    {{ $evolutionTotal }}
+                                </p>
+
+                                <p class="mt-1 text-xs text-[#66788A]">
+                                    registros encontrados para o estudante
+                                </p>
+
+                            </div>
+
+
+                            <div class="rounded-2xl border border-[#DCEBE2] bg-[#F8FAF9] p-5">
+
+                                <p class="text-xs font-semibold uppercase tracking-wide text-[#66788A]">
+                                    Registros com avanços
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-[#2F684A]">
+                                    {{ $evolutionWithAdvances }}
+                                </p>
+
+                                <p class="mt-1 text-xs text-[#66788A]">
+                                    de {{ $evolutionTotal }} atendimento(s)
+                                </p>
+
+                            </div>
+
+
+                            <div class="rounded-2xl border border-[#E1E7EC] bg-[#F8FAF9] p-5">
+
+                                <p class="text-xs font-semibold uppercase tracking-wide text-[#66788A]">
+                                    Evolução de habilidades
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-[#102A43]">
+                                    {{ $evolutionWithSkills }}
+                                </p>
+
+                                <p class="mt-1 text-xs text-[#66788A]">
+                                    registro(s) com descrição de evolução
+                                </p>
+
+                            </div>
+
+
+                            <div class="rounded-2xl border border-[#E1E7EC] bg-[#F8FAF9] p-5">
+
+                                <p class="text-xs font-semibold uppercase tracking-wide text-[#66788A]">
+                                    Dificuldades registradas
+                                </p>
+
+                                <p class="mt-2 text-3xl font-bold text-[#B45353]">
+                                    {{ $evolutionWithDifficulties }}
+                                </p>
+
+                                <p class="mt-1 text-xs text-[#66788A]">
+                                    ponto(s) acompanhado(s) ao longo do período
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        {{-- =================================================
+                             LEITURA DA EVOLUÇÃO
+                             ================================================= --}}
+
+                        <div class="px-6 md:px-8 py-7">
+
+                            <div class="rounded-2xl border border-[#DCEBE2] bg-[#F8FAF9] p-6">
+
+                                <div class="flex items-start gap-4">
+
+                                    <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-[#EDF5F0] text-[#3B7D5A] flex items-center justify-center">
+
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6"
+                                            />
+                                        </svg>
+
+                                    </div>
+
+                                    <div class="min-w-0">
+
+                                        <h3 class="text-lg font-bold text-[#102A43]">
+                                            Leitura da evolução registrada
+                                        </h3>
+
+                                        <p class="mt-1 text-sm leading-6 text-[#66788A]">
+                                            Esta síntese considera somente as informações que foram efetivamente registradas nos atendimentos do estudante.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="mt-6 space-y-3">
+
+                                    @if ($firstEvolutionAttendance && $latestEvolutionAttendance)
+
+                                        <div class="rounded-xl border border-[#E1E7EC] bg-white px-4 py-4">
+
+                                            <p class="text-sm leading-6 text-[#334E68]">
+                                                O acompanhamento possui registros desde
+                                                <strong class="text-[#102A43]">
+                                                    {{ \Carbon\Carbon::parse($firstEvolutionAttendance->date)->format('d/m/Y') }}
+                                                </strong>
+                                                até
+                                                <strong class="text-[#102A43]">
+                                                    {{ \Carbon\Carbon::parse($latestEvolutionAttendance->date)->format('d/m/Y') }}
+                                                </strong>.
+                                                Ao longo desse período, foram documentados
+                                                <strong class="text-[#2F684A]">
+                                                    {{ $evolutionWithAdvances }} registro(s) com avanços
+                                                </strong>
+                                                e
+                                                <strong class="text-[#B45353]">
+                                                    {{ $evolutionWithDifficulties }} registro(s) com dificuldades
+                                                </strong>.
+                                            </p>
+
+                                        </div>
+
+                                    @endif
+
+
+                                    @if ($evolutionActivitiesPerformed > 0)
+
+                                        <div class="rounded-xl border border-[#E1E7EC] bg-white px-4 py-4">
+
+                                            <p class="text-sm leading-6 text-[#334E68]">
+                                                Foram registradas atividades realizadas em
+                                                <strong class="text-[#102A43]">
+                                                    {{ $evolutionActivitiesPerformed }} de {{ $evolutionTotal }}
+                                                </strong>
+                                                atendimento(s).
+                                                @if ($evolutionActivitiesNotPerformed > 0)
+                                                    Também existem
+                                                    <strong class="text-[#66788A]">
+                                                        {{ $evolutionActivitiesNotPerformed }} registro(s)
+                                                    </strong>
+                                                    em que a atividade não foi realizada.
+                                                @endif
+                                            </p>
+
+                                        </div>
+
+                                    @endif
+
+
+                                    @if ($latestEvolutionAttendance && !empty($latestEvolutionAttendance->skills_evolution))
+
+                                        <div class="rounded-xl border border-[#DCEBE2] bg-[#EDF5F0] px-4 py-4">
+
+                                            <p class="profile-label">
+                                                Evolução de habilidades registrada no atendimento mais recente
+                                            </p>
+
+                                            <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                {{ $latestEvolutionAttendance->skills_evolution }}
+                                            </p>
+
+                                        </div>
+
+                                    @endif
+
+
+                                    @if ($latestEvolutionAttendance && !empty($latestEvolutionAttendance->advances))
+
+                                        <div class="rounded-xl border border-[#DCEBE2] bg-white px-4 py-4">
+
+                                            <p class="profile-label">
+                                                Avanços mais recentes
+                                            </p>
+
+                                            <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                {{ $latestEvolutionAttendance->advances }}
+                                            </p>
+
+                                        </div>
+
+                                    @endif
+
+
+                                    @if ($latestEvolutionAttendance && !empty($latestEvolutionAttendance->difficulties))
+
+                                        <div class="rounded-xl border border-[#F0DFDF] bg-[#FFF9F9] px-4 py-4">
+
+                                            <p class="profile-label">
+                                                Dificuldades que permanecem em acompanhamento
+                                            </p>
+
+                                            <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                {{ $latestEvolutionAttendance->difficulties }}
+                                            </p>
+
+                                        </div>
+
+                                    @endif
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    @else
+
+                        <div class="px-6 md:px-8 py-16 text-center">
+
+                            <div class="mx-auto w-14 h-14 rounded-xl bg-[#EDF5F0] flex items-center justify-center text-[#3B7D5A]">
+
+                                <svg
+                                    class="w-7 h-7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 7h8m0 0v8m0-8-8 8-4-4-6 6"
+                                    />
+                                </svg>
+
+                            </div>
+
+                            <h3 class="mt-4 text-lg font-bold text-[#102A43]">
+                                Ainda não é possível analisar a evolução
+                            </h3>
+
+                            <p class="mt-1 text-sm text-[#66788A] max-w-xl mx-auto">
+                                Este estudante ainda não possui atendimentos registrados. Depois que os atendimentos forem cadastrados, esta aba passará a apresentar a análise da evolução.
+                            </p>
+
+                        </div>
+
+                    @endif
+
+                </section>
+
+
+                {{-- =====================================================
+                     LINHA DO TEMPO DOS ATENDIMENTOS
+                     ===================================================== --}}
+
+                @if ($evolutionTotal > 0)
+
+                    <section class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden mb-6">
+
+                        <div class="px-6 md:px-8 py-6 border-b border-[#E1E7EC]">
+
+                            <p class="text-sm font-semibold text-[#3B7D5A] mb-1">
+                                Histórico de acompanhamento
+                            </p>
+
+                            <h2 class="text-xl md:text-2xl font-bold text-[#102A43]">
+                                Linha do tempo da evolução
+                            </h2>
+
+                            <p class="mt-1 text-sm text-[#66788A]">
+                                Veja como os registros de atendimento foram sendo construídos ao longo do tempo.
+                            </p>
+
+                        </div>
+
+
+                        <div class="divide-y divide-[#E1E7EC]">
+
+                            @foreach ($evolutionAttendances->reverse() as $attendance)
+
+                                <article class="px-6 md:px-8 py-6">
+
+                                    <div class="flex flex-col lg:flex-row lg:items-start gap-5">
+
+                                        <div class="lg:w-40 flex-shrink-0">
+
+                                            <p class="text-xs font-semibold uppercase tracking-wide text-[#66788A]">
+                                                Data
+                                            </p>
+
+                                            <p class="mt-1 text-lg font-bold text-[#102A43]">
+                                                {{ \Carbon\Carbon::parse($attendance->date)->format('d/m/Y') }}
+                                            </p>
+
+                                            @if ($attendance->professor)
+                                                <p class="mt-1 text-xs text-[#66788A]">
+                                                    {{ $attendance->professor->name }}
+                                                </p>
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                            <div class="rounded-xl border border-[#E1E7EC] bg-[#FAFBFC] p-4 md:col-span-2">
+
+                                                <p class="profile-label">
+                                                    Eixo trabalhado
+                                                </p>
+
+                                                <p class="profile-value">
+                                                    {{ $attendance->educational_axis ?: 'Não informado' }}
+                                                </p>
+
+                                            </div>
+
+
+                                            @if (!empty($attendance->skills))
+
+                                                <div class="rounded-xl border border-[#E1E7EC] p-4">
+
+                                                    <p class="profile-label">
+                                                        Habilidades trabalhadas
+                                                    </p>
+
+                                                    <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                        {{ $attendance->skills }}
+                                                    </p>
+
+                                                </div>
+
+                                            @endif
+
+
+                                            @if (!empty($attendance->skills_evolution))
+
+                                                <div class="rounded-xl border border-[#DCEBE2] bg-[#EDF5F0] p-4">
+
+                                                    <p class="profile-label">
+                                                        Evolução das habilidades
+                                                    </p>
+
+                                                    <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                        {{ $attendance->skills_evolution }}
+                                                    </p>
+
+                                                </div>
+
+                                            @endif
+
+
+                                            @if (!empty($attendance->advances))
+
+                                                <div class="rounded-xl border border-[#DCEBE2] bg-[#F8FAF9] p-4">
+
+                                                    <p class="profile-label">
+                                                        Avanços observados
+                                                    </p>
+
+                                                    <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                        {{ $attendance->advances }}
+                                                    </p>
+
+                                                </div>
+
+                                            @endif
+
+
+                                            @if (!empty($attendance->difficulties))
+
+                                                <div class="rounded-xl border border-[#F0DFDF] bg-[#FFF9F9] p-4">
+
+                                                    <p class="profile-label">
+                                                        Dificuldades observadas
+                                                    </p>
+
+                                                    <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                        {{ $attendance->difficulties }}
+                                                    </p>
+
+                                                </div>
+
+                                            @endif
+
+
+                                            <div class="md:col-span-2 flex flex-wrap gap-2 pt-1">
+
+                                                @if (!is_null($attendance->advances_level))
+
+                                                    <span class="inline-flex items-center rounded-full border border-[#DCEBE2] bg-[#EDF5F0] px-3 py-1.5 text-xs font-semibold text-[#2F684A]">
+                                                        Nível de avanços: {{ $attendance->advances_level }}
+                                                    </span>
+
+                                                @endif
+
+                                                @if (!is_null($attendance->difficulties_level))
+
+                                                    <span class="inline-flex items-center rounded-full border border-[#E1E7EC] bg-[#F4F6F8] px-3 py-1.5 text-xs font-semibold text-[#66788A]">
+                                                        Nível de dificuldades: {{ $attendance->difficulties_level }}
+                                                    </span>
+
+                                                @endif
+
+                                                @if ($attendance->activity_not_performed)
+
+                                                    <span class="inline-flex items-center rounded-full border border-gray-200 bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-600">
+                                                        Atividade não realizada
+                                                    </span>
+
+                                                @else
+
+                                                    <span class="inline-flex items-center rounded-full border border-[#DCEBE2] bg-[#EDF5F0] px-3 py-1.5 text-xs font-semibold text-[#2F684A]">
+                                                        Atividade realizada
+                                                    </span>
+
+                                                @endif
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </article>
+
+                            @endforeach
+
+                        </div>
+
+                    </section>
+
+
+                    {{-- =====================================================
+                         EIXOS MAIS TRABALHADOS
+                         ===================================================== --}}
+
+                    @if ($evolutionAxes->count())
+
+                        <section class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden mb-6">
+
+                            <div class="px-6 md:px-8 py-6 border-b border-[#E1E7EC]">
+
+                                <p class="text-sm font-semibold text-[#3B7D5A] mb-1">
+                                    Foco do acompanhamento
+                                </p>
+
+                                <h2 class="text-xl md:text-2xl font-bold text-[#102A43]">
+                                    Eixos mais trabalhados
+                                </h2>
+
+                            </div>
+
+
+                            <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                                @foreach ($evolutionAxes as $axis => $count)
+
+                                    <div class="rounded-xl border border-[#E1E7EC] bg-[#FAFBFC] p-4">
+
+                                        <p class="text-sm font-semibold text-[#102A43]">
+                                            {{ $axis }}
+                                        </p>
+
+                                        <p class="mt-1 text-xs text-[#66788A]">
+                                            {{ $count }} registro(s)
+                                        </p>
+
+                                    </div>
+
+                                @endforeach
+
+                            </div>
+
+                        </section>
+
+                    @endif
+
+                @endif
+
+
+                {{-- =====================================================
+                     RELATÓRIOS PEDAGÓGICOS
+                     ===================================================== --}}
+
+                <section class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden mb-6">
+
+                    <div class="px-6 md:px-8 py-6 border-b border-[#E1E7EC]">
+
+                        <p class="text-sm font-semibold text-[#3B7D5A] mb-1">
+                            Registros complementares
+                        </p>
+
+                        <h2 class="text-xl md:text-2xl font-bold text-[#102A43]">
+                            Relatórios pedagógicos
+                        </h2>
 
                         <p class="mt-1 text-sm text-[#66788A]">
-                            Registros pedagógicos realizados exclusivamente para este estudante.
+                            Os relatórios continuam disponíveis aqui como complemento da análise, e não como a própria análise de evolução.
                         </p>
 
                     </div>
@@ -1635,110 +2256,104 @@
 
                     @if ($pedagogicals->count())
 
-
                         <div class="divide-y divide-[#E1E7EC]">
-
 
                             @foreach ($pedagogicals as $pedagogical)
 
+                                <article class="px-6 md:px-8 py-6">
 
-                                <article class="px-6 md:px-8 py-6 hover:bg-[#F8FAF9] transition">
+                                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
 
+                                        <div class="min-w-0 flex-1">
 
-                                    <div class="flex flex-col gap-5">
+                                            <div class="flex flex-wrap items-center gap-3">
 
+                                                <h3 class="text-base md:text-lg font-bold text-[#102A43]">
+                                                    Registro pedagógico
+                                                </h3>
 
-                                        <div class="flex flex-wrap items-center gap-3">
+                                                @if ($pedagogical->date_pedagogical)
 
+                                                    <span class="inline-flex items-center rounded-full bg-[#EDF5F0] border border-[#DCEBE2] px-3 py-1 text-xs font-semibold text-[#2F684A]">
 
-                                            <h3 class="text-base md:text-lg font-bold text-[#102A43]">
-                                                Registro pedagógico
-                                            </h3>
+                                                        {{ \Carbon\Carbon::parse($pedagogical->date_pedagogical)->format('d/m/Y') }}
 
+                                                    </span>
 
-                                            @if ($pedagogical->date_pedagogical)
-
-                                                <span class="inline-flex items-center rounded-full bg-[#EDF5F0] border border-[#DCEBE2] px-3 py-1 text-xs font-semibold text-[#2F684A]">
-
-                                                    {{ \Carbon\Carbon::parse(
-                                                        $pedagogical->date_pedagogical
-                                                    )->format('d/m/Y') }}
-
-                                                </span>
-
-                                            @endif
-
-                                        </div>
-
-
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-
-                                            <div class="md:col-span-2 rounded-xl border border-[#E1E7EC] bg-[#FAFBFC] p-4">
-
-                                                <p class="profile-label">
-                                                    Eixo pedagógico
-                                                </p>
-
-                                                <p class="profile-value">
-                                                    {{ $pedagogical->educational_axis ?: 'Não informado' }}
-                                                </p>
+                                                @endif
 
                                             </div>
 
 
-                                            <div>
+                                            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                                                <p class="profile-label">
-                                                    Professor responsável
-                                                </p>
+                                                <div class="md:col-span-2 rounded-xl border border-[#E1E7EC] bg-[#FAFBFC] p-4">
 
-                                                <p class="profile-value">
-                                                    {{ optional($pedagogical->professor)->name ?: 'Não informado' }}
-                                                </p>
+                                                    <p class="profile-label">
+                                                        Eixo pedagógico
+                                                    </p>
+
+                                                    <p class="profile-value">
+                                                        {{ $pedagogical->educational_axis ?: 'Não informado' }}
+                                                    </p>
+
+                                                </div>
+
+
+                                                <div>
+
+                                                    <p class="profile-label">
+                                                        Professor responsável
+                                                    </p>
+
+                                                    <p class="profile-value">
+                                                        {{ optional($pedagogical->professor)->name ?: 'Não informado' }}
+                                                    </p>
+
+                                                </div>
+
+
+                                                @if (!empty($pedagogical->advances))
+
+                                                    <div>
+
+                                                        <p class="profile-label">
+                                                            Avanços
+                                                        </p>
+
+                                                        <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                            {{ $pedagogical->advances }}
+                                                        </p>
+
+                                                    </div>
+
+                                                @endif
+
+
+                                                @if (!empty($pedagogical->difficulties))
+
+                                                    <div>
+
+                                                        <p class="profile-label">
+                                                            Dificuldades
+                                                        </p>
+
+                                                        <p class="mt-2 text-sm leading-6 text-[#334E68] whitespace-pre-line">
+                                                            {{ $pedagogical->difficulties }}
+                                                        </p>
+
+                                                    </div>
+
+                                                @endif
 
                                             </div>
-
-
-                                            @if (!empty($pedagogical->advances))
-
-                                                <div>
-
-                                                    <p class="profile-label">
-                                                        Avanços
-                                                    </p>
-
-                                                    <p class="mt-1 text-sm leading-6 text-[#334E68] whitespace-pre-line">
-                                                        {{ $pedagogical->advances }}
-                                                    </p>
-
-                                                </div>
-
-                                            @endif
-
-
-                                            @if (!empty($pedagogical->difficulties))
-
-                                                <div>
-
-                                                    <p class="profile-label">
-                                                        Dificuldades
-                                                    </p>
-
-                                                    <p class="mt-1 text-sm leading-6 text-[#334E68] whitespace-pre-line">
-                                                        {{ $pedagogical->difficulties }}
-                                                    </p>
-
-                                                </div>
-
-                                            @endif
 
                                         </div>
 
 
                                         @if (Route::has('educational.show'))
 
-                                            <div class="flex justify-end">
+                                            <div class="flex-shrink-0">
 
                                                 <a
                                                     href="{{ route('educational.show', $pedagogical->id) }}"
@@ -1755,41 +2370,16 @@
 
                                 </article>
 
-
                             @endforeach
 
                         </div>
 
-
-                        @if ($pedagogicals->hasPages())
-
-                            <div class="px-6 md:px-8 py-5 border-t border-[#E1E7EC]">
-
-                                {{ $pedagogicals->links() }}
-
-                            </div>
-
-                        @endif
-
-
                     @else
 
+                        <div class="px-6 md:px-8 py-10 text-center">
 
-                        <div class="px-6 md:px-8 py-16 text-center">
-
-
-                            <div class="mx-auto w-14 h-14 rounded-xl bg-[#EDF5F0] flex items-center justify-center text-[#3B7D5A] text-2xl">
-                                ↑
-                            </div>
-
-
-                            <h3 class="mt-4 text-lg font-bold text-[#102A43]">
-                                Nenhuma evolução registrada
-                            </h3>
-
-
-                            <p class="mt-1 text-sm text-[#66788A]">
-                                Este estudante ainda não possui registros pedagógicos.
+                            <p class="text-sm text-[#66788A]">
+                                Nenhum relatório pedagógico complementar foi registrado para este estudante.
                             </p>
 
                         </div>
@@ -2593,4 +3183,4 @@
 
     </style>
 
-</x-app-layout>
+    </x-app-layout>
