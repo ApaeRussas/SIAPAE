@@ -438,9 +438,37 @@
                 {{-- =================================================
                      AÇÕES
                      ================================================= --}}
+                @if ($tab === 'perfil')
 
-                <div class="flex flex-wrap items-center gap-2">
+                    <a
+                        href="{{ route('student.print-report', [
+                            'id' => $student->id,
+                            'monthYear' => now()->format('m/Y')
+                        ]) }}"
+                        target="_blank"
+                        class="no-print inline-flex items-center justify-center rounded-lg border border-[#D7DEE5] bg-white px-5 py-2.5 text-sm font-semibold text-[#334E68] hover:bg-[#F8FAF9] transition shadow-sm"
+                    >
 
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-4 h-4 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-10 0h8v3H6v-3zm0-3h12"
+                            />
+                        </svg>
+
+                        Imprimir relatório
+
+                    </a>
+
+                @endif
 
                     {{-- EDITAR --}}
 
@@ -3155,4 +3183,4 @@
 
     </style>
 
-</x-app-layout>
+    </x-app-layout>

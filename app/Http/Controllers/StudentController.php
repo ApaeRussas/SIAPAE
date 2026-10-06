@@ -221,6 +221,315 @@ class StudentController extends Controller
         );
     }
 
+    public function printReport($id, Request $request)
+{
+    $student = Student::with('professors')
+        ->findOrFail($id);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | IDADE
+    |--------------------------------------------------------------------------
+    */
+
+    $dateOfBirth = Carbon::parse(
+        $student->date_of_birth
+    );
+
+    $now = Carbon::now();
+
+    $ageYears = (int) $dateOfBirth->diffInYears($now);
+
+    $dateOfBirthAge = $dateOfBirth->copy()
+        ->addYears($ageYears);
+
+    $ageMonths = (int) $dateOfBirthAge->diffInMonths($now);
+
+    $dateOfBirthAge = $dateOfBirthAge->copy()
+        ->addMonths($ageMonths);
+
+    $ageDays = (int) $dateOfBirthAge->diffInDays($now);
+
+    $studentAge =
+        "$ageYears anos, $ageMonths meses e $ageDays dias";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ATENDIMENTOS
+    |--------------------------------------------------------------------------
+    */
+
+    $studentAttendances = Attendance::where(
+        'student_id',
+        $student->id
+    )
+        ->with('student', 'professor')
+        ->orderByDesc('date')
+        ->get();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FREQUÊNCIA
+    |--------------------------------------------------------------------------
+    */
+
+    $frequencyMonthYear = request(
+        'monthYear',
+        now()->format('m/Y')
+    );
+
+    try {
+
+        $frequencyDate = Carbon::createFromFormat(
+            'm/Y',
+            $frequencyMonthYear
+        );
+
+    } catch (\Throwable $e) {
+
+        $frequencyDate = now();
+
+        $frequencyMonthYear =
+            $frequencyDate->format('m/Y');
+
+    }
+
+    $frequencyMonth =
+        (int) $frequencyDate->format('m');
+
+    $frequencyYear =
+        (int) $frequencyDate->format('Y');
+
+    $numberDaysInMonth =
+        $frequencyDate->daysInMonth;
+
+
+    $studentFrequency = Frequency::where(
+        'student_id',
+        $student->id
+    )
+        ->where(
+            'month_year',
+            $frequencyMonthYear
+        )
+        ->first();
+
+
+    $frequencyPresent = 0;
+    $frequencyAbsent = 0;
+    $frequencyNotRegistered = 0;
+
+
+    if ($studentFrequency) {
+
+        for (
+            $day = 1;
+            $day <= $numberDaysInMonth;
+            $day++
+        ) {
+
+            if ($studentFrequency->{$day} === true) {
+
+                $frequencyPresent++;
+
+            } elseif ($studentFrequency->{$day} === false) {
+
+                $frequencyAbsent++;
+
+            } else {
+
+                $frequencyNotRegistered++;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SONDAGENS
+    |--------------------------------------------------------------------------
+    */
+
+    $diagnosticAssessments =
+        DiagnosticAssessment::where(
+            'student_id',
+            $student->id
+        )
+        ->orderByDesc('date')
+        ->get();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVOLUÇÃO
+    |--------------------------------------------------------------------------
+    */
+
+    $evolutionAttendances =
+        Attendance::where(
+            'student_id',
+            $student->id
+        )
+        ->with('professor')
+        ->orderBy('date')
+        ->get();
+
+
+    $evolutionTotal =
+        $evolutionAttendances->count();
+
+
+    $evolutionWithAdvances =
+        $evolutionAttendances
+            ->filter(
+                fn ($item) => !empty($item->advances)
+            )
+            ->count();
+
+
+    $evolutionWithDifficulties =
+        $evolutionAttendances
+            ->filter(
+                fn ($item) => !empty($item->difficulties)
+            )
+            ->count();
+
+
+    $evolutionWithSkills =
+        $evolutionAttendances
+            ->filter(
+                fn ($item) => !empty($item->skills_evolution)
+            )
+            ->count();
+
+
+    $evolutionActivitiesPerformed =
+        $evolutionAttendances
+            ->filter(
+                fn ($item) =>
+                    $item->activity_not_performed === false
+            )
+            ->count();
+
+
+    $evolutionActivitiesNotPerformed =
+        $evolutionAttendances
+            ->filter(
+                fn ($item) =>
+                    $item->activity_not_performed
+            )
+            ->count();
+
+
+    $firstEvolutionAttendance =
+        $evolutionAttendances->first();
+
+    $latestEvolutionAttendance =
+        $evolutionAttendances->last();
+
+
+    $firstAdvancesLevel = null;
+    $latestAdvancesLevel = null;
+
+    $firstDifficultiesLevel = null;
+    $latestDifficultiesLevel = null;
+
+
+    if ($firstEvolutionAttendance) {
+
+        $firstAdvancesLevel =
+            $firstEvolutionAttendance->advances_level;
+
+        $firstDifficultiesLevel =
+            $firstEvolutionAttendance->difficulties_level;
+
+    }
+
+
+    if ($latestEvolutionAttendance) {
+
+        $latestAdvancesLevel =
+            $latestEvolutionAttendance->advances_level;
+
+        $latestDifficultiesLevel =
+            $latestEvolutionAttendance->difficulties_level;
+
+    }
+
+
+    $evolutionAxes =
+        $evolutionAttendances
+            ->pluck('educational_axis')
+            ->filter()
+            ->countBy()
+            ->sortDesc();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVOLUÇÕES PEDAGÓGICAS
+    |--------------------------------------------------------------------------
+    */
+
+    $pedagogicals =
+        Educational::where(
+            'student_id',
+            $student->id
+        )
+        ->with(
+            'student',
+            'professor'
+        )
+        ->orderByDesc('date_pedagogical')
+        ->get();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATÓRIO
+    |--------------------------------------------------------------------------
+    */
+
+    return view(
+        'student.print-report',
+        compact(
+            'student',
+            'studentAge',
+            'studentAttendances',
+            'frequencyMonthYear',
+            'frequencyMonth',
+            'frequencyYear',
+            'numberDaysInMonth',
+            'studentFrequency',
+            'frequencyPresent',
+            'frequencyAbsent',
+            'frequencyNotRegistered',
+            'diagnosticAssessments',
+            'evolutionAttendances',
+            'evolutionTotal',
+            'evolutionWithAdvances',
+            'evolutionWithDifficulties',
+            'evolutionWithSkills',
+            'evolutionActivitiesPerformed',
+            'evolutionActivitiesNotPerformed',
+            'firstEvolutionAttendance',
+            'latestEvolutionAttendance',
+            'firstAdvancesLevel',
+            'latestAdvancesLevel',
+            'firstDifficultiesLevel',
+            'latestDifficultiesLevel',
+            'evolutionAxes',
+            'pedagogicals'
+        )
+    );
+}
+
     public function edit($id, Request $request)
     {
         $student = Student::with('professors')->findOrFail($id);

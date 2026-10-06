@@ -100,6 +100,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('student', StudentController::class)
         ->except('destroy');
 
+    Route::get('/student/{id}/print-report', [StudentController::class, 'printReport'])
+    ->name('student.print-report');
+
     // ==================================================
     // DOCUMENTOS DOS ESTUDANTES
     // ==================================================
