@@ -2,6 +2,7 @@
     <div class="educational-create-page">
         <x-table-create title="Relatório Pedagógico" onlyHead actionRoute="educational">
 
+```
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             {{-- ESTUDANTE --}}
@@ -302,4 +303,6 @@
 
     $('#signature_id').trigger('change');
 </script>
+```
+
 </x-app-layout>
