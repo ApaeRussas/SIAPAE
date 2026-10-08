@@ -11,7 +11,9 @@
         </div>
     </x-slot>
 
-    <div class="py-6 bg-[#EAF3ED] min-h-screen">
+    <div class="diagnostic-create-page">
+
+<div class="py-6 bg-[#EAF3ED] min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div class="bg-white rounded-2xl border border-[#E1E7EC] shadow-sm overflow-hidden">
@@ -1174,5 +1176,19 @@
             }
         });
     </script>
+
+</div>
+
+
+<style>
+.dark .diagnostic-create-page{background:#0F2018!important;color:#D1DBD3!important}
+.dark .diagnostic-create-page .bg-white{background:#14271E!important;border-color:#294236!important}
+.dark .diagnostic-create-page h1,.dark .diagnostic-create-page h2,.dark .diagnostic-create-page h3,.dark .diagnostic-create-page label,.dark .diagnostic-create-page p{color:#D1DBD3!important}
+.dark .diagnostic-create-page input,.dark .diagnostic-create-page textarea,.dark .diagnostic-create-page select{background:#0F2018!important;color:#D1DBD3!important;border-color:#294236!important}
+.dark .diagnostic-create-page input::placeholder,.dark .diagnostic-create-page textarea::placeholder{color:#91A197!important}
+.dark .diagnostic-create-page input:focus,.dark .diagnostic-create-page textarea:focus,.dark .diagnostic-create-page select:focus{border-color:#76B58F!important;box-shadow:0 0 0 3px rgba(118,181,143,.16)!important}
+.dark .diagnostic-create-page .bg-\[\#EDF5F0\]{background:#1A3025!important}
+.dark .diagnostic-create-page .border-\[\#E1E7EC\],.dark .diagnostic-create-page .border-\[\#DCE7E1\]{border-color:#294236!important}
+</style>
 
 </x-app-layout>

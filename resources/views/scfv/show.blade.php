@@ -1,5 +1,7 @@
 <x-app-layout>
 
+<div class="scfv-show-page">
+
     <x-table-show 
         :title="'SCFV ' . $scfv->date_scfv" 
         :elementShow="$scfv" 
@@ -289,5 +291,16 @@
         </div>
 
     </x-table-show>
+
+</div>
+
+
+<style>
+.dark .scfv-show-page{background:#0F2018!important;color:#D1DBD3!important}
+.dark .scfv-show-page .bg-white,.dark .scfv-show-page .bg-gray-50,.dark .scfv-show-page .bg-gray-100{background:#14271E!important}
+.dark .scfv-show-page label,.dark .scfv-show-page h1,.dark .scfv-show-page h2,.dark .scfv-show-page h3,.dark .scfv-show-page p,.dark .scfv-show-page span{color:#D1DBD3!important}
+.dark .scfv-show-page input,.dark .scfv-show-page textarea,.dark .scfv-show-page select{background:#0F2018!important;color:#D1DBD3!important;border-color:#294236!important}
+.dark .scfv-show-page hr,.dark .scfv-show-page .border-gray-200,.dark .scfv-show-page .border-gray-300,.dark .scfv-show-page .border-gray-600{border-color:#294236!important}
+</style>
 
 </x-app-layout>
