@@ -558,6 +558,18 @@ Pedro Fernandes ..."
 
     </div>
 
+
+<style>
+.dark .scfv-create-page{background:#0F2018!important;color:#D1DBD3!important}
+.dark .scfv-create-page .bg-white,.dark .scfv-create-page .bg-gray-50,.dark .scfv-create-page .bg-gray-100{background:#14271E!important}
+.dark .scfv-create-page label,.dark .scfv-create-page h1,.dark .scfv-create-page h2,.dark .scfv-create-page h3,.dark .scfv-create-page p,.dark .scfv-create-page span{color:#D1DBD3!important}
+.dark .scfv-create-page input,.dark .scfv-create-page textarea,.dark .scfv-create-page select{background:#0F2018!important;color:#D1DBD3!important;border-color:#294236!important}
+.dark .scfv-create-page input::placeholder,.dark .scfv-create-page textarea::placeholder{color:#91A197!important}
+.dark .scfv-create-page input:focus,.dark .scfv-create-page textarea:focus,.dark .scfv-create-page select:focus{border-color:#76B58F!important;box-shadow:0 0 0 3px rgba(118,181,143,.16)!important}
+.dark .scfv-create-page hr,.dark .scfv-create-page .border-gray-200,.dark .scfv-create-page .border-gray-300{border-color:#294236!important}
+.dark .scfv-create-page .bg-blue-500,.dark .scfv-create-page .bg-blue-600,.dark .scfv-create-page .bg-blue-700{background:#3A8060!important;border-color:#3A8060!important}
+</style>
+
 </x-app-layout>
 
 

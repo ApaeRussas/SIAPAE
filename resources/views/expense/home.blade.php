@@ -435,4 +435,18 @@
 
     </style>
 
+
+<style>
+.dark .expense-list-page{background:#0F2018!important;color:#D1DBD3!important}
+.dark .expense-list-page h2{color:#F5F1E8!important}
+.dark .expense-list-page .page-content>div{background:#14271E!important;border-color:#294236!important;box-shadow:0 14px 35px rgba(0,0,0,.20)!important}
+.dark .expense-list-page table,.dark .expense-list-page table tbody,.dark .expense-list-page table tbody tr,.dark .expense-list-page table tbody td{background:#14271E!important;color:#D1DBD3!important}
+.dark .expense-list-page table thead,.dark .expense-list-page table thead tr,.dark .expense-list-page table thead th{background:#1A3025!important;color:#8CC9A3!important;border-color:#294236!important}
+.dark .expense-list-page table tbody tr:hover,.dark .expense-list-page table tbody tr:hover td{background:#20392C!important;color:#F5F1E8!important}
+.dark .expense-list-page input,.dark .expense-list-page select{background:#0F2018!important;color:#D1DBD3!important;border-color:#294236!important}
+.dark .expense-list-page input::placeholder{color:#91A197!important}
+.dark .expense-list-page a,.dark .expense-list-page button{transition:.18s ease}
+.dark .expense-list-page .bg-white{background:#14271E!important}
+</style>
+
 </x-app-layout>

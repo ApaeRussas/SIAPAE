@@ -698,4 +698,23 @@
 </style>
 
 
+
+<style>
+.dark .documents-list-page{background:#0F2018!important;color:#D1DBD3!important}
+.dark .documents-header h2{color:#F5F1E8!important}
+.dark .documents-header p{color:#91A197!important}
+.dark .documents-page-content,.dark .documents-table-container,.dark .documents-table{background:#14271E!important}
+.dark .documents-toolbar,.dark .documents-search{background:#1A3025!important;border-color:#294236!important}
+.dark .documents-search input{background:#1A3025!important;color:#D1DBD3!important}
+.dark .documents-search input::placeholder{color:#91A197!important}
+.dark .documents-table thead,.dark .documents-table thead tr,.dark .documents-table th{background:#1A3025!important;color:#8CC9A3!important;border-color:#294236!important}
+.dark .documents-table tbody,.dark .documents-table tbody tr,.dark .documents-table td{background:#14271E!important;color:#D1DBD3!important;border-color:#294236!important}
+.dark .documents-table tbody tr:hover,.dark .documents-table tbody tr:hover td{background:#20392C!important;color:#F5F1E8!important}
+.dark .student-name,.dark .document-name,.dark .document-date{color:#D1DBD3!important}
+.dark .document-type,.dark .action-download,.dark .empty-icon{background:rgba(118,181,143,.14)!important;color:#8CC9A3!important}
+.dark .empty-documents h3{color:#F5F1E8!important}
+.dark .empty-documents p{color:#91A197!important}
+.dark .action-delete{background:#3A2222!important;color:#F2A6A6!important}
+</style>
+
 </x-app-layout>

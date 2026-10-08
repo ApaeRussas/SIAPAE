@@ -675,4 +675,16 @@
         }
     </style>
 
+</div>
+
+
+<style>
+.dark .diagnostic-show-page{background:#0F2018!important;color:#D1DBD3!important}
+.dark .diagnostic-show-page .diagnostic-card,.dark .diagnostic-show-page .diagnostic-subsection{background:#14271E!important;border-color:#294236!important}
+.dark .diagnostic-show-page .diagnostic-card h1,.dark .diagnostic-show-page .diagnostic-card h2,.dark .diagnostic-show-page .diagnostic-card h3,.dark .diagnostic-show-page .diagnostic-value{color:#D1DBD3!important}
+.dark .diagnostic-show-page .diagnostic-check{background:#0F2018!important;color:#D1DBD3!important;border-color:#294236!important}
+.dark .diagnostic-show-page .diagnostic-check.checked{background:rgba(118,181,143,.14)!important;color:#8CC9A3!important;border-color:#3A8060!important}
+.dark .diagnostic-show-page hr{border-color:#294236!important}
+</style>
+
 </x-app-layout>
