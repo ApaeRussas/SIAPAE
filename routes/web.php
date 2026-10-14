@@ -48,9 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
         ->name('educational.deposit');
 
-    // ==================================================
     // SONDAGEM DIAGNÓSTICA
-    // ==================================================
     Route::resource(
         'diagnostic-assessments',
         DiagnosticAssessmentController::class
@@ -101,25 +99,9 @@ Route::middleware(['auth'])->group(function () {
         ->except('destroy');
 
     Route::get('/student/{id}/print-report', [StudentController::class, 'printReport'])
-    ->name('student.print-report');
+        ->name('student.print-report');
 
-    // ==================================================
-    // DOCUMENTOS DOS ESTUDANTES
-    // ==================================================
-
-    // Visualizar a lista de documentos
-    Route::get('/documents', [StudentDocumentController::class, 'index'])
-        ->name('student-documents.index');
-
-    // Baixar um documento
-    Route::get('/documents/{studentDocument}/download', [StudentDocumentController::class, 'download'])
-        ->name('student-documents.download');
-
-
-    // ==================================================
     // FREQUÊNCIAS
-    // ==================================================
-
     Route::post('/frequencies/multiple-details', [FrequencyController::class, 'updateDetails'])
         ->name('frequency_details.update');
 
@@ -137,6 +119,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/export/scfv/{id}', [ScfvController::class, 'generatePdf'])
         ->name('scfv.export');
 
+    // ROTAS DA COORDENADORIA E DOCUMENTOS DOS ESTUDANTES
     Route::middleware(CheckCoordinatorOrAdmin::class)->group(function () {
 
         Route::post('/coordinator/archive/{id}', [CoordinatorController::class, 'archive'])
@@ -154,10 +137,15 @@ Route::middleware(['auth'])->group(function () {
             'record' => RecordController::class,
         ]);
 
-
-        // ==================================================
         // DOCUMENTOS DOS ESTUDANTES
-        // ==================================================
+
+        // Visualizar a lista de documentos
+        Route::get('/documents', [StudentDocumentController::class, 'index'])
+            ->name('student-documents.index');
+
+        // Baixar um documento
+        Route::get('/documents/{studentDocument}/download', [StudentDocumentController::class, 'download'])
+            ->name('student-documents.download');
 
         // Formulário para adicionar documento
         Route::get('/documents/create', [StudentDocumentController::class, 'create'])
@@ -172,9 +160,10 @@ Route::middleware(['auth'])->group(function () {
             ->name('student-documents.destroy');
     });
 
+    // ROTAS EXCLUSIVAS DE ADMINISTRAÇÃO
     Route::middleware([
         CheckAdmin::class,
-        RestrictIPMiddleware::class
+        RestrictIPMiddleware::class,
     ])->group(function () {
 
         Route::resources([

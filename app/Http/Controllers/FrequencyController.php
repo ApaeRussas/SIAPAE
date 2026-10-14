@@ -20,7 +20,7 @@ class FrequencyController extends Controller
         session(['previous_url' => url()->full()]);
         session(['previous_url_secondary' => url()->full()]);
         $context = 'frequency';
-        
+
         $professors = User::where('position', 'professor(a)')
             ->where('state_user', 'alive')
             ->orderBy('name', 'asc')
@@ -54,7 +54,7 @@ class FrequencyController extends Controller
             $query->where('students.turn_apae', $turn_apae)
                 ->where('frequencies.month_year', $monthYear);
         }
-        
+
         if($professor_id) {
             $query->whereHas('student.professors', function ($query) use ($professor_id) {
                 $query->where('users.id', $professor_id);
@@ -189,34 +189,47 @@ class FrequencyController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, $id)
     {
-        // Validação dos dados
-        $request->validate([
-            'frequencyId' => 'required',
-            'day' => 'required',
+        // Validar os dados recebidos
+        $validated = $request->validate([
+            'frequencyId' => 'required|integer',
+            'day' => 'required|integer|between:1,31',
             'status' => 'nullable|boolean',
         ]);
 
-        // Encontrar o aluno
+        // Garantir que o ID informado corresponde à frequência solicitada
+        if ((int) $validated['frequencyId'] !== (int) $id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Identificador de frequência inválido.',
+            ], 422);
+        }
+
         $frequency = Frequency::find($id);
 
         if (!$frequency) {
-            return response()->json(['success' => false, 'message' => 'Aluno da frequência não encontrado.']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Frequência não encontrada.',
+            ], 404);
         }
 
-        $frequency->{$request->day} = $request->status;
+        // Usar somente dias válidos como nomes de atributos
+        $day = (string) $validated['day'];
+        $frequency->{$day} = $validated['status'] ?? null;
         $frequency->save();
-        
-        broadcast(new CrudUpdated('updated',  'frequency'))->toOthers();
+
+        broadcast(new CrudUpdated('updated', 'frequency'))->toOthers();
+
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 
     public function updateDetails(Request $request)
     {
-        // Decodifique o JSON recebido
         $frequencies = json_decode($request->input('frequencies'), true);
         $observation = $request->input('observation');
         $signature_id = $request->input('signature_id');
@@ -224,47 +237,66 @@ class FrequencyController extends Controller
         $turn_apae = null;
         $monthYear = null;
 
-        DB::transaction(function () use ($frequencies, $observation, $signature_id, &$class_apae, &$turn_apae, &$monthYear) {
+        DB::transaction(function () use (
+            $frequencies,
+            &$observation,
+            $signature_id,
+            &$class_apae,
+            &$turn_apae,
+            &$monthYear
+        ) {
             foreach ($frequencies['data'] as $frequencyData) {
                 $frequency = Frequency::find($frequencyData['id']);
+
                 if ($frequency) {
                     if ($observation == '') {
                         $observation = '-------- Sem Observações --------';
                     }
+
                     $updated = $frequency->update([
-                        'observation' => $observation, // Atualize conforme necessário
-                        'signature_id' => $signature_id, // Assinatura comum para todos
+                        'observation' => $observation,
+                        'signature_id' => $signature_id,
                     ]);
+
                     if (!$updated) {
-                        throw new \Exception("Falha ao atualizar a frequência com ID {$frequencyData['id']}");
+                        throw new \Exception(
+                            "Falha ao atualizar a frequência com ID {$frequencyData['id']}"
+                        );
                     }
                 } else {
-                    throw new \Exception("Frequência com ID {$frequencyData['id']} não encontrada");
+                    throw new \Exception(
+                        "Frequência com ID {$frequencyData['id']} não encontrada"
+                    );
                 }
+
                 $class_apae = $frequency->student->class_apae;
                 $turn_apae = $frequency->student->turn_apae;
                 $monthYear = $frequency->month_year;
             }
         });
-        // Se a transação for bem-sucedida, retornamos com uma mensagem de sucesso
-        broadcast(new CrudUpdated('updated',  'frequency'))->toOthers();
+
+        broadcast(new CrudUpdated('updated', 'frequency'))->toOthers();
+
         session()->flash('success', 'Observações atualizadas com sucesso!');
-        return redirect()->route('frequency.index', compact('class_apae', 'turn_apae', 'monthYear'));
+
+        return redirect()->route(
+            'frequency.index',
+            compact('class_apae', 'turn_apae', 'monthYear')
+        );
     }
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
     public function destroy(Frequency $frequency)
     {
         //
     }
     public function getDaysNotRequired($classType, $year, $month, $numberDaysInMonth) {
         $daysNotRequired = [];
-        
+
         for ($i = 0; $i < $numberDaysInMonth; $i++) {
             $date = sprintf("%04d-%02d-%02d", $year, $month, $i + 1); // Corrigido para o dia 1 até 31
             $dayOfWeek = date('N', strtotime($date)); // Obtém o dia da semana como número (1 = Segunda, 7 = Domingo)
-    
+
             // Lógica para diferentes combinações de dias da semana
             switch ($classType) {
                 case 'Segunda':
@@ -349,7 +381,7 @@ class FrequencyController extends Controller
                     break;
             }
         }
-    
+
         return $daysNotRequired;
     }
 }
