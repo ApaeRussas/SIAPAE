@@ -1,5 +1,4 @@
 <style>
-
     .siapae-sidebar-nav {
         scrollbar-width: thin;
         scrollbar-color: var(--sp-border) transparent;
@@ -16,7 +15,6 @@
         text-transform: uppercase;
         color: var(--sp-section);
     }
-
 </style>
 
 <x-perfect-scrollbar
@@ -24,9 +22,7 @@
     aria-label="main"
     class="siapae-sidebar-nav flex flex-col flex-1 px-3 pb-4 z-20"
 >
-
     {{-- INÍCIO --}}
-
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -51,7 +47,6 @@
     </div>
 
     {{-- ATENDIMENTO --}}
-
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -61,7 +56,6 @@
     </div>
 
     {{-- ANAMNESE --}}
-
     <div>
         <x-sidebar.link
             title="{{ __('Anamnesis') }}"
@@ -84,7 +78,6 @@
     </div>
 
     {{-- ESTUDANTES --}}
-
     <div>
         <x-sidebar.dropdown
             title="Estudantes"
@@ -118,18 +111,16 @@
                     'student-documents.create'
                 )"
             />
-            
+
             <x-sidebar.sublink
                 title="Perfil do estudante"
                 href="{{ route('student.index') }}"
                 :active="false"
             />
-
         </x-sidebar.dropdown>
     </div>
 
     {{-- FREQUÊNCIA --}}
-
     <div>
         <x-sidebar.link
             title="{{ __('Frequency List') }}"
@@ -146,7 +137,6 @@
     </div>
 
     {{-- REGISTROS DE ATENDIMENTO --}}
-
     <div>
         <x-sidebar.dropdown
             title="Atendimentos"
@@ -183,12 +173,10 @@
                 href="{{ route('attendance.list') }}"
                 :active="request()->routeIs('attendance.list')"
             />
-
         </x-sidebar.dropdown>
     </div>
 
     {{-- SCFV --}}
-
     <div>
         <x-sidebar.link
             title="{{ __('SCFV') }}"
@@ -210,7 +198,6 @@
     </div>
 
     {{-- SONDAGEM DIAGNÓSTICA --}}
-
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -239,8 +226,38 @@
         </x-sidebar.link>
     </div>
 
-    {{-- GESTÃO --}}
+    {{-- PROCESSO DE DESENVOLVIMENTO INDIVIDUAL CAEE --}}
+    <div
+        x-transition
+        x-show="isSidebarOpen || isSidebarHovered"
+        class="siapae-section-title"
+    >
+        Processo de Desenvolvimento
+    </div>
 
+    <div>
+        <x-sidebar.link
+            title="Registro de PDI - CAEE "
+            href="{{ route('development-processes.index') }}"
+            :isActive="request()->routeIs(
+                'development-processes.index',
+                'development-processes.create',
+                'development-processes.store',
+                'development-processes.edit',
+                'development-processes.update',
+                'development-processes.show'
+            )"
+        >
+            <x-slot name="icon">
+                <x-icons.report
+                    class="flex-shrink-0 w-5 h-5"
+                    aria-hidden="true"
+                />
+            </x-slot>
+        </x-sidebar.link>
+    </div>
+
+    {{-- GESTÃO --}}
     <div
         x-transition
         x-show="isSidebarOpen || isSidebarHovered"
@@ -250,7 +267,6 @@
     </div>
 
     {{-- RELATÓRIOS --}}
-
     <div>
         <x-sidebar.dropdown
             title="{{ __('Reports') }}"
@@ -279,7 +295,6 @@
             />
 
             @canany(['coordinator-view', 'admin-view'])
-
                 <x-sidebar.sublink
                     title="{{ __('Regional') }}"
                     href="{{ route('regional.index') }}"
@@ -290,16 +305,12 @@
                         'regional.show'
                     )"
                 />
-
             @endcanany
-
         </x-sidebar.dropdown>
     </div>
 
     {{-- REUNIÕES --}}
-
     @canany(['coordinator-view', 'admin-view'])
-
         <div
             x-transition
             x-show="isSidebarOpen || isSidebarHovered"
@@ -326,13 +337,10 @@
                 </x-slot>
             </x-sidebar.link>
         </div>
-
     @endcanany
 
     {{-- ADMINISTRAÇÃO --}}
-
     @can('admin-view')
-
         <div
             x-transition
             x-show="isSidebarOpen || isSidebarHovered"
@@ -375,7 +383,5 @@
                 </x-slot>
             </x-sidebar.link>
         </div>
-
     @endcan
-
 </x-perfect-scrollbar>

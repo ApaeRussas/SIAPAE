@@ -19,6 +19,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiagnosticAssessmentController;
 use App\Http\Controllers\StudentDocumentController;
 use App\Http\Controllers\MonthlyStudentRecordController;
+use App\Http\Controllers\DevelopmentProcessController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckCoordinatorOrAdmin;
 use App\Http\Middleware\RestrictIPMiddleware;
@@ -48,14 +49,49 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
         ->name('educational.deposit');
 
+<<<<<<< HEAD
     // SONDAGEM DIAGNÓSTICA
+=======
+    /*
+    |--------------------------------------------------------------------------
+    | Sondagem Diagnóstica
+    |--------------------------------------------------------------------------
+    */
+
+>>>>>>> isadora
     Route::resource(
         'diagnostic-assessments',
         DiagnosticAssessmentController::class
     );
 
+    /*
+    |--------------------------------------------------------------------------
+    | Registro de Processo de Desenvolvimento Individual CAEE
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource(
+        'development-processes',
+        DevelopmentProcessController::class
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Frequência e atendimentos
+    |--------------------------------------------------------------------------
+    */
+
     Route::get('/attendance/list', [AttendanceController::class, 'attendanceList'])
         ->name('attendance.list');
+
+    Route::get('/attendanceapi/detail', [AttendanceController::class, 'mudarSemana'])
+        ->name('attendance.weekChange');
+
+    Route::post('/clear-session', [AttendanceController::class, 'clearSession'])
+        ->name('attendance.clearSession');
+
+    Route::post('/frequencies/multiple-details', [FrequencyController::class, 'updateDetails'])
+        ->name('frequency_details.update');
 
     Route::resources([
         'anamnesis' => MedHistoryController::class,
@@ -65,11 +101,11 @@ Route::middleware(['auth'])->group(function () {
         'scfv' => ScfvController::class,
     ]);
 
-    Route::get('/attendanceapi/detail', [AttendanceController::class, 'mudarSemana'])
-        ->name('attendance.weekChange');
-
-    Route::post('/clear-session', [AttendanceController::class, 'clearSession'])
-        ->name('attendance.clearSession');
+    /*
+    |--------------------------------------------------------------------------
+    | Estudantes
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/student/deposit', [StudentApiController::class, 'deposit'])
         ->name('student.deposit');
@@ -79,6 +115,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/studentapi/{id}', [StudentApiController::class, 'archive'])
         ->name('student.archive');
+
+    Route::get('/studentapi/{id}', [StudentApiController::class, 'getStudentData']);
 
     Route::get('/student/anamnesis/{id}', [StudentController::class, 'showMedhistory'])
         ->name('student.showMedhistory');
@@ -95,9 +133,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/monthly-record/{student}', [MonthlyStudentRecordController::class, 'show'])
         ->name('monthlyStudentRecord.show');
 
+    Route::get('/student/{id}/print-report', [StudentController::class, 'printReport'])
+        ->name('student.print-report');
+
     Route::resource('student', StudentController::class)
         ->except('destroy');
 
+<<<<<<< HEAD
     Route::get('/student/{id}/print-report', [StudentController::class, 'printReport'])
         ->name('student.print-report');
 
@@ -106,6 +148,25 @@ Route::middleware(['auth'])->group(function () {
         ->name('frequency_details.update');
 
     Route::get('/studentapi/{id}', [StudentApiController::class, 'getStudentData']);
+=======
+    /*
+    |--------------------------------------------------------------------------
+    | Documentos dos estudantes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/documents', [StudentDocumentController::class, 'index'])
+        ->name('student-documents.index');
+
+    Route::get('/documents/{studentDocument}/download', [StudentDocumentController::class, 'download'])
+        ->name('student-documents.download');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Exportação de relatórios
+    |--------------------------------------------------------------------------
+    */
+>>>>>>> isadora
 
     Route::get('/export/educational/{id}', [EducationalController::class, 'generatePdf'])
         ->name('educational.export');
@@ -119,8 +180,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/export/scfv/{id}', [ScfvController::class, 'generatePdf'])
         ->name('scfv.export');
 
+<<<<<<< HEAD
     // ROTAS DA COORDENADORIA E DOCUMENTOS DOS ESTUDANTES
     Route::middleware(CheckCoordinatorOrAdmin::class)->group(function () {
+=======
+    /*
+    |--------------------------------------------------------------------------
+    | Coordenação e administração de registros
+    |--------------------------------------------------------------------------
+    */
+
+    Route::middleware([CheckCoordinatorOrAdmin::class])->group(function () {
+>>>>>>> isadora
 
         Route::post('/coordinator/archive/{id}', [CoordinatorController::class, 'archive'])
             ->name('coordinator.archive');
@@ -137,6 +208,7 @@ Route::middleware(['auth'])->group(function () {
             'record' => RecordController::class,
         ]);
 
+<<<<<<< HEAD
         // DOCUMENTOS DOS ESTUDANTES
 
         // Visualizar a lista de documentos
@@ -148,19 +220,28 @@ Route::middleware(['auth'])->group(function () {
             ->name('student-documents.download');
 
         // Formulário para adicionar documento
+=======
+>>>>>>> isadora
         Route::get('/documents/create', [StudentDocumentController::class, 'create'])
             ->name('student-documents.create');
 
-        // Salvar documento
         Route::post('/documents', [StudentDocumentController::class, 'store'])
             ->name('student-documents.store');
 
-        // Excluir documento
         Route::delete('/documents/{studentDocument}', [StudentDocumentController::class, 'destroy'])
             ->name('student-documents.destroy');
     });
 
+<<<<<<< HEAD
     // ROTAS EXCLUSIVAS DE ADMINISTRAÇÃO
+=======
+    /*
+    |--------------------------------------------------------------------------
+    | Administração restrita
+    |--------------------------------------------------------------------------
+    */
+
+>>>>>>> isadora
     Route::middleware([
         CheckAdmin::class,
         RestrictIPMiddleware::class,
@@ -196,9 +277,16 @@ Route::middleware(['auth'])->group(function () {
             ->name('donation.export');
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Página 404
+    |--------------------------------------------------------------------------
+    */
+
     Route::fallback(function () {
         return view('errors.404');
     });
+
 });
 
 require __DIR__ . '/auth.php';
