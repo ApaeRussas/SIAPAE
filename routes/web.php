@@ -49,16 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/educational/deposit', [EducationalController::class, 'deposit'])
         ->name('educational.deposit');
 
-<<<<<<< HEAD
     // SONDAGEM DIAGNÓSTICA
-=======
-    /*
-    |--------------------------------------------------------------------------
-    | Sondagem Diagnóstica
-    |--------------------------------------------------------------------------
-    */
-
->>>>>>> isadora
     Route::resource(
         'diagnostic-assessments',
         DiagnosticAssessmentController::class
@@ -139,34 +130,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('student', StudentController::class)
         ->except('destroy');
 
-<<<<<<< HEAD
-    Route::get('/student/{id}/print-report', [StudentController::class, 'printReport'])
-        ->name('student.print-report');
-
-    // FREQUÊNCIAS
-    Route::post('/frequencies/multiple-details', [FrequencyController::class, 'updateDetails'])
-        ->name('frequency_details.update');
-
-    Route::get('/studentapi/{id}', [StudentApiController::class, 'getStudentData']);
-=======
-    /*
-    |--------------------------------------------------------------------------
-    | Documentos dos estudantes
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/documents', [StudentDocumentController::class, 'index'])
-        ->name('student-documents.index');
-
-    Route::get('/documents/{studentDocument}/download', [StudentDocumentController::class, 'download'])
-        ->name('student-documents.download');
-
     /*
     |--------------------------------------------------------------------------
     | Exportação de relatórios
     |--------------------------------------------------------------------------
     */
->>>>>>> isadora
 
     Route::get('/export/educational/{id}', [EducationalController::class, 'generatePdf'])
         ->name('educational.export');
@@ -180,18 +148,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/export/scfv/{id}', [ScfvController::class, 'generatePdf'])
         ->name('scfv.export');
 
-<<<<<<< HEAD
-    // ROTAS DA COORDENADORIA E DOCUMENTOS DOS ESTUDANTES
-    Route::middleware(CheckCoordinatorOrAdmin::class)->group(function () {
-=======
     /*
     |--------------------------------------------------------------------------
     | Coordenação e administração de registros
     |--------------------------------------------------------------------------
     */
-
     Route::middleware([CheckCoordinatorOrAdmin::class])->group(function () {
->>>>>>> isadora
 
         Route::post('/coordinator/archive/{id}', [CoordinatorController::class, 'archive'])
             ->name('coordinator.archive');
@@ -208,20 +170,15 @@ Route::middleware(['auth'])->group(function () {
             'record' => RecordController::class,
         ]);
 
-<<<<<<< HEAD
-        // DOCUMENTOS DOS ESTUDANTES
 
-        // Visualizar a lista de documentos
+        // Listar documentos dos estudantes
         Route::get('/documents', [StudentDocumentController::class, 'index'])
             ->name('student-documents.index');
 
-        // Baixar um documento
+        // Baixar documento de um estudante
         Route::get('/documents/{studentDocument}/download', [StudentDocumentController::class, 'download'])
             ->name('student-documents.download');
 
-        // Formulário para adicionar documento
-=======
->>>>>>> isadora
         Route::get('/documents/create', [StudentDocumentController::class, 'create'])
             ->name('student-documents.create');
 
@@ -232,16 +189,11 @@ Route::middleware(['auth'])->group(function () {
             ->name('student-documents.destroy');
     });
 
-<<<<<<< HEAD
-    // ROTAS EXCLUSIVAS DE ADMINISTRAÇÃO
-=======
     /*
     |--------------------------------------------------------------------------
     | Administração restrita
     |--------------------------------------------------------------------------
     */
-
->>>>>>> isadora
     Route::middleware([
         CheckAdmin::class,
         RestrictIPMiddleware::class,

@@ -496,11 +496,19 @@
 
                                 <p class="mt-1 text-sm text-[#66788A]">
                                     {{
-                                        [
-                                            'ontem' => 'Ontem',
-                                            'hoje' => 'Hoje',
-                                            'amanha' => 'Amanhã'
-                                        ][$assessment->cognitive['time_knowledge'][$key] ?? ''] ?? 'Não informado'
+                                        (
+                                            ($key === 'day')
+                                                ? [
+                                                    'ontem' => 'Ontem',
+                                                    'hoje' => 'Hoje',
+                                                    'amanha' => 'Amanhã'
+                                                ]
+                                                : [
+                                                    'ontem' => 'Passado',
+                                                    'hoje' => 'Atual',
+                                                    'amanha' => 'Futuro'
+                                                ]
+                                        )[$assessment->cognitive['time_knowledge'][$key] ?? ''] ?? 'Não informado'
                                     }}
                                 </p>
                             </div>

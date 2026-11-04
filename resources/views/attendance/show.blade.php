@@ -21,7 +21,13 @@
             5 => 'Excelente',
         ];
  
-        $difficultiesLevels = $advancesLevels;
+        $difficultiesLevels = [
+            1 => 'Quase nada',
+            2 => 'Muito pouco',
+            3 => 'Pouco',
+            4 => 'Não apresenta',
+            5 => 'Muita dificuldade',
+        ];
     @endphp
  
     <div class="attendance-page">

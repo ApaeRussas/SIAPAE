@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\CrudUpdated;
 use App\Models\Frequency;
+use App\Models\Student;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +54,29 @@ class FrequencyController extends Controller
 
             $query->where('students.turn_apae', $turn_apae)
                 ->where('frequencies.month_year', $monthYear);
+        }
+
+        // Criar ficha de frequência para estudantes ativos sem registro no mês.
+        if ($turn_apae && $monthYear) {
+            $students = Student::query()
+                ->where('state_student', 'alive')
+                ->where('turn_apae', $turn_apae)
+                ->get(['id', 'class_apae', 'turn_apae']);
+
+            DB::transaction(function () use ($students, $monthYear) {
+                foreach ($students as $student) {
+                    Frequency::firstOrCreate(
+                        [
+                            'student_id' => $student->id,
+                            'month_year' => $monthYear,
+                        ],
+                        [
+                            'class_apae' => $student->class_apae,
+                            'turn_apae' => $student->turn_apae,
+                        ]
+                    );
+                }
+            });
         }
 
         if($professor_id) {

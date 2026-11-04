@@ -966,11 +966,7 @@
 
                                         <div class="flex flex-wrap gap-3">
 
-                                            @foreach ([
-                                                'ontem' => 'Ontem',
-                                                'hoje' => 'Hoje',
-                                                'amanha' => 'Amanhã'
-                                            ] as $value => $option)
+                                            @foreach (($key === 'day' ? ['ontem' => 'Ontem', 'hoje' => 'Hoje', 'amanha' => 'Amanhã'] : ['ontem' => 'Passado', 'hoje' => 'Atual', 'amanha' => 'Futuro']) as $value => $option)
 
                                                 <label class="assessment-radio">
 

@@ -339,7 +339,7 @@
                             <input
                                 type="hidden"
                                 name="activity_not_performed"
-                                value="0"
+                                value="{{ old('activity_not_performed', $attendance->activity_not_performed ? 1 : 0) }}"
                             >
 
                             <label
@@ -350,7 +350,6 @@
                                 <input
                                     type="checkbox"
                                     id="activity_not_performed"
-                                    name="activity_not_performed"
                                     value="1"
                                     {{ old('activity_not_performed', $attendance->activity_not_performed) ? 'checked' : '' }}
                                     onchange="toggleActivityDescription()"
@@ -656,7 +655,7 @@
                                     onclick="setDifficultiesLevel(4)"
                                 >
                                     <span class="level-number">4</span>
-                                    <span class="level-label">Bom</span>
+                                    <span class="level-label">Não apresenta</span>
                                 </button>
 
                                 <button
@@ -666,7 +665,7 @@
                                     onclick="setDifficultiesLevel(5)"
                                 >
                                     <span class="level-number">5</span>
-                                    <span class="level-label">Excelente</span>
+                                    <span class="level-label">Muita dificuldade</span>
                                 </button>
 
                             </div>
@@ -1295,6 +1294,14 @@
             !textarea
         ) {
             return;
+        }
+
+        const hiddenInput = document.querySelector(
+            'input[type="hidden"][name="activity_not_performed"]'
+        );
+
+        if (hiddenInput) {
+            hiddenInput.value = checkbox.checked ? '1' : '0';
         }
 
         if (checkbox.checked) {

@@ -311,7 +311,7 @@ class AttendanceController extends Controller
         if ($attendance) {
             session()->flash(
                 'success',
-                'Atendimento adicionado com sucesso'
+                'Atendimento cadastrado com sucesso!'
             );
 
             broadcast(

@@ -10,14 +10,14 @@ class Frequency extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $fillable = [
         'student_id',
-        'class_apae',    
-        'turn_apae', 
-        'month_year', 
-        'observation', 
+        'class_apae',
+        'turn_apae',
+        'month_year',
+        'observation',
         'signature_id',
-        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31' 
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'
     ];
 
     protected $casts = [
@@ -29,6 +29,6 @@ class Frequency extends Model
     }
     public function professor(): BelongsTo
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(User::class, 'signature_id');
     }
 }

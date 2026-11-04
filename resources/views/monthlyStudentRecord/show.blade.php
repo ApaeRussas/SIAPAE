@@ -205,11 +205,11 @@
                     </p>
 
                     <p class="mt-2 text-3xl font-semibold text-[#243129] dark:text-[#F1F5F0]">
-                        {{ $participationPercentage }}%
+                        {{ $participationPercentage !== null ? number_format($participationPercentage, 1, ',', '.') . '%' : '—' }}
                     </p>
 
                     <p class="mt-1 text-xs text-[#6E7A72] dark:text-[#A9B5AC]">
-                        Nas atividades registradas
+                        Sobre {{ $classifiableActivities }} registros com situação identificável
                     </p>
                 </div>
 
@@ -224,11 +224,8 @@
                         </h3>
 
                         <p class="mt-1 text-sm text-[#6E7A72] dark:text-[#A9B5AC]">
-                            @if ($month)
-                                Frequência registrada em {{ $monthNames[(int) $month] }}.
-                            @else
-                                Frequência registrada durante o ano.
-                            @endif
+                            Quantidade de atendimentos por resposta e nível no período filtrado.
+                            Campos sem nível ficam separados para não presumir respostas.
                         </p>
                     </div>
 
@@ -240,7 +237,7 @@
                 <div class="rounded-3xl border border-[#E4E8E2] bg-[#FFFDF9] p-6 shadow-sm dark:border-[#2A382F] dark:bg-[#151D18]">
                     <div class="mb-5">
                         <h3 class="text-lg font-semibold text-[#243129] dark:text-[#F1F5F0]">
-                            Participação nas atividades
+                            Avanços e dificuldades
                         </h3>
 
                         <p class="mt-1 text-sm text-[#6E7A72] dark:text-[#A9B5AC]">
@@ -252,8 +249,8 @@
                         </p>
                     </div>
 
-                    <div class="h-72">
-                        <canvas id="participationChart"></canvas>
+                    <div style="height: 440px;">
+                        <canvas id="advancesDifficultiesChart"></canvas>
                     </div>
                 </div>
 
@@ -267,11 +264,11 @@
                     </h3>
 
                     <p class="mt-1 text-sm text-[#6E7A72] dark:text-[#A9B5AC]">
-                        Registros de participação nas atividades.
+                        Registros sem descrição ou sem marcação explícita são apresentados separadamente.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 
                     <div class="rounded-2xl bg-[#E7F0E9] p-5 dark:bg-[#1B3025]">
                         <p class="text-sm text-[#6E7A72] dark:text-[#A9B5AC]">
@@ -290,6 +287,16 @@
 
                         <p class="mt-2 text-3xl font-semibold text-[#243129] dark:text-[#F1F5F0]">
                             {{ $activitiesNotPerformed }}
+                        </p>
+                    </div>
+
+                    <div class="rounded-2xl bg-[#F1F2F0] p-5 dark:bg-[#1A241E]">
+                        <p class="text-sm text-[#6E7A72] dark:text-[#A9B5AC]">
+                            Sem informação suficiente
+                        </p>
+
+                        <p class="mt-2 text-3xl font-semibold text-[#243129] dark:text-[#F1F5F0]">
+                            {{ $activitiesWithoutStatus }}
                         </p>
                     </div>
 
@@ -336,7 +343,7 @@
 
                             @for ($i = 0; $i < count($monthlyLabels); $i++)
 
-                                @if ($monthlyPresences[$i] > 0 || $monthlyAbsences[$i] > 0 || $monthlyParticipation[$i] > 0)
+                                @if ($monthlyPresences[$i] > 0 || $monthlyAbsences[$i] > 0 || $monthlyParticipation[$i] !== null)
 
                                     <tr class="transition hover:bg-[#F8F7F2] dark:hover:bg-[#1B3025]/60">
 
@@ -353,7 +360,7 @@
                                         </td>
 
                                         <td class="px-6 py-4 text-sm font-medium text-[#2F6B4F] dark:text-[#A9C9B2]">
-                                            {{ $monthlyParticipation[$i] }}%
+                                            {{ $monthlyParticipation[$i] !== null ? number_format($monthlyParticipation[$i], 1, ',', '.') . '%' : '—' }}
                                         </td>
 
                                     </tr>
@@ -643,70 +650,57 @@
                 });
             }
 
-            const participationCanvas = document.getElementById('participationChart');
+            const advancesDifficultiesCanvas =
+                document.getElementById('advancesDifficultiesChart');
 
-            if (participationCanvas) {
-                new Chart(participationCanvas, {
-                    type: 'line',
+            if (advancesDifficultiesCanvas) {
+                const levelLabels = @json($advancesDifficultyChartLabels);
+                const levelCounts = @json($advancesDifficultyChartValues);
+
+                new Chart(advancesDifficultiesCanvas, {
+                    type: 'bar',
 
                     data: {
-                        labels: labels,
-
-                        datasets: [
-                            {
-                                label: 'Participação',
-                                data: participation,
-                                borderColor: '#2F6B4F',
-                                backgroundColor: 'rgba(47, 107, 79, 0.10)',
-                                tension: 0.35,
-                                fill: true,
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                pointBackgroundColor: '#2F6B4F',
-                                pointBorderColor: '#FFFFFF'
-                            }
-                        ]
+                        labels: levelLabels,
+                        datasets: [{
+                            label: 'Quantidade de atendimentos',
+                            data: levelCounts,
+                            backgroundColor: levelLabels.map((_, index) =>
+                                index < 7 ? '#2F6B4F' : '#7B857F'
+                            ),
+                            borderRadius: 6
+                        }]
                     },
 
                     options: {
+                        indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
 
                         plugins: {
                             legend: {
-                                position: 'bottom',
-
-                                labels: {
-                                    color: '#5E6962'
-                                }
+                                display: false
                             }
                         },
 
                         scales: {
                             x: {
+                                beginAtZero: true,
                                 ticks: {
+                                    precision: 0,
                                     color: '#5E6962'
                                 },
-
                                 grid: {
                                     color: 'rgba(94, 105, 98, 0.10)'
                                 }
                             },
 
                             y: {
-                                beginAtZero: true,
-                                max: 100,
-
                                 ticks: {
-                                    color: '#5E6962',
-
-                                    callback: function (value) {
-                                        return value + '%';
-                                    }
+                                    color: '#5E6962'
                                 },
-
                                 grid: {
-                                    color: 'rgba(94, 105, 98, 0.10)'
+                                    display: false
                                 }
                             }
                         }

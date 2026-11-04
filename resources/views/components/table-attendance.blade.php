@@ -141,7 +141,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
                         @foreach($dias as $diaKey => $diaInfo)
 
-                            <div class="bg-[#F8FAF9] rounded-xl border border-[#E1E7EC] overflow-hidden">
+                            <div class="bg-white rounded-xl border border-[#E1E7EC] overflow-hidden">
 
                                 {{-- CABEÇALHO DO DIA --}}
                                 <div class="p-3 border-b border-[#E1E7EC]">
@@ -266,10 +266,6 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                                     ]
                                                                 );
 
-                                                            } elseif ($frequencyValue === true) {
-
-                                                                $attendanceLink = '#';
-
                                                             } else {
 
                                                                 $attendanceLink = route(
@@ -286,24 +282,14 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                         @endphp
 
 
-                                                        <li
-                                                            class="text-sm
-                                                            {{
-                                                                $frequencyValue === true
-                                                                    ? 'text-[#3B7D5A]'
-                                                                    : (
-                                                                        $frequencyValue === false
-                                                                            ? 'text-[#B42318]'
-                                                                            : 'text-[#66788A]'
-                                                                    )
-                                                            }}"
+                                                        <li class="text-sm" style="{{ $frequencyValue === true ? 'color: #166534;' : ($frequencyValue === false ? 'color: #B91C1C;' : 'color: #3F4852;') }}"
                                                         >
 
                                                             <div class="flex items-center space-x-1.5">
 
                                                                 <a
                                                                     href="{{ $attendanceLink }}"
-                                                                    class="truncate
+                                                                    style="{{ $frequencyValue === true ? 'color: #166534; background-color: #DCFCE7;' : ($frequencyValue === false ? 'color: #B91C1C; background-color: #FEE2E2;' : 'color: #465565; background-color: #E5E7EB;') }} padding: 2px 5px; border-radius: 4px; display: inline-block; max-width: 100%;" class="truncate
                                                                     {{
                                                                         $attendanceExists
                                                                             ? 'font-medium hover:underline'
@@ -316,19 +302,11 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                                 </a>
 
 
-                                                                @if($attendanceExists)
-
-                                                                    <span class="flex-shrink-0 text-[#3B7D5A]">
-                                                                        ✓
-                                                                    </span>
-
-                                                                @elseif($frequencyValue === true)
-
-                                                                    <span class="flex-shrink-0 text-[#B42318]">
-                                                                        ✗
-                                                                    </span>
-
-                                                                @endif
+                                                                @if ($frequencyValue === true)
+    <span class="flex-shrink-0 text-[#166534]">✓</span>
+@elseif ($frequencyValue === false)
+    <span class="flex-shrink-0 text-[#B91C1C]">✗</span>
+@endif
 
                                                             </div>
 
@@ -434,10 +412,6 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                                     ]
                                                                 );
 
-                                                            } elseif ($frequencyValue === true) {
-
-                                                                $attendanceLink = '#';
-
                                                             } else {
 
                                                                 $attendanceLink = route(
@@ -454,24 +428,14 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                         @endphp
 
 
-                                                        <li
-                                                            class="text-sm
-                                                            {{
-                                                                $frequencyValue === true
-                                                                    ? 'text-[#3B7D5A]'
-                                                                    : (
-                                                                        $frequencyValue === false
-                                                                            ? 'text-[#B42318]'
-                                                                            : 'text-[#66788A]'
-                                                                    )
-                                                            }}"
+                                                        <li class="text-sm" style="{{ $frequencyValue === true ? 'color: #166534;' : ($frequencyValue === false ? 'color: #B91C1C;' : 'color: #3F4852;') }}"
                                                         >
 
                                                             <div class="flex items-center space-x-1.5">
 
                                                                 <a
                                                                     href="{{ $attendanceLink }}"
-                                                                    class="truncate
+                                                                    style="{{ $frequencyValue === true ? 'color: #166534; background-color: #DCFCE7;' : ($frequencyValue === false ? 'color: #B91C1C; background-color: #FEE2E2;' : 'color: #465565; background-color: #E5E7EB;') }} padding: 2px 5px; border-radius: 4px; display: inline-block; max-width: 100%;" class="truncate
                                                                     {{
                                                                         $attendanceExists
                                                                             ? 'font-medium hover:underline'
@@ -484,19 +448,11 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                                 </a>
 
 
-                                                                @if($attendanceExists)
-
-                                                                    <span class="flex-shrink-0 text-[#3B7D5A]">
-                                                                        ✓
-                                                                    </span>
-
-                                                                @elseif($frequencyValue === true)
-
-                                                                    <span class="flex-shrink-0 text-[#B42318]">
-                                                                        ✗
-                                                                    </span>
-
-                                                                @endif
+                                                                @if ($frequencyValue === true)
+    <span class="flex-shrink-0 text-[#166534]">✓</span>
+@elseif ($frequencyValue === false)
+    <span class="flex-shrink-0 text-[#B91C1C]">✗</span>
+@endif
 
                                                             </div>
 
@@ -590,6 +546,16 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
         }
 
     }
+
+/* SIAPAE frequency status color override */
+[class*="text-[#166534]"] {
+    color: #166534 !important;
+}
+
+[class*="text-[#B91C1C]"] {
+    color: #B91C1C !important;
+}
+
 </style>
 
 
@@ -930,11 +896,11 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                             var className =
                                 frequency === true
 
-                                    ? 'text-[#3B7D5A]'
+                                    ? 'text-[#166534]'
 
                                     : (
                                         frequency === false
-                                            ? 'text-[#B42318]'
+                                            ? 'text-[#B91C1C]'
                                             : 'text-[#66788A]'
                                     );
 
@@ -964,7 +930,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                             ) {
 
                                 ahref =
-                                    '<a href="#" class="text-[#B42318]">' +
+                                    '<a href="#" class="text-[#B91C1C]">' +
                                     student.name +
                                     '</a>';
 
@@ -999,15 +965,13 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                         </span>
 
                                         ${
-                                            attendanceExists === true
-
-                                                ? '<span class="flex-shrink-0 text-[#3B7D5A]">✓</span>'
-
-                                                : (
-                                                    frequency === true
-                                                        ? '<span class="flex-shrink-0 text-[#B42318]">✗</span>'
-                                                        : ''
-                                                )
+                                            frequency === true
+    ? '<span class="flex-shrink-0 text-[#166534]">✓</span>'
+    : (
+        frequency === false
+            ? '<span class="flex-shrink-0 text-[#B91C1C]">✗</span>'
+            : ''
+    )
                                         }
 
                                     </div>

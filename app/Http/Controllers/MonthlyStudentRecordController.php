@@ -138,6 +138,83 @@ class MonthlyStudentRecordController extends Controller
             $years = collect([now()->year]);
         }
 
+
+        /*
+         * Distribuição dos avanços e dificuldades nos atendimentos filtrados.
+         * Os níveis são os valores realmente salvos no atendimento.
+         * Campos sem nível ficam em categorias separadas e não são inventados.
+         */
+        $advancesLevelCounts = array_fill(1, 5, 0);
+        $difficultiesLevelCounts = array_fill(1, 5, 0);
+
+        $advancesNoOrUnratedCount = 0;
+        $advancesWithoutLevelCount = 0;
+        $difficultiesNoOrUnratedCount = 0;
+        $difficultiesWithoutLevelCount = 0;
+
+        foreach ($attendances as $attendance) {
+            $advanceLevel = is_numeric($attendance->advances_level)
+                ? (int) $attendance->advances_level
+                : 0;
+
+            $difficultyLevel = is_numeric($attendance->difficulties_level)
+                ? (int) $attendance->difficulties_level
+                : 0;
+
+            $hasAdvancesText = trim((string) $attendance->advances) !== '';
+            $hasDifficultiesText = trim((string) $attendance->difficulties) !== '';
+
+            if (isset($advancesLevelCounts[$advanceLevel])) {
+                $advancesLevelCounts[$advanceLevel]++;
+            } elseif ($hasAdvancesText) {
+                $advancesWithoutLevelCount++;
+            } else {
+                $advancesNoOrUnratedCount++;
+            }
+
+            if (isset($difficultiesLevelCounts[$difficultyLevel])) {
+                $difficultiesLevelCounts[$difficultyLevel]++;
+            } elseif ($hasDifficultiesText) {
+                $difficultiesWithoutLevelCount++;
+            } else {
+                $difficultiesNoOrUnratedCount++;
+            }
+        }
+
+        $advancesDifficultyChartLabels = [
+            'Avanços — Não/sem nível',
+            'Avanços — Sim, sem nível',
+            'Avanços — Quase nada',
+            'Avanços — Muito pouco',
+            'Avanços — Pouco',
+            'Avanços — Bom',
+            'Avanços — Excelente',
+            'Dificuldades — Não/sem nível',
+            'Dificuldades — Sim, sem nível',
+            'Dificuldades — Quase nada',
+            'Dificuldades — Muito pouco',
+            'Dificuldades — Pouco',
+            'Dificuldades — Não apresenta',
+            'Dificuldades — Muita dificuldade',
+        ];
+
+        $advancesDifficultyChartValues = [
+            $advancesNoOrUnratedCount,
+            $advancesWithoutLevelCount,
+            $advancesLevelCounts[1],
+            $advancesLevelCounts[2],
+            $advancesLevelCounts[3],
+            $advancesLevelCounts[4],
+            $advancesLevelCounts[5],
+            $difficultiesNoOrUnratedCount,
+            $difficultiesWithoutLevelCount,
+            $difficultiesLevelCounts[1],
+            $difficultiesLevelCounts[2],
+            $difficultiesLevelCounts[3],
+            $difficultiesLevelCounts[4],
+            $difficultiesLevelCounts[5],
+        ];
+
         /*
          * Indicadores de frequência.
          * A leitura do valor original diferencia:
@@ -201,13 +278,53 @@ class MonthlyStudentRecordController extends Controller
             : 0;
 
         /*
-         * A tabela de produção não possui activity_not_performed.
-         * Portanto, não é possível classificar atividades como realizadas
-         * ou não realizadas nem calcular uma porcentagem de participação.
+         * Classificação baseada em informações verificáveis:
+         * - flag true: atividade explicitamente não realizada;
+         * - descrição preenchida e flag false: atividade realizada;
+         * - flag false sem descrição: situação desconhecida.
+         *
+         * Registros antigos podem ter recebido false como valor padrão
+         * na migração. Por isso, não são presumidos como atividades realizadas.
          */
-        $activitiesPerformed = null;
-        $activitiesNotPerformed = null;
-        $participationPercentage = null;
+        $activitiesPerformed = 0;
+        $activitiesNotPerformed = 0;
+        $activitiesWithoutStatus = 0;
+        $monthlyActivityStats = [];
+
+        foreach ($attendances as $attendance) {
+            $attendanceMonth = (int) Carbon::parse($attendance->date)->format('n');
+
+            if (!isset($monthlyActivityStats[$attendanceMonth])) {
+                $monthlyActivityStats[$attendanceMonth] = [
+                    'performed' => 0,
+                    'not_performed' => 0,
+                    'unknown' => 0,
+                ];
+            }
+
+            $rawNotPerformed = $attendance->getRawOriginal('activity_not_performed');
+            $notPerformed = $rawNotPerformed !== null
+                && (int) $rawNotPerformed === 1;
+
+            $hasDescription = trim((string) $attendance->activity_description) !== '';
+
+            if ($notPerformed) {
+                $activitiesNotPerformed++;
+                $monthlyActivityStats[$attendanceMonth]['not_performed']++;
+            } elseif ($hasDescription) {
+                $activitiesPerformed++;
+                $monthlyActivityStats[$attendanceMonth]['performed']++;
+            } else {
+                $activitiesWithoutStatus++;
+                $monthlyActivityStats[$attendanceMonth]['unknown']++;
+            }
+        }
+
+        $classifiableActivities = $activitiesPerformed + $activitiesNotPerformed;
+
+        $participationPercentage = $classifiableActivities > 0
+            ? round(($activitiesPerformed / $classifiableActivities) * 100, 1)
+            : null;
 
         /*
          * Histórico de atendimentos agrupado por mês.
@@ -288,8 +405,18 @@ class MonthlyStudentRecordController extends Controller
             $monthlyPresences[] = $monthPresence;
             $monthlyAbsences[] = $monthAbsence;
 
-            // Não há dados suficientes na tabela atual para calcular participação.
-            $monthlyParticipation[] = null;
+            $activityStats = $monthlyActivityStats[$monthNumber] ?? [
+                'performed' => 0,
+                'not_performed' => 0,
+                'unknown' => 0,
+            ];
+
+            $monthlyClassifiable = $activityStats['performed']
+                + $activityStats['not_performed'];
+
+            $monthlyParticipation[] = $monthlyClassifiable > 0
+                ? round(($activityStats['performed'] / $monthlyClassifiable) * 100, 1)
+                : null;
         }
 
         $monthNames = $this->monthNames;
@@ -309,11 +436,15 @@ class MonthlyStudentRecordController extends Controller
             'absencePercentage',
             'activitiesPerformed',
             'activitiesNotPerformed',
+            'activitiesWithoutStatus',
+            'classifiableActivities',
             'participationPercentage',
             'monthlyLabels',
             'monthlyPresences',
             'monthlyAbsences',
             'monthlyParticipation',
+            'advancesDifficultyChartLabels',
+            'advancesDifficultyChartValues',
             'monthNames'
         ));
     }

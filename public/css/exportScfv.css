@@ -5,10 +5,11 @@ header {
     position: fixed; top: -20px; left: 0px; right: 0px; height: 50px; 
 }
 .signature {
-    position: fixed;
-    bottom: 70px;
+    position: static;
     width: 100%;
     text-align: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
 }
 footer {
     position: fixed;
@@ -42,16 +43,20 @@ footer {
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
+    display: block;
     width: 100%;
-    word-wrap: break-word; /* Quebra a palavra quando necessário */
-    overflow-wrap: break-word; /* Garantir que a palavra longa seja quebrada */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.35;
 }
 .paragrafo {
+    display: block;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    line-height: 1.35;
 }
 .palavra {
     margin-right: 4px;
@@ -108,4 +113,104 @@ main td {
 }
 .page-break {
     page-break-before: always;
+}
+
+
+/* =========================================================
+   CORREÇÃO DO CABEÇALHO DO PDF SCFV - DOMPDF
+   Mantém o cabeçalho fixo e reserva espaço para o conteúdo.
+   ========================================================= */
+
+body {
+    padding-top: 125px !important;
+}
+
+header {
+    position: fixed !important;
+    top: -8px !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: auto !important;
+}
+
+.header-apae {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-spacing: 4px 0 !important;
+    margin-bottom: 6px !important;
+    flex-wrap: nowrap !important;
+}
+
+.header-apae > div {
+    display: table-cell !important;
+    vertical-align: middle !important;
+}
+
+.logo-area {
+    width: 90px !important;
+    vertical-align: middle !important;
+}
+
+.logo-area img {
+    display: block !important;
+    width: 78px !important;
+    height: auto !important;
+}
+
+.text-area {
+    vertical-align: middle !important;
+}
+
+.text-area h1 {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+    margin: 0 !important;
+    text-align: center !important;
+    white-space: normal !important;
+}
+
+.text-area h2 {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    margin: 3px 0 5px !important;
+    text-align: center !important;
+}
+
+.divider {
+    height: 2px !important;
+    margin: 4px 0 5px !important;
+}
+
+.info-row {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 2px !important;
+}
+
+.info-line {
+    display: table-cell !important;
+    width: 50% !important;
+    vertical-align: top !important;
+    gap: 0 !important;
+}
+
+.info-icon {
+    display: none !important;
+}
+
+.header-apae > div[style] {
+    width: 65px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.header-apae > div[style] p {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    padding: 4px 0 !important;
+    margin: 0 !important;
 }
