@@ -26,7 +26,7 @@
             2 => 'Muito pouco',
             3 => 'Pouco',
             4 => 'Não apresenta',
-            5 => 'Muita dificuldade',
+            5 => 'Ainda com dificuldade',
         ];
     @endphp
  
