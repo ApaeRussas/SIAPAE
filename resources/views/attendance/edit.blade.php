@@ -665,7 +665,7 @@
                                     onclick="setDifficultiesLevel(5)"
                                 >
                                     <span class="level-number">5</span>
-                                    <span class="level-label">Muita dificuldade</span>
+                                    <span class="level-label">Ainda com dificuldade</span>
                                 </button>
 
                             </div>
