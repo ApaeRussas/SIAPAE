@@ -126,14 +126,6 @@ $sections = [
         </section>
     @endforeach
 
-    <section class="caee-panel">
-        <div class="caee-panel-heading"><span class="caee-step">✎</span><div><h2>Observações e acompanhamento</h2><p>Registre informações complementares relevantes.</p></div></div>
-        <div class="caee-fields caee-fields-one">
-            <div class="caee-field"><label for="observations">Observações</label><textarea id="observations" class="caee-textarea" name="observations" rows="4">{{ old('observations', data_get($process, 'observations')) }}</textarea></div>
-            <div class="caee-field"><label for="family_guidance">Orientações / acompanhamento da família</label><textarea id="family_guidance" class="caee-textarea" name="family_guidance" rows="4">{{ old('family_guidance', data_get($process, 'family_guidance')) }}</textarea></div>
-        </div>
-    </section>
-
     <div class="caee-actions"><a class="caee-btn caee-btn-light" href="{{ route('development-processes.index') }}">Cancelar</a><button class="caee-btn caee-btn-primary" type="submit">{{ $submitLabel ?? 'Salvar registro' }}</button></div>
 </div>
 
