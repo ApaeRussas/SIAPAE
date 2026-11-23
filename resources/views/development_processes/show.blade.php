@@ -1,3 +1,4 @@
+
 @php
     $process = $process ?? $development_process ?? null;
 
@@ -287,7 +288,6 @@
 
 <x-app-layout>
     <div class="dp-show mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-
         <div class="dp-actions mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-semibold uppercase tracking-wide text-green-800 dark:text-green-300">
@@ -317,7 +317,6 @@
         </div>
 
         <main id="development-process-document">
-
             <section class="dp-card dp-identification">
                 <div class="dp-institution">
                     <h2>CAEE: CENTRO DE ATENDIMENTO EDUCACIONAL ESPECIALIZADO JOSÉ ALVES DOS SANTOS</h2>
@@ -387,20 +386,21 @@
                 </section>
             @endforeach
 
-            <section class="dp-card dp-topic">
-                <h2 class="dp-section-title">OBSERVAÇÕES</h2>
-                <div class="dp-text-content">
-                    {{ filled($process->observations) ? $process->observations : 'Nenhuma observação registrada.' }}
+            <section class="dp-signatures">
+                <div class="dp-signature-grid">
+                    <div class="dp-signature">
+                        <div class="dp-signature-line"></div>
+                        <strong>COORDENAÇÃO</strong>
+                        <span>Assinatura da coordenação</span>
+                    </div>
+
+                    <div class="dp-signature">
+                        <div class="dp-signature-line"></div>
+                        <strong>PROFESSOR(A) RESPONSÁVEL</strong>
+                        <span>{{ $teacherName }}</span>
+                    </div>
                 </div>
             </section>
-
-            <section class="dp-card dp-topic">
-                <h2 class="dp-section-title">ORIENTAÇÕES / ACOMPANHAMENTO DA FAMÍLIA</h2>
-                <div class="dp-text-content">
-                    {{ filled($process->family_guidance) ? $process->family_guidance : 'Nenhuma orientação registrada.' }}
-                </div>
-            </section>
-
         </main>
     </div>
 
@@ -526,6 +526,13 @@
             overflow-wrap: anywhere;
             color: #26382d;
             line-height: 1.65;
+        }
+
+        .dp-signatures {
+            margin-top: 35px;
+            padding: 25px 10px 15px;
+            break-inside: avoid;
+            page-break-inside: avoid;
         }
 
         .dp-signature-grid {
@@ -777,7 +784,16 @@
             }
 
             .dp-signatures {
+                margin-top: 20px;
+                padding: 20px 10px 10px;
                 break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .dp-signature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 45px;
+                padding-top: 20px;
             }
 
             .dp-signature-line {
