@@ -10,9 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\RestrictIPMiddleware;
 
-Route::middleware(RestrictIPMiddleware::class)->group(function () {
 
     Route::middleware('guest')->group(function () {
         Route::get('login', [AuthenticatedSessionController::class, 'create'])
@@ -55,5 +53,3 @@ Route::middleware(RestrictIPMiddleware::class)->group(function () {
         Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
     });
-
-});

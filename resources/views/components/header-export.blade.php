@@ -76,8 +76,70 @@
             padding-top: 1px;
         }
     </style>
+    @if(isset($caeeHeader))
+<style>
+    header {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        height: auto !important;
+        margin-bottom: 20px !important;
+    }
 
-    <div class="header-apae">
+    .header-caee {
+        display: table !important;
+        width: 100% !important;
+        table-layout: fixed !important;
+        margin-bottom: 15px !important;
+    }
+
+    .header-caee .logo-area,
+    .header-caee .text-area {
+        display: table-cell !important;
+        vertical-align: middle !important;
+    }
+
+    .header-caee .logo-area {
+        width: 115px !important;
+    }
+
+    .header-caee .logo-area img {
+        width: 105px !important;
+    }
+
+    .header-caee .text-area {
+        padding-left: 12px !important;
+    }
+
+    .header-caee .text-area h1 {
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+    }
+
+    .header-caee .text-area h2 {
+        font-size: 10px !important;
+        line-height: 1.3 !important;
+    }
+
+    .header-caee .info-row {
+        display: block !important;
+        font-size: 9px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .header-caee .info-line {
+        display: inline-block !important;
+        width: 48% !important;
+        vertical-align: top !important;
+    }
+
+    .header-caee > div:last-child {
+        display: none !important;
+    }
+</style>
+@endif
+    <div class="header-apae {{ isset($caeeHeader) ? 'header-caee' : '' }}" >
 
         <div class="logo-area">
             <img src="{{public_path('logo/logoTimbre.png')}}" alt="Logo APAE">

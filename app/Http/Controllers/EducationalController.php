@@ -269,8 +269,71 @@ class EducationalController extends Controller
     
         // Para adicionar o css diretamente ao html
         $css = file_get_contents(public_path('css/export.css'));
-        $html = str_replace('</head>', '<style>' . $css . '</style></head>', $html);
 
+$css .= "
+    header {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        height: auto !important;
+        margin-bottom: 15px !important;
+    }
+
+    .header-caee {
+        position: relative !important;
+        display: block !important;
+        width: 100% !important;
+        height: 150px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .header-caee .logo-area {
+        position: absolute !important;
+        left: 0 !important;
+        top: 25px !important;
+        width: 110px !important;
+    }
+
+    .header-caee .logo-area img {
+        width: 100px !important;
+    }
+
+    .header-caee .text-area {
+        position: absolute !important;
+        left: 125px !important;
+        top: 0 !important;
+        width: 75% !important;
+    }
+
+    .header-caee .text-area h1 {
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+        text-align: left !important;
+    }
+
+    .header-caee .text-area h2 {
+        font-size: 10px !important;
+        line-height: 1.3 !important;
+    }
+
+    .header-caee .info-row {
+        display: block !important;
+        font-size: 9px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .header-caee .info-line {
+        display: inline-block !important;
+        width: 48% !important;
+    }
+
+    .header-caee > div:last-child {
+        display: none !important;
+    }
+";
+
+$html = str_replace('</head>', '<style>' . $css . '</style></head>', $html);
         // Gera o PDF
         $pdf = Pdf::loadHTML($html)->setPaper('a4', 'portrait');
 

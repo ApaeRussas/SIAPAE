@@ -1,7 +1,7 @@
-<x-header-export 
-    title="Relatório Inidividual AEE"
-    headerOld>
-
+<x-header-export
+    title="Relatório Individual CAEE"
+    headerOld
+    caeeHeader>
     <main>
         <div class="center-text font-sitka" style="font-size: 24px; margin-bottom: 20px">
             <i>
@@ -12,9 +12,6 @@
         </div>
         <div style="padding-right: 16px;">
             <div class="retangulo">
-                <p class="m-bottom"> <strong> ASSOCIAÇÃO DOS PAIS E AMIGOS DOS EXCEPCIONAIS DE RUSSAS - APAE RUSSAS </strong>
-                </p>
-                <p class="m-bottom"> <strong> CAEE: </strong> CENTRO DE ATENDIMENTO EDUCACIONAL ESPECIALIZADO JOSÉ ALVES DOS SANTOS </p>
     
                 <p><strong>Aluno(a): {{$data->student->name}}</strong> </p>
                 <table class="m-bottom-table">
@@ -42,19 +39,18 @@
             </div>
         </div>
         
-        <div class="content justify font-arial">
-        @foreach (explode("\n", $data->text) as $linha)
-            <div class="paragrafo">
-                <span class="tab"></span>
-                @foreach (preg_split('/\s+/', $linha) as $palavra)
-                    <span class="palavra">{{ $palavra }}</span>
-                @endforeach
-            </div>
-        @endforeach
+        <div class="content font-arial" style="display: block; text-align: justify; line-height: 1.5; width: 100%;">
+            @foreach (preg_split('/\r\n|\r|\n/', $data->text) as $linha)
+                @if(trim($linha) !== '')
+                    <p style="text-indent: 35px; margin-bottom: 12px; line-height: 1.5;">
+                        {{ trim($linha) }}
+                    </p>
+                @endif
+            @endforeach
         </div>
     </main>
 
-    <div class="signature">
+   <div class="signature" style="position: static !important; bottom: auto !important; margin-top: 30px; text-align: center; page-break-inside: avoid; width: 100%;">
         ___________________________________________________ <br> 
         <strong> {{$data->professor->name}}</strong> <br>
         Professor do CAEE / APAE RUSSAS
