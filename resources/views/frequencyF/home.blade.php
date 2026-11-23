@@ -1,3 +1,4 @@
+
 <x-app-layout :context="$context">
 
     <x-slot name="header">
@@ -12,7 +13,7 @@
                     variant="question"
                     class="frequency-info-button mt-1 sm:mt-2"
                     size="sm"
-                    onclick="guestText('info', 'Esse setor possui a ferramenta de busca com o turno do aluno em questão, mês/ano e o professor responsável pelo atendimento a qual se refere a lista de frequência, em que o único campo obrigatório de pesquisa é o mês/ano. <br><br>Legenda:<br>dos botões (o que cada símbolo significa):<br><span class=&quot;text-[#8091A5]&quot;> - : Neutro ou Indiferente </span><br><span class=&quot;text-[#B42318]&quot;> x : Falta Confirmada</span><br><span class=&quot;text-[#3B7D5A]&quot;> ✓ : Presença Confirmada</span><br>dos campos sem botões:<br><div class=&quot;flex items-center&quot;><hr class=&quot;w-[18px] border-[#B8C7BE] mr-2 mb-4&quot;>: Dia de semana em que o aluno não tem atendimento ou feriado</div>x : Fim de semana (mascara/não mostra um feriado)<br><br>Essa tabela contabiliza as faltas e seu dia em questão, além disso pode-se justificar a falta do aluno no campo apropriado além de registrar a assinatura do professor responsável.')"
+                    onclick="guestText('info', 'Esse setor possui a ferramenta de busca com o turno do aluno em questão, mês/ano e o professor responsável pelo atendimento a qual se refere a lista de frequência, em que o único campo obrigatório de pesquisa é o mês/ano. <br><br>Legenda:<br>dos botões (o que cada símbolo significa):<br><span class=&quot;text-[#8091A5]&quot;> - : Neutro ou Indiferente </span><br><span class=&quot;text-[#B42318]&quot;> x : Falta Confirmada</span><br><span class=&quot;text-[#3B7D5A]&quot;> ✓ : Presença Confirmada</span><br>dos campos sem botões:<br><div class=&quot;flex items-center&quot;><hr class=&quot;w-[18px] border-[#B8C7BE] mr-2 mb-4&quot;>: Dia de semana em que o aluno não tem atendimento ou feriado</div>x : Fim de semana (mascara/não mostra um feriado)<br><br>Essa tabela contabiliza as faltas e seu dia em questão, além disso pode-se justificar a falta do aluno no campo apropriado além de registrar a assinatura do professor responsável pela frequência.')"
                 >
                     <x-icons.question />
                 </x-button>
@@ -31,11 +32,8 @@
     @endphp
 
     <div class="frequency-page">
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-            <div class="frequency-table-wrapper rounded-2xl overflow-hidden mb-6">
-
+            <div class="frequency-table-wrapper rounded-2xl mb-6">
                 <x-table
                     title="Frequência"
                     :headers="array_merge(['Nome'], $days, ['Faltas'])"
@@ -48,14 +46,8 @@
                     :variablesSearchFrequency="$variablesSearchFrequency"
                     iteration="true"
                 >
-
                     @forelse ($frequencies as $frequency)
-
-                        <tr
-                            data-id="{{ $frequency->id }}"
-                            class="frequency-row"
-                        >
-
+                        <tr data-id="{{ $frequency->id }}" class="frequency-row">
                             <td class="frequency-cell frequency-index">
                                 {{ $loop->iteration }}
                             </td>
@@ -63,12 +55,12 @@
                             <td
                                 class="frequency-cell frequency-student"
                                 onclick="show('{{ route('student.show', $frequency->student->id) }}')"
+                                title="{{ $frequency->student->name }}"
                             >
-                                {{ \Illuminate\Support\Str::limit($frequency->student->name, 14, '...') }}
+                                {{ $frequency->student->name }}
                             </td>
 
                             @for ($day = 1; $day <= $numberDaysInMonth; $day++)
-
                                 @php
                                     [$month, $year] = explode('/', $monthYear);
 
@@ -91,9 +83,7 @@
                                 @endphp
 
                                 <td class="frequency-day-cell">
-
                                     @if (!$isNonClickable)
-
                                         <x-button
                                             class="btn-toggle frequency-toggle {{
                                                 $frequency->$day === true
@@ -127,33 +117,19 @@
                                                     )
                                             }}"></i>
                                         </x-button>
-
                                     @elseif ($isWeekend)
-
-                                        <span class="frequency-weekend">
-                                            X
-                                        </span>
-
+                                        <span class="frequency-weekend">X</span>
                                     @else
-
                                         <hr class="frequency-unavailable">
-
                                     @endif
-
                                 </td>
-
                             @endfor
 
                             <td class="frequency-cell frequency-absences">
-                                <h3>
-                                    {{ $frequency->countAbsences }}
-                                </h3>
+                                <h3>{{ $frequency->countAbsences }}</h3>
                             </td>
-
                         </tr>
-
                     @empty
-
                         <tr class="text-center">
                             <td
                                 class="frequency-empty"
@@ -162,26 +138,19 @@
                                 Nenhum registro encontrado.
                             </td>
                         </tr>
-
                     @endforelse
-
                 </x-table>
-
             </div>
         </div>
 
         @if (isset($monthYear) && count($frequencies) != 0)
-
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-
                 <div class="frequency-observation-card rounded-2xl overflow-hidden">
-
                     <form
                         action="{{ route('frequency_details.update') }}"
                         class="p-6"
                         method="POST"
                     >
-
                         @csrf
 
                         <input
@@ -191,16 +160,9 @@
                         >
 
                         <div class="mb-5">
-
-                            <label
-                                for="observation"
-                                class="frequency-form-label"
-                            >
+                            <label for="observation" class="frequency-form-label">
                                 Observações:
-
-                                <span class="frequency-optional">
-                                    (*opcional)
-                                </span>
+                                <span class="frequency-optional">(*opcional)</span>
                             </label>
 
                             <x-form.textarea
@@ -211,17 +173,11 @@
                                 placeholder="Ex: O Aluno *** faltou dia ** pois estava doente ....."
                                 data-observation=""
                             >{{ old('observation', $observation) }}</x-form.textarea>
-
                         </div>
 
                         <div class="grid sm:grid-cols-2 gap-y-4 gap-x-5">
-
                             <div>
-
-                                <label
-                                    for="signature_id"
-                                    class="frequency-form-label"
-                                >
+                                <label for="signature_id" class="frequency-form-label">
                                     Assinatura do Professor:
                                 </label>
 
@@ -230,43 +186,29 @@
                                     idSelect="signature_id"
                                     class="frequency-select frequency-field"
                                 >
-                                    <option value="">
-                                        Selecione o Nome:
-                                    </option>
+                                    <option value="">Selecione o Nome:</option>
 
                                     @foreach ($professors as $professor)
-
                                         <option
                                             value="{{ $professor->id }}"
                                             {{ old('signature_id', $signature_id) == $professor->id ? 'selected' : '' }}
                                         >
                                             {{ $professor->name }}
                                         </option>
-
                                     @endforeach
-
                                 </x-form.select>
-
                             </div>
 
                             <div class="sm:flex sm:justify-end sm:items-end">
-
                                 <x-button class="frequency-update-button">
                                     Atualizar
                                 </x-button>
-
                             </div>
-
                         </div>
-
                     </form>
-
                 </div>
-
             </div>
-
         @endif
-
     </div>
 
 </x-app-layout>
@@ -290,15 +232,12 @@
         --neutral: #B8C7BE;
         --neutral-dark: #9EADA4;
         --shadow: 0 10px 30px rgba(31, 81, 58, 0.06);
-
         display: block;
         min-height: calc(100vh - 64px);
         background-color: var(--bg);
         color: var(--text);
         padding-bottom: 2rem;
-        transition:
-            background-color 250ms ease,
-            color 250ms ease;
+        transition: background-color 250ms ease, color 250ms ease;
     }
 
     .dark .frequency-page {
@@ -335,9 +274,16 @@
     }
 
     .frequency-table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        position: relative;
+        isolation: isolate;
         background: #FFFFFF !important;
         border: 1px solid var(--border) !important;
         box-shadow: var(--shadow) !important;
+        -webkit-overflow-scrolling: touch;
     }
 
     .frequency-table-wrapper .bg-white,
@@ -360,6 +306,10 @@
     }
 
     .frequency-page table {
+        width: max-content !important;
+        min-width: 100%;
+        border-collapse: separate !important;
+        border-spacing: 0;
         background-color: #FFFFFF !important;
     }
 
@@ -368,10 +318,12 @@
     }
 
     .frequency-page table thead th {
+        position: relative;
         background-color: var(--surface-soft) !important;
         color: var(--title) !important;
         border-color: var(--border) !important;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     .frequency-page .frequency-row {
@@ -393,22 +345,56 @@
     }
 
     .frequency-page .frequency-index {
+        position: sticky !important;
+        left: 0 !important;
+        z-index: 6 !important;
+        width: 42px !important;
+        min-width: 42px !important;
+        max-width: 42px !important;
+        background: #FFFFFF !important;
         color: #78857D !important;
         font-weight: 500;
     }
 
     .frequency-page .frequency-student {
+        position: sticky !important;
+        left: 42px !important;
+        z-index: 6 !important;
+        width: 220px !important;
+        min-width: 220px !important;
+        max-width: 220px !important;
         padding-left: 0.65rem;
         padding-right: 0.65rem;
+        text-align: left !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
         color: #183C2C !important;
         font-weight: 500;
         cursor: pointer;
-        background-color: #FFFFFF !important;
+        background: #FFFFFF !important;
+        box-shadow: 4px 0 7px rgba(0, 0, 0, 0.08);
     }
 
     .frequency-page .frequency-student:hover {
         color: var(--green) !important;
         background-color: var(--green-light) !important;
+    }
+
+    .frequency-page table thead th:first-child {
+        position: sticky !important;
+        left: 0 !important;
+        z-index: 12 !important;
+        min-width: 42px !important;
+        background: var(--surface-soft) !important;
+    }
+
+    .frequency-page table thead th:nth-child(2) {
+        position: sticky !important;
+        left: 42px !important;
+        z-index: 12 !important;
+        min-width: 220px !important;
+        background: var(--surface-soft) !important;
+        box-shadow: 4px 0 7px rgba(0, 0, 0, 0.08);
     }
 
     .frequency-page .frequency-day-cell {
@@ -523,9 +509,7 @@
         border: 1px solid var(--border) !important;
         border-radius: 9px !important;
         box-shadow: none !important;
-        transition:
-            border-color 0.18s ease,
-            box-shadow 0.18s ease;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .frequency-page textarea::placeholder,
@@ -614,11 +598,7 @@
 
     .frequency-page button,
     .frequency-page a {
-        transition:
-            background-color 0.18s ease,
-            border-color 0.18s ease,
-            color 0.18s ease,
-            box-shadow 0.18s ease;
+        transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
     }
 
     @media (max-width: 768px) {
@@ -640,7 +620,13 @@
         }
 
         .frequency-page .frequency-student {
-            min-width: 110px;
+            width: 180px !important;
+            min-width: 180px !important;
+            max-width: 180px !important;
+        }
+
+        .frequency-page table thead th:nth-child(2) {
+            min-width: 180px !important;
         }
     }
 
@@ -680,7 +666,6 @@
                     status: novoStatus,
                     _token: '{{ csrf_token() }}',
                 },
-
                 success: function (response) {
                     if (response.success) {
                         let $button = $(
@@ -701,25 +686,21 @@
                                 .addClass('success frequency-present')
                                 .find('i')
                                 .addClass('fa-check frequency-icon-check');
-
                         } else if (novoStatus === 0) {
                             $button
                                 .addClass('danger frequency-absent')
                                 .find('i')
                                 .addClass('fa-times frequency-icon-times');
-
                         } else {
                             $button
                                 .addClass('indifferent frequency-neutral')
                                 .find('i')
                                 .addClass('fa-minus frequency-icon-minus');
                         }
-
                     } else {
                         alert('Erro ao atualizar a frequência.');
                     }
                 },
-
                 error: function () {
                     alert('Erro ao atualizar a frequência.');
                 }
