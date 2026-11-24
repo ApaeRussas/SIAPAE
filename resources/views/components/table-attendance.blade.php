@@ -1,4 +1,4 @@
-{{-- 
+{{--
 $title: string que define o título da tabela.
 
 $headers: Um array que contém os cabeçalhos das colunas da tabela.
@@ -110,6 +110,12 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                 @if(isset($students))
 
                     @php
+
+                        /*
+                         * Professor(a) só enxerga os próprios atendimentos.
+                         * Outros perfis continuam vendo o geral.
+                         */
+                        $isProfessor = Auth::user()?->position === 'professor(a)';
 
                         $dias = [
                             'segunda' => [
@@ -230,15 +236,10 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                             ->first();
 
                                                         $attendanceExists =
-                                                            App\Models\Attendance::where(
-                                                                'student_id',
-                                                                $student->id
-                                                            )
-                                                            ->where(
-                                                                'date',
-                                                                $dateForAttendance
-                                                            )
-                                                            ->exists();
+                                                            App\Models\Attendance::where('student_id', $student->id)
+                                                                ->where('date', $dateForAttendance)
+                                                                ->when($isProfessor, fn ($q) => $q->where('signature_id', Auth::id()))
+                                                                ->exists();
 
                                                         $frequencyValue =
                                                             $frequency
@@ -252,13 +253,29 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
                                                         @php
 
-                                                            /*
-                                                             * Quando já existe atendimento,
-                                                             * abre a Lista de Atendimento
-                                                             * filtrada somente para aquela data.
-                                                             */
-                                                            if ($attendanceExists) {
+                                                            if ($attendanceExists && $isProfessor) {
 
+                                                                /*
+                                                                 * Professor que já atendeu: abre o atendimento
+                                                                 * dele já preenchido (o show() redireciona
+                                                                 * para a edição).
+                                                                 */
+                                                                $attendanceLink = route(
+                                                                    'attendance.show',
+                                                                    [
+                                                                        'attendance' => 0,
+                                                                        'student_id' => $student->id,
+                                                                        'date' => $diasDaSemana[$diaKey],
+                                                                        'year' => $year
+                                                                    ]
+                                                                );
+
+                                                            } elseif ($attendanceExists) {
+
+                                                                /*
+                                                                 * Demais perfis: Lista de Atendimento
+                                                                 * filtrada para aquela data.
+                                                                 */
                                                                 $attendanceLink = route(
                                                                     'attendance.list',
                                                                     [
@@ -303,10 +320,10 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
 
                                                                 @if ($frequencyValue === true)
-    <span class="flex-shrink-0 text-[#166534]">✓</span>
-@elseif ($frequencyValue === false)
-    <span class="flex-shrink-0 text-[#B91C1C]">✗</span>
-@endif
+                                                                    <span class="flex-shrink-0 text-[#166534]">✓</span>
+                                                                @elseif ($frequencyValue === false)
+                                                                    <span class="flex-shrink-0 text-[#B91C1C]">✗</span>
+                                                                @endif
 
                                                             </div>
 
@@ -381,15 +398,10 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                                                             ->first();
 
                                                         $attendanceExists =
-                                                            App\Models\Attendance::where(
-                                                                'student_id',
-                                                                $student->id
-                                                            )
-                                                            ->where(
-                                                                'date',
-                                                                $dateForAttendance
-                                                            )
-                                                            ->exists();
+                                                            App\Models\Attendance::where('student_id', $student->id)
+                                                                ->where('date', $dateForAttendance)
+                                                                ->when($isProfessor, fn ($q) => $q->where('signature_id', Auth::id()))
+                                                                ->exists();
 
                                                         $frequencyValue =
                                                             $frequency
@@ -403,7 +415,19 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
                                                         @php
 
-                                                            if ($attendanceExists) {
+                                                            if ($attendanceExists && $isProfessor) {
+
+                                                                $attendanceLink = route(
+                                                                    'attendance.show',
+                                                                    [
+                                                                        'attendance' => 0,
+                                                                        'student_id' => $student->id,
+                                                                        'date' => $diasDaSemana[$diaKey],
+                                                                        'year' => $year
+                                                                    ]
+                                                                );
+
+                                                            } elseif ($attendanceExists) {
 
                                                                 $attendanceLink = route(
                                                                     'attendance.list',
@@ -449,10 +473,10 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
 
                                                                 @if ($frequencyValue === true)
-    <span class="flex-shrink-0 text-[#166534]">✓</span>
-@elseif ($frequencyValue === false)
-    <span class="flex-shrink-0 text-[#B91C1C]">✗</span>
-@endif
+                                                                    <span class="flex-shrink-0 text-[#166534]">✓</span>
+                                                                @elseif ($frequencyValue === false)
+                                                                    <span class="flex-shrink-0 text-[#B91C1C]">✗</span>
+                                                                @endif
 
                                                             </div>
 
@@ -561,6 +585,14 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
 <script>
 
+    /*
+     * Perfil do usuário logado e chave do cache da lista de alunos.
+     * O cache é separado por usuário (e tem "versão") para que a lista
+     * montada para um professor nunca apareça para outro no mesmo navegador.
+     */
+    const SIAPAE_IS_PROFESSOR = @json(Auth::user()?->position === 'professor(a)');
+    const SIAPAE_STUDENTS_KEY = 'studentsData_u{{ Auth::id() }}_v2';
+
     document.addEventListener('DOMContentLoaded', function () {
 
         const clearLocalStorageBtn =
@@ -575,7 +607,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                     localStorage.removeItem('faixaSemana');
                     localStorage.removeItem('year');
                     localStorage.removeItem('diasDaSemana');
-                    localStorage.removeItem('studentsData');
+                    localStorage.removeItem(SIAPAE_STUDENTS_KEY);
 
                     location.reload();
 
@@ -588,6 +620,9 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
 
     $(document).ready(function () {
+
+        // Remove o cache antigo (sem usuário), que podia misturar dados entre contas
+        localStorage.removeItem('studentsData');
 
         var faixaSemana =
             localStorage.getItem('faixaSemana')
@@ -909,6 +944,29 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
 
                             if (
+                                attendanceExists === true &&
+                                SIAPAE_IS_PROFESSOR
+                            ) {
+
+                                /*
+                                 * Professor que já atendeu: abre o atendimento
+                                 * dele já preenchido (o show() redireciona
+                                 * para a edição).
+                                 */
+                                ahref =
+                                    '<a href="/attendance/0?student_id=' +
+                                    student.id +
+                                    '&date=' +
+                                    dayDate +
+                                    '&year=' +
+                                    year +
+                                    '" class="hover:underline font-medium">' +
+                                    student.name +
+                                    '</a>';
+
+                            }
+
+                            else if (
                                 attendanceExists === true
                             ) {
 
@@ -1130,7 +1188,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
 
 
             localStorage.setItem(
-                'studentsData',
+                SIAPAE_STUDENTS_KEY,
                 JSON.stringify(studentsData)
             );
 
@@ -1149,7 +1207,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
             const studentsData =
                 JSON.parse(
                     localStorage.getItem(
-                        'studentsData'
+                        SIAPAE_STUDENTS_KEY
                     )
                 );
 

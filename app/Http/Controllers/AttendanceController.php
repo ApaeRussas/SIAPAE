@@ -313,7 +313,7 @@ class AttendanceController extends Controller
         if ($request->student_id && $request->date) {
             $attendanceDate = Carbon::createFromFormat(
                 'd/m/Y',
-                $request->date . '/' . Carbon::now()->format('Y')
+                $request->date . '/' . ($request->year ?? Carbon::now()->format('Y'))
             )->format('Y-m-d');
 
             $attendance = Attendance::where('student_id', $request->student_id)
@@ -355,7 +355,7 @@ class AttendanceController extends Controller
              */
             $student_id = $request->student_id;
 
-            $date = $request->date . '/' . Carbon::now()->format('Y');
+            $date = $request->date . '/' . ($request->year ?? Carbon::now()->format('Y'));
 
             $students = Student::where('state_student', 'alive')
                 ->orderBy('name', 'asc')
