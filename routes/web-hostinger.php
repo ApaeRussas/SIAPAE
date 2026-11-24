@@ -64,8 +64,6 @@ Route::middleware(['auth', RestrictIPMiddleware::class])->group(function () {
     Route::post('/student/restore/{id}', [StudentApiController::class, 'restore'])->name('student.restore');
     Route::post('/studentapi/{id}', [StudentApiController::class, 'archive'])->name('student.archive');
     Route::get('/student/anamnesis/{id}', [StudentController::class, 'showMedhistory'])->name('student.showMedhistory');
-    Route::get('/student/attendance/{id}', [StudentController::class, 'showAttendancesAndFrequency'])->name('student.showAttendancesAndFrequency');
-    Route::get('/student/educational/{id}', [StudentController::class, 'showEducationals'])->name('student.showEducationals');
     
     Route::resource('student', StudentController::class)->except('destroy');
 

@@ -11,14 +11,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use \Carbon\Carbon;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
     /**
-     * O usuário logado é professor(a)?
-     * Só professores ficam restritos aos próprios atendimentos.
-     * Outros perfis (coordenação, admin etc.) continuam vendo tudo.
+     * Verifica se o usuário logado é professor(a).
      */
     private function isProfessor(): bool
     {
@@ -26,7 +24,7 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Bloqueia (403) o acesso de um professor ao atendimento de outro.
+     * Impede que um professor acesse atendimentos de outro professor.
      */
     private function authorizeOwner(Attendance $attendance): void
     {
@@ -36,7 +34,22 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Calendário de atendimentos
+     * Busca os atendimentos de um aluno em uma data.
+     * Professores visualizam somente os próprios registros.
+     * Coordenação e administração visualizam todos.
+     */
+    private function getAttendancesForStudentDate($studentId, $date)
+    {
+        return Attendance::with('student', 'professor')
+            ->where('student_id', $studentId)
+            ->whereDate('date', $date)
+            ->when($this->isProfessor(), fn ($query) => $query->ownedBy(Auth::id()))
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    /**
+     * Calendário de atendimentos.
      */
     public function index()
     {
@@ -90,9 +103,8 @@ class AttendanceController extends Controller
         );
     }
 
-
     /**
-     * Lista de atendimentos
+     * Lista de atendimentos.
      */
     public function attendanceList(Request $request)
     {
@@ -100,7 +112,6 @@ class AttendanceController extends Controller
         session(['previous_url_secondary' => url()->full()]);
 
         $context = 'attendance';
-
         $date_range = $request->input('date_range');
 
         $query = Attendance::query()
@@ -113,15 +124,39 @@ class AttendanceController extends Controller
         if ($date_range) {
             $dates = explode(' à ', $date_range);
 
-            $start_date = Carbon::createFromFormat('d/m/Y', trim($dates[0]))->format('Y-m-d');
-            $end_date = Carbon::createFromFormat('d/m/Y', trim($dates[1]))->format('Y-m-d');
+            if (count($dates) === 2) {
+                $start_date = Carbon::createFromFormat('d/m/Y', trim($dates[0]))->format('Y-m-d');
+                $end_date = Carbon::createFromFormat('d/m/Y', trim($dates[1]))->format('Y-m-d');
 
-            $query->whereDate('date', '>=', $start_date)
-                ->whereDate('date', '<=', $end_date);
+                $query->whereDate('date', '>=', $start_date)
+                    ->whereDate('date', '<=', $end_date);
+            }
+        }
+
+        // Filtro opcional por aluno.
+        if ($request->filled('student_id')) {
+            $query->where('student_id', $request->student_id);
+        }
+
+        // Filtro opcional por data.
+        if ($request->filled('date') && $request->filled('year')) {
+            try {
+                $selectedDate = Carbon::createFromFormat(
+                    'd/m/Y',
+                    $request->date . '/' . $request->year
+                )->format('Y-m-d');
+
+                $query->whereDate('date', $selectedDate);
+            } catch (\Exception $e) {
+                $selectedDate = null;
+            }
+        } else {
+            $selectedDate = null;
         }
 
         $attendances = $query
             ->orderBy('date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->paginate(15)
             ->appends($request->query());
 
@@ -130,14 +165,14 @@ class AttendanceController extends Controller
             compact(
                 'attendances',
                 'date_range',
-                'context'
+                'context',
+                'selectedDate'
             )
         );
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Formulário de criação.
      */
     public function create(Request $request)
     {
@@ -149,28 +184,20 @@ class AttendanceController extends Controller
             $date = '';
         }
 
-        /*
-         * Se este professor já atendeu este aluno nesta data,
-         * abre o formulário de edição (preenchido) em vez de um em branco.
-         */
-        if ($student_id && $date && $this->isProfessor()) {
+        // Carrega os atendimentos já cadastrados para consulta.
+        // Isso NÃO impede a criação de um novo atendimento.
+        $existingAttendances = collect();
+
+        if ($student_id && $date) {
             try {
                 $dateDb = Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+
+                $existingAttendances = $this->getAttendancesForStudentDate(
+                    $student_id,
+                    $dateDb
+                );
             } catch (\Exception $e) {
-                $dateDb = null;
-            }
-
-            if ($dateDb) {
-                $existing = Attendance::ownedBy(Auth::id())
-                    ->where('student_id', $student_id)
-                    ->whereDate('date', $dateDb)
-                    ->first();
-
-                if ($existing) {
-                    return redirect()
-                        ->route('attendance.edit', $existing->id)
-                        ->with('info', 'Confira os dados e atualize se necessário.');
-                }
+                $existingAttendances = collect();
             }
         }
 
@@ -189,57 +216,38 @@ class AttendanceController extends Controller
                 'student_id',
                 'date',
                 'students',
-                'professors'
+                'professors',
+                'existingAttendances'
             )
         );
     }
 
-
     /**
-     * Store a newly created resource in storage.
+     * Salva um novo atendimento.
      */
     public function store(AttendanceRequest $request)
     {
         $data = $request->validated();
 
-        /*
-         * Professor: o atendimento sempre pertence a ele mesmo,
-         * ignorando qualquer valor enviado pelo formulário.
-         */
+        // Professor sempre registra o atendimento em seu próprio nome.
         if ($this->isProfessor()) {
             $data['signature_id'] = Auth::id();
         }
 
-        /*
-         * Se marcou NÃO em avanços,
-         * não salva o texto nem o nível.
-         */
         if ($data['advances_status'] === 'Não') {
             $data['advances'] = '';
             $data['advances_level'] = null;
         }
 
-        /*
-         * Se marcou NÃO em dificuldades,
-         * não salva o texto nem o nível.
-         */
         if ($data['difficulties_status'] === 'Não') {
             $data['difficulties'] = '';
             $data['difficulties_level'] = null;
         }
 
-        /*
-         * Se marcou que não realizou a atividade,
-         * não salva a descrição.
-         */
         if (filter_var($data['activity_not_performed'], FILTER_VALIDATE_BOOLEAN)) {
             $data['activity_description'] = null;
         }
 
-        /*
-         * Os status são usados somente na interface.
-         * Não são colunas da tabela attendances.
-         */
         unset(
             $data['advances_status'],
             $data['difficulties_status']
@@ -247,17 +255,10 @@ class AttendanceController extends Controller
 
         $data['date'] = Carbon::createFromFormat('d/m/Y', $data['date'])->format('Y-m-d');
 
-        $existingAttendance = Attendance::where('student_id', $data['student_id'])
-            ->where('signature_id', $data['signature_id'])
-            ->whereDate('date', $data['date'])
-            ->exists();
-
-        if ($existingAttendance) {
-            throw ValidationException::withMessages([
-                'date' =>
-                    'Já existe um atendimento deste professor para este aluno na data informada.',
-            ]);
-        }
+        /*
+         * Não existe mais bloqueio de atendimento duplicado.
+         * Vários atendimentos para o mesmo aluno na mesma data são permitidos.
+         */
 
         list($year, $month, $day) = explode('-', $data['date']);
 
@@ -266,15 +267,14 @@ class AttendanceController extends Controller
             ->first();
 
         if ($frequency) {
-            $day = ltrim($day, '0');
+            $dayNumber = ltrim($day, '0');
 
-            if ($frequency->{$day} === null) {
-                $frequency->{$day} = true;
+            if ($frequency->{$dayNumber} === null) {
+                $frequency->{$dayNumber} = true;
                 $frequency->save();
-            } elseif ($frequency->{$day} === false) {
+            } elseif ($frequency->{$dayNumber} === false) {
                 throw ValidationException::withMessages([
-                    'date' =>
-                        'Na data informada, a frequência do Aluno consta como se ele tivesse faltado, mude na lista de frequência.',
+                    'date' => 'Na data informada, a frequência do Aluno consta como se ele tivesse faltado, mude na lista de frequência.',
                 ]);
             }
         }
@@ -297,9 +297,8 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.create');
     }
 
-
     /**
-     * Display the specified resource.
+     * Exibe um atendimento individual ou abre o cadastro pelo calendário.
      */
     public function show($id, Request $request)
     {
@@ -308,73 +307,16 @@ class AttendanceController extends Controller
         ]);
 
         /*
-         * Clique no aluno/dia do calendário.
+         * Clique em um aluno e dia no calendário.
+         * Abre o formulário com os registros anteriores visíveis,
+         * sem redirecionar para a edição de um atendimento existente.
          */
         if ($request->student_id && $request->date) {
-            $attendanceDate = Carbon::createFromFormat(
-                'd/m/Y',
-                $request->date . '/' . ($request->year ?? Carbon::now()->format('Y'))
-            )->format('Y-m-d');
-
-            $attendance = Attendance::where('student_id', $request->student_id)
-                ->where('date', $attendanceDate)
-                ->when($this->isProfessor(), fn ($q) => $q->ownedBy(Auth::id()))
-                ->first();
-
-            if ($attendance) {
-                /*
-                 * Professor: abre o formulário de edição já preenchido,
-                 * com o aviso "Atendimento já registrado" e o botão "Atualizar".
-                 */
-                if ($this->isProfessor()) {
-                    return redirect()
-                        ->route('attendance.edit', $attendance->id)
-                        ->with('info', 'Confira os dados e atualize se necessário.');
-                }
-
-                $attendance['date'] = Carbon::createFromFormat(
-                    'Y-m-d',
-                    $attendance['date']
-                )->format('d/m/Y');
-
-                $element = null;
-                $notRegularSidebar = null;
-
-                return view(
-                    'attendance.show',
-                    compact(
-                        'attendance',
-                        'element',
-                        'notRegularSidebar'
-                    )
-                );
-            }
-
-            /*
-             * Sem atendimento (deste professor) neste dia: formulário em branco.
-             */
-            $student_id = $request->student_id;
-
-            $date = $request->date . '/' . ($request->year ?? Carbon::now()->format('Y'));
-
-            $students = Student::where('state_student', 'alive')
-                ->orderBy('name', 'asc')
-                ->get();
-
-            $professors = User::orderBy('name', 'asc')
-                ->where('position', 'professor(a)')
-                ->where('state_user', 'alive')
-                ->get();
-
-            return view(
-                'attendance.create',
-                compact(
-                    'student_id',
-                    'date',
-                    'students',
-                    'professors'
-                )
-            );
+            return redirect()->route('attendance.create', [
+                'student_id' => $request->student_id,
+                'date' => $request->date,
+                'year' => $request->year ?? Carbon::now()->format('Y'),
+            ]);
         }
 
         $attendance = Attendance::findOrFail($id);
@@ -391,7 +333,6 @@ class AttendanceController extends Controller
 
         if ($request->notRegularSidebar) {
             $element = Student::where('id', $attendance->student_id)->first();
-
             $notRegularSidebar = true;
         }
 
@@ -405,9 +346,8 @@ class AttendanceController extends Controller
         );
     }
 
-
     /**
-     * Show the form for editing the specified resource.
+     * Formulário de edição.
      */
     public function edit($id, Request $request)
     {
@@ -437,7 +377,6 @@ class AttendanceController extends Controller
 
         if ($request->notRegularSidebar) {
             $element = Student::where('id', $attendance->student_id)->first();
-
             $notRegularSidebar = true;
         }
 
@@ -453,9 +392,8 @@ class AttendanceController extends Controller
         );
     }
 
-
     /**
-     * Update the specified resource in storage.
+     * Atualiza um atendimento.
      */
     public function update(AttendanceRequest $request, $id)
     {
@@ -465,35 +403,20 @@ class AttendanceController extends Controller
 
         $this->authorizeOwner($attendance);
 
-        /*
-         * Professor: mantém o atendimento como dele.
-         */
         if ($this->isProfessor()) {
             $data['signature_id'] = Auth::id();
         }
 
-        /*
-         * Se marcou NÃO em avanços,
-         * remove o texto e o nível.
-         */
         if ($data['advances_status'] === 'Não') {
             $data['advances'] = '';
             $data['advances_level'] = null;
         }
 
-        /*
-         * Se marcou NÃO em dificuldades,
-         * remove o texto e o nível.
-         */
         if ($data['difficulties_status'] === 'Não') {
             $data['difficulties'] = '';
             $data['difficulties_level'] = null;
         }
 
-        /*
-         * Se marcou que não realizou a atividade,
-         * remove a descrição.
-         */
         if (filter_var($data['activity_not_performed'], FILTER_VALIDATE_BOOLEAN)) {
             $data['activity_description'] = null;
         }
@@ -507,18 +430,10 @@ class AttendanceController extends Controller
 
         $student_id = $attendance->student_id;
 
-        $existingAttendance = Attendance::where('student_id', $data['student_id'])
-            ->where('signature_id', $data['signature_id'])
-            ->whereDate('date', $data['date'])
-            ->where('id', '!=', $id)
-            ->exists();
-
-        if ($existingAttendance) {
-            throw ValidationException::withMessages([
-                'date' =>
-                    'Já existe um atendimento deste professor para este aluno na data informada.',
-            ]);
-        }
+        /*
+         * Não bloqueia a atualização caso já exista outro atendimento
+         * para o mesmo aluno, professor e data.
+         */
 
         $input = $attendance->update($data);
 
@@ -527,28 +442,7 @@ class AttendanceController extends Controller
 
             broadcast(new CrudUpdated('updated', 'attendance'))->toOthers();
 
-            $previousUrl = session('previous_url_secondary');
-
-            if ($previousUrl && str_contains($previousUrl, route('attendance.list'))) {
-                return redirect()->route('attendance.list');
-            }
-
-            if (route('attendance.index') != $previousUrl) {
-                $element = Student::where('id', $student_id)->first();
-
-                $notRegularSidebar = true;
-
-                return redirect()->route(
-                    'student.showAttendancesAndFrequency',
-                    [
-                        'id' => $student_id,
-                        'element' => $element,
-                        'notRegularSidebar' => $notRegularSidebar,
-                    ]
-                );
-            }
-
-            return redirect()->route('attendance.index');
+            return redirect()->route('attendance.list');
         }
 
         session()->flash('error', 'Falha na edição do Atendimento');
@@ -556,9 +450,8 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.edit', $id);
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * Exclui um atendimento.
      */
     public function destroy($id, Request $request)
     {
@@ -567,23 +460,37 @@ class AttendanceController extends Controller
         $this->authorizeOwner($data);
 
         $student_id = $data->student_id;
+        $attendanceDate = $data->date;
 
-        list($year, $month, $day) = explode('-', $data->date);
-
-        $frequency = Frequency::where('student_id', $data->student_id)
-            ->where('month_year', $month . '/' . $year)
-            ->first();
-
-        if ($frequency) {
-            $day = ltrim($day, '0');
-
-            $frequency->{$day} = null;
-            $frequency->save();
-        }
-
+        /*
+         * Exclui somente o atendimento selecionado.
+         */
         $input = Attendance::destroy($id);
 
         if ($input) {
+            /*
+             * Só limpa a frequência se não existir mais nenhum
+             * atendimento para esse aluno nessa data.
+             */
+            $anotherAttendanceExists = Attendance::where('student_id', $student_id)
+                ->whereDate('date', $attendanceDate)
+                ->exists();
+
+            if (!$anotherAttendanceExists) {
+                list($year, $month, $day) = explode('-', $attendanceDate);
+
+                $frequency = Frequency::where('student_id', $student_id)
+                    ->where('month_year', $month . '/' . $year)
+                    ->first();
+
+                if ($frequency) {
+                    $dayNumber = ltrim($day, '0');
+
+                    $frequency->{$dayNumber} = null;
+                    $frequency->save();
+                }
+            }
+
             session()->flash('success', 'Atendimento excluído com sucesso!');
 
             broadcast(new CrudUpdated('deleted', 'attendance'))->toOthers();
@@ -617,9 +524,8 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index');
     }
 
-
     /**
-     * Arquivados
+     * Atendimentos arquivados.
      */
     public function deposit()
     {
@@ -663,16 +569,13 @@ class AttendanceController extends Controller
         );
     }
 
-
     /**
-     * Alterar semana do calendário
+     * Alterar semana do calendário.
      */
     public function mudarSemana(Request $request)
     {
         $faixaSemana = $request->get('faixaSemana');
-
         $direcao = $request->get('direcao', 0);
-
         $ano = $request->get('year');
 
         list($primeiroDia, $ultimoDia) = explode(' - ', $faixaSemana);
@@ -694,7 +597,6 @@ class AttendanceController extends Controller
         $anoAtualizado = $ano;
 
         if ($direcao == -1) {
-
             if (
                 $primeiroDia == '01/01' ||
                 $primeiroDia == '02/01' ||
@@ -705,7 +607,6 @@ class AttendanceController extends Controller
                 $primeiroDia == '07/01'
             ) {
                 $ano = (int) $ano;
-
                 $anoAtualizado = (string) (--$ano);
             }
 
@@ -713,7 +614,6 @@ class AttendanceController extends Controller
             $ultimoDiaSemana->subWeek();
 
         } elseif ($direcao == 1) {
-
             if (
                 $ultimoDia == '31/12' ||
                 $ultimoDia == '30/12' ||
@@ -724,7 +624,6 @@ class AttendanceController extends Controller
                 $ultimoDia == '25/12'
             ) {
                 $ano = (int) $ano;
-
                 $anoAtualizado = (string) (++$ano);
             }
 
@@ -733,11 +632,9 @@ class AttendanceController extends Controller
         }
 
         if ($primeiroDiaSemana->year !== $ultimoDiaSemana->year) {
-
             if ($direcao == -1) {
                 $primeiroDiaSemana->subWeek();
                 $ultimoDiaSemana->subWeek();
-
             } elseif ($direcao == 1) {
                 $primeiroDiaSemana->addWeek();
                 $ultimoDiaSemana->addWeek();
@@ -758,7 +655,6 @@ class AttendanceController extends Controller
         $diasDaSemana['sexta'] = Carbon::parse($primeiroDiaSemana)->addDays(4)->format('d/m');
 
         $frequencies = Frequency::get();
-
         $students = Student::orderBy('name', 'asc')->get();
 
         $this->getDaysUseful($students, $anoAtualizado, $primeiroDiaSemana);
@@ -768,20 +664,14 @@ class AttendanceController extends Controller
         $studentsWithFrequency = [];
 
         foreach ($students as $student) {
-
             $student->frequencyExists = null;
 
             $attendanceExists = [];
-
             $studentFrequencies = [];
 
             foreach ($diasDaSemana as $dayKey => $day) {
-
                 list($day, $month) = explode('/', $day);
 
-                /*
-                 * Professor: o "atendimento existe" considera só os dele.
-                 */
                 $attendance = Attendance::where('student_id', $student->id)
                     ->where('date', $anoAtualizado . '-' . $month . '-' . $day)
                     ->when($isProfessor, fn ($q) => $q->ownedBy(Auth::id()))
@@ -789,14 +679,14 @@ class AttendanceController extends Controller
 
                 $attendanceExists[$dayKey] = $attendance;
 
-                $day = ltrim($day, '0');
+                $dayNumber = ltrim($day, '0');
 
                 $frequency = $frequencies
                     ->where('student_id', $student->id)
                     ->where('month_year', $month . '/' . $anoAtualizado)
                     ->first();
 
-                $studentFrequencies[$dayKey] = $frequency ? $frequency->{$day} : null;
+                $studentFrequencies[$dayKey] = $frequency ? $frequency->{$dayNumber} : null;
 
                 if ($frequency) {
                     $student->frequencyExists = true;
@@ -820,9 +710,8 @@ class AttendanceController extends Controller
         ]);
     }
 
-
     /**
-     * Limpar sessão
+     * Limpar sessão.
      */
     public function clearSession()
     {
@@ -836,14 +725,12 @@ class AttendanceController extends Controller
         ]);
     }
 
-
     /**
      * Identifica os dias em que cada aluno possui atendimento/aula.
      */
     public function getDaysUseful($students, $anoAtualizado, $primeiroDiaSemana)
     {
         foreach ($students as $student) {
-
             $month = Carbon::parse($primeiroDiaSemana)->format('m');
 
             $frequency = Frequency::where('student_id', $student->id)
@@ -863,137 +750,111 @@ class AttendanceController extends Controller
             $student->friday = null;
 
             switch ($classType) {
-
                 case 'Segunda':
                     $student->monday = true;
                     break;
-
                 case 'Terça':
                     $student->tuesday = true;
                     break;
-
                 case 'Quarta':
                     $student->wednesday = true;
                     break;
-
                 case 'Quinta':
                     $student->thursday = true;
                     break;
-
                 case 'Sexta':
                     $student->friday = true;
                     break;
-
                 case 'Segunda e Terça':
                     $student->monday = true;
                     $student->tuesday = true;
                     break;
-
                 case 'Segunda e Quarta':
                     $student->monday = true;
                     $student->wednesday = true;
                     break;
-
                 case 'Segunda e Quinta':
                     $student->monday = true;
                     $student->thursday = true;
                     break;
-
                 case 'Segunda e Sexta':
                     $student->monday = true;
                     $student->friday = true;
                     break;
-
                 case 'Terça e Quarta':
                     $student->tuesday = true;
                     $student->wednesday = true;
                     break;
-
                 case 'Terça e Quinta':
                     $student->tuesday = true;
                     $student->thursday = true;
                     break;
-
                 case 'Terça e Sexta':
                     $student->tuesday = true;
                     $student->friday = true;
                     break;
-
                 case 'Quarta e Quinta':
                     $student->wednesday = true;
                     $student->thursday = true;
                     break;
-
                 case 'Quarta e Sexta':
                     $student->wednesday = true;
                     $student->friday = true;
                     break;
-
                 case 'Quinta e Sexta':
                     $student->thursday = true;
                     $student->friday = true;
                     break;
-
                 case 'Segunda, Terça e Quarta':
                     $student->monday = true;
                     $student->tuesday = true;
                     $student->wednesday = true;
                     break;
-
                 case 'Segunda, Terça e Quinta':
                     $student->monday = true;
                     $student->tuesday = true;
                     $student->thursday = true;
                     break;
-
                 case 'Segunda, Terça e Sexta':
                     $student->monday = true;
                     $student->tuesday = true;
                     $student->friday = true;
                     break;
-
                 case 'Segunda, Quarta e Quinta':
                     $student->monday = true;
                     $student->wednesday = true;
                     $student->thursday = true;
                     break;
-
                 case 'Segunda, Quarta e Sexta':
                     $student->monday = true;
                     $student->wednesday = true;
                     $student->friday = true;
                     break;
-
                 case 'Segunda, Quinta e Sexta':
                     $student->monday = true;
                     $student->thursday = true;
                     $student->friday = true;
                     break;
-
                 case 'Terça, Quarta e Quinta':
                     $student->tuesday = true;
                     $student->wednesday = true;
                     $student->thursday = true;
                     break;
-
                 case 'Terça, Quarta e Sexta':
                     $student->tuesday = true;
                     $student->wednesday = true;
                     $student->friday = true;
                     break;
-
                 case 'Terça, Quinta e Sexta':
                     $student->tuesday = true;
                     $student->thursday = true;
                     $student->friday = true;
                     break;
-
                 case 'Quarta, Quinta e Sexta':
                     $student->wednesday = true;
                     $student->thursday = true;
                     $student->friday = true;
                     break;
-
                 default:
                     break;
             }

@@ -223,6 +223,7 @@ class StudentController extends Controller
 
     public function printReport($id, Request $request)
 {
+
     $student = Student::with('professors')
         ->findOrFail($id);
 

@@ -152,69 +152,54 @@ class EducationalController extends Controller
         }
         return view('educational.edit', compact('pedagogical', 'students', 'professors', 'element', 'notRegularSidebar')); 
     }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(EducationalRequest $request, $id)
-    {
-        $pedagogical = Educational::findOrFail($id);
-        $student_id = $pedagogical->student_id;
+public function update(EducationalRequest $request, $id)
+{
+    $pedagogical = Educational::findOrFail($id);
 
-        $data = $request->validated();
-        // Convert string to data
-        $data['date_pedagogical'] = Carbon::createFromFormat('d/m/Y', $data['date_pedagogical'])->format('Y-m-d');
+    $data = $request->validated();
 
-        $input = $pedagogical->update($data);
-        
-        if ($input) {
-            session()->flash('success', 'Relatório Pedagógico atualizado com sucesso!');
-            broadcast(new CrudUpdated('updated',  'educational'))->toOthers();
-            if(route('educational.index') != session('previous_url_secondary')) {
-                $element = Student::where('id', $student_id)->first();
-                $notRegularSidebar = true;
-                return redirect()->route('student.showEducationals', [
-                    'id' => $student_id,
-                    'element' => $element,
-                    'notRegularSidebar' => $notRegularSidebar,
-                ]);
-            } else {
-                return redirect()->route('educational.index');
-            }
-        } else {
-            session()->flash('error', 'Falha na edição do Relatório Pedagógico');
-            return redirect()->route('educational.edit');
-        }
+    $data['date_pedagogical'] = Carbon::createFromFormat(
+        'd/m/Y',
+        $data['date_pedagogical']
+    )->format('Y-m-d');
+
+    $input = $pedagogical->update($data);
+
+    if ($input) {
+        session()->flash('success', 'Relatório Pedagógico atualizado com sucesso!');
+
+        broadcast(new CrudUpdated('updated', 'educational'))->toOthers();
+
+        return redirect()->route('educational.index');
     }
 
+    session()->flash('error', 'Falha na edição do Relatório Pedagógico');
+
+    return redirect()->route('educational.index');
+}
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id, Request $request)
     {
-        $pedagogical = Educational::where('id', $id)->first();
-
         $input = Educational::destroy($id);
 
         if ($input) {
             session()->flash('success', 'Relatório Pedagógico excluído com sucesso!');
-            broadcast(new CrudUpdated('deleted',  'educational'))->toOthers();
-            if($request->notRegularSidebar) {
-                $element = Student::where('id', $pedagogical->student_id)->first();
-                $notRegularSidebar = true;
-                return redirect()->route('student.showEducationals', [
-                    'id' => $pedagogical->student_id,
-                    'element' => $element,
-                    'notRegularSidebar' => $notRegularSidebar,
-                ]);
-            } else {
-                return redirect()->route('educational.index');
-            }
-        } else {
-            session()->flash('error', 'Erro na exclusão do Relatório Pedagógico');
+
+            broadcast(new CrudUpdated('deleted', 'educational'))->toOthers();
+
             return redirect()->route('educational.index');
         }
+
+        session()->flash('error', 'Erro na exclusão do Relatório Pedagógico');
+
+        return redirect()->route('educational.index');
     }
+
     public function deposit()
     {
         session(['previous_url' => url()->full()]);

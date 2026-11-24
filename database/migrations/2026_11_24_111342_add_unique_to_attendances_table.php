@@ -1,27 +1,18 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        // ATENÇÃO: se já existirem registros duplicados (mesmo aluno + professor + data),
-        // remova-os antes de rodar, senão a migration falha.
-        Schema::table('attendances', function (Blueprint $table) {
-            $table->unique(
-                ['student_id', 'signature_id', 'date'],
-                'attendances_student_professor_date_unique'
-            );
-        });
+        // A regra de unicidade foi cancelada.
+        // Um professor pode cadastrar vários atendimentos
+        // para o mesmo aluno na mesma data.
     }
 
     public function down(): void
     {
-        Schema::table('attendances', function (Blueprint $table) {
-            $table->dropUnique('attendances_student_professor_date_unique');
-        });
+        // Não recriar a regra de unicidade.
     }
 };

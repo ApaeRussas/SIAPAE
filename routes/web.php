@@ -112,12 +112,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student/anamnesis/{id}', [StudentController::class, 'showMedhistory'])
         ->name('student.showMedhistory');
 
-    Route::get('/student/attendance/{id}', [StudentController::class, 'showAttendancesAndFrequency'])
-        ->name('student.showAttendancesAndFrequency');
-
-    Route::get('/student/educational/{id}', [StudentController::class, 'showEducationals'])
-        ->name('student.showEducationals');
-
     Route::get('/student/monthly-record', [MonthlyStudentRecordController::class, 'index'])
         ->name('monthlyStudentRecord.index');
 

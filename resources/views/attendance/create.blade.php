@@ -5,13 +5,56 @@
         onlyHead
         actionRoute="attendance"
     >
-
         <div class="mt-2 mb-4">
             <x-auth-validation-errors :errors="$errors" />
         </div>
 
         <input type="hidden" name="year" id="year">
         <input type="hidden" name="faixaSemana" id="faixaSemana">
+@if(isset($existingAttendances) && $existingAttendances->isNotEmpty())
+    <div class="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4">
+        <h3 class="mb-2 text-lg font-bold text-amber-900">
+            Atendimentos já cadastrados para este aluno nesta data
+        </h3>
+
+        <p class="mb-3 text-sm text-amber-800">
+            Estes registros são apenas informativos. Você pode cadastrar
+            outro atendimento normalmente.
+        </p>
+
+        <div class="space-y-3">
+            @foreach($existingAttendances as $existing)
+                <div class="rounded-md border border-amber-200 bg-white p-3">
+                    <p class="font-semibold text-gray-800">
+                        {{ $existing->student->name ?? 'Aluno não informado' }}
+                    </p>
+
+                    <p class="text-sm text-gray-700">
+                        <strong>Data:</strong>
+                        {{ \Carbon\Carbon::parse($existing->date)->format('d/m/Y') }}
+                    </p>
+
+                    <p class="text-sm text-gray-700">
+                        <strong>Professor(a):</strong>
+                        {{ $existing->professor->name ?? 'Não informado' }}
+                    </p>
+
+                    <p class="text-sm text-gray-700">
+                        <strong>Eixo educacional:</strong>
+                        {{ $existing->educational_axis }}
+                    </p>
+
+                    <a
+                        href="{{ route('attendance.show', $existing->id) }}"
+                        class="mt-2 inline-block text-sm font-semibold text-green-700 underline"
+                    >
+                        Consultar atendimento
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 my-3">
 
