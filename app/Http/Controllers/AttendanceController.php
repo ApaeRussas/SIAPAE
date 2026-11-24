@@ -22,7 +22,7 @@ class AttendanceController extends Controller
      */
     private function isProfessor(): bool
     {
-        return Auth::user()?->position === 'professor(a)';
+        return mb_strtolower(Auth::user()?->position ?? '') === 'professor(a)';
     }
 
     /**

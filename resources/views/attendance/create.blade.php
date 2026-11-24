@@ -84,7 +84,7 @@
             </div>
         </div>
 
-@if (Auth::user()->position === 'professor(a)')
+@if (mb_strtolower(Auth::user()->position ?? '') === 'professor(a)')
         <div class="my-4">
             <label
                 for="signature_id_display"

@@ -115,7 +115,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
                          * Professor(a) só enxerga os próprios atendimentos.
                          * Outros perfis continuam vendo o geral.
                          */
-                        $isProfessor = Auth::user()?->position === 'professor(a)';
+                        $isProfessor = mb_strtolower(Auth::user()?->position ?? '') === 'professor(a)';
 
                         $dias = [
                             'segunda' => [
@@ -590,7 +590,7 @@ $actionRoute: URL/rota utilizada pelos botões e ações.
      * O cache é separado por usuário (e tem "versão") para que a lista
      * montada para um professor nunca apareça para outro no mesmo navegador.
      */
-    const SIAPAE_IS_PROFESSOR = @json(Auth::user()?->position === 'professor(a)');
+    const SIAPAE_IS_PROFESSOR = @json(mb_strtolower(Auth::user()?->position ?? '') === 'professor(a)');
     const SIAPAE_STUDENTS_KEY = 'studentsData_u{{ Auth::id() }}_v2';
 
     document.addEventListener('DOMContentLoaded', function () {

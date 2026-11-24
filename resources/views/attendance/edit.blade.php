@@ -165,7 +165,7 @@
                          PROFESSOR
                          ================================================= --}}
 
-@if (Auth::user()->position === 'professor(a)')
+@if (mb_strtolower(Auth::user()->position ?? '') === 'professor(a)')
                     <div class="mb-5">
 
                         <label
