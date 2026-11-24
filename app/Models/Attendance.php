@@ -46,4 +46,12 @@ class Attendance extends Model
     {
         return $this->belongsTo(User::class, 'signature_id');
     }
+
+    /**
+     * Atendimentos do professor informado (isolamento entre contas).
+     */
+    public function scopeOwnedBy($query, $professorId)
+    {
+        return $query->where('signature_id', $professorId);
+    }
 }

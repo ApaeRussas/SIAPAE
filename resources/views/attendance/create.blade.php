@@ -84,6 +84,40 @@
             </div>
         </div>
 
+@if (Auth::user()->position === 'professor(a)')
+        <div class="my-4">
+            <label
+                for="signature_id_display"
+                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+            >
+                Assinatura do Professor Responsável:
+            </label>
+
+            {{-- Professor: o atendimento sempre pertence a ele mesmo --}}
+            <select
+                id="signature_id_display"
+                disabled
+                class="w-full rounded-lg border border-[#D7DEE5] bg-gray-100 px-3 py-2.5 text-[#243B53]"
+            >
+                @foreach ($professors as $professor)
+                    <option
+                        value="{{ $professor->id }}"
+                        {{ Auth::id() == $professor->id ? 'selected' : '' }}
+                    >
+                        {{ $professor->name }}
+                    </option>
+                @endforeach
+            </select>
+
+            <input type="hidden" name="signature_id" value="{{ Auth::id() }}">
+
+            @error('signature_id')
+                <span class="text-sm text-red-600 dark:text-red-400">
+                    {{ $message }}
+                </span>
+            @enderror
+        </div>
+@else
         <div class="my-4">
             <label
                 for="signature_id"
@@ -119,6 +153,7 @@
                 </span>
             @enderror
         </div>
+@endif
 
         <div class="my-4">
             <label
@@ -502,6 +537,7 @@
 <style>
     #student_id,
     #signature_id,
+    #signature_id_display,
     #date,
     #educational_axis,
     #skills,
@@ -516,6 +552,7 @@
 
     #student_id:focus,
     #signature_id:focus,
+    #signature_id_display:focus,
     #date:focus,
     #educational_axis:focus,
     #skills:focus,
