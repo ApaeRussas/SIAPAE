@@ -1,18 +1,14 @@
 <x-app-layout :notRegularSidebar="$notRegularSidebar" :element="$element">
- 
+
     @php
         $parameter = isset($notRegularSidebar) ? '?notRegularSidebar=1' : null;
- 
+
         $activityNotPerformed = (bool) $attendance->activity_not_performed;
- 
-        $hasAdvances =
-            !empty($attendance->advances) ||
-            !is_null($attendance->advances_level);
- 
-        $hasDifficulties =
-            !empty($attendance->difficulties) ||
-            !is_null($attendance->difficulties_level);
- 
+
+        $hasAdvances = !empty($attendance->advances) || !is_null($attendance->advances_level);
+
+        $hasDifficulties = !empty($attendance->difficulties) || !is_null($attendance->difficulties_level);
+
         $advancesLevels = [
             1 => 'Quase nada',
             2 => 'Muito pouco',
@@ -20,7 +16,7 @@
             4 => 'Bom',
             5 => 'Excelente',
         ];
- 
+
         $difficultiesLevels = [
             1 => 'Quase nada',
             2 => 'Muito pouco',
@@ -29,9 +25,9 @@
             5 => 'Ainda com dificuldade',
         ];
     @endphp
- 
+
     <div class="attendance-page">
- 
+
         <x-table-show
             :title="'Atendimento de data ' . ' - ' . $attendance->date"
             :elementShow="$attendance"
@@ -48,35 +44,32 @@
             notRegularSidebar
             notEditDelete
         >
- 
+
             <div class="mt-5 space-y-5">
- 
-                {{-- SITUAÇÃO DA ATIVIDADE --}}
+
                 <div class="attendance-card">
                     <p class="attendance-card-title">Atividade realizada</p>
- 
+
                     @if ($activityNotPerformed)
-                        <span class="attendance-badge attendance-badge-danger">Não realizou a atividade</span>
+                        <span class="attendance-badge attendance-badge-warning">Não realizou a atividade</span>
                     @else
                         <span class="attendance-badge attendance-badge-success">Sim</span>
                     @endif
                 </div>
- 
- 
-                {{-- AVANÇOS --}}
+
                 <div class="attendance-card">
                     <p class="attendance-card-title">Houve avanços?</p>
- 
+
                     @if ($hasAdvances)
                         <span class="attendance-badge attendance-badge-success mb-4">Sim</span>
- 
+
                         @if (!empty($attendance->advances))
                             <div class="mb-4">
                                 <p class="attendance-card-label">Descrição dos avanços</p>
                                 <div class="attendance-card-text">{{ $attendance->advances }}</div>
                             </div>
                         @endif
- 
+
                         @if (!is_null($attendance->advances_level))
                             <div>
                                 <p class="attendance-card-label mb-2">Nível do avanço</p>
@@ -94,22 +87,20 @@
                         <span class="attendance-badge attendance-badge-neutral">Não</span>
                     @endif
                 </div>
- 
- 
-                {{-- DIFICULDADES --}}
+
                 <div class="attendance-card">
                     <p class="attendance-card-title">Houve dificuldades?</p>
- 
+
                     @if ($hasDifficulties)
-                        <span class="attendance-badge attendance-badge-warning mb-4">Sim</span>
- 
+                        <span class="attendance-badge attendance-badge-success mb-4">Sim</span>
+
                         @if (!empty($attendance->difficulties))
                             <div class="mb-4">
                                 <p class="attendance-card-label">Descrição das dificuldades</p>
                                 <div class="attendance-card-text">{{ $attendance->difficulties }}</div>
                             </div>
                         @endif
- 
+
                         @if (!is_null($attendance->difficulties_level))
                             <div>
                                 <p class="attendance-card-label mb-2">Nível das dificuldades</p>
@@ -127,15 +118,13 @@
                         <span class="attendance-badge attendance-badge-neutral">Não</span>
                     @endif
                 </div>
- 
- 
-                {{-- BOTÕES --}}
+
                 <div class="flex gap-2 items-center justify-between pt-2">
- 
+
                     <div>
                         <x-button
                             href="{{ route('student.show', $attendance->student->id) }}"
-                            variant="blue"
+                            variant="success"
                         >
                             <p class="flex px-2">
                                 Ir para Aluno
@@ -145,10 +134,9 @@
                             </p>
                         </x-button>
                     </div>
- 
+
                     <div class="flex gap-2">
- 
-                        {{-- EDITAR - MOBILE --}}
+
                         <x-button
                             href="{{ route('attendance.edit', $attendance->id) . $parameter }}"
                             class="flex sm:hidden"
@@ -158,8 +146,7 @@
                         >
                             <x-icons.edit />
                         </x-button>
- 
-                        {{-- EDITAR - DESKTOP --}}
+
                         <x-button
                             href="{{ route('attendance.edit', $attendance->id) . $parameter }}"
                             class="hidden sm:flex"
@@ -168,8 +155,7 @@
                         >
                             <p class="text-gray-900 px-2">{{ __('Editar') }}</p>
                         </x-button>
- 
-                        {{-- DELETAR --}}
+
                         @if ($attendance->student->state_student === 'alive')
                             <form
                                 method="POST"
@@ -179,8 +165,7 @@
                             >
                                 {{ method_field('DELETE') }}
                                 {{ csrf_field() }}
- 
-                                {{-- MOBILE --}}
+
                                 <x-button
                                     variant="pdf-trash"
                                     title="Deletar Atendimento"
@@ -190,8 +175,7 @@
                                 >
                                     <x-icons.trash />
                                 </x-button>
- 
-                                {{-- DESKTOP --}}
+
                                 <x-button
                                     type="submit"
                                     variant="danger"
@@ -203,140 +187,161 @@
                                 </x-button>
                             </form>
                         @endif
- 
+
                     </div>
- 
                 </div>
- 
+
             </div>
- 
+
         </x-table-show>
- 
+
     </div>
- 
+
 </x-app-layout>
- 
- 
+
 <style>
     .attendance-page {
-        --bg: transparent;
-        --surface: #F7F5EF;
-        --surface-soft: #E3EFE7;
-        --surface-hover: #F0EEE6;
-        --input-bg: #FFFFFF;
-        --title: #183C2C;
+        --surface: #FFFFFF;
+        --surface-soft: #F1F4EF;
+        --surface-hover: #F7F7F7;
+        --title: #243129;
         --text: #42564A;
         --muted: #78857D;
         --border: #E2E8E2;
         --green: #2F6B4F;
         --green-dark: #1F513A;
         --green-light: #E3EFE7;
-        --gold: #C99B4A;
-        --gold-light: #F7EFDD;
-        --danger: #C98B45;
-        --danger-dark: #A96F31;
-        --neutral: #B8C7BE;
+        --field: #FFFFFF;
+        --ring: rgba(47, 107, 79, 0.18);
+        --neutral: #A5B0A8;
         --shadow: 0 10px 30px rgba(31, 81, 58, 0.06);
+
         display: block;
         min-height: calc(100vh - 64px);
-        background-color: var(--bg);
-        color: var(--text);
         padding-bottom: 2rem;
-        transition: background-color 250ms ease, color 250ms ease;
+        color: var(--text);
+        background: transparent;
+        transition: color 200ms ease;
     }
- 
+
     .dark .attendance-page {
-        --bg: #0D1B15;
         --surface: #14271E;
         --surface-soft: #1A3025;
         --surface-hover: #20392C;
-        --input-bg: #FFFFFF;
         --title: #F5F1E8;
         --text: #D1DBD3;
         --muted: #91A197;
         --border: #294236;
         --green: #76B58F;
-        --green-dark: #5D9D78;
+        --green-dark: #8CC9A3;
         --green-light: rgba(118, 181, 143, 0.14);
-        --gold: #D8B56A;
-        --gold-light: rgba(216, 181, 106, 0.13);
-        --danger: #D8935B;
-        --danger-dark: #C77A3E;
+        --field: #0F2018;
+        --ring: rgba(118, 181, 143, 0.25);
         --neutral: #40584B;
         --shadow: 0 14px 35px rgba(0, 0, 0, 0.20);
     }
- 
-    /* Fundos: tudo que era branco/cinza vira off-white (igual à frequência) */
+
+    .attendance-page,
+    .attendance-page * {
+        box-sizing: border-box;
+    }
+
     .attendance-page .bg-white,
     .attendance-page .dark\:bg-gray-800,
     .attendance-page .dark\:bg-gray-900,
     .attendance-page .dark\:bg-gray-700 {
         background-color: var(--surface) !important;
     }
+
     .attendance-page .bg-gray-50,
     .attendance-page .bg-gray-100,
     .attendance-page .dark\:bg-gray-600 {
         background-color: var(--surface-soft) !important;
     }
+
     .attendance-page .shadow,
     .attendance-page .shadow-sm,
     .attendance-page .shadow-md,
-    .attendance-page .shadow-lg { box-shadow: none !important; }
+    .attendance-page .shadow-lg {
+        box-shadow: none !important;
+    }
+
     .attendance-page .border-gray-100,
     .attendance-page .border-gray-200,
     .attendance-page .border-gray-300,
     .attendance-page .dark\:border-gray-700,
-    .attendance-page .dark\:border-gray-600 { border-color: var(--border) !important; }
- 
-    /* Tabelas */
-    .attendance-page table { background-color: var(--surface) !important; }
+    .attendance-page .dark\:border-gray-600 {
+        border-color: var(--border) !important;
+    }
+
+    .attendance-page table {
+        background: var(--surface) !important;
+        border-color: var(--border) !important;
+    }
+
     .attendance-page table thead,
     .attendance-page table thead th {
-        background-color: var(--surface-soft) !important;
+        background: var(--surface-soft) !important;
         color: var(--muted) !important;
         border-color: var(--border) !important;
         font-weight: 600;
     }
-    .attendance-page table td { color: var(--text) !important; border-color: var(--border) !important; }
-    .attendance-page table tbody tr { background-color: var(--surface) !important; transition: background-color 0.18s ease; }
-    .attendance-page table tbody tr:hover { background-color: var(--surface-hover) !important; }
- 
-    /* Campos */
+
+    .attendance-page table td {
+        color: var(--text) !important;
+        border-color: var(--border) !important;
+    }
+
+    .attendance-page table tbody tr {
+        background: var(--surface) !important;
+        transition: background-color 160ms ease;
+    }
+
+    .attendance-page table tbody tr:hover {
+        background: var(--surface-hover) !important;
+    }
+
     .attendance-page input,
     .attendance-page select,
     .attendance-page textarea {
         color: var(--title) !important;
-        background-color: var(--input-bg) !important;
+        background: var(--field) !important;
         border: 1px solid var(--border) !important;
         border-radius: 9px !important;
         box-shadow: none !important;
-        transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
+
     .attendance-page input::placeholder,
-    .attendance-page textarea::placeholder { color: var(--muted) !important; opacity: 1; }
+    .attendance-page textarea::placeholder {
+        color: var(--muted) !important;
+        opacity: 1;
+    }
+
     .attendance-page input:focus,
     .attendance-page select:focus,
     .attendance-page textarea:focus {
         border-color: var(--green) !important;
-        box-shadow: 0 0 0 3px var(--green-light) !important;
+        box-shadow: 0 0 0 3px var(--ring) !important;
         outline: none !important;
     }
+
     .attendance-page #search-container {
-        background-color: var(--input-bg) !important;
+        background: var(--field) !important;
         border: 1px solid var(--border) !important;
         border-radius: 10px !important;
         box-shadow: none !important;
     }
+
     .attendance-page #search-container input,
     .attendance-page #search-container select {
         border-color: transparent !important;
     }
+
     .attendance-page #search-container:focus-within {
         border-color: var(--green) !important;
-        box-shadow: 0 0 0 3px var(--green-light) !important;
+        box-shadow: 0 0 0 3px var(--ring) !important;
     }
- 
-    /* Azul -> verde */
+
     .attendance-page .bg-blue-500,
     .attendance-page .bg-blue-600,
     .attendance-page .bg-blue-700 {
@@ -344,6 +349,7 @@
         border-color: var(--green) !important;
         color: #FFFFFF !important;
     }
+
     .attendance-page .bg-blue-500:hover,
     .attendance-page .bg-blue-600:hover,
     .attendance-page .bg-blue-700:hover,
@@ -352,65 +358,87 @@
         background-color: var(--green-dark) !important;
         border-color: var(--green-dark) !important;
     }
+
     .attendance-page .text-blue-500,
     .attendance-page .text-blue-600,
-    .attendance-page .text-blue-700 { color: var(--green) !important; }
- 
-    /* Paginação */
-    .attendance-page nav { color: var(--muted) !important; }
+    .attendance-page .text-blue-700 {
+        color: var(--green) !important;
+    }
+
+    .attendance-page nav {
+        color: var(--muted) !important;
+    }
+
     .attendance-page nav a,
-    .attendance-page nav span { color: var(--text) !important; }
- 
+    .attendance-page nav span {
+        color: var(--text) !important;
+    }
+
     .attendance-page button,
     .attendance-page a {
-        transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+        transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
     }
- 
-    /* Cards da tela de visualização */
+
     .attendance-page .attendance-card {
-        background-color: var(--surface) !important;
+        padding: 20px 24px;
         border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 1.1rem 1.25rem;
+        border-radius: 18px;
+        background: var(--surface) !important;
         box-shadow: var(--shadow);
     }
+
     .attendance-page .attendance-card-title {
+        margin-bottom: 10px;
         color: var(--title);
-        font-size: 0.92rem;
-        font-weight: 600;
-        margin-bottom: 0.6rem;
+        font-size: 0.9375rem;
+        font-weight: 700;
     }
+
     .attendance-page .attendance-card-label {
+        margin-bottom: 5px;
         color: var(--muted);
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         font-weight: 600;
-        text-transform: uppercase;
         letter-spacing: 0.04em;
-        margin-bottom: 0.25rem;
+        text-transform: uppercase;
     }
+
     .attendance-page .attendance-card-text {
         color: var(--text);
+        font-size: 0.875rem;
+        line-height: 1.65;
+        overflow-wrap: anywhere;
         white-space: pre-line;
     }
- 
-    /* Selos */
+
     .attendance-page .attendance-badge {
         display: inline-flex;
         align-items: center;
-        padding: 0.25rem 0.8rem;
-        border-radius: 999px;
-        font-size: 0.85rem;
+        padding: 5px 12px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 0.8125rem;
         font-weight: 600;
     }
-    .attendance-page .attendance-badge-success { background: var(--green-light); color: var(--green-dark); }
-    .attendance-page .attendance-badge-warning { background: var(--gold-light); color: var(--danger-dark); }
-    .attendance-page .attendance-badge-danger  { background: var(--gold-light); color: var(--danger-dark); }
-    .attendance-page .attendance-badge-neutral { background: var(--surface-soft); color: var(--muted); }
-    .dark .attendance-page .attendance-badge-success { color: var(--green); }
-    .dark .attendance-page .attendance-badge-warning,
-    .dark .attendance-page .attendance-badge-danger  { color: var(--gold); }
- 
-    /* Nível */
+
+    .attendance-page .attendance-badge-success {
+        background: var(--green-light);
+        color: var(--green);
+        border-color: transparent;
+    }
+
+    .attendance-page .attendance-badge-warning {
+        background: var(--surface-soft);
+        color: var(--text);
+        border-color: var(--border);
+    }
+
+    .attendance-page .attendance-badge-neutral {
+        background: var(--surface-soft);
+        color: var(--muted);
+        border-color: var(--border);
+    }
+
     .attendance-page .attendance-level {
         display: inline-flex;
         align-items: center;
@@ -418,14 +446,35 @@
         min-width: 38px;
         height: 38px;
         border-radius: 10px;
-        font-weight: 700;
         color: #FFFFFF;
+        font-weight: 700;
     }
-    .attendance-page .attendance-level-success { background: var(--green); }
-    .attendance-page .attendance-level-warning { background: var(--danger); }
+
+    .attendance-page .attendance-level-success {
+        background: var(--green);
+    }
+
+    .attendance-page .attendance-level-warning {
+        background: #718078;
+    }
+
     .attendance-page .attendance-level-name {
         color: var(--text);
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+        .attendance-page .attendance-card {
+            padding: 16px;
+            border-radius: 14px;
+        }
+    }
+
+    @media print {
+        .attendance-page .attendance-card {
+            box-shadow: none !important;
+            break-inside: avoid;
+        }
     }
 </style>
