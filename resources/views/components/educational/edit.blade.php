@@ -17,7 +17,7 @@
                 <div class="col-span-1 sm:col-span-2">
                     <x-form.label for="student_id">
                         Nome do Estudante para o Relatório
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.select
@@ -48,13 +48,13 @@
                 <div class="col-span-1">
                     <x-form.label for="date_pedagogical">
                         Data do Relatório
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
                         id="date_pedagogical"
                         name="date_pedagogical"
-                        class="date dateInput dark:text-gray-400 w-full educational-field"
+                        class="date dateInput  w-full educational-field"
                         required
                         x-init="initFlatpickr"
                         autocomplete="off"
@@ -76,7 +76,7 @@
                 <div class="col-span-1">
                     <x-form.label for="period">
                         Semestre do Aluno
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.select
@@ -124,14 +124,14 @@
                 <div class="col-span-1 sm:col-span-2">
                     <x-form.label for="school">
                         Escola que estuda
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
                         id="school"
                         name="school"
                         value="{{ old('school', $pedagogical->school) }}"
-                        class="w-full dark:text-gray-400 educational-field"
+                        class="w-full  educational-field"
                         placeholder="Ex: E.M Tia Benilce"
                         required />
 
@@ -146,14 +146,14 @@
                 <div class="col-span-1">
                     <x-form.label for="date_of_birth">
                         Data de Nascimento
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
                         id="date_of_birth"
                         name="date_of_birth"
                         value="{{ old('date_of_birth', \Carbon\Carbon::createFromFormat('Y-m-d', $pedagogical->student->date_of_birth)->format('d/m/Y')) }}"
-                        class="w-full sm:w-auto dark:text-gray-400 educational-field"
+                        class="w-full sm:w-auto  educational-field"
                         readonly
                         placeholder="Data fixa" />
 
@@ -168,7 +168,7 @@
                 <div class="col-span-1">
                     <x-form.label for="age">
                         Idade
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
@@ -177,7 +177,7 @@
                         value="{{ old('age', $pedagogical->age) }}"
                         required
                         placeholder="Ex: 15 anos"
-                        class="w-full sm:w-48 dark:text-gray-400 educational-field" />
+                        class="w-full sm:w-48  educational-field" />
 
                     @error('age')
                         <span class="educational-validation-error">
@@ -194,7 +194,7 @@
                 <div class="col-span-1">
                     <x-form.label for="turn_school">
                         Turno
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
@@ -203,7 +203,7 @@
                         value="{{ old('turn_school', $pedagogical->turn_school) }}"
                         required
                         placeholder="Ex: Manhã"
-                        class="w-full dark:text-gray-400 educational-field" />
+                        class="w-full  educational-field" />
 
                     @error('turn_school')
                         <span class="educational-validation-error">
@@ -216,7 +216,7 @@
                 <div class="col-span-1">
                     <x-form.label for="grade_school">
                         Série/Ano
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
@@ -225,7 +225,7 @@
                         value="{{ old('grade_school', $pedagogical->grade_school) }}"
                         required
                         placeholder="Ex: 1°"
-                        class="w-full dark:text-gray-400 educational-field" />
+                        class="w-full  educational-field" />
 
                     @error('grade_school')
                         <span class="educational-validation-error">
@@ -238,7 +238,7 @@
                 <div class="col-span-1">
                     <x-form.label for="school_year">
                         Ano Letivo
-                        <span class="text-red-700 dark:text-red-500">*</span>
+                        <span class="text-red-700 ">*</span>
                     </x-form.label>
 
                     <x-form.input
@@ -247,7 +247,7 @@
                         value="{{ old('school_year', $pedagogical->school_year) }}"
                         required
                         placeholder="Ex: 2024"
-                        class="w-full dark:text-gray-400 educational-field" />
+                        class="w-full  educational-field" />
 
                     @error('school_year')
                         <span class="educational-validation-error">
@@ -272,7 +272,7 @@
 
                 <x-form.label for="professor_signature">
                     Professor do CAEE
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </x-form.label>
 
                 <x-form.select
@@ -309,7 +309,7 @@
 
                 <x-form.label for="text">
                     Texto Principal do Relatório
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </x-form.label>
 
                 <x-form.textarea
@@ -340,7 +340,7 @@
 
                 <x-form.label for="signature_id">
                     Assinatura do Professor Responsável
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </x-form.label>
 
                 <x-form.select

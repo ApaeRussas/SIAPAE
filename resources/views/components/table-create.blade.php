@@ -15,7 +15,7 @@ route('dashboard')
 
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden rounded-lg shadow-md dark:bg-dark-eval-1">
+        <div class="bg-white overflow-hidden rounded-lg shadow-md ">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h1 class="text-xl sm:text-2xl font-bold leading-tight pt-2">Adicionar novo(a) {{ $title }}</h1>
@@ -33,10 +33,10 @@ route('dashboard')
                         </p>
                     </x-button>
                 </div>
-                <hr class="border-gray-300 dark:border-gray-500" />
+                <hr class="border-gray-300 " />
 
                 @if (session()->has('error'))
-                    <div class="text-red-600 dark:text-red-400">
+                    <div class="text-red-600 ">
                         {{session('error')}}
                     </div>
                 @endif
@@ -57,20 +57,20 @@ route('dashboard')
                         @foreach ($labelsVariablesTypes as $itens)
                             <div class="mb-3">
                                 <label for="{{ $itens[1] }}"
-                                    class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                                    {{ $itens[0] }}: <span class="text-red-700 dark:text-red-500">*</span>
+                                    class="block text-gray-700  font-normal mt-3 mb-2">
+                                    {{ $itens[0] }}: <span class="text-red-700 ">*</span>
                                 </label>
 
                                 @if($itens[2] == "text")
 
                                     <x-form.input id="{{ $itens[1] }}" type="text" name="{{ $itens[1] }}"
-                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-full dark:text-gray-400"
+                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-full "
                                         placeholder="{{ isset($itens[3]) ? $itens[3] : $itens[0] }}" required />
 
                                 @elseif($itens[2] == "date")
 
                                     <x-form.input id="{{ $itens[1] }}" type="text" name="{{ $itens[1] }}"
-                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-full dark:text-gray-400 date dateInput" autocomplete="off"
+                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-full  date dateInput" autocomplete="off"
                                         x-init="initFlatpickr" placeholder="{{ isset($itens[3]) ? $itens[3] : $itens[0] }}" required />
 
                                     <span id="errorMessage" style="color: red; display: none;">Data inválida. Insira uma data entre 1960 e 2200.</span>
@@ -78,7 +78,7 @@ route('dashboard')
                                 @elseif($itens[2] == "textarea")
 
                                     <x-form.textarea id="{{ $itens[1] }}" name="{{ $itens[1] }}"
-                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-full dark:text-gray-400" sizeFont="base"
+                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-full " sizeFont="base"
                                         placeholder="{{ isset($itens[3]) ? $itens[3] : $itens[0] }}" required height="{{$itens[1]}}">
                                         {{old($itens[1])}}
                                     </x-form.textarea>
@@ -113,21 +113,21 @@ route('dashboard')
                                         <input id="file-upload" type="file" name="{{ $itens[1] }}" value="{{ old($itens[1]) }}"
                                             class="hidden" onchange="updateImageLabel(event)">
 
-                                        <p id="label-image" class="ml-2 text-gray-700 dark:text-gray-500">
+                                        <p id="label-image" class="ml-2 text-gray-700 ">
                                             Nenhuma {{$itens[1] == "image" ? 'Imagem' : $title}} Selecionada {{$itens[1] == "image" ? '(*opcional)' : ''}}
                                         </p>
                                     </div>
                                 
                                 @elseif($itens[2] == "number")
                                     <x-form.input id="{{ $itens[1] }}" type="number" name="{{ $itens[1] }}" min="1"
-                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-64 dark:text-gray-400"
+                                        value="{{ old($itens[1], (isset($itens[4]) ? $itens[4] : '')) }}" class="w-64 "
                                         placeholder="{{ isset($itens[3]) ? $itens[3] : $itens[0] }}" required />
                                 @else
                                     <p>O campo escolhido não existe no componente</p>
                                 @endif
 
                                 @error($itens[1])
-                                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                                    <span class="text-red-600 ">{{$message}}</span>
                                 @enderror
                             </div>
                         @endforeach

@@ -23,7 +23,7 @@
                 <x-form.textarea
                     id="theme"
                     name="theme"
-                    class="w-full dark:text-gray-400 scfv-field"
+                    class="w-full  scfv-field"
                     sizeFont="base"
                     placeholder="Dê um enter (quebra de linha) após cada frase
 Ex: 1- Confraternização Natalina ...
@@ -55,7 +55,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="1Q_objective"
                         name="1Q_objective"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Fortalecer vínculos ...."
                         required
@@ -77,7 +77,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="1Q_activity"
                         name="1Q_activity"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Festa Natalina..."
                         required
@@ -103,7 +103,7 @@ Ex: 1- Confraternização Natalina ...
                 <x-form.textarea
                     id="1Q_description"
                     name="1Q_description"
-                    class="w-full dark:text-gray-400 scfv-field"
+                    class="w-full  scfv-field"
                     sizeFont="base"
                     placeholder="Ex: O momento foi realizado com ..."
                     required
@@ -129,7 +129,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="1Q_resource"
                         name="1Q_resource"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Declarações Natalinas ...."
                         required
@@ -151,7 +151,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="1Q_partner"
                         name="1Q_partner"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Disk Pão, Glaucia ..."
                         required
@@ -181,7 +181,7 @@ Ex: 1- Confraternização Natalina ...
                         type="text"
                         name="1Q_place"
                         value="{{ old('1Q_place', data_get($scfv, '1Q_place')) }}"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         placeholder="Ex: Sede da Apae Russas"
                         required />
 
@@ -202,7 +202,7 @@ Ex: 1- Confraternização Natalina ...
                         name="1Q_date"
                         autocomplete="off"
                         value="{{ old('1Q_date', data_get($scfv, '1Q_date')) }}"
-                        class="w-full dark:text-gray-400 scfv-field date dateInput"
+                        class="w-full  scfv-field date dateInput"
                         x-init="initFlatpickr"
                         placeholder="Ex: 01/11/2001"
                         required />
@@ -231,7 +231,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="2Q_objective"
                         name="2Q_objective"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Fortalecer vínculos ...."
                         required
@@ -253,7 +253,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="2Q_activity"
                         name="2Q_activity"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Festa Natalina..."
                         required
@@ -279,7 +279,7 @@ Ex: 1- Confraternização Natalina ...
                 <x-form.textarea
                     id="2Q_description"
                     name="2Q_description"
-                    class="w-full dark:text-gray-400 scfv-field"
+                    class="w-full  scfv-field"
                     sizeFont="base"
                     placeholder="Ex: O momento foi realizado com ..."
                     required
@@ -305,7 +305,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="2Q_resource"
                         name="2Q_resource"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Declarações Natalinas ...."
                         required
@@ -327,7 +327,7 @@ Ex: 1- Confraternização Natalina ...
                     <x-form.textarea
                         id="2Q_partner"
                         name="2Q_partner"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         sizeFont="base"
                         placeholder="Ex: Disk Pão, Glaucia ..."
                         required
@@ -357,7 +357,7 @@ Ex: 1- Confraternização Natalina ...
                         type="text"
                         name="2Q_place"
                         value="{{ old('2Q_place', data_get($scfv, '2Q_place')) }}"
-                        class="w-full dark:text-gray-400 scfv-field"
+                        class="w-full  scfv-field"
                         placeholder="Ex: Sede da Apae Russas"
                         required />
 
@@ -378,7 +378,7 @@ Ex: 1- Confraternização Natalina ...
                         name="2Q_date"
                         autocomplete="off"
                         value="{{ old('2Q_date', data_get($scfv, '2Q_date')) }}"
-                        class="w-full dark:text-gray-400 scfv-field date dateInput"
+                        class="w-full  scfv-field date dateInput"
                         x-init="initFlatpickr"
                         placeholder="Ex: 01/11/2001"
                         required />
@@ -403,7 +403,7 @@ Ex: 1- Confraternização Natalina ...
                 <x-form.textarea
                     id="students_frequency"
                     name="students_frequency"
-                    class="w-full dark:text-gray-400 scfv-field"
+                    class="w-full  scfv-field"
                     sizeFont="base"
                     placeholder="Dê enter para cada estudante novo
 Ex: João Henrique...
@@ -464,7 +464,7 @@ Pedro Fernandes ..."
                         name="date_scfv"
                         autocomplete="off"
                         value="{{ old('date_scfv', \Carbon\Carbon::now()->format('d/m/Y')) }}"
-                        class="w-full dark:text-gray-400 scfv-field date dateInput"
+                        class="w-full  scfv-field date dateInput"
                         x-init="initFlatpickr"
                         placeholder="Ex: 01/11/2001"
                         required />

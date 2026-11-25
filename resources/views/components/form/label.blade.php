@@ -4,7 +4,7 @@
 ])
 
 @php
-    $baseClasses = 'block font-medium text-gray-700 dark:text-gray-300 mb-1';
+    $baseClasses = 'block font-medium text-gray-700  mb-1';
 
     switch ($sizeClass) {
         case 'sm':

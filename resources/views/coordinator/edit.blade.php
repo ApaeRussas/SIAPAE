@@ -17,7 +17,7 @@
                             <x-heroicon-o-user aria-hidden="true" class="w-5 h-5" />
                         </x-slot>
 
-                        <x-form.input withicon id="name" class="block w-full text-gray-800 dark:text-gray-300"
+                        <x-form.input withicon id="name" class="block w-full text-gray-800 "
                             type="text" name="name" value="{{old('name', $user->name)}}" required autofocus
                             placeholder="{{ __('Name') }}" />
                     </x-form.input-with-icon-wrapper>
@@ -32,7 +32,7 @@
                             <x-heroicon-o-mail aria-hidden="true" class="w-5 h-5" />
                         </x-slot>
 
-                        <x-form.input withicon id="email" class="block w-full text-gray-800 dark:text-gray-300"
+                        <x-form.input withicon id="email" class="block w-full text-gray-800 "
                             type="email" name="email" value="{{old('email', $user->email)}}" required placeholder="{{ __('Email') }}" />
                     </x-form.input-with-icon-wrapper>
                 </div>
@@ -46,7 +46,7 @@
                             <x-heroicon-o-lock-closed aria-hidden="true" class="w-5 h-5" />
                         </x-slot>
 
-                        <x-form.input withicon id="password" class="block w-full text-gray-800 dark:text-gray-300"
+                        <x-form.input withicon id="password" class="block w-full text-gray-800 "
                             type="password" name="password" required autocomplete="new-password"
                             placeholder="{{ __('A Senha não pode ser Adquirida') }}" value="{{old('password')}}"/>
                         <i class="icon fas fa-eye -mt-3" onclick="togglePassword()" style="cursor: pointer;"></i>
@@ -74,7 +74,7 @@
                 <div class="flex justify-between">
                     <div></div>
 
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-sm text-gray-600 ">
                         <a href="{{ route('coordinator.index') }}" class="text-blue-500 hover:underline">
                             {{ __('Back') }}
                         </a>

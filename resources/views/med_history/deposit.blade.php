@@ -2,13 +2,13 @@
 
     <x-slot name="header">
         <div class="flex items-center justify-between md:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-4">
-            <h2 class="text-xl sm:text-2xl font-bold leading-tight pt-2 text-[#102A43] dark:text-[#F1F5F0]">
+            <h2 class="text-xl sm:text-2xl font-bold leading-tight pt-2 text-[#102A43] ">
                 {{ __('Lista das Anamneses Arquivadas') }}
             </h2>
 
             <x-button
                 href="{{ route('anamnesis.index') }}"
-                class="justify-center gap-2 h-10 !bg-[#EDF5F0] !text-[#2F684A] !border !border-[#CFE0D6] hover:!bg-[#DCEDE3] hover:!text-[#245E43] dark:!bg-[#1A3025] dark:!text-[#9BC5A9] dark:!border-[#31503F] dark:hover:!bg-[#223B2E] dark:hover:!text-[#B4D5BE] shadow-none"
+                class="justify-center gap-2 h-10 !bg-[#EDF5F0] !text-[#2F684A] !border !border-[#CFE0D6] hover:!bg-[#DCEDE3] hover:!text-[#245E43]      shadow-none"
             >
                 <x-icons.anamnesis
                     class="flex-shrink-0 w-6 h-6"

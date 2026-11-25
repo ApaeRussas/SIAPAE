@@ -2,15 +2,15 @@
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-semibold uppercase tracking-wide text-green-800 dark:text-green-300">Atendimento · CAEE</p>
-                <h1 class="mt-1 text-2xl font-bold text-gray-900 dark:text-gray-100">Registro de Processo de Desenvolvimento Individual CAEE</h1>
-                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Consulte, cadastre e acompanhe os registros individuais.</p>
+                <p class="text-sm font-semibold uppercase tracking-wide text-green-800 ">Atendimento · CAEE</p>
+                <h1 class="mt-1 text-2xl font-bold text-gray-900 ">Registro de Processo de Desenvolvimento Individual CAEE</h1>
+                <p class="mt-2 text-sm text-gray-500 ">Consulte, cadastre e acompanhe os registros individuais.</p>
             </div>
             <a href="{{ route('development-processes.create') }}" class="dp-add">+ Novo registro</a>
         </div>
 
         @if (session('success'))
-            <div class="mb-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800 dark:border-green-900 dark:bg-green-950/40 dark:text-green-200">{{ session('success') }}</div>
+            <div class="mb-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800   ">{{ session('success') }}</div>
         @endif
 
         <form method="GET" action="{{ route('development-processes.index') }}" class="mb-5 flex flex-col gap-3 sm:flex-row">
@@ -21,23 +21,23 @@
             @endif
         </form>
 
-        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-[#294236] dark:bg-[#14271e]">
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm  ">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-[#294236]">
-                    <thead class="bg-[#f1f4ef] dark:bg-[#1a3025]">
+                <table class="min-w-full divide-y divide-gray-200 ">
+                    <thead class="bg-[#f1f4ef] ">
                         <tr>
-                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#42564a] dark:text-[#d1dbd3]">Estudante</th>
-                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#42564a] dark:text-[#d1dbd3]">Data da avaliação</th>
-                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#42564a] dark:text-[#d1dbd3]">Responsável pelo registro</th>
-                            <th class="px-5 py-4 text-right text-xs font-bold uppercase tracking-wider text-[#42564a] dark:text-[#d1dbd3]">Ações</th>
+                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#42564a] ">Estudante</th>
+                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#42564a] ">Data da avaliação</th>
+                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#42564a] ">Responsável pelo registro</th>
+                            <th class="px-5 py-4 text-right text-xs font-bold uppercase tracking-wider text-[#42564a] ">Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 bg-white dark:divide-[#294236] dark:bg-[#14271e]">
+                    <tbody class="divide-y divide-gray-100 bg-white  ">
                         @forelse ($processes as $item)
-                            <tr class="hover:bg-[#f7f9f6] dark:hover:bg-[#1a3025]">
-                                <td class="whitespace-nowrap px-5 py-4 font-semibold text-gray-900 dark:text-gray-100">{{ $item->student?->name ?? 'Estudante não encontrado' }}</td>
-                                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600 dark:text-gray-300">{{ $item->evaluation_date?->format('d/m/Y') ?? 'Não informada' }}</td>
-                                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600 dark:text-gray-300">{{ $item->user?->name ?? '—' }}</td>
+                            <tr class="hover:bg-[#f7f9f6] ">
+                                <td class="whitespace-nowrap px-5 py-4 font-semibold text-gray-900 ">{{ $item->student?->name ?? 'Estudante não encontrado' }}</td>
+                                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600 ">{{ $item->evaluation_date?->format('d/m/Y') ?? 'Não informada' }}</td>
+                                <td class="whitespace-nowrap px-5 py-4 text-sm text-gray-600 ">{{ $item->user?->name ?? '—' }}</td>
                                 <td class="whitespace-nowrap px-5 py-4 text-right text-sm">
                                     <div class="flex justify-end gap-3">
                                         <a class="dp-action" href="{{ route('development-processes.show', $item) }}">Visualizar</a>
@@ -51,12 +51,12 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="4" class="px-5 py-12 text-center text-sm text-gray-500 dark:text-gray-400">Nenhum registro encontrado. Clique em “Novo registro” para começar.</td></tr>
+                            <tr><td colspan="4" class="px-5 py-12 text-center text-sm text-gray-500 ">Nenhum registro encontrado. Clique em “Novo registro” para começar.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-            <div class="border-t border-gray-100 px-5 py-4 dark:border-[#294236]">{{ $processes->links() }}</div>
+            <div class="border-t border-gray-100 px-5 py-4 ">{{ $processes->links() }}</div>
         </div>
     </div>
     <style>

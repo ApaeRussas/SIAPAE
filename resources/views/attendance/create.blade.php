@@ -61,10 +61,10 @@
             <div>
                 <label
                     for="student_id"
-                    class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                    class="block text-gray-700  font-normal mb-2"
                 >
                     Nome do aluno:
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </label>
 
                 <select
@@ -88,7 +88,7 @@
                 </select>
 
                 @error('student_id')
-                    <span class="text-sm text-red-600 dark:text-red-400">
+                    <span class="text-sm text-red-600 ">
                         {{ $message }}
                     </span>
                 @enderror
@@ -97,10 +97,10 @@
             <div>
                 <label
                     for="date"
-                    class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                    class="block text-gray-700  font-normal mb-2"
                 >
                     Data do Atendimento:
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </label>
 
                 <input
@@ -120,7 +120,7 @@
                 >
 
                 @error('date')
-                    <span class="text-sm text-red-600 dark:text-red-400">
+                    <span class="text-sm text-red-600 ">
                         {{ $message }}
                     </span>
                 @enderror
@@ -131,7 +131,7 @@
         <div class="my-4">
             <label
                 for="signature_id_display"
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Assinatura do Professor Responsável:
             </label>
@@ -155,7 +155,7 @@
             <input type="hidden" name="signature_id" value="{{ Auth::id() }}">
 
             @error('signature_id')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -164,10 +164,10 @@
         <div class="my-4">
             <label
                 for="signature_id"
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Assinatura do Professor Responsável:
-                <span class="text-red-700 dark:text-red-500">*</span>
+                <span class="text-red-700 ">*</span>
             </label>
 
             <select
@@ -191,7 +191,7 @@
             </select>
 
             @error('signature_id')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -201,10 +201,10 @@
         <div class="my-4">
             <label
                 for="educational_axis"
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Eixo educacional trabalhado:
-                <span class="text-red-700 dark:text-red-500">*</span>
+                <span class="text-red-700 ">*</span>
             </label>
 
             <textarea
@@ -217,7 +217,7 @@
             >{{ old('educational_axis') }}</textarea>
 
             @error('educational_axis')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -226,7 +226,7 @@
         <div class="my-5">
             <label
                 for="skills"
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Habilidades:
             </label>
@@ -240,7 +240,7 @@
             >{{ old('skills') }}</textarea>
 
             @error('skills')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -249,7 +249,7 @@
         <div class="my-5">
             <label
                 for="skills_evolution"
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Evolução das habilidades:
             </label>
@@ -263,7 +263,7 @@
             >{{ old('skills_evolution') }}</textarea>
 
             @error('skills_evolution')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -272,10 +272,10 @@
         <div class="my-5">
             <label
                 for="activity_description"
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Descrição da atividade realizada:
-                <span class="text-red-700 dark:text-red-500">*</span>
+                <span class="text-red-700 ">*</span>
             </label>
 
             <textarea
@@ -287,7 +287,7 @@
             >{{ old('activity_description') }}</textarea>
 
             @error('activity_description')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -312,7 +312,7 @@
                         class="rounded border-gray-300 text-[#3B7D5A] focus:ring-[#3B7D5A]"
                     >
 
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <span class="ml-2 text-sm font-medium text-gray-700 ">
                         Não realizou a atividade
                     </span>
                 </label>
@@ -321,10 +321,10 @@
 
         <div class="my-5">
             <label
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Houve avanços?
-                <span class="text-red-700 dark:text-red-500">*</span>
+                <span class="text-red-700 ">*</span>
             </label>
 
             <input
@@ -363,7 +363,7 @@
             >{{ old('advances') }}</textarea>
 
             @error('advances')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -373,10 +373,10 @@
                 class="attendance-level-container mt-4"
             >
                 <label
-                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    class="block text-sm font-medium text-gray-700  mb-2"
                 >
                     Nível do avanço:
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </label>
 
                 <input
@@ -439,7 +439,7 @@
                 </div>
 
                 @error('advances_level')
-                    <span class="text-sm text-red-600 dark:text-red-400">
+                    <span class="text-sm text-red-600 ">
                         {{ $message }}
                     </span>
                 @enderror
@@ -448,10 +448,10 @@
 
         <div class="my-5">
             <label
-                class="block text-gray-700 dark:text-gray-300 font-normal mb-2"
+                class="block text-gray-700  font-normal mb-2"
             >
                 Houve dificuldades?
-                <span class="text-red-700 dark:text-red-500">*</span>
+                <span class="text-red-700 ">*</span>
             </label>
 
             <input
@@ -490,7 +490,7 @@
             >{{ old('difficulties') }}</textarea>
 
             @error('difficulties')
-                <span class="text-sm text-red-600 dark:text-red-400">
+                <span class="text-sm text-red-600 ">
                     {{ $message }}
                 </span>
             @enderror
@@ -500,10 +500,10 @@
                 class="attendance-level-container mt-4"
             >
                 <label
-                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    class="block text-sm font-medium text-gray-700  mb-2"
                 >
                     Nível das dificuldades:
-                    <span class="text-red-700 dark:text-red-500">*</span>
+                    <span class="text-red-700 ">*</span>
                 </label>
 
                 <input
@@ -566,7 +566,7 @@
                 </div>
 
                 @error('difficulties_level')
-                    <span class="text-sm text-red-600 dark:text-red-400">
+                    <span class="text-sm text-red-600 ">
                         {{ $message }}
                     </span>
                 @enderror

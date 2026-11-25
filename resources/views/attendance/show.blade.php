@@ -183,7 +183,7 @@
                                     class="hidden sm:flex"
                                     onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')"
                                 >
-                                    <div class="text-gray-100 dark:text-gray-200 px-2">{{ __('Deletar') }}</div>
+                                    <div class="text-gray-100  px-2">{{ __('Deletar') }}</div>
                                 </x-button>
                             </form>
                         @endif

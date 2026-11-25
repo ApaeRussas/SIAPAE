@@ -61,8 +61,8 @@
             <div class="flex">
                 <x-anamnesis.label for="have_caregiver" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_caregiver ? 'checked' : '' }}
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" disabled>
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem Cuidador?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    " disabled>
+                    <span class="ml-2 text-sm text-gray-700 ">Tem Cuidador?</span>
                 </x-anamnesis.label>
             </div>
         </div>
@@ -93,9 +93,9 @@
             </div>
             <div>
                 <label for="have_AEE" class="inline-flex items-center">
-                    <input type="checkbox" class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1"
+                    <input type="checkbox" class="rounded  focus:border-gray-300 focus:ring    "
                         {{$medHistory->have_AEE ? 'checked' : ''}} disabled>
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz AEE?</span>
+                    <span class="ml-2 text-sm text-gray-700 ">Faz AEE?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_AEE ? ($medHistory->turn_AEE == '' ? '-- Faz, sem turno especificado --' : $medHistory->turn_AEE) : '-- Não tem AEE --'}} </x-form.p_show>
             </div>
@@ -161,8 +161,8 @@
             <div>
                 <label for="have_medication" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_medication ? 'checked' : '' }}
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1" disabled>
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400 text-sm">Usa Medicação?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    " disabled>
+                    <span class="ml-2 text-sm text-gray-700  text-sm">Usa Medicação?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_medication ? ($medHistory->what_medication == '' ? '-- Usa, mas não especificado --' : $medHistory->what_medication) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -179,7 +179,7 @@
         <div>
             <x-anamnesis.label sizeFont="sm" isShow for="compplaint">Queixa Inicial</x-anamnesis.label>
             <x-form.textarea sizeFont="sm" disabled
-                class="disabled:bg-white disabled:text-gray-800 dark:disabled:text-gray-300">
+                class="disabled:bg-white disabled:text-gray-800 ">
                 {{$medHistory->compplaint ?? '----- Sem Queixa -----'}}
             </x-form.textarea>
         </div>
@@ -209,8 +209,8 @@
             <div class="col-span-1 md:col-span-2">
                 <label for="have_kinship_parents" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_kinship_parents ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Existe Parentesco entre os Pais?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Existe Parentesco entre os Pais?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_kinship_parents ? ($medHistory->what_kinship_parents == '' ? '-- Existe parentesco, mas não especificado --' : $medHistory->what_kinship_parents) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -220,8 +220,8 @@
             <div class="flex">
                 <label for="new_relation_mother" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->new_relation_mother ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Mãe: Novo relacionamento?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Mãe: Novo relacionamento?</span>
                 </label>
             </div>
             <div>
@@ -239,8 +239,8 @@
             <div class="flex">
                 <label for="new_relation_father" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->new_relation_father ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Pai: Novo relacionamento?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Pai: Novo relacionamento?</span>
                 </label>
             </div>
             <div>
@@ -258,7 +258,7 @@
         <div class="col-span-1"> 
             
         </div> 
-        <div class="col-span-2 sm:col-span-1 step-indicator pt-0 sm:pt-2 text-center text-gray-700 dark:text-gray-300"> 
+        <div class="col-span-2 sm:col-span-1 step-indicator pt-0 sm:pt-2 text-center text-gray-700 "> 
             Página <span class="current-step"></span> de <span class="total-steps"></span> 
         </div>
         <div class="col-span-1 flex justify-end"> 
@@ -305,8 +305,8 @@
             <div class="col-span-1 md:col-span-2">
                 <label for="history_abort" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->history_abort ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Histórico de Aborto?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Histórico de Aborto?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->history_abort ? ($medHistory->history_abort_justify == '' ? '-- Há histórico, mas sem justificativa --' : $medHistory->history_abort) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -322,8 +322,8 @@
             <div>
                 <label for="have_disease_gestation" class="inline-flex items-center">
                     <input type="checkbox" {{  $medHistory->have_disease_gestation ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Doença durante a Gravidez?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Doença durante a Gravidez?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_disease_gestation ? ($medHistory->what_disease_gestation == '' ? '-- Houve, mas não especificada --' : $medHistory->what_disease_gestation) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -338,8 +338,8 @@
             <div>
                 <label for="have_discharged_together" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_discharged_together ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Receberam Altas Juntos?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Receberam Altas Juntos?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_discharged_together ? ($medHistory->detail_discharged_together == '' ? '-- Sim, sem detalhes adicionais --' : $medHistory->detail_discharged_together) : '-- Não --'}}
                 </x-form.p_show>
@@ -348,8 +348,8 @@
             <div class="col-span-1 md:col-span-2">
                 <label for="have_problems_birth" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_problems_birth ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1 dark:hover:bg-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Intercorrência no Parto?</span>
+                        class="rounded  focus:border-gray-300 focus:ring     ">
+                    <span class="ml-2 text-sm text-gray-700 ">Intercorrência no Parto?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_problems_birth ? ($medHistory->what_problems_birth == '' ? '-- Houve, mas não especificada --' : $medHistory->what_problems_birth) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -364,8 +364,8 @@
             <div class="flex">
                 <label for="have_neonatal_tests" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_neonatal_tests ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Fez os testes
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm font-medium text-gray-700 ">Fez os testes
                         neonatais?</span>
                 </label>
             </div>
@@ -390,8 +390,8 @@
 
                 <label for="have_nozzle" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_nozzle ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz uso de bicos artificiais?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Faz uso de bicos artificiais?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_nozzle ? ($medHistory->detail_nozzle == '' ? '-- Faz uso, sem detalhes a mais --' : $medHistory->detail_nozzle) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -410,8 +410,8 @@
             <div class="col-span-1 md:col-span-2">
                 <label for="have_delay_NPM" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_delay_NPM ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Apresentou atraso no Desenv.
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Apresentou atraso no Desenv.
                         NPM?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_delay_NPM ? ($medHistory->detail_delay_NPM == '' ? '-- Apresenta atraso, sem detalhes adicionais --' : $medHistory->detail_delay_NPM) : '-- Não --'}} </x-form.p_show>
@@ -422,8 +422,8 @@
 
                 <label for="have_normal_development" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_normal_development ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Desenv. da Linguagem Normal?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Desenv. da Linguagem Normal?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_normal_development ? ($medHistory->detail_normal_development == '' ? '-- Usa linguagem normal, sem detalhes adicionais --' : $medHistory->detail_normal_development) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -431,16 +431,16 @@
             <div>
                 <label for="have_desfrald_yet" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_desfrald_yet ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Desfralde?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Desfralde?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_desfrald_yet ? ($medHistory->age_desfrald_yet == '' ? '-- Desfralda --' : $medHistory->age_desfrald_yet) : '-- Não --'}} </x-form.p_show>
             </div>
             <div>
                 <label for="have_sphincters_control" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_sphincters_control ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Controle dos Esfincteres?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Controle dos Esfincteres?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_sphincters_control ? ($medHistory->age_sphincters_control == '' ? '-- Controla --' : $medHistory->age_sphincters_control) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -481,7 +481,7 @@
                 <x-anamnesis.label sizeFont="sm" isShow for="other_difficulty">Outras Dificildades
                     :</x-anamnesis.label>
                 <x-form.textarea sizeFont="sm" disabled
-                    class="disabled:bg-white disabled:text-gray-800 dark:disabled:text-gray-300">
+                    class="disabled:bg-white disabled:text-gray-800 ">
                     {{$medHistory->other_difficulty ?? '----- Sem outras Dificuldades -----'}}
                 </x-form.textarea>
             </div>
@@ -504,22 +504,22 @@
             <div class="flex">
                 <label for="stubbornness" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->stubbornness ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Teimosia?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Teimosia?</span>
                 </label>
             </div>
             <div class="flex">
                 <label for="tantrum" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->tantrum ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Birra?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Birra?</span>
                 </label>
             </div>
             <div class="col-span-2 md:col-span-4">
                 <label for="inappropriate_behavior" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->inappropriate_behavior ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Comportamento Inapropriado?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm font-medium text-gray-700 ">Comportamento Inapropriado?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->inappropriate_behavior ? ($medHistory->how_manifests_inappropriate_behavior == '' ? '-- Apresenta, mas não especificado --' : $medHistory->how_manifests_inappropriate_behavior) : '-- Não --'}}
                 </x-form.p_show>
@@ -527,21 +527,21 @@
             <div class="flex">
                 <label for="lies" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->lies ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Mente?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Mente?</span>
                 </label>
             </div>
             <div class="flex">
                 <label for="aggressiveness" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->aggressiveness ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Agressiva?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Agressiva?</span>
                 </label>
             </div>
             <div class="col-span-2 md:col-span-4">
                 <label for="sexual_curiosity" class="inline-flex items-center">
-                    <input type="checkbox" {{ old('sexual_curiosity', $medHistory->sexual_curiosity) ? 'checked' : '' }} disabled class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Manifesta curiosidade sexual?</span>
+                    <input type="checkbox" {{ old('sexual_curiosity', $medHistory->sexual_curiosity) ? 'checked' : '' }} disabled class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm font-medium text-gray-700 ">Manifesta curiosidade sexual?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->sexual_curiosity ? ($medHistory->how_manifests_sexual_curiosity == '' ? '-- Manifesta, mas não especificado --' : $medHistory->how_manifests_sexual_curiosity) : '-- Não --'}}
                 </x-form.p_show>
@@ -549,22 +549,22 @@
             <div class="flex">
                 <label for="shyness" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->shyness ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Timidez?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Timidez?</span>
                 </label>
             </div>
             <div class="flex">
                 <label for="affectionate" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->affectionate ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Carinhoso?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Carinhoso?</span>
                 </label>
             </div>
             <div class="col-span-2 md:col-span-4">
                 <label for="sports_activity" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->sports_activity ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz alguma atividade
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Faz alguma atividade
                         esportiva?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->sports_activity ? ($medHistory->what_sports_activity == '' ? '-- Faz, mas não especificado --' : $medHistory->what_sports_activity) : '-- Não --'}} </x-form.p_show>
@@ -572,22 +572,22 @@
             <div class="flex">
                 <label for="waiting_skill" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->waiting_skill ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem habilidade de Espera?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Tem habilidade de Espera?</span>
                 </label>
             </div>
             <div class="flex">
                 <label for="tolerates_frustration" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->tolerates_frustration ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tolera Frustações?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Tolera Frustações?</span>
                 </label>
             </div>
             <div class="col-span-2 md:col-span-4">
                 <label for="hyperfocus" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->hyperfocus ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Hiperfoco?
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Hiperfoco?
                     </span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->hyperfocus ? ($medHistory->how_manifests_hyperfocus == '' ? '-- Possui, mas não especificado --' : $medHistory->how_manifests_hyperfocus) : '-- Não --'}} </x-form.p_show>
@@ -595,15 +595,15 @@
             <div class="flex">
                 <label for="responds_orders" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->responds_orders ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Atende Ordens Solicitadas?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Atende Ordens Solicitadas?</span>
                 </label>
             </div>
             <div class="col-span-2 md:col-span-4">
                 <label for="tics_manias" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->tics_manias ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tiques, mania ou estereotipia?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Tiques, mania ou estereotipia?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->tics_manias ? ($medHistory->what_tics_manias == '' ? '-- Apresenta, mas não especificado --' : $medHistory->what_tics_manias) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -613,8 +613,8 @@
             <div class="flex">
                 <label for="daily_routine" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->daily_routine ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Segue uma Rotina Diária?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Segue uma Rotina Diária?</span>
                 </label>
             </div>
             <div>
@@ -635,7 +635,7 @@
                 <span class="hidden sm:block"> Anterior </span>
             </x-button> 
         </div> 
-        <div class="col-span-2 sm:col-span-1 step-indicator pt-0 sm:pt-2 text-center text-gray-700 dark:text-gray-300"> 
+        <div class="col-span-2 sm:col-span-1 step-indicator pt-0 sm:pt-2 text-center text-gray-700 "> 
             Página <span class="current-step"></span> de <span class="total-steps"></span> 
         </div>
         <div class="col-span-1 flex justify-end"> 
@@ -689,8 +689,8 @@
             <div>
                 <label for="have_difficulty_learning" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_difficulty_learning ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Dificuldade na aprendizagem?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Dificuldade na aprendizagem?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_difficulty_learning ? ($medHistory->justify_difficulty_learning == '' ? '-- Possui --' : $medHistory->justify_difficulty_learning) : '-- Não --'}}
                 </x-form.p_show>
@@ -712,7 +712,7 @@
         <!-- VIII - Habilidades Escolares -->
 
         <div class="my-4">
-            <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
+            <h1 class="text-xl font-bold text-gray-800 ">
                 VIII - Habilidades Escolares
             </h1>
         </div>
@@ -766,7 +766,7 @@
         <!-- IX - Histórico Médico -->
 
         <div class="my-4">
-            <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
+            <h1 class="text-xl font-bold text-gray-800 ">
                 IX - Histórico Médico
             </h1>
         </div>
@@ -775,8 +775,8 @@
             <div>
                 <label for="have_allergy" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_allergy ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Possui algum tipo de alergia?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Possui algum tipo de alergia?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_allergy ? ($medHistory->what_allergy == '' ? '-- Possui, mas não especificado --' : $medHistory->what_allergy) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -796,8 +796,8 @@
             <div class="col-span-1 md:col-span-4">
                 <label for="have_therapeutic" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_therapeutic ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Faz acompanhamento terapeutico?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Faz acompanhamento terapeutico?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_therapeutic ? ($medHistory->times_days_therapeutic == '' ? '-- Faz acompanhamento, mas não especificado quais são os atendimentos e horários --' : $medHistory->times_days_therapeutic) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -805,8 +805,8 @@
             <div class="col-span-1 md:col-span-2">
                 <label for="history_disorders_family" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->history_disorders_family ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-400">Histórico de doenças/distúrbios ou transtorno na família?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm font-medium text-gray-700 ">Histórico de doenças/distúrbios ou transtorno na família?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->history_disorders_family ? ($medHistory->what_history_disorders_family == '' ? '-- Possui histórico, mas não especificado --' : $medHistory->what_history_disorders_family) : '-- Não --'}}
                 </x-form.p_show>
@@ -814,8 +814,8 @@
             <div class="col-span-1 md:col-span-2">
                 <label for="have_update_vaccines" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_update_vaccines ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Cronograma de Vacinas em dia?</span>
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Cronograma de Vacinas em dia?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->have_update_vaccines ? ($medHistory->detail_update_vaccines == '' ? '-- Está atualizado, sem detalhes adicionais --' : $medHistory->detail_update_vaccines) : '-- Não --'}} </x-form.p_show>
             </div>
@@ -824,7 +824,7 @@
         <!-- X - Ambiente Social e Familiar -->
 
         <div class="my-4">
-            <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
+            <h1 class="text-xl font-bold text-gray-800 ">
                 X - Ambiente Social e Familiar
             </h1>
         </div>
@@ -845,8 +845,8 @@
 
                 <label for="have_access_cellphone" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->have_access_cellphone ? 'checked' : '' }} disabled
-                        class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Tem acesso ao celular ou a outras
+                        class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Tem acesso ao celular ou a outras
                         telas?</span>
                 </label>
             </div>
@@ -865,7 +865,7 @@
         <!-- XI - Avaliando o CAEE da APAE Russas -->
 
         <div class="my-4">
-            <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
+            <h1 class="text-xl font-bold text-gray-800 ">
                 XI - Avaliando o CAEE da APAE Russas
             </h1>
         </div>
@@ -876,8 +876,8 @@
 
                 <label for="already_had_information_institution" class="inline-flex items-center">
                     <input type="checkbox" {{ $medHistory->already_had_information_institution ? 'checked' : '' }}
-                        disabled class="rounded dark:text-gray-500 focus:border-gray-300 focus:ring dark:focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-400">Já tinha informações da
+                        disabled class="rounded  focus:border-gray-300 focus:ring    ">
+                    <span class="ml-2 text-sm text-gray-700 ">Já tinha informações da
                         Instituição?</span>
                 </label>
                 <x-form.p_show sizeFont="sm"> {{$medHistory->already_had_information_institution ? ($medHistory->who_recommend_institution == '' ? '-- Tinha, mas não especificado quem recomendou --' : $medHistory->who_recommend_institution) : '-- Não --'}} </x-form.p_show>
@@ -891,14 +891,14 @@
         <!-- XII - Observações Gerais -->
 
         <div class="my-4">
-            <h1 class="text-xl font-bold text-gray-800 dark:text-gray-300">
+            <h1 class="text-xl font-bold text-gray-800 ">
                 XII - Observações Gerais:
             </h1>
         </div>
 
         <div>
             <x-form.textarea sizeFont="sm" height="lg" disabled
-                class="disabled:bg-white disabled:text-gray-800 dark:disabled:text-gray-300">
+                class="disabled:bg-white disabled:text-gray-800 ">
                 {{$medHistory->general_observations ?? '----- Sem Observações -----'}}
             </x-form.textarea>
         </div>
@@ -920,7 +920,7 @@
                 <span class="hidden sm:block"> Anterior </span>
             </x-button> 
         </div> 
-        <div class="col-span-2 sm:col-span-1 step-indicator pt-0 sm:pt-2 text-center text-gray-700 dark:text-gray-300"> 
+        <div class="col-span-2 sm:col-span-1 step-indicator pt-0 sm:pt-2 text-center text-gray-700 "> 
             Página <span class="current-step"></span> de <span class="total-steps"></span> 
         </div>
         <div class="col-span-1 flex justify-end" > 
@@ -932,7 +932,7 @@
     <div class="flex items-center justify-between">
         <div class="flex items-center my-4">
             <x-button href="{{route('student.show', $medHistory->student->id)}}" variant="blue">
-                <p class="flex dark:text-gray-200 px-2">
+                <p class="flex  px-2">
                     Ir para Aluno <span class="hidden sm:flex ml-1">{{ \Illuminate\Support\Str::limit($medHistory->student->name, 12)}}</span>
                 </p>
             </x-button>
@@ -970,7 +970,7 @@
 
                 <x-button type="submit" variant="danger" title="Deletar {{$medHistory->student->name}}" class="hidden sm:flex"
                     onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')">
-                    <div class="text-gray-100 dark:text-gray-200 px-2">
+                    <div class="text-gray-100  px-2">
                         {{ __('Deletar') }}
                     </div>
                 </x-button>

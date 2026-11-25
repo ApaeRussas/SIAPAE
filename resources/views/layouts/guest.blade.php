@@ -37,7 +37,7 @@
         :class="{dark: isDarkMode}"
         x-cloak
     >
-        <div class="flex flex-col min-h-screen max-h-full text-gray-900 bg-gray-100 dark:bg-dark-eval-0 dark:text-gray-200 transition duration-200 ease-in-out">
+        <div class="flex flex-col min-h-screen max-h-full text-gray-900 bg-gray-100   transition duration-200 ease-in-out">
             {{ $slot }}
 
             <x-footer />

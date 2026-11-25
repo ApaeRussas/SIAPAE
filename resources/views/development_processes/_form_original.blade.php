@@ -130,7 +130,7 @@ $sections = [
 </div>
 
 <style>
-.caee-form{--caee-green:#2f6b4f;--caee-green-dark:#1f513a;--caee-green-soft:#eaf3ec;--caee-ink:#26382d;--caee-muted:#6b7b70;--caee-border:#dce6de;--caee-surface:#fff;--caee-field:#fff;display:flex;flex-direction:column;gap:22px;color:var(--caee-ink)}
+.caee-form{--caee-green:#2f6b4f;--caee-green-
 .caee-hero{display:flex;align-items:center;gap:20px;padding:28px;border-radius:18px;background:linear-gradient(120deg,#1f513a,#347858);color:#fff;box-shadow:0 8px 24px rgba(31,81,58,.13)}
 .caee-brand-mark{display:flex;align-items:center;justify-content:center;flex:0 0 58px;width:58px;height:58px;border:1px solid rgba(255,255,255,.55);border-radius:17px;font-size:30px;font-weight:800;color:#fff;background:rgba(255,255,255,.12)}
 .caee-kicker{margin:0 0 7px;font-size:11px;font-weight:800;letter-spacing:.13em;opacity:.82}

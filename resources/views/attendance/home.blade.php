@@ -6,7 +6,7 @@
 
             <div class="flex items-center gap-x-2">
 
-                <h2 class="text-2xl md:text-3xl font-bold leading-tight text-gray-800 dark:text-gray-200">
+                <h2 class="text-2xl md:text-3xl font-bold leading-tight text-gray-800 ">
                     {{ __('Reg. de Atendimento') }}
                 </h2>
 

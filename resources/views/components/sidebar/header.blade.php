@@ -28,7 +28,7 @@
             <span
                 class="text-base font-bold tracking-wide
                        text-[#1F513A]
-                       dark:text-[#F5F1E8]"
+                       "
             >
                 APAE
             </span>
@@ -36,7 +36,7 @@
             <span
                 class="text-xs font-medium tracking-wider
                        text-[#6F7D73]
-                       dark:text-[#A8B9AE]"
+                       "
             >
                 RUSSAS - CE
             </span>
@@ -74,13 +74,13 @@
             focus:ring-0
             focus:bg-transparent
 
-            dark:bg-transparent
-            dark:text-[#A8C0B0]
+            
+            
 
-            dark:hover:bg-[#1D3A2C]
-            dark:hover:text-[#D8B56A]
+            
+            
 
-            dark:focus:bg-transparent
+            
 
             transition-all duration-200
         "

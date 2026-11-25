@@ -19,7 +19,7 @@
                             <x-heroicon-o-mail aria-hidden="true" class="w-5 h-5" />
                         </x-slot>
 
-                        <x-form.input withicon id="email" class="block w-full text-gray-800 dark:text-gray-300" type="email" name="email"
+                        <x-form.input withicon id="email" class="block w-full text-gray-800 " type="email" name="email"
                             :value="old('email')" placeholder="{{ __('Email') }}" required autofocus />
                     </x-form.input-with-icon-wrapper>
                 </div>
@@ -31,7 +31,7 @@
                         <x-slot name="icon">
                             <x-heroicon-o-lock-closed aria-hidden="false" class="w-5 h-5" />
                         </x-slot>
-                        <x-form.input withicon id="password" class="block w-full text-gray-800 dark:text-gray-300" type="password" name="password" required autocomplete="current-password" placeholder="{{ __('Password') }}" />
+                        <x-form.input withicon id="password" class="block w-full text-gray-800 " type="password" name="password" required autocomplete="current-password" placeholder="{{ __('Password') }}" />
 
                         <i class="icon fas fa-eye -mt-3" onclick="togglePassword()" style="cursor: pointer;"></i>
                     </x-form.input-with-icon-wrapper>
@@ -41,10 +41,10 @@
                 <div class="flex items-center justify-between">
                     <label for="remember_me" class="inline-flex items-center">
                         <input id="remember_me" type="checkbox"
-                            class="text-gray-500 border-gray-300 rounded focus:border-gray-300 focus:ring focus:ring-gray-500 dark:border-gray-600 dark:bg-dark-eval-1 dark:focus:ring-offset-dark-eval-1"
+                            class="text-gray-500 border-gray-300 rounded focus:border-gray-300 focus:ring focus:ring-gray-500   "
                             name="remember">
 
-                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span class="ml-2 text-sm text-gray-600 ">
                             {{ __('Remember me') }}
                         </span>
                     </label>
@@ -60,7 +60,7 @@
 
                 <div class="flex items-center justify-between mt-4">
                     @if (Route::has('password.request'))
-                        <a class="underline text-sm text-gray-600 dark:text-gray-400"
+                        <a class="underline text-sm text-gray-600 "
                             href="{{ route('password.request') }}" style="text-decoration: none;">
                             <p class=" hover:text-gray-700">
                             {{ __('Forgot your password?') }}
@@ -69,9 +69,9 @@
                     @endif
 
                     <x-button class="justify-center gap-2">
-                        <x-heroicon-o-login class="w-6 h-6 dark:text-gray-300" aria-hidden="true" />
+                        <x-heroicon-o-login class="w-6 h-6 " aria-hidden="true" />
 
-                        <span class="dark:text-gray-300">{{ __('Log in') }}</span>
+                        <span class="">{{ __('Log in') }}</span>
                     </x-button>
                 </div>
             

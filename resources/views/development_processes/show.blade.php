@@ -290,13 +290,13 @@
     <div class="dp-show mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div class="dp-actions mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-semibold uppercase tracking-wide text-green-800 dark:text-green-300">
+                <p class="text-sm font-semibold uppercase tracking-wide text-green-800 ">
                     Atendimento · CAEE
                 </p>
-                <h1 class="mt-1 text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <h1 class="mt-1 text-2xl font-bold text-gray-900 ">
                     Registro de Processo de Desenvolvimento Individual CAEE
                 </h1>
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <p class="mt-2 text-sm text-gray-600 ">
                     Consulte o documento digital com os tópicos, perguntas e respostas registrados.
                 </p>
             </div>

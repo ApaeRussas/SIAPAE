@@ -70,7 +70,7 @@
                     x-init="initFlatpickr"
                     autocomplete="off"
                     value="{{ old('date_of_emission', $expense->date_of_emission) }}"
-                    class="w-full dark:text-gray-400 date dateInput expense-field"
+                    class="w-full  date dateInput expense-field"
                     required
                     placeholder="Ex: 01/01/2001" />
 
@@ -105,7 +105,7 @@
                         name="fiscal_number"
                         autocomplete="off"
                         value="{{ old('fiscal_number', $expense->fiscal_number) }}"
-                        class="w-full dark:text-gray-400 expense-field"
+                        class="w-full  expense-field"
                         placeholder="Ex: 392.047.028" />
 
                     @error('fiscal_number')
@@ -137,7 +137,7 @@
                         name="cupom_number"
                         autocomplete="off"
                         value="{{ old('cupom_number', $expense->cupom_number) }}"
-                        class="w-full dark:text-gray-400 expense-field"
+                        class="w-full  expense-field"
                         placeholder="Ex: 999999" />
 
                     @error('cupom_number')
@@ -168,7 +168,7 @@
                         id="description"
                         name="description"
                         value="{{ old('description', $expense->description) }}"
-                        class="w-full dark:text-gray-400 expense-field"
+                        class="w-full  expense-field"
                         placeholder="Ex: Descrição do Recibo" />
 
                     @error('description')
@@ -198,7 +198,7 @@
                     id="enterprise"
                     name="enterprise"
                     value="{{ old('enterprise', $expense->enterprise) }}"
-                    class="w-full dark:text-gray-400 expense-field"
+                    class="w-full  expense-field"
                     placeholder="Ex: Nome da Empresa" />
 
                 @error('enterprise')
@@ -226,7 +226,7 @@
                     id="price"
                     name="price"
                     value="{{ old('price', 'R$ ' . number_format($expense->price, 2, ',', '.')) }}"
-                    class="w-full dark:text-gray-400 expense-field"
+                    class="w-full  expense-field"
                     required
                     placeholder="Ex: 49,99"
                     oninput="mascaraMoeda(event)" />

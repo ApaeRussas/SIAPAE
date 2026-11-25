@@ -17,18 +17,18 @@
 
         <div class="mb-5 flex items-center justify-between">
             <div>
-                <p class="text-sm font-medium text-[#2F6B4F] dark:text-[#8CC9A3]">
+                <p class="text-sm font-medium text-[#2F6B4F] ">
                     Usuários
                 </p>
 
-                <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#243129] dark:text-[#F5F1E8]">
+                <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#243129] ">
                     {{ 'Informações do Usuário' . $state_user }}
                 </h2>
             </div>
 
             <x-button
                 href="{{ route('coordinator.index') }}"
-                class="coordinator-green-button !justify-center !gap-2 !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white dark:!border-[#3A8060] dark:!bg-[#3A8060] dark:!text-white dark:hover:!bg-[#4A9A75]"
+                class="coordinator-green-button !justify-center !gap-2 !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white    "
             >
                 <x-heroicon-o-arrow-left class="w-5 h-5 !text-white" aria-hidden="true" />
 
@@ -38,7 +38,7 @@
             </x-button>
         </div>
 
-        <div class="rounded-2xl border border-[#DCE7DF] bg-[#FFFDF9] p-5 shadow-sm dark:border-[#294236] dark:bg-[#14271E]">
+        <div class="rounded-2xl border border-[#DCE7DF] bg-[#FFFDF9] p-5 shadow-sm  ">
 
             <x-table-show
                 :title="'Informações do Usuário'. $state_user"
@@ -56,23 +56,23 @@
 
                 @if ($user->position == 'Professor(a)')
 
-                    <div class="my-6 border-t border-[#DCE7DF] dark:border-[#294236]"></div>
+                    <div class="my-6 border-t border-[#DCE7DF] "></div>
 
                     <div class="mb-5">
-                        <p class="text-sm font-medium text-[#2F6B4F] dark:text-[#8CC9A3]">
+                        <p class="text-sm font-medium text-[#2F6B4F] ">
                             Histórico profissional
                         </p>
 
-                        <h3 class="mt-1 text-xl font-semibold text-[#243129] dark:text-[#F5F1E8]">
+                        <h3 class="mt-1 text-xl font-semibold text-[#243129] ">
                             Registros de Atendimento
                         </h3>
 
-                        <p class="mt-1 text-sm text-[#66788A] dark:text-[#91A197]">
+                        <p class="mt-1 text-sm text-[#66788A] ">
                             Atendimentos realizados por {{ \Illuminate\Support\Str::words($user->name, 2, ' ...') }}.
                         </p>
                     </div>
 
-                    <div class="coordinator-green-table rounded-2xl border border-[#DCE7DF] bg-[#F8F7F2] p-3 dark:border-[#294236] dark:bg-[#101713]">
+                    <div class="coordinator-green-table rounded-2xl border border-[#DCE7DF] bg-[#F8F7F2] p-3  ">
 
                         <x-table
                             title="Atendimento"
@@ -102,14 +102,14 @@
 
                 @endif
 
-                <div class="mt-7 flex flex-col gap-3 border-t border-[#DCE7DF] pt-5 sm:flex-row sm:items-center sm:justify-between dark:border-[#294236]">
+                <div class="mt-7 flex flex-col gap-3 border-t border-[#DCE7DF] pt-5 sm:flex-row sm:items-center sm:justify-between ">
 
                     @if (Auth::user()->can('admin-view'))
 
                         <x-button
                             href="{{ route('coordinator.edit', $user->id) }}"
                             title="Editar {{ $user->name }}"
-                            class="coordinator-green-button !justify-center !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white dark:!border-[#3A8060] dark:!bg-[#3A8060] dark:!text-white dark:hover:!bg-[#4A9A75]"
+                            class="coordinator-green-button !justify-center !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white    "
                         >
                             <span class="px-2">
                                 {{ __('Editar') }}
@@ -135,7 +135,7 @@
                             <x-button
                                 type="submit"
                                 title="Arquivar {{ $user->name }}"
-                                class="coordinator-green-button !justify-center !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white dark:!border-[#3A8060] dark:!bg-[#3A8060] dark:!text-white dark:hover:!bg-[#4A9A75]"
+                                class="coordinator-green-button !justify-center !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white    "
                                 onclick="warningConfirm(event, 'Essa ação irá arquivar o usuário selecionado!', 'warning', 'Arquivar')"
                             >
                                 <span class="px-2">
@@ -158,7 +158,7 @@
                             <x-button
                                 type="submit"
                                 title="Restaurar o Usuário"
-                                class="coordinator-green-button !justify-center !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white dark:!border-[#3A8060] dark:!bg-[#3A8060] dark:!text-white dark:hover:!bg-[#4A9A75]"
+                                class="coordinator-green-button !justify-center !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white    "
                             >
                                 <span class="px-2">
                                     {{ __('Restaurar') }}

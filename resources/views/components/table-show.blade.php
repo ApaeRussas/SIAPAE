@@ -13,7 +13,7 @@ route('dashboard')
 --}}
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden rounded-lg shadow-md dark:bg-dark-eval-1">
+        <div class="bg-white overflow-hidden rounded-lg shadow-md ">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h1 class="text-xl font-bold leading-tight">{{ $title }}</h1>
@@ -64,7 +64,7 @@ route('dashboard')
                         @endif
                     </div>
                 </div>
-                <hr class="border-gray-300 dark:border-gray-500" />
+                <hr class="border-gray-300 " />
 
                 <div class="min-w-full mt-3">
                     <div id="body">
@@ -173,22 +173,22 @@ route('dashboard')
                                     </div>
 
                                     <!-- Linha divisória -->
-                                    <div class="hidden sm:block absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 border-l border-gray-300 dark:border-gray-600"></div>
+                                    <div class="hidden sm:block absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 border-l border-gray-300 "></div>
                                 </div>
                             @else
 
                                 @foreach ($labelsVariables as $item)
-                                    <p class="py-2 dark:text-gray-400 text-gray-700">
+                                    <p class="py-2  text-gray-700">
                                         {{ $item[0] }}:
                                     </p>
 
                                     @if ($item[2] != 'textarea')
-                                    <p class="border border-gray-400 dark:border-gray-600 bg-white dark:bg-dark-eval-1 
-                                        font-normal dark:text-gray-300 py-2 px-3 rounded-lg">
+                                    <p class="border border-gray-400  bg-white  
+                                        font-normal  py-2 px-3 rounded-lg">
                                         {{ data_get($elementShow, $item[1]) ?? '-----' }}
                                     </p>
                                     @else
-                                    <x-form.textarea disabled disabled_normal="null" class="w-full dark:text-gray-400" sizeFont="base" height="{{$item[1]}}">
+                                    <x-form.textarea disabled disabled_normal="null" class="w-full " sizeFont="base" height="{{$item[1]}}">
                                         {{ data_get($elementShow, $item[1]) ?? '-----'}}
                                     </x-form.textarea>
                                     @endif
@@ -244,7 +244,7 @@ route('dashboard')
 
                                     <x-button type="submit" variant="danger" title="Deletar {{$title}}" class="hidden sm:flex"
                                         onclick="warningConfirm(event, 'Essa ação é irreversível!', 'warning', 'Deletar')">
-                                        <div class="text-gray-100 dark:text-gray-200 px-2">
+                                        <div class="text-gray-100  px-2">
                                             {{ __('Deletar') }}
                                         </div>
                                     </x-button>

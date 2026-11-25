@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", function()
             let dropdown = document.querySelector('.ts-dropdown');
             if (dropdown) {
                 dropdown.classList.add(
-                    "bg-white", "dark:bg-dark-eval-1", "border", "border-gray-300",
-                    "dark:border-gray-600", "rounded-md", "shadow-lg", "p-2",
-                    "text-gray-800", "dark:text-gray-400"
+                    "bg-white", "", "border", "border-gray-300",
+                    "", "rounded-md", "shadow-lg", "p-2",
+                    "text-gray-800", ""
                 );
             }
 
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function()
             options.forEach((option, index) => {
                 option.classList.add(
                     "flex", "items-center", "space-x-2", "px-4", "py-2", "cursor-pointer",
-                    "hover:bg-gray-200", "dark:hover:bg-gray-700", "rounded-md",
-                    "text-gray-800", "dark:text-gray-300"
+                    "hover:bg-gray-200", "", "rounded-md",
+                    "text-gray-800", ""
                 );
 
                 // Aplica o estilo dark imediatamente se estiver no modo dark
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function()
             checkboxes.forEach(checkbox => {
                 checkbox.classList.add(
                     "w-4", "h-4", "text-blue-600", "border-gray-300", "rounded",
-                    "focus:ring", "focus:ring-blue-500", "dark:bg-gray-800", "dark:border-gray-600"
+                    "focus:ring", "focus:ring-blue-500", "", ""
                 );
             });
 
@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", function()
                 "max-w-full", "border", "border-gray-400", "rounded-md", "p-2.75",
                 "focus:border-gray-400", "focus:ring", "focus:ring-gray-500",
                 "focus:ring-offset-2", "focus:ring-offset-white",
-                "dark:border-gray-600", "dark:bg-dark-eval-1",
-                "dark:focus:ring-offset-dark-eval-1", "dark:text-gray-400"
+                "", "",
+                "", ""
             );
             control.style.minHeight  = '42px'; // Altura fixa igual ao input de texto
         }

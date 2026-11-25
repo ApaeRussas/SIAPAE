@@ -17,8 +17,8 @@
         border-[#E4E8E2]
         shadow-sm
 
-        dark:bg-[#10251B]
-        dark:border-[#294236]
+        
+        
 
         transition-transform
         duration-500
@@ -49,11 +49,11 @@
                 hover:!bg-[#E8F0EA]
                 hover:!border-[#C8D8CC]
 
-                dark:!border-[#294236]
-                dark:!bg-[#173126]
-                dark:!text-[#D8B56A]
+                
+                
+                
 
-                dark:hover:!bg-[#1E3A2C]
+                
 
                 transition-all
                 duration-200
@@ -67,7 +67,7 @@
             <x-heroicon-o-moon
                 x-show="!isDarkMode"
                 aria-hidden="true"
-                class="w-5 h-5 text-[#2F6B4F] dark:text-[#D8B56A]"
+                class="w-5 h-5 text-[#2F6B4F] "
             />
 
             <x-heroicon-o-sun
@@ -106,12 +106,12 @@
                 hover:!bg-[#E8F0EA]
                 hover:!border-[#C8D8CC]
 
-                dark:!border-[#294236]
-                dark:!bg-[#173126]
-                dark:!text-[#D8B56A]
+                
+                
+                
 
-                dark:hover:!bg-[#1E3A2C]
-                dark:hover:!border-[#3B604B]
+                
+                
 
                 transition-all
                 duration-200
@@ -125,7 +125,7 @@
             <x-heroicon-o-moon
                 x-show="!isDarkMode"
                 aria-hidden="true"
-                class="w-5 h-5 text-[#2F6B4F] dark:text-[#D8B56A]"
+                class="w-5 h-5 text-[#2F6B4F] "
             />
 
             <x-heroicon-o-sun
@@ -162,8 +162,8 @@
                         focus:ring-2
                         focus:ring-[#2F6B4F]/20
 
-                        dark:hover:bg-[#173126]
-                        dark:focus:ring-[#D8B56A]/30
+                        
+                        
                     "
                 >
 
@@ -181,8 +181,8 @@
                             border
                             border-[#C8D8CC]
 
-                            dark:bg-[#173126]
-                            dark:border-[#3B604B]
+                            
+                            
                         "
                     >
 
@@ -192,7 +192,7 @@
                                 h-5
                                 text-[#2F6B4F]
 
-                                dark:text-[#8FC5A5]
+                                
                             "
                             fill="none"
                             stroke="currentColor"
@@ -231,7 +231,7 @@
 
                                 text-[#7A867E]
 
-                                dark:text-[#91A197]
+                                
                             "
                         >
                             Usuário
@@ -246,7 +246,7 @@
 
                                 text-[#1B4632]
 
-                                dark:text-[#F5F1E8]
+                                
                             "
                         >
                             {{ Auth::user()->name }}
@@ -268,8 +268,8 @@
 
                             group-hover:text-[#2F6B4F]
 
-                            dark:text-[#91A197]
-                            dark:group-hover:text-[#D8B56A]
+                            
+                            
                         "
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
@@ -375,8 +375,8 @@
         border-[#E4E8E2]
         shadow-lg
 
-        dark:bg-[#10251B]
-        dark:border-[#294236]
+        
+        
 
         md:hidden
         z-10
@@ -438,11 +438,11 @@
             hover:!bg-[#E8F0EA]
             hover:!border-[#C8D8CC]
 
-            dark:!border-[#294236]
-            dark:!bg-[#173126]
-            dark:!text-[#D8B56A]
+            
+            
+            
 
-            dark:hover:!bg-[#1E3A2C]
+            
 
             transition-all
             duration-200

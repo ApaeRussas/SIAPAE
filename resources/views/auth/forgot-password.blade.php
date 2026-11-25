@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-auth-card>
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        <div class="mb-4 text-sm text-gray-600 ">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
 
@@ -29,7 +29,7 @@
                         <x-form.input
                             withicon
                             id="email"
-                            class="block w-full text-gray-800 dark:text-gray-300"
+                            class="block w-full text-gray-800 "
                             type="email"
                             name="email"
                             :value="old('email')"
@@ -41,7 +41,7 @@
                 </div>
 
                 <div>
-                    <x-button class="justify-center w-full dark:text-gray-300">
+                    <x-button class="justify-center w-full ">
                         {{ __('Email Password Reset Link') }}
                     </x-button>
                 </div>

@@ -14,7 +14,7 @@
 
     <!-- Transition - ALUNOS -->
 
-    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 dark:text-gray-300">
+    <div x-transition x-show="isSidebarOpen || isSidebarHovered" class="text-sm text-gray-700 ">
         {{__('Student Data' . ($element->state_student == 'archived' ? ' Archived' : '')) }}
     </div>
 

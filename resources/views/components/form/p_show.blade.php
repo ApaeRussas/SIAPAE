@@ -3,7 +3,7 @@
 ])
 
 @php
-    $baseClasses = 'border border-gray-400 dark:border-gray-600 bg-white dark:bg-dark-eval-1 font-normal dark:text-gray-300 rounded-lg';
+    $baseClasses = 'border border-gray-400  bg-white  font-normal  rounded-lg';
 
     switch ($sizeFont) {
         case 'sm':

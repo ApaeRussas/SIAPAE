@@ -178,7 +178,7 @@
 
        <div
     {{ $attributes->merge([
-        'class' => 'min-h-screen siapae-system-bg text-gray-900 dark:text-gray-200 transition duration-200 ease-in-out'
+        'class' => 'min-h-screen siapae-system-bg text-gray-900  transition duration-200 ease-in-out'
     ]) }} >
 
 

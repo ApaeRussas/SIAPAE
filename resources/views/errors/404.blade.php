@@ -14,7 +14,7 @@
     </x-slot>
 
     <div class="h-error center">
-        <div class="flex flex-col text-center p-error overflow-hidden bg-white rounded-md shadow-md dark:bg-dark-eval-1 gap-4 px-8 sm:px-14 py-3 sm:py-4">
+        <div class="flex flex-col text-center p-error overflow-hidden bg-white rounded-md shadow-md  gap-4 px-8 sm:px-14 py-3 sm:py-4">
             <div class="style-error text-4xl sm:text-6xl">
                 {{ __('Not Found!') }}
 
@@ -29,7 +29,7 @@
                     
                     @if ($student->state_student === 'alive')
                         <x-button href="{{route('anamnesis.create', ['student_id' => $student->id])}}" variant="blue" class="w-full sm:w-32 mt-2">
-                            <div class="dark:text-gray-100 text-center w-full">
+                            <div class=" text-center w-full">
                                 Adicionar 
                             </div>
                         </x-button>

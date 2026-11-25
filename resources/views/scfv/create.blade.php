@@ -14,14 +14,14 @@
         {{-- TEMA --}}
         <div class="mb-4">
 
-            <label for="theme" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Tema(s) Tratado(s): <span class="text-red-700 dark:text-red-500">*</span>
+            <label for="theme" class="block text-gray-700  font-normal mt-3 mb-2">
+                Tema(s) Tratado(s): <span class="text-red-700 ">*</span>
             </label>
 
             <x-form.textarea
                 id="theme"
                 name="theme"
-                class="w-full dark:text-gray-400"
+                class="w-full "
                 sizeFont="base"
                 placeholder="Dê um enter (quebra de linha) após cada frase
 Ex: 1-  Confraternização Natalina ...
@@ -34,7 +34,7 @@ Ex: 1-  Confraternização Natalina ...
             </x-form.textarea>
 
             @error('theme')
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                <span class="text-red-600 ">{{$message}}</span>
             @enderror
 
         </div>
@@ -59,14 +59,14 @@ Ex: 1-  Confraternização Natalina ...
             {{-- OBJETIVO --}}
             <div>
 
-                <label for="1Q_objective" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Objetivo(s): <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="1Q_objective" class="block text-gray-700  font-normal mb-2">
+                    Objetivo(s): <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="1Q_objective"
                     name="1Q_objective"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Fortalecer vínculos ...."
                     required
@@ -77,7 +77,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('1Q_objective')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -86,14 +86,14 @@ Ex: 1-  Confraternização Natalina ...
             {{-- ATIVIDADE --}}
             <div>
 
-                <label for="1Q_activity" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Ação / Atividade: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="1Q_activity" class="block text-gray-700  font-normal mb-2">
+                    Ação / Atividade: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="1Q_activity"
                     name="1Q_activity"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Festa Natalina..."
                     required
@@ -104,7 +104,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('1Q_activity')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -115,14 +115,14 @@ Ex: 1-  Confraternização Natalina ...
         {{-- DESCRIÇÃO --}}
         <div class="mb-3">
 
-            <label for="1Q_description" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Descrição da Atividade: <span class="text-red-700 dark:text-red-500">*</span>
+            <label for="1Q_description" class="block text-gray-700  font-normal mt-3 mb-2">
+                Descrição da Atividade: <span class="text-red-700 ">*</span>
             </label>
 
             <x-form.textarea
                 id="1Q_description"
                 name="1Q_description"
-                class="w-full dark:text-gray-400"
+                class="w-full "
                 sizeFont="base"
                 placeholder="Ex: O momento foi realizado com ..."
                 required
@@ -133,7 +133,7 @@ Ex: 1-  Confraternização Natalina ...
             </x-form.textarea>
 
             @error('1Q_description')
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                <span class="text-red-600 ">{{$message}}</span>
             @enderror
 
         </div>
@@ -144,14 +144,14 @@ Ex: 1-  Confraternização Natalina ...
 
             <div>
 
-                <label for="1Q_resource" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Recursos Necessários: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="1Q_resource" class="block text-gray-700  font-normal mb-2">
+                    Recursos Necessários: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="1Q_resource"
                     name="1Q_resource"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Declarações Natalinas ...."
                     required
@@ -162,7 +162,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('1Q_resource')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -170,14 +170,14 @@ Ex: 1-  Confraternização Natalina ...
 
             <div>
 
-                <label for="1Q_partner" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Responsáveis / Parceiros: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="1Q_partner" class="block text-gray-700  font-normal mb-2">
+                    Responsáveis / Parceiros: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="1Q_partner"
                     name="1Q_partner"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Disk Pão, Glaucia ..."
                     required
@@ -188,7 +188,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('1Q_partner')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -201,8 +201,8 @@ Ex: 1-  Confraternização Natalina ...
 
             <div class="col-span-1 sm:col-span-3">
 
-                <label for="1Q_place" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Local 1ª Quinzena: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="1Q_place" class="block text-gray-700  font-normal mb-2">
+                    Local 1ª Quinzena: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.input
@@ -210,12 +210,12 @@ Ex: 1-  Confraternização Natalina ...
                     type="text"
                     name="1Q_place"
                     value="{{ old('1Q_place') }}"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     placeholder="Ex: Sede da Apae Russas"
                     required />
 
                 @error('1Q_place')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -223,8 +223,8 @@ Ex: 1-  Confraternização Natalina ...
 
             <div class="col-span-1">
 
-                <label for="1Q_date" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Data 1ª Quinzena: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="1Q_date" class="block text-gray-700  font-normal mb-2">
+                    Data 1ª Quinzena: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.input
@@ -233,13 +233,13 @@ Ex: 1-  Confraternização Natalina ...
                     name="1Q_date"
                     autocomplete="off"
                     value="{{ old('1Q_date') }}"
-                    class="w-full dark:text-gray-400 date dateInput"
+                    class="w-full  date dateInput"
                     x-init="initFlatpickr"
                     placeholder="Ex: 01/11/2001"
                     required />
 
                 @error('1Q_date')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -266,14 +266,14 @@ Ex: 1-  Confraternização Natalina ...
             {{-- OBJETIVO --}}
             <div>
 
-                <label for="2Q_objective" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Objetivo(s): <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="2Q_objective" class="block text-gray-700  font-normal mb-2">
+                    Objetivo(s): <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="2Q_objective"
                     name="2Q_objective"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Fortalecer vínculos ...."
                     required
@@ -284,7 +284,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('2Q_objective')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -293,14 +293,14 @@ Ex: 1-  Confraternização Natalina ...
             {{-- ATIVIDADE --}}
             <div>
 
-                <label for="2Q_activity" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Ação / Atividade: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="2Q_activity" class="block text-gray-700  font-normal mb-2">
+                    Ação / Atividade: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="2Q_activity"
                     name="2Q_activity"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Festa Natalina..."
                     required
@@ -311,7 +311,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('2Q_activity')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -322,14 +322,14 @@ Ex: 1-  Confraternização Natalina ...
         {{-- DESCRIÇÃO --}}
         <div class="mb-3">
 
-            <label for="2Q_description" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Descrição da Atividade: <span class="text-red-700 dark:text-red-500">*</span>
+            <label for="2Q_description" class="block text-gray-700  font-normal mt-3 mb-2">
+                Descrição da Atividade: <span class="text-red-700 ">*</span>
             </label>
 
             <x-form.textarea
                 id="2Q_description"
                 name="2Q_description"
-                class="w-full dark:text-gray-400"
+                class="w-full "
                 sizeFont="base"
                 placeholder="Ex: O momento foi realizado com ..."
                 required
@@ -340,7 +340,7 @@ Ex: 1-  Confraternização Natalina ...
             </x-form.textarea>
 
             @error('2Q_description')
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                <span class="text-red-600 ">{{$message}}</span>
             @enderror
 
         </div>
@@ -351,14 +351,14 @@ Ex: 1-  Confraternização Natalina ...
 
             <div>
 
-                <label for="2Q_resource" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Recursos Necessários: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="2Q_resource" class="block text-gray-700  font-normal mb-2">
+                    Recursos Necessários: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="2Q_resource"
                     name="2Q_resource"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Declarações Natalinas ...."
                     required
@@ -369,7 +369,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('2Q_resource')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -377,14 +377,14 @@ Ex: 1-  Confraternização Natalina ...
 
             <div>
 
-                <label for="2Q_partner" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Responsáveis / Parceiros: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="2Q_partner" class="block text-gray-700  font-normal mb-2">
+                    Responsáveis / Parceiros: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.textarea
                     id="2Q_partner"
                     name="2Q_partner"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     sizeFont="base"
                     placeholder="Ex: Disk Pão, Glaucia ..."
                     required
@@ -395,7 +395,7 @@ Ex: 1-  Confraternização Natalina ...
                 </x-form.textarea>
 
                 @error('2Q_partner')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -408,8 +408,8 @@ Ex: 1-  Confraternização Natalina ...
 
             <div class="col-span-1 sm:col-span-3">
 
-                <label for="2Q_place" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Local 2ª Quinzena: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="2Q_place" class="block text-gray-700  font-normal mb-2">
+                    Local 2ª Quinzena: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.input
@@ -417,12 +417,12 @@ Ex: 1-  Confraternização Natalina ...
                     type="text"
                     name="2Q_place"
                     value="{{ old('2Q_place') }}"
-                    class="w-full dark:text-gray-400"
+                    class="w-full "
                     placeholder="Ex: Sede da Apae Russas"
                     required />
 
                 @error('2Q_place')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -430,8 +430,8 @@ Ex: 1-  Confraternização Natalina ...
 
             <div class="col-span-1">
 
-                <label for="2Q_date" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Data 2ª Quinzena: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="2Q_date" class="block text-gray-700  font-normal mb-2">
+                    Data 2ª Quinzena: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.input
@@ -440,13 +440,13 @@ Ex: 1-  Confraternização Natalina ...
                     name="2Q_date"
                     autocomplete="off"
                     value="{{ old('2Q_date') }}"
-                    class="w-full dark:text-gray-400 date dateInput"
+                    class="w-full  date dateInput"
                     x-init="initFlatpickr"
                     placeholder="Ex: 01/11/2001"
                     required />
 
                 @error('2Q_date')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -463,14 +463,14 @@ Ex: 1-  Confraternização Natalina ...
         {{-- ASSISTIDOS --}}
         <div class="mb-3">
 
-            <label for="students_frequency" class="block text-gray-700 dark:text-gray-300 font-normal mt-3 mb-2">
-                Assistidos Presentes para a Frequência das Quinzenas: <span class="text-red-700 dark:text-red-500">*</span>
+            <label for="students_frequency" class="block text-gray-700  font-normal mt-3 mb-2">
+                Assistidos Presentes para a Frequência das Quinzenas: <span class="text-red-700 ">*</span>
             </label>
 
             <x-form.textarea
                 id="students_frequency"
                 name="students_frequency"
-                class="w-full dark:text-gray-400"
+                class="w-full "
                 sizeFont="base"
                 placeholder="Dê enter para cada estudante novo
 Ex: João Henrique...
@@ -483,7 +483,7 @@ Pedro Fernandes ..."
             </x-form.textarea>
 
             @error('students_frequency')
-                <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                <span class="text-red-600 ">{{$message}}</span>
             @enderror
 
         </div>
@@ -494,8 +494,8 @@ Pedro Fernandes ..."
 
             <div class="col-span-1 sm:col-span-3">
 
-                <label for="signature_id" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Assinatura do Professor Responsável: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="signature_id" class="block text-gray-700  font-normal mb-2">
+                    Assinatura do Professor Responsável: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.select
@@ -522,7 +522,7 @@ Pedro Fernandes ..."
                 </x-form.select>
 
                 @error('signature_id')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>
@@ -530,8 +530,8 @@ Pedro Fernandes ..."
 
             <div class="col-span-1">
 
-                <label for="date_scfv" class="block text-gray-700 dark:text-gray-300 font-normal mb-2">
-                    Data do Serviço: <span class="text-red-700 dark:text-red-500">*</span>
+                <label for="date_scfv" class="block text-gray-700  font-normal mb-2">
+                    Data do Serviço: <span class="text-red-700 ">*</span>
                 </label>
 
                 <x-form.input
@@ -540,13 +540,13 @@ Pedro Fernandes ..."
                     name="date_scfv"
                     autocomplete="off"
                     value="{{ old('date_scfv', \Carbon\Carbon::now()->format('d/m/Y')) }}"
-                    class="w-full dark:text-gray-400 date dateInput"
+                    class="w-full  date dateInput"
                     x-init="initFlatpickr"
                     placeholder="Ex: 01/11/2001"
                     required />
 
                 @error('date_scfv')
-                    <span class="text-red-600 dark:text-red-400">{{$message}}</span>
+                    <span class="text-red-600 ">{{$message}}</span>
                 @enderror
 
             </div>

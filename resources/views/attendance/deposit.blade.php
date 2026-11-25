@@ -5,8 +5,8 @@
             <h2 class="text-xl sm:text-2xl font-bold leading-tight pt-2">
                 {{ __('Lista dos Registros de Atendimento Arquivados') }}
             </h2>
-            <x-button href="{{route('attendance.index')}}" class="justify-center gap-2 h-10" variant="edit" bg="bg-gray-100 dark:bg-dark-eval-0">
-                <x-icons.person class="w-6 h-6 dark:text-gray-300 -ml-1" aria-hidden="true" />
+            <x-button href="{{route('attendance.index')}}" class="justify-center gap-2 h-10" variant="edit" bg="bg-gray-100 ">
+                <x-icons.person class="w-6 h-6  -ml-1" aria-hidden="true" />
 
                 <span class="hidden sm:block">{{ __('Voltar') }}</span>
             </x-button>

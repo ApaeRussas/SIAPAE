@@ -3,7 +3,7 @@
     <x-slot name="header">
         <div class="flex flex-col md:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-x-2">
-                <h2 class="text-2xl md:text-3xl font-bold leading-tight text-gray-800 dark:text-gray-200">
+                <h2 class="text-2xl md:text-3xl font-bold leading-tight text-gray-800 ">
                     {{ __('Lista de Atendimento') }}
                 </h2>
             </div>

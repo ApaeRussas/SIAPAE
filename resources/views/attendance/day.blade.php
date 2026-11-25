@@ -30,7 +30,7 @@
                         font-bold
                         leading-tight
                         text-[#1F513A]
-                        dark:text-[#F5F1E8]
+                        
                     "
                 >
                     Atendimentos do dia {{ $date }}
@@ -40,7 +40,7 @@
                     class="
                         text-sm
                         text-[#78857D]
-                        dark:text-[#91A197]
+                        
                         mt-1
                     "
                 >
@@ -64,10 +64,10 @@
                         !border-[#DCE5DE]
                         !text-[#3E4C43]
                         hover:!bg-[#EAF0EB]
-                        dark:!border-[#294236]
-                        dark:!bg-[#172C22]
-                        dark:!text-[#D1DBD3]
-                        dark:hover:!bg-[#1E3A2C]
+                        
+                        
+                        
+                        
                     "
                 >
                     Voltar
@@ -84,9 +84,9 @@
                         !bg-[#2F6B4F]
                         !text-white
                         hover:!bg-[#1F513A]
-                        dark:!bg-[#2F6B4F]
-                        dark:!text-[#F5F1E8]
-                        dark:hover:!bg-[#3A795A]
+                        
+                        
+                        
                     "
                 >
                     Adicionar novo atendimento
@@ -106,7 +106,7 @@
         class="
             py-6
             bg-[#F7F5EF]
-            dark:bg-[#0D1B15]
+            
             min-h-full
         "
     >
@@ -129,21 +129,21 @@
                 <div
                     class="
                         bg-[#FFFDF9]
-                        dark:bg-[#14271E]
+                        
                         rounded-2xl
                         shadow-sm
                         p-6
                         text-center
                         border
                         border-[#E2E8E2]
-                        dark:border-[#294236]
+                        
                     "
                 >
 
                     <p
                         class="
                             text-[#78857D]
-                            dark:text-[#91A197]
+                            
                         "
                     >
                         Nenhum atendimento foi registrado nesta data.
@@ -161,9 +161,9 @@
                                 !bg-[#2F6B4F]
                                 !text-white
                                 hover:!bg-[#1F513A]
-                                dark:!bg-[#2F6B4F]
-                                dark:!text-[#F5F1E8]
-                                dark:hover:!bg-[#3A795A]
+                                
+                                
+                                
                             "
                         >
                             Adicionar novo atendimento
@@ -187,7 +187,7 @@
                             class="
                                 block
                                 bg-[#FFFDF9]
-                                dark:bg-[#14271E]
+                                
                                 rounded-2xl
                                 shadow-sm
                                 hover:shadow-md
@@ -196,9 +196,9 @@
                                 p-5
                                 border
                                 border-[#E2E8E2]
-                                dark:border-[#294236]
+                                
                                 hover:border-[#76B58F]
-                                dark:hover:border-[#D8B56A]
+                                
                             "
                         >
 
@@ -232,7 +232,7 @@
                                                 text-lg
                                                 font-semibold
                                                 text-[#1F513A]
-                                                dark:text-[#F5F1E8]
+                                                
                                             "
                                         >
                                             {{ $attendance->student->name }}
@@ -248,8 +248,8 @@
                                                 rounded-full
                                                 bg-[#E3EFE7]
                                                 text-[#2F6B4F]
-                                                dark:bg-[#1E3A2C]
-                                                dark:text-[#D8B56A]
+                                                
+                                                
                                             "
                                         >
                                             Atendimento
@@ -274,7 +274,7 @@
                                         <p
                                             class="
                                                 text-[#5F6F65]
-                                                dark:text-[#B7C6BC]
+                                                
                                             "
                                         >
                                             <strong>Professor:</strong>
@@ -285,7 +285,7 @@
                                         <p
                                             class="
                                                 text-[#5F6F65]
-                                                dark:text-[#B7C6BC]
+                                                
                                             "
                                         >
                                             <strong>Eixo educacional:</strong>
@@ -304,7 +304,7 @@
                                             class="
                                                 text-sm
                                                 text-[#78857D]
-                                                dark:text-[#91A197]
+                                                
                                                 mt-3
                                             "
                                         >
@@ -334,7 +334,7 @@
                                     <span
                                         class="
                                             text-[#2F6B4F]
-                                            dark:text-[#76B58F]
+                                            
                                             font-medium
                                             text-sm
                                             transition-colors

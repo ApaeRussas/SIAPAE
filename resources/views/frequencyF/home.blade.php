@@ -4,7 +4,7 @@
     <x-slot name="header">
         <div class="flex flex-col md:justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-x-2">
-                <h2 class="text-xl md:text-2xl font-bold leading-tight pt-2 text-[#183C2C] dark:text-[#F5F1E8]">
+                <h2 class="text-xl md:text-2xl font-bold leading-tight pt-2 text-[#183C2C] ">
                     {{ __('Lista de Frequência') }}
                 </h2>
 
@@ -674,7 +674,7 @@
 
                         $button
                             .removeClass(
-                                'success danger indifferent frequency-present frequency-absent frequency-neutral bg-green-500 hover:bg-green-600 focus:ring-green-500 bg-red-600 hover:bg-red-700 dark:bg-red-700 focus:ring-red-700 bg-gray-400 hover:bg-gray-500 dark:bg-gray-500 focus:ring-gray-500'
+                                'success danger indifferent frequency-present frequency-absent frequency-neutral bg-green-500 hover:bg-green-600 focus:ring-green-500 bg-red-600 hover:bg-red-700  focus:ring-red-700 bg-gray-400 hover:bg-gray-500  focus:ring-gray-500'
                             )
                             .find('i')
                             .removeClass(

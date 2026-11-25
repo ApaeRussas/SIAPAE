@@ -6,7 +6,7 @@
     <x-slot name="header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <h2 class="text-2xl font-bold leading-tight text-[#3E4C43] dark:text-white">
+            <h2 class="text-2xl font-bold leading-tight text-[#3E4C43] ">
                 {{ __('Parte Admin') }}
             </h2>
 

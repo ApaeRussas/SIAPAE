@@ -7,7 +7,7 @@
 ])
 
 @php
-    $baseClasses = 'w-full py-1 border-gray-400 rounded-md focus:border-gray-400 dark:border-gray-600 dark:bg-dark-eval-1 shadow-sm dark:text-gray-400';
+    $baseClasses = 'w-full py-1 border-gray-400 rounded-md focus:border-gray-400   shadow-sm ';
 
     switch ($sizeFont) {
         case 'sm':
@@ -45,10 +45,10 @@
     switch ($disabled_normal) {
         case 'base':
         default:
-            $style_disabled = 'disabled:bg-gray-100 disabled:text-gray-500 dark:disabled:text-gray-300 disabled:border-gray-400';
+            $style_disabled = 'disabled:bg-gray-100 disabled:text-gray-500  disabled:border-gray-400';
         break;
         case 'null':
-            $style_disabled = 'dark:disabled:text-gray-300';
+            $style_disabled = '';
         break;
     }
 

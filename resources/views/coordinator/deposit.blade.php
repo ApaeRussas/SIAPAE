@@ -7,25 +7,25 @@
     <x-slot name="header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl bg-[#FFFDF9] border border-[#DCE7DF] px-5 py-4 shadow-sm dark:bg-[#14271E] dark:border-[#294236]">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl bg-[#FFFDF9] border border-[#DCE7DF] px-5 py-4 shadow-sm  ">
 
                 <div>
-                    <p class="text-sm font-medium text-[#2F6B4F] dark:text-[#8CC9A3]">
+                    <p class="text-sm font-medium text-[#2F6B4F] ">
                         Usuários
                     </p>
 
-                    <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#243129] dark:text-[#F5F1E8]">
+                    <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#243129] ">
                         {{ __('Usuários Arquivados') }}
                     </h2>
 
-                    <p class="mt-1 text-sm text-[#66788A] dark:text-[#91A197]">
+                    <p class="mt-1 text-sm text-[#66788A] ">
                         Consulte e restaure usuários que foram arquivados.
                     </p>
                 </div>
 
                 <x-button
                     href="{{ route('coordinator.index') }}"
-                    class="coordinator-green-button !justify-center !gap-2 !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white dark:!border-[#3A8060] dark:!bg-[#3A8060] dark:!text-white dark:hover:!bg-[#4A9A75]"
+                    class="coordinator-green-button !justify-center !gap-2 !rounded-xl !border-[#2F6B4F] !bg-[#2F6B4F] !text-white hover:!border-[#1F513A] hover:!bg-[#1F513A] hover:!text-white    "
                 >
                     <x-heroicon-o-arrow-left
                         class="w-5 h-5 !text-white"
@@ -52,7 +52,7 @@
 
     <div class="coordinator-green-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
 
-        <div class="rounded-2xl border border-[#DCE7DF] bg-[#FFFDF9] p-3 shadow-sm dark:border-[#294236] dark:bg-[#14271E]">
+        <div class="rounded-2xl border border-[#DCE7DF] bg-[#FFFDF9] p-3 shadow-sm  ">
 
             <x-table
                 title="Usuário Arquivado"

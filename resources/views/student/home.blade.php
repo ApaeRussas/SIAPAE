@@ -4,13 +4,13 @@
         <div class="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div class="flex items-center gap-2">
-                <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#00000] dark:text-[#E5EAE7]">
+                <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#00000] ">
                     {{ __('Lista de Estudantes') }}
                 </h2>
 
                 <button
                     type="button"
-                    class="!bg-transparent hover:!bg-transparent !border-0 !shadow-none !p-0 !outline-none text-[#00000] dark:text-[#5FBE8C]"
+                    class="!bg-transparent hover:!bg-transparent !border-0 !shadow-none !p-0 !outline-none text-[#00000] "
                     onclick="guestText('info', 'Esta tabela é essencial para registros relacionados, como anamnese, lista de frequência, registro de atendimento e relatório pedagógico, que dependem de um estudante criado para funcionarem. <br> <br> <span class=&quot;text-red-500&quot;> Importante: </span> ao arquivar um estudante, seus registros associados, como anamnese, atendimento e relatório pedagógico, serão automaticamente arquivados para fins de organização e espaço. Esses registros só podem ser restaurados se o estudante também for restaurado. Observação: a lista de frequência não será arquivada.')"
                 >
                     <x-icons.question class="w-6 h-6" />
@@ -19,10 +19,10 @@
 
             <x-button
                 href="{{ route('student.deposit') }}"
-                class="!bg-transparent hover:!bg-transparent !text-[#102A43] dark:!text-gray-200 !border !border-[#E1E7EC] dark:!border-dark-eval-2 shadow-none justify-center gap-2"
+                class="!bg-transparent hover:!bg-transparent !text-[#102A43]  !border !border-[#E1E7EC]  shadow-none justify-center gap-2"
             >
                 <x-icons.archive
-                    class="w-5 h-5 text-[#102A43] dark:text-gray-200"
+                    class="w-5 h-5 text-[#102A43] "
                     aria-hidden="true"
                 />
                 <span>{{ __('Armazém') }}</span>

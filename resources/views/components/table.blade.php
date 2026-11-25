@@ -4,26 +4,26 @@
     $isFrequency = isset($headFrequency);
 
     $cardClass = $isAnamnese
-        ? 'bg-white dark:bg-dark-eval-1 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm'
-        : 'bg-white dark:bg-dark-eval-1 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700';
+        ? 'bg-white  rounded-2xl border border-gray-200  shadow-sm'
+        : 'bg-white  rounded-xl shadow-sm border border-gray-200 ';
 
     $tableClass = $isAnamnese
         ? 'min-w-full border-separate border-spacing-0'
-        : 'min-w-full mt-5 border-separate border-spacing-0 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700';
+        : 'min-w-full mt-5 border-separate border-spacing-0 overflow-hidden rounded-lg border border-gray-200 ';
 
     $tableHeaderClass = $isAnamnese
-        ? 'bg-gray-100 dark:bg-gray-800'
-        : 'bg-blue-50 dark:bg-gray-800';
+        ? 'bg-gray-100 '
+        : 'bg-blue-50 ';
 
     $titleColor = $isAnamnese
-        ? 'text-[#10243E] dark:text-gray-100'
-        : 'text-gray-800 dark:text-gray-100';
+        ? 'text-[#10243E] '
+        : 'text-gray-800 ';
 
     $bodyTextColor = $isAnamnese
-        ? 'text-[#10243E] dark:text-gray-200'
-        : 'text-gray-800 dark:text-gray-200';
+        ? 'text-[#10243E] '
+        : 'text-gray-800 ';
 
-    $borderColor = 'border-gray-100 dark:border-gray-700';
+    $borderColor = 'border-gray-100 ';
 @endphp
 
 <div class="py-6">
@@ -47,7 +47,7 @@
                                 Fichas de anamnese
                             </h1>
 
-                            <p class="text-base text-gray-500 dark:text-gray-400 mt-2">
+                            <p class="text-base text-gray-500  mt-2">
                                 Consulte e gerencie as fichas de anamnese dos alunos.
                             </p>
                         </div>
@@ -68,7 +68,7 @@
                         @if (isset($withSearchInput))
                             <div
                                 id="search-container"
-                                class="flex items-center overflow-hidden w-full sm:w-80 h-12 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-eval-1 transition duration-200 focus-within:border-[#287653] focus-within:ring-2 focus-within:ring-[#287653]/10"
+                                class="flex items-center overflow-hidden w-full sm:w-80 h-12 rounded-xl border border-gray-300  bg-white  transition duration-200 focus-within:border-[#287653] focus-within:ring-2 focus-within:ring-[#287653]/10"
                             >
                                 @php
                                     $route = $actionRoute . '.index';
@@ -88,14 +88,14 @@
                                         id="search"
                                         name="search"
                                         value="{{ request('search') }}"
-                                        class="w-full h-full px-4 border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 bg-transparent text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
+                                        class="w-full h-full px-4 border-0 outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 bg-transparent text-gray-700  placeholder-gray-400 "
                                         placeholder="{{ $searchPlaceholder }}"
                                     />
 
                                     <button
                                         id="icone-search"
                                         type="submit"
-                                        class="w-14 h-full flex items-center justify-center border-l border-gray-200 dark:border-gray-700 text-gray-400 hover:text-[#287653] dark:hover:text-green-400 transition duration-200"
+                                        class="w-14 h-full flex items-center justify-center border-l border-gray-200  text-gray-400 hover:text-[#287653]  transition duration-200"
                                     >
                                         <x-icons.search />
                                     </button>
@@ -157,7 +157,7 @@
                                             />
 
                                             <x-button class="w-full sm:w-auto flex sm:hidden">
-                                                <div class="text-gray-100 dark:text-gray-100 w-full text-center">
+                                                <div class="text-gray-100  w-full text-center">
                                                     Filtrar
                                                 </div>
                                             </x-button>
@@ -179,7 +179,7 @@
 
                                     <div class="hidden sm:flex">
                                         <x-button class="w-full sm:w-auto">
-                                            <div class="text-gray-100 dark:text-gray-100 w-full text-center">
+                                            <div class="text-gray-100  w-full text-center">
                                                 Filtrar
                                             </div>
                                         </x-button>
@@ -201,12 +201,12 @@
                                     </div>
 
                                     <div>
-                                        <button class="icone-search flex sm:hidden px-2.5 rounded-md bg-gray-500 hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-800 focus:outline-none transition duration-200">
+                                        <button class="icone-search flex sm:hidden px-2.5 rounded-md bg-gray-500 hover:bg-gray-600   focus:outline-none transition duration-200">
                                             <x-icons.search />
                                         </button>
 
                                         <x-button class="w-auto hidden sm:flex">
-                                            <div class="text-gray-100 dark:text-gray-100 w-full text-center">
+                                            <div class="text-gray-100  w-full text-center">
                                                 Filtrar
                                             </div>
                                         </x-button>
@@ -227,7 +227,7 @@
 
                             <div
                                 id="search-container"
-                                class="flex items-center rounded-xl overflow-hidden w-full sm:w-auto border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-eval-1"
+                                class="flex items-center rounded-xl overflow-hidden w-full sm:w-auto border border-gray-300  bg-white "
                             >
                                 <form
                                     method="GET"
@@ -243,14 +243,14 @@
                                     @endphp
 
                                     <x-form.input
-                                        class="date-range w-full sm:w-80 form-control text-gray-700 dark:text-gray-300 border-0 focus:border-0 focus:ring-0"
+                                        class="date-range w-full sm:w-80 form-control text-gray-700  border-0 focus:border-0 focus:ring-0"
                                         x-init="initFlatpickr"
                                         name="date_range"
                                         placeholder="{{ $placeholderValue }}"
                                         autocomplete="off"
                                     />
 
-                                    <button class="icone-search px-2 text-gray-500 hover:text-[#287653] dark:text-gray-400 dark:hover:text-green-400 focus:outline-none focus:ring-0 transition duration-200">
+                                    <button class="icone-search px-2 text-gray-500 hover:text-[#287653]   focus:outline-none focus:ring-0 transition duration-200">
                                         <x-icons.search />
                                     </button>
                                 </form>
@@ -280,8 +280,8 @@
                             @endif
 
                             @if (isset($valueTotal))
-                                <div class="flex max-w-full justify-center items-center sm:mr-2 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg w-full sm:w-auto">
-                                    <p class="flex dark:text-gray-300 gap-x-1">
+                                <div class="flex max-w-full justify-center items-center sm:mr-2 px-3 py-2 border border-gray-300  rounded-lg w-full sm:w-auto">
+                                    <p class="flex  gap-x-1">
                                         <span class="hidden sm:flex">Valor Total:</span>
                                         <span class="flex sm:hidden">V.T:</span>
                                         <span>{{ $valueTotal }} R$</span>
@@ -314,7 +314,7 @@
                     </div>
                 </div>
 
-                <hr class="border-gray-200 dark:border-gray-700 w-full">
+                <hr class="border-gray-200  w-full">
 
                 <div class="{{ $isFrequency ? 'frequency-table-scroll' : 'overflow-x-auto scrollbar-custom' }}">
 
@@ -324,25 +324,25 @@
                             <tr>
 
                                 @if ($iteration == "true")
-                                    <th class="{{ $isFrequency ? 'frequency-index-header' : '' }} border-b border-gray-200 dark:border-gray-700 {{ isset($headersSmall) ? 'w-8 py-1' : 'px-5 py-4' }} text-center text-sm font-semibold {{ $titleColor }}">
+                                    <th class="{{ $isFrequency ? 'frequency-index-header' : '' }} border-b border-gray-200  {{ isset($headersSmall) ? 'w-8 py-1' : 'px-5 py-4' }} text-center text-sm font-semibold {{ $titleColor }}">
                                         #
                                     </th>
                                 @endif
 
                                 @if (!isset($headFrequency))
                                     @foreach ($headers as $header)
-                                        <th class="border-b border-gray-200 dark:border-gray-700 {{ isset($headersSmall) ? 'px-1 py-1' : 'px-5 py-4' }} text-center text-sm font-semibold {{ $titleColor }}">
+                                        <th class="border-b border-gray-200  {{ isset($headersSmall) ? 'px-1 py-1' : 'px-5 py-4' }} text-center text-sm font-semibold {{ $titleColor }}">
                                             {{ __($header) }}
                                         </th>
                                     @endforeach
                                 @else
                                     @foreach ($headers as $header)
                                         @if ($header == 'Nome')
-                                            <th class="frequency-name-header border-b border-gray-200 dark:border-gray-700 py-3 text-center text-sm font-semibold {{ $titleColor }}">
+                                            <th class="frequency-name-header border-b border-gray-200  py-3 text-center text-sm font-semibold {{ $titleColor }}">
                                                 {{ __($header) }}
                                             </th>
                                         @else
-                                            <th class="frequency-day-header border-b border-gray-200 dark:border-gray-700 py-3 text-center text-sm font-semibold {{ $titleColor }}">
+                                            <th class="frequency-day-header border-b border-gray-200  py-3 text-center text-sm font-semibold {{ $titleColor }}">
                                                 {{ __($header) }}
                                             </th>
                                         @endif
@@ -350,7 +350,7 @@
                                 @endif
 
                                 @if (isset($actionRoute) && !isset($notActions))
-                                    <th class="border-b border-gray-200 dark:border-gray-700 {{ isset($headersSmall) ? 'px-1 py-1' : 'px-5 py-4' }} text-center text-sm font-semibold {{ $titleColor }}">
+                                    <th class="border-b border-gray-200  {{ isset($headersSmall) ? 'px-1 py-1' : 'px-5 py-4' }} text-center text-sm font-semibold {{ $titleColor }}">
                                         Ações
                                     </th>
                                 @endif
@@ -358,7 +358,7 @@
                             </tr>
                         </thead>
 
-                        <tbody class="bg-white dark:bg-dark-eval-1">
+                        <tbody class="bg-white ">
 
                             @if (!isset($onlyHead))
                                 @forelse ($rows as $row)
@@ -369,11 +369,11 @@
                                     <tr
                                         x-data
                                         @click="window.location.href = '{{ route($actionRoute . '.show', $row->id) . $parameter }}'"
-                                        class="group cursor-pointer transition duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                                        class="group cursor-pointer transition duration-200 hover:bg-gray-50 "
                                     >
 
                                         @if ($iteration == "true")
-                                            <td class="{{ $isFrequency ? 'frequency-index' : '' }} border-b {{ $borderColor }} px-5 py-4 text-center text-gray-700 dark:text-gray-300">
+                                            <td class="{{ $isFrequency ? 'frequency-index' : '' }} border-b {{ $borderColor }} px-5 py-4 text-center text-gray-700 ">
                                                 {{ ($rows->currentPage() - 1) * $rows->perPage() + $loop->iteration }}
                                             </td>
                                         @endif
@@ -527,7 +527,7 @@
                                 @empty
                                     <tr>
                                         <td
-                                            class="px-5 py-12 text-center font-medium text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700"
+                                            class="px-5 py-12 text-center font-medium text-gray-500  border-b border-gray-100 "
                                             colspan="{{ count($headers) + (isset($actionRoute) ? 2 : 0) }}"
                                         >
                                             <div class="flex flex-col items-center justify-center">
@@ -546,7 +546,7 @@
 
                 @if (!isset($notPaginate))
                     @if ($rows->count() >= (isset($numberPages) ? $numberPages : 15))
-                        <hr class="border-gray-200 dark:border-gray-700 mt-5" />
+                        <hr class="border-gray-200  mt-5" />
                     @endif
 
                     <div class="pagination mt-5">
